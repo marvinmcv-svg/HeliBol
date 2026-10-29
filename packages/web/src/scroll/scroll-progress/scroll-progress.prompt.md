@@ -1,0 +1,1 @@
+Build a reading-progress indicator (bar and ring variants). Modern path: `animation: k-progress linear both; animation-timeline: scroll(nearest)` animating `scaleX(0→1)` (bar) or `stroke-dashoffset 100→0` on a pathLength=100 circle (ring). Fallback when `CSS.supports('animation-timeline: scroll()')` is false: a passive scroll listener writes the same styles.

@@ -1,0 +1,1 @@
+Create an aurora background: three absolutely positioned rounded blobs (violet, cyan, pink) with `filter: blur(64px)` and opacity .55, each looping a translate/scale/rotate keyframe with different durations (speed, ×1.3, ×0.8) and alternate directions. Children render on top. Pause under reduced motion.

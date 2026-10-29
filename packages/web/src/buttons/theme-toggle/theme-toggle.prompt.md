@@ -1,0 +1,3 @@
+Build a dark-mode toggle: an SVG sun whose core grows and gets "bitten" by a masked circle to become a moon (spring physics, rays fade/scale out), and the theme change itself reveals as a circle growing from the button's center to the farthest viewport corner.
+
+Keep: `document.startViewTransition(() => flushSync(commit))`, then animate `clipPath` on `::view-transition-new(root)` with an expo-out ease; global CSS `::view-transition-old(root), ::view-transition-new(root) { animation: none }`; graceful fallback when VT is unsupported or reduced motion is on; works controlled (e.g. next-themes) or uncontrolled.

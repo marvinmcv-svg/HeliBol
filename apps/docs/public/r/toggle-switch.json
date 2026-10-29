@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-switch",
+  "type": "registry:component",
+  "title": "Spring Switch",
+  "description": "iOS-feel switch: the thumb springs across with layout animation and stretches while pressed.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/toggle-switch.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/toggle-switch.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface ToggleSwitchProps {\n  checked?: boolean;\n  defaultChecked?: boolean;\n  onCheckedChange?: (checked: boolean) => void;\n  label?: string;\n  disabled?: boolean;\n  className?: string;\n}\n\nexport function ToggleSwitch({ checked: controlled, defaultChecked = false, onCheckedChange, label, disabled, className }: ToggleSwitchProps) {\n  const [internal, setInternal] = useState(defaultChecked);\n  const checked = controlled ?? internal;\n  const set = () => {\n    if (controlled === undefined) setInternal(!checked);\n    onCheckedChange?.(!checked);\n  };\n  return (\n    <label className={cn(\"inline-flex cursor-pointer items-center gap-3 text-sm\", disabled && \"cursor-not-allowed opacity-50\", className)}>\n      <button\n        type=\"button\"\n        role=\"switch\"\n        aria-checked={checked}\n        disabled={disabled}\n        onClick={set}\n        className={cn(\n          \"relative flex h-7 w-12 shrink-0 items-center rounded-full p-0.5 outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background\",\n          checked ? \"justify-end bg-emerald-500\" : \"justify-start bg-muted-foreground/30\",\n        )}\n      >\n        <motion.span layout transition={spring.snappy} whileTap={{ width: 30 }} className=\"block h-6 w-6 rounded-full bg-white shadow-[0_2px_6px_rgb(0_0_0/.25)]\" />\n      </button>\n      {label && <span>{label}</span>}\n    </label>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "switch",
+      "toggle",
+      "settings",
+      "ios",
+      "form"
+    ],
+    "pageTypes": [
+      "settings",
+      "pricing",
+      "dashboard"
+    ]
+  }
+}

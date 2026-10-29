@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "auto-animate-list",
+  "type": "registry:component",
+  "title": "Auto-Animate List",
+  "description": "Add, remove and shuffle items and everything animates: entries pop in, exits blur out, siblings slide into the gap.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/auto-animate-list.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/auto-animate-list.tsx",
+      "content": "\"use client\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface AutoAnimateListProps<T> {\n  items: T[];\n  getKey: (item: T) => string;\n  render: (item: T) => ReactNode;\n  className?: string;\n  itemClassName?: string;\n}\n\n/** Drop-in list where adds, removals and re-sorts animate automatically. */\nexport function AutoAnimateList<T>({ items, getKey, render, className, itemClassName }: AutoAnimateListProps<T>) {\n  return (\n    <ul className={cn(\"relative\", className)}>\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        {items.map((item) => (\n          <motion.li\n            key={getKey(item)}\n            layout\n            initial={{ opacity: 0, scale: 0.9, y: -8 }}\n            animate={{ opacity: 1, scale: 1, y: 0 }}\n            exit={{ opacity: 0, scale: 0.9, filter: \"blur(4px)\" }}\n            transition={spring.smooth}\n            className={itemClassName}\n          >\n            {render(item)}\n          </motion.li>\n        ))}\n      </AnimatePresence>\n    </ul>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "list",
+      "add remove",
+      "layout",
+      "product ui"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "settings",
+      "ecommerce"
+    ]
+  }
+}

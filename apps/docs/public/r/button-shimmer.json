@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-shimmer",
+  "type": "registry:component",
+  "title": "Shimmer Button",
+  "description": "A glossy light sweep crosses the CTA every few seconds, pulling the eye without being noisy.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-shimmer.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-shimmer.tsx",
+      "content": "import type { ButtonHTMLAttributes } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nexport interface ButtonShimmerProps extends ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Seconds between sweeps. */\n  duration?: number;\n  shimmerColor?: string;\n  /** Render as a link instead of a button. */\n  href?: string;\n}\n\nconst css = `\n.k-shimmer-btn{position:relative;overflow:hidden;isolation:isolate}\n.k-shimmer-btn::before{content:\"\";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 35%,var(--k-shimmer-color) 50%,transparent 65%);background-size:250% 100%;animation:k-shimmer var(--k-shimmer-d) cubic-bezier(.4,0,.2,1) infinite}\n@keyframes k-shimmer{0%{background-position:150% 0}60%,100%{background-position:-100% 0}}\n@media (prefers-reduced-motion:reduce){.k-shimmer-btn::before{animation:none}}\n[data-reduce-motion] .k-shimmer-btn::before{animation:none}`;\n\nexport function ButtonShimmer({ duration = 2.6, shimmerColor = \"rgb(255 255 255 / .35)\", href, className, style, ...props }: ButtonShimmerProps) {\n  const Tag = (href ? \"a\" : \"button\") as \"button\";\n  return (\n    <>\n      <style href=\"k-shimmer-btn\" precedence=\"kinetik\">{css}</style>\n      <Tag\n        {...(href ? { href } : {})}\n        className={cn(\n          \"k-shimmer-btn inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[linear-gradient(135deg,#18181b,#3f3f46)] px-6 text-sm font-medium text-white shadow-[0_0_0_1px_rgb(255_255_255/.08)_inset,0_8px_24px_-8px_rgb(0_0_0/.5)] outline-none transition-[scale,box-shadow] duration-150 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background\",\n          className,\n        )}\n        style={{ \"--k-shimmer-d\": `${duration}s`, \"--k-shimmer-color\": shimmerColor, ...style } as React.CSSProperties}\n        {...props}\n      />\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "cta",
+      "shimmer",
+      "upgrade",
+      "css-only"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing",
+      "onboarding"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Create a pill CTA with a periodic shimmer: a `::before` pseudo-element holding a 110° transparent→white(35%)→transparent gradient at 250% width animates its background-position across the button during the first 60% of each cycle, then rests. Dark gradient fill, inset hairline, soft drop shadow, press squash. Reduced motion: no sweep.

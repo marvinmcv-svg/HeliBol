@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "motion-provider",
+  "type": "registry:component",
+  "title": "Motion Provider",
+  "description": "One provider for the whole app: default spring from tokens, reduced-motion wiring and LazyMotion feature loading.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/motion-provider.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/motion-provider.tsx",
+      "content": "\"use client\";\nimport { LazyMotion, MotionConfig, domAnimation } from \"motion/react\";\nimport type { ReactNode } from \"react\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface MotionProviderProps {\n  children: ReactNode;\n  /** Default transition for every motion component. */\n  transition?: object;\n  /** Strict LazyMotion: forces `m.*` components (4.6 KB instead of ~34 KB). */\n  strict?: boolean;\n}\n\n/**\n * Root motion provider: shared default spring, reduced-motion wiring (OS setting or <html data-reduce-motion>)\n * and LazyMotion feature loading.\n */\nexport function MotionProvider({ children, transition = spring.smooth, strict = false }: MotionProviderProps) {\n  const reduced = useReducedMotion();\n  return (\n    <LazyMotion features={domAnimation} strict={strict}>\n      <MotionConfig transition={transition} reducedMotion={reduced ? \"always\" : \"never\"}>\n        {children}\n      </MotionConfig>\n    </LazyMotion>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "provider",
+      "setup",
+      "reduced motion",
+      "bundle size"
+    ],
+    "pageTypes": [
+      "landing",
+      "dashboard",
+      "docs"
+    ]
+  }
+}

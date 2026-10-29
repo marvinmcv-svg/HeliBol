@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton-shimmer",
+  "type": "registry:component",
+  "title": "Skeleton Shimmer",
+  "description": "Theme-aware skeleton blocks with a soft sweeping highlight. Shape them with Tailwind classes to match your layout.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/skeleton-shimmer.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/skeleton-shimmer.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nconst css = `\n.k-skel{position:relative;overflow:hidden;background:color-mix(in oklab,var(--color-foreground,#888) 8%,transparent)}\n.k-skel::after{content:\"\";position:absolute;inset:0;translate:-100% 0;background:linear-gradient(90deg,transparent,color-mix(in oklab,var(--color-foreground,#888) 9%,transparent),transparent);animation:k-skel 1.6s cubic-bezier(.4,0,.2,1) infinite}\n@keyframes k-skel{to{translate:100% 0}}\n@media (prefers-reduced-motion:reduce){.k-skel::after{animation:none;display:none}}\n[data-reduce-motion] .k-skel::after{display:none}`;\n\n/** Skeleton block with a sweeping highlight. Size it with Tailwind classes. */\nexport function Skeleton({ className, ...props }: HTMLAttributes<HTMLDivElement>) {\n  return (\n    <>\n      <style href=\"k-skel\" precedence=\"kinetik\">{css}</style>\n      <div aria-hidden className={cn(\"k-skel rounded-md\", className)} {...props} />\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "loaders"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "skeleton",
+      "loading",
+      "placeholder",
+      "css-only"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "blog",
+      "ecommerce"
+    ]
+  }
+}

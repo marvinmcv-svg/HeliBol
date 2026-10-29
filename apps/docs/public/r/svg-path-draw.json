@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "svg-path-draw",
+  "type": "registry:component",
+  "title": "SVG Path Draw",
+  "description": "Every stroke inside an SVG draws itself — once on view, or scrubbed with scroll — with GSAP DrawSVG. Illustrations, signatures, diagrams.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/svg-path-draw.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/svg-path-draw.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { DrawSVGPlugin } from \"gsap/DrawSVGPlugin\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(DrawSVGPlugin, ScrollTrigger, useGSAP);\n\nexport interface SvgPathDrawProps {\n  /** SVG markup (paths, lines, circles…) — every stroked shape is drawn. */\n  children: ReactNode;\n  viewBox: string;\n  /** \"view\" draws once on enter; \"scrub\" ties drawing to scroll position. */\n  mode?: \"view\" | \"scrub\";\n  scroller?: RefObject<HTMLElement | null>;\n  duration?: number;\n  stagger?: number;\n  className?: string;\n}\n\nexport function SvgPathDraw({ children, viewBox, mode = \"view\", scroller, duration = 1.6, stagger = 0.15, className }: SvgPathDrawProps) {\n  const ref = useRef<SVGSVGElement>(null);\n  const reduced = useReducedMotion();\n  useGSAP(\n    () => {\n      if (reduced) return;\n      const shapes = ref.current!.querySelectorAll(\"path, line, polyline, circle, rect, ellipse\");\n      gsap.from(shapes, {\n        drawSVG: 0,\n        duration,\n        stagger,\n        ease: mode === \"scrub\" ? \"none\" : \"power2.inOut\",\n        scrollTrigger: {\n          trigger: ref.current,\n          scroller: scroller?.current ?? undefined,\n          start: \"top 80%\",\n          end: mode === \"scrub\" ? \"bottom 40%\" : undefined,\n          scrub: mode === \"scrub\" ? 0.5 : false,\n        },\n      });\n    },\n    { scope: ref, dependencies: [reduced, mode] },\n  );\n  return (\n    <svg ref={ref} viewBox={viewBox} fill=\"none\" className={cn(\"overflow-visible\", className)}>\n      {children}\n    </svg>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "svg"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "svg",
+      "draw",
+      "line art",
+      "signature",
+      "scroll"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio",
+      "blog"
+    ]
+  }
+}

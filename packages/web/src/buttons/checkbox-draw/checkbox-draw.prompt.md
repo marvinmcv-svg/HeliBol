@@ -1,0 +1,1 @@
+Create a checkbox where a native sr-only input drives a custom box via the `:checked + .box` sibling selector; the SVG check path has `stroke-dasharray: 22` and transitions `stroke-dashoffset` 22→0 with an expo-out ease. Optional strike-through: the label's 1.5px linear-gradient background grows 0%→100% width and the text dims. Press scales the box to 0.9.

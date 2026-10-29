@@ -1,0 +1,1 @@
+Create a copy-to-clipboard icon button: the copy icon scales out and a checkmark scales in on a bouncy spring while its path draws (pathLength 0→1, 300ms). Reset after 1.6s. Announce "Copied" through an sr-only role=status.

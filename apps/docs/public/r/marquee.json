@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "marquee",
+  "type": "registry:component",
+  "title": "Marquee",
+  "description": "Seamless infinite marquee for logos and testimonials: horizontal or vertical, reverse, edge fade, pause on hover and an optional pause button.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/marquee.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/marquee.tsx",
+      "content": "\"use client\";\nimport { useState, type ReactNode } from \"react\";\nimport { Pause, Play } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface MarqueeProps {\n  children: ReactNode;\n  /** Seconds per loop. */\n  duration?: number;\n  reverse?: boolean;\n  vertical?: boolean;\n  pauseOnHover?: boolean;\n  /** Fade the edges with a mask. */\n  fade?: boolean;\n  /** Show a pause/play control (WCAG 2.2.2). */\n  controls?: boolean;\n  gap?: string;\n  className?: string;\n}\n\nconst css = `\n.k-marquee{--k-gap:2rem;display:flex;overflow:hidden;gap:var(--k-gap)}\n.k-marquee[data-vertical]{flex-direction:column}\n.k-marquee-track{display:flex;flex-shrink:0;gap:var(--k-gap);min-width:100%;justify-content:space-around;animation:k-marquee-x var(--k-dur) linear infinite}\n.k-marquee[data-vertical] .k-marquee-track{flex-direction:column;min-width:auto;min-height:100%;animation-name:k-marquee-y}\n.k-marquee[data-reverse] .k-marquee-track{animation-direction:reverse}\n.k-marquee[data-hover-pause]:hover .k-marquee-track,.k-marquee[data-paused] .k-marquee-track{animation-play-state:paused}\n@keyframes k-marquee-x{to{transform:translateX(calc(-100% - var(--k-gap)))}}\n@keyframes k-marquee-y{to{transform:translateY(calc(-100% - var(--k-gap)))}}\n@media (prefers-reduced-motion:reduce){.k-marquee-track{animation-play-state:paused}}\n[data-reduce-motion] .k-marquee-track{animation-play-state:paused!important}`;\n\nexport function Marquee({ children, duration = 30, reverse, vertical, pauseOnHover = true, fade = true, controls = false, gap = \"2rem\", className }: MarqueeProps) {\n  const [paused, setPaused] = useState(false);\n  const mask = vertical ? \"linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent)\" : \"linear-gradient(to right,transparent,#000 10%,#000 90%,transparent)\";\n  return (\n    <div className={cn(\"relative\", className)}>\n      <style href=\"k-marquee\" precedence=\"kinetik\">{css}</style>\n      <div\n        className={cn(\"k-marquee\", vertical && \"h-full\")}\n        data-vertical={vertical || undefined}\n        data-reverse={reverse || undefined}\n        data-hover-pause={pauseOnHover || undefined}\n        data-paused={paused || undefined}\n        style={{ \"--k-dur\": `${duration}s`, \"--k-gap\": gap, maskImage: fade ? mask : undefined, WebkitMaskImage: fade ? mask : undefined } as React.CSSProperties}\n      >\n        <div className=\"k-marquee-track\">{children}</div>\n        <div className=\"k-marquee-track\" aria-hidden>{children}</div>\n      </div>\n      {controls && (\n        <button onClick={() => setPaused((p) => !p)} aria-label={paused ? \"Play marquee\" : \"Pause marquee\"} className=\"absolute top-1/2 right-0 grid size-7 -translate-y-1/2 place-items-center rounded-full border border-border bg-background/80 text-muted-foreground backdrop-blur hover:text-foreground\">\n          {paused ? <Play className=\"size-3\" /> : <Pause className=\"size-3\" />}\n        </button>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "marquee",
+      "logos",
+      "testimonials",
+      "infinite",
+      "ticker"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing"
+    ]
+  }
+}

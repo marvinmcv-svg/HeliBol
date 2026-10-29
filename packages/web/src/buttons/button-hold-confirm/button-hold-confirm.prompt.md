@@ -1,0 +1,1 @@
+Create a hold-to-confirm button: a filled overlay copy of the label is revealed left→right with `clip-path: inset(0 X% 0 0)` driven by a motion value that animates linearly to 1 over holdDuration while pressed (pointer or Enter/Space keydown, ignoring key repeat), and eases back to 0 on release. On completion call onConfirm, show a confirmed label, then reset.

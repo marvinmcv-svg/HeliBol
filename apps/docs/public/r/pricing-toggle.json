@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pricing-toggle",
+  "type": "registry:block",
+  "title": "Pricing — Period Toggle",
+  "description": "Three-tier pricing with a sliding Monthly/Yearly toggle; prices roll vertically to the new value and the savings badge lights up.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json",
+    "https://kinetik.dev/r/animated-tabs.json",
+    "https://kinetik.dev/r/button-shimmer.json",
+    "https://kinetik.dev/r/button-press.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/pricing-toggle.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/pricing-toggle.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { AnimatedTabs } from \"@/components/kinetik/animated-tabs\";\nimport { ButtonShimmer } from \"@/components/kinetik/button-shimmer\";\nimport { ButtonPress } from \"@/components/kinetik/button-press\";\n\nconst plans = [\n  { name: \"Hobby\", monthly: 0, yearly: 0, blurb: \"For side projects\", features: [\"All CSS components\", \"Community support\", \"MIT license\"] },\n  { name: \"Pro\", monthly: 24, yearly: 19, blurb: \"For product teams\", features: [\"Everything in Hobby\", \"Blocks & mobile flows\", \"Figma kit\", \"Priority support\"], featured: true },\n  { name: \"Team\", monthly: 79, yearly: 64, blurb: \"For agencies\", features: [\"Everything in Pro\", \"5 seats\", \"Private registry\", \"SSO\"] },\n];\n\nfunction Price({ value }: { value: number }) {\n  return (\n    <span className=\"relative inline-flex h-12 overflow-hidden text-5xl font-semibold tracking-tight tabular-nums\">\n      $\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        <motion.span key={value} initial={{ y: \"100%\", opacity: 0, filter: \"blur(4px)\" }} animate={{ y: 0, opacity: 1, filter: \"blur(0px)\" }} exit={{ y: \"-100%\", opacity: 0, filter: \"blur(4px)\" }} transition={spring.smooth}>\n          {value}\n        </motion.span>\n      </AnimatePresence>\n    </span>\n  );\n}\n\nexport function PricingToggle() {\n  const [period, setPeriod] = useState<\"monthly\" | \"yearly\">(\"yearly\");\n  return (\n    <section className=\"mx-auto max-w-5xl px-6 py-12\">\n      <div className=\"text-center\">\n        <h2 className=\"text-3xl font-semibold tracking-tight sm:text-4xl\">Simple pricing</h2>\n        <p className=\"mt-2 text-muted-foreground\">Start free. Upgrade when your motion does.</p>\n        <div className=\"mt-6 flex items-center justify-center gap-3\">\n          <AnimatedTabs className=\"w-auto\" defaultTab=\"yearly\" onChange={(id) => setPeriod(id as \"monthly\" | \"yearly\")} tabs={[{ id: \"monthly\", label: \"Monthly\" }, { id: \"yearly\", label: \"Yearly\" }]} />\n          <motion.span animate={{ opacity: period === \"yearly\" ? 1 : 0.4, scale: period === \"yearly\" ? 1 : 0.95 }} className=\"rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-600 dark:text-emerald-400\">Save 20%</motion.span>\n        </div>\n      </div>\n      <div className=\"mt-10 grid gap-4 md:grid-cols-3\">\n        {plans.map((p) => (\n          <div key={p.name} className={cn(\"relative flex flex-col rounded-3xl border p-6\", p.featured ? \"border-foreground/20 bg-card shadow-xl md:-translate-y-2\" : \"border-border bg-card/60\")}>\n            {p.featured && <span className=\"absolute -top-3 left-6 rounded-full bg-foreground px-2.5 py-0.5 text-xs font-medium text-background\">Most popular</span>}\n            <p className=\"font-semibold\">{p.name}</p>\n            <p className=\"text-sm text-muted-foreground\">{p.blurb}</p>\n            <div className=\"mt-5 flex items-end gap-1\">\n              <Price value={p[period]} />\n              <span className=\"mb-1.5 text-sm text-muted-foreground\">/mo</span>\n            </div>\n            <ul className=\"mt-6 flex-1 space-y-2.5 text-sm\">\n              {p.features.map((f) => <li key={f} className=\"flex items-center gap-2\"><Check className=\"size-4 text-emerald-500\" />{f}</li>)}\n            </ul>\n            <div className=\"mt-6\">{p.featured ? <ButtonShimmer className=\"w-full\">Start 14-day trial</ButtonShimmer> : <ButtonPress variant=\"secondary\" className=\"w-full rounded-full\">Choose {p.name}</ButtonPress>}</div>\n          </div>\n        ))}\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "pricing",
+      "toggle",
+      "plans",
+      "saas"
+    ],
+    "pageTypes": [
+      "pricing",
+      "landing"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cta-spotlight",
+  "type": "registry:block",
+  "title": "CTA — Spotlight & Meteors",
+  "description": "Closing call-to-action panel with a cursor spotlight, meteor shower, animated gradient word and a magnetic button.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json",
+    "https://kinetik.dev/r/spotlight.json",
+    "https://kinetik.dev/r/bg-meteors.json",
+    "https://kinetik.dev/r/text-gradient-animated.json",
+    "https://kinetik.dev/r/button-magnetic.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/cta-spotlight.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/cta-spotlight.tsx",
+      "content": "\"use client\";\nimport { BgMeteors } from \"@/components/kinetik/bg-meteors\";\nimport { ButtonMagnetic } from \"@/components/kinetik/button-magnetic\";\nimport { Spotlight } from \"@/components/kinetik/spotlight\";\nimport { TextGradientAnimated } from \"@/components/kinetik/text-gradient-animated\";\n\nexport function CtaSpotlight() {\n  return (\n    <section className=\"p-6\">\n      <Spotlight color=\"rgb(139 92 246 / .35)\" className=\"rounded-[2rem] border border-white/10 bg-[radial-gradient(ellipse_at_top,#1e1b4b,#09090b_70%)] text-white\">\n        <BgMeteors count={14} className=\"flex flex-col items-center px-6 py-20 text-center\">\n          <h2 className=\"max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl\">\n            Stop shipping <TextGradientAnimated>static</TextGradientAnimated> interfaces.\n          </h2>\n          <p className=\"mt-4 max-w-md text-white/60\">Install your first component in 30 seconds. Free and open source.</p>\n          <div className=\"mt-8\">\n            <ButtonMagnetic className=\"bg-white text-black\">Get started — it&apos;s free</ButtonMagnetic>\n          </div>\n        </BgMeteors>\n      </Spotlight>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "cta",
+      "landing",
+      "spotlight",
+      "footer"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing"
+    ]
+  }
+}

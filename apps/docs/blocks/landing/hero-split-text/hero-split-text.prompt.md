@@ -1,0 +1,1 @@
+Compose a landing hero: full-height section with an aurora background (3 drifting blurred blobs) under a subtle film-grain overlay; centered content = an announcement pill with a light beam orbiting its border, an H1 whose words rise from masks (GSAP SplitText, expo-out, staggered), a subhead that blurs in word by word, and two CTAs (dark shimmer pill + secondary press button).

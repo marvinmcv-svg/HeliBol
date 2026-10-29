@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-aurora",
+  "type": "registry:component",
+  "title": "Aurora Background",
+  "description": "Three heavily blurred color blobs drift on out-of-phase loops behind your hero. Pure CSS, theme-friendly.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-aurora.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-aurora.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nexport interface BgAuroraProps {\n  children?: ReactNode;\n  colors?: [string, string, string];\n  /** Seconds per drift cycle. */\n  speed?: number;\n  className?: string;\n}\n\nconst css = `\n.k-aurora-blob{position:absolute;border-radius:9999px;filter:blur(64px);opacity:.55;mix-blend-mode:var(--k-aurora-blend,normal);animation:k-aurora var(--k-aurora-speed) ease-in-out infinite alternate}\n.k-aurora-blob:nth-child(2){animation-duration:calc(var(--k-aurora-speed) * 1.3);animation-direction:alternate-reverse}\n.k-aurora-blob:nth-child(3){animation-duration:calc(var(--k-aurora-speed) * 0.8)}\n@keyframes k-aurora{0%{transform:translate(0,0) scale(1) rotate(0)}50%{transform:translate(12%,-8%) scale(1.15) rotate(20deg)}100%{transform:translate(-10%,10%) scale(.9) rotate(-10deg)}}\n@media (prefers-reduced-motion:reduce){.k-aurora-blob{animation:none}}\n[data-reduce-motion] .k-aurora-blob{animation:none}`;\n\nexport function BgAurora({ children, colors = [\"#7c3aed\", \"#06b6d4\", \"#ec4899\"], speed = 14, className }: BgAuroraProps) {\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)}>\n      <style href=\"k-aurora\" precedence=\"kinetik\">{css}</style>\n      <div aria-hidden className=\"absolute inset-0 -z-10\" style={{ \"--k-aurora-speed\": `${speed}s` } as React.CSSProperties}>\n        <div className=\"k-aurora-blob\" style={{ background: colors[0], width: \"55%\", height: \"60%\", top: \"-15%\", left: \"-10%\" }} />\n        <div className=\"k-aurora-blob\" style={{ background: colors[1], width: \"50%\", height: \"55%\", top: \"10%\", right: \"-12%\" }} />\n        <div className=\"k-aurora-blob\" style={{ background: colors[2], width: \"45%\", height: \"50%\", bottom: \"-20%\", left: \"25%\" }} />\n      </div>\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "background",
+      "aurora",
+      "gradient",
+      "hero",
+      "ambient",
+      "css-only"
+    ],
+    "pageTypes": [
+      "landing",
+      "auth",
+      "pricing"
+    ]
+  }
+}

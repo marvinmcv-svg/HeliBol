@@ -1,0 +1,1 @@
+Create a pure-CSS animated mesh gradient: register six `@property` percentages (x/y for three anchors), layer three `radial-gradient(at x y, color, transparent 55%)` over a base color, and animate the properties through 3 keyframe stops with `ease-in-out infinite alternate`. Colors and speed via CSS variables; paused under reduced motion.

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress-ring",
+  "type": "registry:component",
+  "title": "Progress Ring",
+  "description": "Circular progress whose arc and centered percentage spring smoothly to every new value — interruptible mid-flight.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/progress-ring.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/progress-ring.tsx",
+      "content": "\"use client\";\nimport { useEffect } from \"react\";\nimport { motion, useMotionValue, useSpring, useTransform } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface ProgressRingProps {\n  value: number;\n  size?: number;\n  stroke?: number;\n  label?: string;\n  showValue?: boolean;\n  className?: string;\n}\n\nexport function ProgressRing({ value, size = 120, stroke = 10, label = \"Progress\", showValue = true, className }: ProgressRingProps) {\n  const mv = useMotionValue(0);\n  const spring = useSpring(mv, { stiffness: 90, damping: 20 });\n  const offset = useTransform(spring, (v) => 100 - v);\n  const text = useTransform(spring, (v) => `${Math.round(v)}%`);\n  useEffect(() => mv.set(Math.max(0, Math.min(100, value))), [value, mv]);\n  const r = (size - stroke) / 2;\n  return (\n    <div role=\"progressbar\" aria-label={label} aria-valuenow={Math.round(value)} aria-valuemin={0} aria-valuemax={100} className={cn(\"relative inline-grid place-items-center\", className)} style={{ width: size, height: size }}>\n      <svg width={size} height={size} className=\"-rotate-90\">\n        <circle cx={size / 2} cy={size / 2} r={r} fill=\"none\" strokeWidth={stroke} className=\"stroke-muted\" />\n        <motion.circle cx={size / 2} cy={size / 2} r={r} fill=\"none\" strokeWidth={stroke} strokeLinecap=\"round\" pathLength={100} strokeDasharray=\"100\" style={{ strokeDashoffset: offset }} stroke=\"currentColor\" />\n      </svg>\n      {showValue && <motion.span className=\"absolute text-xl font-semibold tabular-nums\">{text}</motion.span>}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "loaders"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "progress",
+      "ring",
+      "goal",
+      "fitness",
+      "kpi"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "onboarding"
+    ]
+  }
+}

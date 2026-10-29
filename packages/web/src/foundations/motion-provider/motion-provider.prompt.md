@@ -1,0 +1,1 @@
+Create an app-level MotionProvider: `LazyMotion features={domAnimation}` + `MotionConfig` with a default spring (stiffness 260, damping 30) and `reducedMotion` set to "always" when a `useReducedMotion()` hook (OS media query OR an `<html data-reduce-motion>` app setting) is true. Wrap the root layout with it.

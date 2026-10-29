@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-typewriter",
+  "type": "registry:component",
+  "title": "Typewriter",
+  "description": "Types, holds, deletes and cycles through a list of phrases with a blinking caret.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-typewriter.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-typewriter.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextTypewriterProps {\n  words: string[];\n  /** ms per typed character */\n  typeSpeed?: number;\n  deleteSpeed?: number;\n  /** ms to hold a finished word */\n  pause?: number;\n  loop?: boolean;\n  className?: string;\n  caretClassName?: string;\n}\n\nexport function TextTypewriter({\n  words,\n  typeSpeed = 70,\n  deleteSpeed = 35,\n  pause = 1400,\n  loop = true,\n  className,\n  caretClassName,\n}: TextTypewriterProps) {\n  const reduced = useReducedMotion();\n  const [index, setIndex] = useState(0);\n  const [text, setText] = useState(\"\");\n  const [deleting, setDeleting] = useState(false);\n\n  useEffect(() => {\n    const word = words[index % words.length] ?? \"\";\n    if (reduced) {\n      setText(word);\n      const t = setTimeout(() => (loop || index < words.length - 1) && setIndex((i) => (i + 1) % words.length), pause * 1.5);\n      return () => clearTimeout(t);\n    }\n    let t: ReturnType<typeof setTimeout>;\n    if (!deleting && text === word) {\n      if (!loop && index === words.length - 1) return;\n      t = setTimeout(() => setDeleting(true), pause);\n    } else if (deleting && text === \"\") {\n      setDeleting(false);\n      setIndex((i) => (i + 1) % words.length);\n    } else {\n      t = setTimeout(\n        () => setText(deleting ? word.slice(0, text.length - 1) : word.slice(0, text.length + 1)),\n        deleting ? deleteSpeed : typeSpeed,\n      );\n    }\n    return () => clearTimeout(t);\n  }, [text, deleting, index, words, reduced, loop, pause, typeSpeed, deleteSpeed]);\n\n  return (\n    <span className={cn(\"inline-flex items-baseline\", className)}>\n      <span className=\"sr-only\">{words.join(\", \")}</span>\n      <span aria-hidden className=\"whitespace-pre\">{text}</span>\n      <motion.span\n        aria-hidden\n        className={cn(\"ml-0.5 inline-block w-[2px] self-stretch bg-current\", caretClassName)}\n        animate={reduced ? { opacity: 1 } : { opacity: [1, 1, 0, 0] }}\n        transition={{ duration: 1, repeat: Infinity, times: [0, 0.5, 0.5, 1] }}\n      />\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "hero",
+      "rotating",
+      "caret",
+      "terminal"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

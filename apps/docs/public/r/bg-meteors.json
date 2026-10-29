@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-meteors",
+  "type": "registry:component",
+  "title": "Meteor Shower",
+  "description": "Shooting stars streak diagonally across a card or hero with randomized timing — deterministic so SSR matches.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-meteors.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-meteors.tsx",
+      "content": "\"use client\";\nimport { useMemo, type ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface BgMeteorsProps {\n  children?: ReactNode;\n  count?: number;\n  angle?: number;\n  className?: string;\n}\n\nconst css = `\n.k-meteor{position:absolute;top:-5%;width:2px;height:2px;border-radius:9999px;background:#fff;box-shadow:0 0 0 1px rgb(255 255 255/.08);rotate:var(--k-angle);animation:k-meteor linear infinite}\n.k-meteor::after{content:\"\";position:absolute;top:50%;right:1px;width:80px;height:1px;translate:0 -50%;background:linear-gradient(90deg,transparent,rgb(255 255 255/.7))}\n@keyframes k-meteor{0%{transform:translateX(0);opacity:0}5%{opacity:1}70%{opacity:1}100%{transform:translateX(900px);opacity:0}}\n@media (prefers-reduced-motion:reduce){.k-meteor{display:none}}\n[data-reduce-motion] .k-meteor{display:none}`;\n\nexport function BgMeteors({ children, count = 18, angle = 145, className }: BgMeteorsProps) {\n  // deterministic pseudo-random so SSR and client match\n  const meteors = useMemo(\n    () =>\n      Array.from({ length: count }, (_, i) => {\n        const r = (n: number) => ((Math.sin(i * 9301 + n * 49297) + 1) / 2) % 1;\n        return { left: `${r(1) * 110}%`, delay: `${r(2) * 6}s`, duration: `${3 + r(3) * 5}s` };\n      }),\n    [count],\n  );\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)}>\n      <style href=\"k-meteor\" precedence=\"kinetik\">{css}</style>\n      <div aria-hidden className=\"absolute inset-0 -z-10\" style={{ \"--k-angle\": `${angle}deg` } as React.CSSProperties}>\n        {meteors.map((m, i) => (\n          <span key={i} className=\"k-meteor\" style={{ left: m.left, animationDelay: m.delay, animationDuration: m.duration }} />\n        ))}\n      </div>\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "meteors",
+      "stars",
+      "space",
+      "launch",
+      "background"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

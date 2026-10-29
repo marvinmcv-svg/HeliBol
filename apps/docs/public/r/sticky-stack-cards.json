@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sticky-stack-cards",
+  "type": "registry:component",
+  "title": "Sticky Stacking Cards",
+  "description": "Cards pin as you scroll and stack on top of each other; the ones underneath shrink and dim for depth.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/sticky-stack-cards.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/sticky-stack-cards.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode, type RefObject } from \"react\";\nimport { motion, useScroll, useTransform, type MotionValue } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface StickyStackCardsProps {\n  items: ReactNode[];\n  container?: RefObject<HTMLElement | null>;\n  /** px offset from the top where cards stick; each card adds `step`. */\n  top?: number;\n  step?: number;\n  className?: string;\n}\n\nfunction Card({ children, i, total, progress, top, step, reduced }: { children: ReactNode; i: number; total: number; progress: MotionValue<number>; top: number; step: number; reduced: boolean }) {\n  const start = i / total;\n  const scale = useTransform(progress, [start, 1], [1, 1 - (total - i - 1) * 0.05]);\n  const filter = useTransform(progress, [start, 1], [\"brightness(1)\", `brightness(${1 - (total - i - 1) * 0.12})`]);\n  return (\n    <div className=\"sticky flex h-[70cqh] items-start justify-center\" style={{ top: top + i * step }}>\n      <motion.div style={reduced ? undefined : { scale, filter }} className=\"w-full origin-top\">\n        {children}\n      </motion.div>\n    </div>\n  );\n}\n\nexport function StickyStackCards({ items, container, top = 24, step = 14, className }: StickyStackCardsProps) {\n  const ref = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n  const { scrollYProgress } = useScroll({ target: ref, container, offset: [\"start start\", \"end end\"] });\n  return (\n    <div ref={ref} className={cn(\"relative\", className)} style={{ height: `${items.length * 70}cqh` }}>\n      {items.map((item, i) => (\n        <Card key={i} i={i} total={items.length} progress={scrollYProgress} top={top} step={step} reduced={reduced}>\n          {item}\n        </Card>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "sticky",
+      "stack",
+      "features",
+      "steps",
+      "scroll"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

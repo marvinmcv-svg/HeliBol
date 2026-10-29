@@ -1,0 +1,1 @@
+Create a bento grid (3 columns, 11rem rows, col-span variants) with tiles that have a visual layer and bottom-aligned copy. On hover or focus-within: the visual lifts -8px and scales 1.02, the copy rises 24px, and a "Learn more →" CTA slides up and fades in, all with a 500ms expo-out ease. Visuals fade out toward the bottom with a mask.

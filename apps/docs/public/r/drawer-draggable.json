@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "drawer-draggable",
+  "type": "registry:component",
+  "title": "Draggable Drawer",
+  "description": "Bottom sheet that follows your finger, rubber-bands upward and dismisses on distance or flick velocity — Vaul-style.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/drawer-draggable.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/drawer-draggable.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, type ReactNode } from \"react\";\nimport { AnimatePresence, motion, useDragControls, type PanInfo } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface DrawerDraggableProps {\n  open: boolean;\n  onOpenChange: (open: boolean) => void;\n  title: string;\n  children: ReactNode;\n  /** Position inside the nearest positioned ancestor instead of the viewport. */\n  contained?: boolean;\n  className?: string;\n}\n\nexport function DrawerDraggable({ open, onOpenChange, title, children, contained = false, className }: DrawerDraggableProps) {\n  const controls = useDragControls();\n  const panel = useRef<HTMLDivElement>(null);\n  const pos = contained ? \"absolute\" : \"fixed\";\n\n  useEffect(() => {\n    if (!open) return;\n    const prev = document.activeElement as HTMLElement | null;\n    panel.current?.focus();\n    const onKey = (e: KeyboardEvent) => e.key === \"Escape\" && onOpenChange(false);\n    window.addEventListener(\"keydown\", onKey);\n    return () => {\n      window.removeEventListener(\"keydown\", onKey);\n      prev?.focus?.();\n    };\n  }, [open, onOpenChange]);\n\n  const onDragEnd = (_: unknown, info: PanInfo) => {\n    if (info.offset.y > 120 || info.velocity.y > 500) onOpenChange(false);\n  };\n\n  return (\n    <AnimatePresence>\n      {open && (\n        <>\n          <motion.div className={cn(pos, \"inset-0 z-40 bg-black/40\")} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => onOpenChange(false)} />\n          <motion.div\n            ref={panel}\n            role=\"dialog\"\n            aria-modal=\"true\"\n            aria-label={title}\n            tabIndex={-1}\n            drag=\"y\"\n            dragControls={controls}\n            dragListener={false}\n            dragConstraints={{ top: 0, bottom: 0 }}\n            dragElastic={{ top: 0.05, bottom: 0.9 }}\n            onDragEnd={onDragEnd}\n            initial={{ y: \"100%\" }}\n            animate={{ y: 0 }}\n            exit={{ y: \"100%\" }}\n            transition={spring.heavy}\n            className={cn(pos, \"inset-x-0 bottom-0 z-50 mx-auto max-h-[85%] max-w-lg rounded-t-3xl border border-border bg-card pb-6 shadow-2xl outline-none\", className)}\n          >\n            <div onPointerDown={(e) => controls.start(e)} className=\"flex cursor-grab touch-none justify-center py-3 active:cursor-grabbing\">\n              <span className=\"h-1.5 w-10 rounded-full bg-muted-foreground/30\" />\n            </div>\n            <div className=\"px-6\">\n              <h2 className=\"text-lg font-semibold\">{title}</h2>\n              <div className=\"mt-3\">{children}</div>\n            </div>\n          </motion.div>\n        </>\n      )}\n    </AnimatePresence>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "drawer",
+      "bottom sheet",
+      "drag",
+      "mobile",
+      "vaul"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "dashboard",
+      "settings"
+    ]
+  }
+}

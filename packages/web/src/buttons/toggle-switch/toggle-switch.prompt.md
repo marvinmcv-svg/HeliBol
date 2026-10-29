@@ -1,0 +1,1 @@
+Build an iOS-style switch: a button with role="switch" whose flex justification flips between start/end, and a `motion.span layout` thumb that springs across (stiffness 500, damping 35) and widens to 30px while pressed (`whileTap`). Track color transitions to green when on.

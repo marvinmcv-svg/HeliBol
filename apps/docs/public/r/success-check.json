@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "success-check",
+  "type": "registry:component",
+  "title": "Success / Error Mark",
+  "description": "The circle draws, the check (or cross) strokes in, then the whole mark pops — the moment-of-completion signature.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/success-check.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/success-check.tsx",
+      "content": "\"use client\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface SuccessCheckProps {\n  status: \"success\" | \"error\";\n  size?: number;\n  className?: string;\n}\n\nexport function SuccessCheck({ status, size = 72, className }: SuccessCheckProps) {\n  const reduced = useReducedMotion();\n  const color = status === \"success\" ? \"#10b981\" : \"#ef4444\";\n  const draw = (delay: number) => (reduced ? { duration: 0 } : { duration: 0.4, delay, ease: [0.65, 0, 0.35, 1] as const });\n  return (\n    <motion.svg\n      key={status}\n      role=\"img\"\n      aria-label={status === \"success\" ? \"Success\" : \"Error\"}\n      viewBox=\"0 0 52 52\"\n      width={size}\n      height={size}\n      className={cn(className)}\n      initial={reduced ? false : { scale: 0.8 }}\n      animate={{ scale: [0.8, 1.08, 1] }}\n      transition={{ duration: 0.5, delay: 0.55, times: [0, 0.5, 1] }}\n    >\n      <motion.circle cx=\"26\" cy=\"26\" r=\"24\" fill=\"none\" stroke={color} strokeWidth=\"2.5\" initial={{ pathLength: 0, rotate: -90 }} animate={{ pathLength: 1 }} transition={draw(0)} style={{ originX: \"50%\", originY: \"50%\" }} />\n      <motion.circle cx=\"26\" cy=\"26\" r=\"24\" fill={color} initial={{ opacity: 0 }} animate={{ opacity: 0.12 }} transition={{ delay: reduced ? 0 : 0.4 }} />\n      {status === \"success\" ? (\n        <motion.path d=\"M15 27l7 7 15-16\" fill=\"none\" stroke={color} strokeWidth=\"3.5\" strokeLinecap=\"round\" strokeLinejoin=\"round\" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={draw(0.35)} />\n      ) : (\n        <>\n          <motion.path d=\"M18 18l16 16\" fill=\"none\" stroke={color} strokeWidth=\"3.5\" strokeLinecap=\"round\" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={draw(0.35)} />\n          <motion.path d=\"M34 18L18 34\" fill=\"none\" stroke={color} strokeWidth=\"3.5\" strokeLinecap=\"round\" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={draw(0.5)} />\n        </>\n      )}\n    </motion.svg>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "loaders"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "success",
+      "error",
+      "checkmark",
+      "payment",
+      "feedback"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "auth",
+      "onboarding"
+    ]
+  }
+}

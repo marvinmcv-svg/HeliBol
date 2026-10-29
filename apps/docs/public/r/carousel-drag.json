@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "carousel-drag",
+  "type": "registry:component",
+  "title": "Drag Carousel",
+  "description": "Flick-able carousel with velocity-projected snapping, scaled neighbours, morphing pagination dots and button/keyboard controls.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/carousel-drag.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/carousel-drag.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useRef, useState, type ReactNode } from \"react\";\nimport { animate, motion, useMotionValue, type PanInfo } from \"motion/react\";\nimport { ChevronLeft, ChevronRight } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface CarouselDragProps {\n  items: ReactNode[];\n  /** Slide width as a fraction of the viewport width. */\n  slideWidth?: number;\n  gap?: number;\n  className?: string;\n  label?: string;\n}\n\nexport function CarouselDrag({ items, slideWidth = 0.78, gap = 16, className, label = \"Carousel\" }: CarouselDragProps) {\n  const viewport = useRef<HTMLDivElement>(null);\n  const [w, setW] = useState(0);\n  const [index, setIndex] = useState(0);\n  const x = useMotionValue(0);\n  const dotId = useId();\n  const step = w * slideWidth + gap;\n\n  useEffect(() => {\n    const ro = new ResizeObserver(([e]) => setW(e.contentRect.width));\n    if (viewport.current) ro.observe(viewport.current);\n    return () => ro.disconnect();\n  }, []);\n\n  useEffect(() => {\n    const c = animate(x, -index * step, spring.smooth);\n    return () => c.stop();\n  }, [index, step, x]);\n\n  const go = (i: number) => setIndex(Math.max(0, Math.min(items.length - 1, i)));\n\n  const onDragEnd = (_: unknown, info: PanInfo) => {\n    // project with velocity for an inertial feel, then snap\n    const projected = -x.get() - info.velocity.x * 0.2;\n    go(Math.round(projected / step));\n  };\n\n  return (\n    <section aria-roledescription=\"carousel\" aria-label={label} className={cn(\"relative\", className)} onKeyDown={(e) => (e.key === \"ArrowRight\" ? go(index + 1) : e.key === \"ArrowLeft\" ? go(index - 1) : null)}>\n      <div ref={viewport} className=\"overflow-hidden\">\n        <motion.div\n          className=\"flex cursor-grab touch-pan-y active:cursor-grabbing\"\n          style={{ x, gap }}\n          drag=\"x\"\n          dragConstraints={{ left: -step * (items.length - 1), right: 0 }}\n          dragElastic={0.12}\n          onDragEnd={onDragEnd}\n        >\n          {items.map((item, i) => (\n            <motion.div\n              key={i}\n              role=\"group\"\n              aria-roledescription=\"slide\"\n              aria-label={`${i + 1} of ${items.length}`}\n              className=\"shrink-0\"\n              style={{ width: w * slideWidth || `${slideWidth * 100}%` }}\n              animate={{ scale: i === index ? 1 : 0.94, opacity: i === index ? 1 : 0.55 }}\n              transition={spring.smooth}\n            >\n              {item}\n            </motion.div>\n          ))}\n        </motion.div>\n      </div>\n      <div className=\"mt-4 flex items-center justify-between\">\n        <div className=\"flex gap-1.5\">\n          {items.map((_, i) => (\n            <button key={i} onClick={() => go(i)} aria-label={`Go to slide ${i + 1}`} aria-current={i === index} className=\"relative h-1.5 overflow-hidden rounded-full bg-muted-foreground/25 transition-[width] duration-300\" style={{ width: i === index ? 24 : 6 }}>\n              {i === index && <motion.span layoutId={`${dotId}-dot`} className=\"absolute inset-0 rounded-full bg-foreground\" />}\n            </button>\n          ))}\n        </div>\n        <div className=\"flex gap-2\">\n          <button onClick={() => go(index - 1)} disabled={index === 0} aria-label=\"Previous slide\" className=\"grid size-9 place-items-center rounded-full border border-border hover:bg-accent disabled:opacity-40\"><ChevronLeft className=\"size-4\" /></button>\n          <button onClick={() => go(index + 1)} disabled={index === items.length - 1} aria-label=\"Next slide\" className=\"grid size-9 place-items-center rounded-full border border-border hover:bg-accent disabled:opacity-40\"><ChevronRight className=\"size-4\" /></button>\n        </div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "carousel",
+      "slider",
+      "drag",
+      "gallery",
+      "inertia"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "portfolio",
+      "landing"
+    ]
+  }
+}

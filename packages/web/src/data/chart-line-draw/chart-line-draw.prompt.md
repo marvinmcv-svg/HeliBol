@@ -1,0 +1,1 @@
+Build a dependency-free animated line chart in SVG: compute points, a cubic-bezier smoothed path (control points at x midpoints), and an area path closed to the baseline. On first view the line draws (pathLength 0→1, 1.6s expo-out), then the gradient area fades in. Invisible per-point hit rects show a spring-sized marker and a tooltip on hover. aria-label summarizes the data.

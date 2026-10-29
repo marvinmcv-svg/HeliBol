@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-noise",
+  "type": "registry:component",
+  "title": "Film Grain",
+  "description": "An SVG feTurbulence grain overlay that jitters in steps like film — instantly makes flat gradients feel tactile and kills banding.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-noise.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-noise.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nexport interface BgNoiseProps {\n  children?: ReactNode;\n  opacity?: number;\n  /** Animate the grain like film (steps, not smooth). */\n  animated?: boolean;\n  className?: string;\n}\n\nconst noise = `url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1.2 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")`;\n\nconst css = `\n@keyframes k-grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-5%,3%)}40%{transform:translate(4%,-6%)}60%{transform:translate(-3%,7%)}80%{transform:translate(6%,2%)}}\n.k-grain{animation:k-grain .6s steps(1) infinite}\n@media (prefers-reduced-motion:reduce){.k-grain{animation:none}}\n[data-reduce-motion] .k-grain{animation:none}`;\n\nexport function BgNoise({ children, opacity = 0.18, animated = true, className }: BgNoiseProps) {\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)}>\n      <style href=\"k-grain\" precedence=\"kinetik\">{css}</style>\n      {children}\n      <div aria-hidden className={cn(\"pointer-events-none absolute -inset-[20%] mix-blend-overlay\", animated && \"k-grain\")} style={{ backgroundImage: noise, opacity }} />\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "noise",
+      "grain",
+      "texture",
+      "gradient",
+      "css-only"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

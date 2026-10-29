@@ -1,0 +1,1 @@
+Build a progress bar: determinate fill uses `scale: value/100 1` from a left origin with a 600ms expo-out transition (never animate width); optional 45° stripes moving via background-position; indeterminate mode slides a 40% segment from -100% to 250% on loop. role=progressbar with aria values; color = currentColor.

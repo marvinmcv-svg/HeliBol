@@ -1,0 +1,1 @@
+Build a bottom-sheet drawer with Motion: slides in from y 100% with a heavy spring (200/40/1.5), `drag="y"` started only from a grab handle via `useDragControls`, constraints top/bottom 0 with elastic {top: .05, bottom: .9}; on drag end dismiss if offset > 120px or velocity > 500. Backdrop fades; Esc closes; focus moves in and is restored.

@@ -1,0 +1,1 @@
+Build a checkout: left card = 3-step form stepper (shipping, payment, review) with floating-label inputs; right = order summary with thumbnails. Finish swaps to a success view with a drawn checkmark and a 40-piece confetti burst (deterministic x spread, arc up then fall, spin, fade).

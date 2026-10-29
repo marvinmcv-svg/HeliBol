@@ -1,0 +1,1 @@
+Build a fullscreen menu: three hamburger lines spring into an X (top/bottom rotate ±45° to center, middle scales to 0). The overlay opens with `clip-path: circle(0% → 150% at the button)` over 700ms expo-out; links slide up from `overflow-hidden` masks with a 100ms stagger; closing reverses links quickly then shrinks the circle. Esc closes.

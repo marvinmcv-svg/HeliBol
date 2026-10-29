@@ -1,0 +1,1 @@
+Create an image reveal: wrapper starts at `clip-path: inset(100% 0 0 0)` (or left/center variants) and transitions to `inset(0)` over 1.1s with `cubic-bezier(.77,0,.18,1)` when it enters view, while the inner img scales 1.25→1 over 1.6s expo-out. IntersectionObserver sets data-in; reduced motion shows it immediately.

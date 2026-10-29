@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spotlight",
+  "type": "registry:component",
+  "title": "Cursor Spotlight",
+  "description": "A soft radial light follows the pointer across a section — fades in on enter, out on leave.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/spotlight.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/spotlight.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface SpotlightProps {\n  children: ReactNode;\n  /** Radius of the light in px. */\n  size?: number;\n  color?: string;\n  className?: string;\n}\n\n/** A soft light that follows the pointer across a section. Writes CSS variables — no React re-renders. */\nexport function Spotlight({ children, size = 420, color = \"rgb(168 85 247 / .22)\", className }: SpotlightProps) {\n  const ref = useRef<HTMLDivElement>(null);\n  const onMove = (e: React.PointerEvent) => {\n    const el = ref.current;\n    if (!el || e.pointerType === \"touch\") return;\n    const r = el.getBoundingClientRect();\n    el.style.setProperty(\"--k-x\", `${e.clientX - r.left}px`);\n    el.style.setProperty(\"--k-y\", `${e.clientY - r.top}px`);\n    el.style.setProperty(\"--k-o\", \"1\");\n  };\n  return (\n    <div\n      ref={ref}\n      onPointerMove={onMove}\n      onPointerLeave={() => ref.current?.style.setProperty(\"--k-o\", \"0\")}\n      className={cn(\"relative isolate overflow-hidden\", className)}\n    >\n      <div\n        aria-hidden\n        className=\"pointer-events-none absolute inset-0 -z-10 transition-opacity duration-500 motion-reduce:hidden\"\n        style={{ opacity: \"var(--k-o, 0)\", background: `radial-gradient(${size}px circle at var(--k-x, 50%) var(--k-y, 50%), ${color}, transparent 70%)` }}\n      />\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "cursor",
+      "spotlight",
+      "hero",
+      "glow",
+      "pointer"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing"
+    ]
+  }
+}

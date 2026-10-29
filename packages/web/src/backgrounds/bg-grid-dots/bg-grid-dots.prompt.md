@@ -1,0 +1,1 @@
+Create a background pattern component: dots via `radial-gradient(circle at 1px 1px, color 1px, transparent 0)` or grid via two 1px linear-gradients, sized by a `size` prop, with color derived from the foreground (`color-mix(... 12%, transparent)`), an optional radial vignette mask, and an optional pan keyframe that shifts background-position by one cell.

@@ -1,0 +1,1 @@
+Build a two-column FAQ section: left column H2 with one word getting a marker highlight on view plus a help line; right column a smooth accordion (height auto, rotating plus icon) with five Q&As, first one open.

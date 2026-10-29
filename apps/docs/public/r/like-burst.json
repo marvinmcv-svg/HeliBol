@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "like-burst",
+  "type": "registry:component",
+  "title": "Like Burst",
+  "description": "Twitter-style heart: squash-and-pop, an expanding ring, a confetti of particles and a rolling counter.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/like-burst.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/like-burst.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface LikeBurstProps {\n  liked?: boolean;\n  onChange?: (liked: boolean) => void;\n  count?: number;\n  color?: string;\n  className?: string;\n}\n\nconst PARTICLES = 10;\n\nexport function LikeBurst({ liked: controlled, onChange, count, color = \"#f43f5e\", className }: LikeBurstProps) {\n  const [internal, setInternal] = useState(false);\n  const [burst, setBurst] = useState(0);\n  const liked = controlled ?? internal;\n  const reduced = useReducedMotion();\n\n  const toggle = () => {\n    const next = !liked;\n    if (controlled === undefined) setInternal(next);\n    onChange?.(next);\n    if (next) setBurst((b) => b + 1);\n  };\n\n  const shown = count !== undefined ? count + (controlled === undefined && liked ? 1 : 0) : undefined;\n\n  return (\n    <button\n      onClick={toggle}\n      aria-pressed={liked}\n      aria-label={liked ? \"Unlike\" : \"Like\"}\n      className={cn(\"group relative inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring\", className)}\n    >\n      <span className=\"relative grid size-7 place-items-center\">\n        <AnimatePresence>\n          {liked && !reduced && (\n            <motion.span key={`ring-${burst}`} className=\"absolute inset-0 rounded-full border-2\" style={{ borderColor: color }} initial={{ scale: 0.2, opacity: 1 }} animate={{ scale: 1.8, opacity: 0, borderWidth: 0 }} transition={{ duration: 0.5 }} />\n          )}\n          {liked && !reduced &&\n            Array.from({ length: PARTICLES }, (_, i) => {\n              const a = (i / PARTICLES) * Math.PI * 2;\n              return (\n                <motion.span\n                  key={`p-${burst}-${i}`}\n                  className=\"absolute size-1.5 rounded-full\"\n                  style={{ background: i % 2 ? color : \"#fbbf24\" }}\n                  initial={{ x: 0, y: 0, scale: 1, opacity: 1 }}\n                  animate={{ x: Math.cos(a) * 22, y: Math.sin(a) * 22, scale: 0, opacity: 0 }}\n                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}\n                />\n              );\n            })}\n        </AnimatePresence>\n        <motion.svg\n          viewBox=\"0 0 24 24\"\n          className=\"relative size-6\"\n          animate={liked && !reduced ? { scale: [1, 0.6, 1.25, 1] } : { scale: 1 }}\n          transition={liked ? { duration: 0.45, times: [0, 0.15, 0.6, 1] } : spring.snappy}\n          whileTap={{ scale: 0.85 }}\n        >\n          <path\n            d=\"M12 21s-7.5-4.6-9.6-9.3C1 8.5 3 4.5 6.9 4.5c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.9 0 5.9 4 4.5 7.2C19.5 16.4 12 21 12 21Z\"\n            fill={liked ? color : \"transparent\"}\n            stroke={liked ? color : \"currentColor\"}\n            strokeWidth=\"1.8\"\n            className=\"transition-[fill,stroke] duration-150\"\n          />\n        </motion.svg>\n      </span>\n      {shown !== undefined && (\n        <span className=\"relative h-5 overflow-hidden tabular-nums\">\n          <AnimatePresence mode=\"popLayout\" initial={false}>\n            <motion.span key={shown} className=\"block\" initial={{ y: liked ? 16 : -16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: liked ? -16 : 16, opacity: 0 }} transition={spring.snappy}>\n              {shown.toLocaleString()}\n            </motion.span>\n          </AnimatePresence>\n        </span>\n      )}\n    </button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "like",
+      "heart",
+      "social",
+      "particles",
+      "delight"
+    ],
+    "pageTypes": [
+      "blog",
+      "ecommerce",
+      "portfolio"
+    ]
+  }
+}

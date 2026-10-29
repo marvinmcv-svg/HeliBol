@@ -1,0 +1,1 @@
+Build an async button that morphs through idle → loading (spinner only, circular) → success (green, check + label) or error (red, X + label, horizontal shake) and back to idle. Use Motion `layout` on the button for the width change (spring 260/30) and `AnimatePresence mode="popLayout"` to blur-slide the label between states. Add aria-busy and aria-live.

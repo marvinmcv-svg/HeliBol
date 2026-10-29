@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flow-onboarding",
+  "type": "registry:block",
+  "title": "Onboarding Pager",
+  "description": "Swipeable 3-page onboarding: pages slide with a spring, hero images parallax and settle, the dot indicator stretches, and the CTA morphs into “Get started”.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/flow-onboarding.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/flow-onboarding.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion, type PanInfo } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { haptic } from \"@/components/kinetik/phone\" /* demo frame + haptic() stand-in */;\n\nconst pages = [\n  { title: \"Motion that means something\", body: \"Every animation explains a change — never decoration for its own sake.\", img: \"/demo/photo-6.jpg\", tint: \"from-violet-600/0 via-violet-950/60 to-violet-950\" },\n  { title: \"Same springs, every platform\", body: \"Web and native share one token system, so your brand feels identical.\", img: \"/demo/photo-2.jpg\", tint: \"from-indigo-600/0 via-indigo-950/60 to-indigo-950\" },\n  { title: \"Accessible by default\", body: \"Reduced motion is designed, not bolted on. Everyone gets a great experience.\", img: \"/demo/photo-4.jpg\", tint: \"from-emerald-600/0 via-emerald-950/60 to-emerald-950\" },\n];\n\nexport function FlowOnboarding({ initialStep = 0 }: { initialStep?: number }) {\n  const [[i, dir], set] = useState<[number, number]>([initialStep, 1]);\n  const go = (n: number) => {\n    if (n < 0 || n >= pages.length) return;\n    haptic(\"light\");\n    set([n, n > i ? 1 : -1]);\n  };\n  const onDragEnd = (_: unknown, info: PanInfo) => {\n    if (info.offset.x < -60 || info.velocity.x < -400) go(i + 1);\n    else if (info.offset.x > 60 || info.velocity.x > 400) go(i - 1);\n  };\n  const p = pages[i];\n  return (\n    <div className=\"relative h-full overflow-hidden bg-black text-white\">\n      <AnimatePresence initial={false} custom={dir}>\n        <motion.div\n          key={i}\n          custom={dir}\n          className=\"absolute inset-0\"\n          variants={{ enter: (d: number) => ({ x: `${d * 100}%` }), center: { x: 0 }, exit: (d: number) => ({ x: `${d * -35}%`, opacity: 0.4 }) }}\n          initial=\"enter\"\n          animate=\"center\"\n          exit=\"exit\"\n          transition={spring.smooth}\n          drag=\"x\"\n          dragConstraints={{ left: 0, right: 0 }}\n          dragElastic={0.25}\n          onDragEnd={onDragEnd}\n        >\n          {/* parallax: image moves slower than the page */}\n          <motion.img src={p.img} alt=\"\" draggable={false} className=\"absolute inset-0 h-[70%] w-full object-cover\" initial={{ scale: 1.25, x: dir * 40 }} animate={{ scale: 1.05, x: 0 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} />\n          <div className={`absolute inset-0 bg-gradient-to-b ${p.tint}`} />\n          <div className=\"absolute inset-x-0 bottom-36 px-7\">\n            <motion.h2 className=\"text-[28px] leading-tight font-semibold tracking-tight\" initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.12, ...spring.gentle }}>{p.title}</motion.h2>\n            <motion.p className=\"mt-3 text-[15px] text-white/70\" initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2, ...spring.gentle }}>{p.body}</motion.p>\n          </div>\n        </motion.div>\n      </AnimatePresence>\n      <div className=\"absolute inset-x-0 bottom-10 flex items-center justify-between px-7\">\n        <div className=\"flex gap-1.5\" role=\"tablist\" aria-label=\"Onboarding pages\">\n          {pages.map((_, n) => (\n            <motion.button key={n} role=\"tab\" aria-selected={n === i} aria-label={`Page ${n + 1}`} onClick={() => go(n)} className=\"h-2 rounded-full bg-white\" animate={{ width: n === i ? 24 : 8, opacity: n === i ? 1 : 0.35 }} transition={spring.snappy} />\n          ))}\n        </div>\n        <motion.button layout onClick={() => (i === pages.length - 1 ? haptic(\"success\") : go(i + 1))} whileTap={{ scale: 0.94 }} transition={spring.smooth} className=\"h-12 overflow-hidden rounded-full bg-white px-5 text-sm font-semibold text-black\">\n          <AnimatePresence mode=\"popLayout\" initial={false}>\n            <motion.span key={i === pages.length - 1 ? \"go\" : \"next\"} className=\"block\" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -20, opacity: 0 }}>\n              {i === pages.length - 1 ? \"Get started\" : \"Next →\"}\n            </motion.span>\n          </AnimatePresence>\n        </motion.button>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "onboarding",
+      "pager",
+      "swipe",
+      "mobile",
+      "intro"
+    ],
+    "pageTypes": [
+      "onboarding"
+    ]
+  }
+}

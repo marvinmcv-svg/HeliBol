@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flow-profile-settings",
+  "type": "registry:block",
+  "title": "Profile & Settings",
+  "description": "iOS-style profile: the avatar shrinks and the large title hands off to a compact blurred header as you scroll; spring toggles with haptics.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/flow-profile-settings.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/flow-profile-settings.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { motion, useScroll, useTransform } from \"motion/react\";\nimport { Bell, ChevronRight, Lock, Moon, Sparkles, Vibrate } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { haptic } from \"@/components/kinetik/phone\" /* demo frame + haptic() stand-in */;\n\nfunction Toggle({ on, onChange }: { on: boolean; onChange: () => void }) {\n  return (\n    <button role=\"switch\" aria-checked={on} onClick={() => { haptic(); onChange(); }} className={cn(\"flex h-[30px] w-[50px] rounded-full p-0.5 transition-colors\", on ? \"justify-end bg-emerald-500\" : \"justify-start bg-zinc-300\")}>\n      <motion.span layout transition={spring.snappy} className=\"size-[26px] rounded-full bg-white shadow\" />\n    </button>\n  );\n}\n\nexport function FlowProfileSettings({ initialStep = 0 }: { initialStep?: number }) {\n  const scroller = useRef<HTMLDivElement>(null);\n  const { scrollY } = useScroll({ container: scroller });\n  const avatar = useTransform(scrollY, [0, 120], [1, 0.4]);\n  const avatarY = useTransform(scrollY, [0, 120], [0, -30]);\n  const bigTitle = useTransform(scrollY, [40, 110], [1, 0]);\n  const smallTitle = useTransform(scrollY, [90, 130], [0, 1]);\n  const headerBg = useTransform(scrollY, [90, 130], [\"rgb(244 244 245 / 0)\", \"rgb(244 244 245 / .9)\"]);\n  const [prefs, setPrefs] = useState({ notif: true, haptics: true, dark: initialStep === 1, reduce: false });\n  const flip = (k: keyof typeof prefs) => setPrefs((p) => ({ ...p, [k]: !p[k] }));\n\n  const rows: [keyof typeof prefs, string, typeof Bell, string][] = [\n    [\"notif\", \"Notifications\", Bell, \"#ef4444\"],\n    [\"haptics\", \"Haptics\", Vibrate, \"#8b5cf6\"],\n    [\"dark\", \"Dark mode\", Moon, \"#0ea5e9\"],\n    [\"reduce\", \"Reduce motion\", Sparkles, \"#f59e0b\"],\n  ];\n\n  return (\n    <div className=\"relative h-full bg-zinc-100 text-zinc-900\">\n      <motion.div style={{ backgroundColor: headerBg }} className=\"absolute inset-x-0 top-0 z-20 flex h-[88px] items-end justify-center pb-2.5 backdrop-blur\">\n        <motion.span style={{ opacity: smallTitle }} className=\"text-[15px] font-semibold\">Ava Lin</motion.span>\n      </motion.div>\n      <div ref={scroller} className=\"h-full overflow-y-auto pt-16 pb-10\">\n        <div className=\"flex flex-col items-center pt-4\">\n          <motion.img src=\"/demo/photo-8.jpg\" alt=\"\" style={{ scale: avatar, y: avatarY }} className=\"size-24 rounded-full object-cover ring-4 ring-white\" />\n          <motion.div style={{ opacity: bigTitle }} className=\"mt-3 text-center\">\n            <h2 className=\"text-2xl font-semibold\">Ava Lin</h2>\n            <p className=\"text-sm text-zinc-500\">Design Engineer · Pro</p>\n          </motion.div>\n        </div>\n        <p className=\"mt-6 px-8 text-xs font-medium tracking-wide text-zinc-500 uppercase\">Preferences</p>\n        <div className=\"mx-4 mt-2 divide-y divide-zinc-200 overflow-hidden rounded-2xl bg-white\">\n          {rows.map(([k, label, Icon, color]) => (\n            <div key={k} className=\"flex items-center gap-3 px-3.5 py-2.5\">\n              <span className=\"grid size-8 place-items-center rounded-lg text-white\" style={{ background: color }}><Icon className=\"size-4\" /></span>\n              <span className=\"flex-1 text-[15px]\">{label}</span>\n              <Toggle on={prefs[k]} onChange={() => flip(k)} />\n            </div>\n          ))}\n        </div>\n        <p className=\"mt-6 px-8 text-xs font-medium tracking-wide text-zinc-500 uppercase\">Account</p>\n        <div className=\"mx-4 mt-2 divide-y divide-zinc-200 overflow-hidden rounded-2xl bg-white\">\n          {[\"Subscription\", \"Privacy & data\", \"Connected apps\", \"Export motion tokens\", \"Help center\", \"About\"].map((l) => (\n            <motion.button key={l} whileTap={{ backgroundColor: \"rgb(228 228 231)\" }} className=\"flex w-full items-center gap-3 px-3.5 py-3.5 text-left text-[15px]\">\n              <span className=\"grid size-8 place-items-center rounded-lg bg-zinc-200\"><Lock className=\"size-4 text-zinc-600\" /></span>\n              <span className=\"flex-1\">{l}</span>\n              <ChevronRight className=\"size-4 text-zinc-400\" />\n            </motion.button>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "settings",
+      "profile",
+      "collapsing header",
+      "toggles",
+      "mobile"
+    ],
+    "pageTypes": [
+      "settings"
+    ]
+  }
+}

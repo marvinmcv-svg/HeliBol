@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flow-checkout",
+  "type": "registry:block",
+  "title": "Swipe-to-Pay Checkout",
+  "description": "Mobile bag with rolling quantity stepper and a swipe-to-pay slider that fills green, snaps home if released early, and lands on a spinning success badge.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/flow-checkout.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/flow-checkout.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { animate, AnimatePresence, motion, useMotionValue, useTransform } from \"motion/react\";\nimport { ChevronRight, Minus, Plus } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { haptic } from \"@/components/kinetik/phone\" /* demo frame + haptic() stand-in */;\n\nfunction SwipeToPay({ onDone, label }: { onDone: () => void; label: string }) {\n  const track = useRef<HTMLDivElement>(null);\n  const x = useMotionValue(0);\n  const max = () => (track.current?.offsetWidth ?? 280) - 56;\n  const fill = useTransform(x, (v) => v + 56);\n  const textOpacity = useTransform(x, [0, 120], [1, 0]);\n  return (\n    <div ref={track} className=\"relative h-14 overflow-hidden rounded-full bg-zinc-900 text-white\">\n      <motion.div className=\"absolute inset-y-0 left-0 rounded-full bg-emerald-500\" style={{ width: fill }} />\n      <motion.span style={{ opacity: textOpacity }} className=\"absolute inset-0 grid place-items-center text-sm font-semibold\">{label}</motion.span>\n      <motion.button\n        aria-label={label}\n        onClick={() => { haptic(\"success\"); onDone(); }}\n        drag=\"x\"\n        dragConstraints={track}\n        dragElastic={0}\n        dragMomentum={false}\n        style={{ x }}\n        onDragEnd={() => {\n          if (x.get() > max() * 0.85) {\n            animate(x, max(), spring.snappy);\n            haptic(\"success\");\n            setTimeout(onDone, 250);\n          } else animate(x, 0, spring.bouncy);\n        }}\n        className=\"absolute top-1 left-1 z-10 grid size-12 cursor-grab place-items-center rounded-full bg-white text-zinc-900 active:cursor-grabbing\"\n      >\n        <ChevronRight className=\"size-5\" />\n      </motion.button>\n    </div>\n  );\n}\n\nexport function FlowCheckout({ initialStep = 0 }: { initialStep?: number }) {\n  const [qty, setQty] = useState(1);\n  const [paid, setPaid] = useState(initialStep === 2);\n  const total = 64 * qty + 8;\n  return (\n    <div className=\"flex h-full flex-col bg-zinc-50 px-5 pt-14 pb-8 text-zinc-900\">\n      <AnimatePresence mode=\"wait\">\n        {paid ? (\n          <motion.div key=\"ok\" className=\"flex flex-1 flex-col items-center justify-center text-center\" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>\n            <motion.div className=\"grid size-24 place-items-center rounded-full bg-emerald-500 text-4xl text-white\" initial={{ scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} transition={spring.bouncy}>✓</motion.div>\n            <h2 className=\"mt-5 text-2xl font-semibold\">Paid ${total}</h2>\n            <p className=\"text-sm text-zinc-500\">Arriving Tuesday · Order #2048</p>\n            <button onClick={() => setPaid(false)} className=\"mt-6 text-xs text-zinc-400\">Restart demo</button>\n          </motion.div>\n        ) : (\n          <motion.div key=\"cart\" className=\"flex flex-1 flex-col\" exit={{ opacity: 0, y: -20 }}>\n            <h2 className=\"text-2xl font-semibold tracking-tight\">Your bag</h2>\n            <motion.div layout className=\"mt-5 flex gap-3 rounded-3xl bg-white p-3 shadow-sm\">\n              <img src=\"/demo/photo-6.jpg\" alt=\"\" className=\"size-24 rounded-2xl object-cover\" />\n              <div className=\"flex flex-1 flex-col\">\n                <p className=\"font-semibold\">Aurora Print</p>\n                <p className=\"text-xs text-zinc-500\">A3 · Matte</p>\n                <div className=\"mt-auto flex items-center justify-between\">\n                  <p className=\"font-semibold tabular-nums\">${64 * qty}</p>\n                  <div className=\"flex items-center gap-2 rounded-full bg-zinc-100 p-1\">\n                    <motion.button whileTap={{ scale: 0.85 }} onClick={() => { setQty((q) => Math.max(1, q - 1)); haptic(); }} aria-label=\"Decrease\" className=\"grid size-7 place-items-center rounded-full bg-white\"><Minus className=\"size-3.5\" /></motion.button>\n                    <span className=\"relative w-4 overflow-hidden text-center text-sm font-semibold tabular-nums\">\n                      <AnimatePresence mode=\"popLayout\" initial={false}><motion.span key={qty} className=\"block\" initial={{ y: 14, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -14, opacity: 0 }} transition={spring.snappy}>{qty}</motion.span></AnimatePresence>\n                    </span>\n                    <motion.button whileTap={{ scale: 0.85 }} onClick={() => { setQty((q) => Math.min(9, q + 1)); haptic(); }} aria-label=\"Increase\" className=\"grid size-7 place-items-center rounded-full bg-white\"><Plus className=\"size-3.5\" /></motion.button>\n                  </div>\n                </div>\n              </div>\n            </motion.div>\n            <dl className=\"mt-5 space-y-2 text-sm\">\n              <div className=\"flex justify-between text-zinc-500\"><dt>Subtotal</dt><dd className=\"tabular-nums\">${64 * qty}</dd></div>\n              <div className=\"flex justify-between text-zinc-500\"><dt>Shipping</dt><dd>$8</dd></div>\n              <div className=\"flex justify-between border-t border-zinc-200 pt-2 text-base font-semibold\"><dt>Total</dt><dd className=\"tabular-nums\">${total}</dd></div>\n            </dl>\n            <div className=\"mt-auto\"><SwipeToPay label={`Swipe to pay $${total}`} onDone={() => setPaid(true)} /></div>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "checkout",
+      "swipe to pay",
+      "cart",
+      "ecommerce",
+      "mobile"
+    ],
+    "pageTypes": [
+      "ecommerce"
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "number-ticker",
+  "type": "registry:component",
+  "title": "Number Ticker",
+  "description": "Counts up to a value when it scrolls into view, with locale-aware formatting, decimals, prefix and suffix.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/number-ticker.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/number-ticker.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef } from \"react\";\nimport { animate, useInView, useMotionValue, useMotionValueEvent } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\nimport { durationS, easeBezier } from \"@/lib/kinetik/tokens\";\n\nexport interface NumberTickerProps {\n  value: number;\n  from?: number;\n  duration?: number;\n  delay?: number;\n  decimals?: number;\n  locale?: string;\n  prefix?: string;\n  suffix?: string;\n  format?: Intl.NumberFormatOptions;\n  className?: string;\n}\n\nexport function NumberTicker({\n  value,\n  from = 0,\n  duration = durationS.cinematic * 1.5,\n  delay = 0,\n  decimals = 0,\n  locale,\n  prefix = \"\",\n  suffix = \"\",\n  format,\n  className,\n}: NumberTickerProps) {\n  const ref = useRef<HTMLSpanElement>(null);\n  const inView = useInView(ref, { once: true, amount: 0.6 });\n  const reduced = useReducedMotion();\n  const mv = useMotionValue(from);\n  const fmt = new Intl.NumberFormat(locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals, ...format });\n\n  useMotionValueEvent(mv, \"change\", (v) => {\n    if (ref.current) ref.current.textContent = prefix + fmt.format(v) + suffix;\n  });\n\n  useEffect(() => {\n    if (!inView) return;\n    if (reduced) {\n      mv.jump(value);\n      return;\n    }\n    const controls = animate(mv, value, { duration, delay, ease: easeBezier.expoOut });\n    return () => controls.stop();\n  }, [inView, value, reduced, duration, delay, mv]);\n\n  return (\n    <span ref={ref} className={cn(\"inline-block tabular-nums\", className)}>\n      {prefix + fmt.format(reduced ? value : from) + suffix}\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "stats",
+      "kpi",
+      "counter",
+      "pricing"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing",
+      "dashboard"
+    ]
+  }
+}

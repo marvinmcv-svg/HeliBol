@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-press",
+  "type": "registry:component",
+  "title": "Press Button",
+  "description": "The foundation button: 2px hover lift, 0.97 press squash, layered shadow and a crisp focus ring. CSS only.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-press.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-press.tsx",
+      "content": "import type { ButtonHTMLAttributes } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nexport interface ButtonPressProps extends ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: \"primary\" | \"secondary\" | \"ghost\";\n  size?: \"sm\" | \"md\" | \"lg\";\n}\n\n/** The base button every kinetik button builds on: hover lift, press squash, crisp focus ring. */\nexport function ButtonPress({ variant = \"primary\", size = \"md\", className, ...props }: ButtonPressProps) {\n  return (\n    <button\n      className={cn(\n        \"inline-flex select-none items-center justify-center gap-2 rounded-xl font-medium outline-none\",\n        \"transition-[translate,scale,box-shadow,background-color] duration-150 ease-[cubic-bezier(.2,0,0,1)]\",\n        \"hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] active:duration-100\",\n        \"focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background\",\n        \"disabled:pointer-events-none disabled:opacity-50 motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100\",\n        variant === \"primary\" && \"bg-primary text-primary-foreground shadow-[0_1px_2px_rgb(0_0_0/.2),inset_0_1px_0_rgb(255_255_255/.12)] hover:shadow-lg hover:shadow-primary/20\",\n        variant === \"secondary\" && \"border border-border bg-card text-foreground shadow-sm hover:shadow-md\",\n        variant === \"ghost\" && \"text-foreground hover:bg-accent\",\n        size === \"sm\" && \"h-8 px-3 text-xs\",\n        size === \"md\" && \"h-10 px-4 text-sm\",\n        size === \"lg\" && \"h-12 px-6 text-base\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "button",
+      "cta",
+      "press",
+      "css-only",
+      "foundation"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing",
+      "auth",
+      "dashboard",
+      "settings"
+    ]
+  }
+}

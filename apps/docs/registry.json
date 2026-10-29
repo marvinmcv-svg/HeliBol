@@ -1,0 +1,3276 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kinetik",
+  "homepage": "https://kinetik.dev",
+  "items": [
+    {
+      "name": "kinetik-core",
+      "type": "registry:lib",
+      "title": "kinetik core",
+      "description": "Motion tokens (durations, easings, springs) and hooks (useReducedMotion, useInView, cn…).",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "files": [
+        {
+          "path": "lib/kinetik/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/kinetik/utils.ts"
+        },
+        {
+          "path": "lib/kinetik/core.ts",
+          "type": "registry:lib",
+          "target": "lib/kinetik/core.ts"
+        },
+        {
+          "path": "lib/kinetik/tokens.ts",
+          "type": "registry:lib",
+          "target": "lib/kinetik/tokens.ts"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "canvas-3d-shell",
+      "type": "registry:component",
+      "title": "3D Canvas Shell",
+      "description": "A production-ready React Three Fiber canvas: clamped DPR, pauses off-screen and in background tabs, reduced-motion aware, lazy-loadable.",
+      "dependencies": [
+        "three",
+        "@react-three/fiber",
+        "@react-three/drei"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "3d"
+      ],
+      "meta": {
+        "engine": "r3f",
+        "tags": [
+          "3d",
+          "webgl",
+          "three.js",
+          "r3f",
+          "hero"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/canvas-3d-shell.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/canvas-3d-shell.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "tilt-card",
+      "type": "registry:component",
+      "title": "3D Tilt Card",
+      "description": "The card rotates in 3D toward the pointer on soft springs, with a moving specular glare. Children can pop out with translateZ.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "3d",
+          "tilt",
+          "card",
+          "glare",
+          "collectible"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/tilt-card.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/tilt-card.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "animated-beam",
+      "type": "registry:component",
+      "title": "Animated Beam",
+      "description": "Light pulses travel along curved connectors between any two elements — the go-to integrations / data-flow diagram.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "integrations",
+          "diagram",
+          "beam",
+          "svg",
+          "connections"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/animated-beam.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/animated-beam.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-gradient-animated",
+      "type": "registry:component",
+      "title": "Animated Gradient Text",
+      "description": "A looping multi-stop gradient flows through the letters. Zero JavaScript.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "gradient",
+          "hero",
+          "highlight",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-gradient-animated.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-gradient-animated.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-gradient-mesh",
+      "type": "registry:component",
+      "title": "Animated Mesh Gradient",
+      "description": "Three radial color fields whose anchor points wander via animated @property percentages — a buttery mesh gradient in pure CSS.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "gradient",
+          "mesh",
+          "@property",
+          "card",
+          "hero",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-gradient-mesh.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-gradient-mesh.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "animated-tabs",
+      "type": "registry:component",
+      "title": "Animated Tabs",
+      "description": "A shared-layout indicator (pill or underline) glides between tabs while panels slide in the direction of travel.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "tabs",
+          "segmented",
+          "layoutId",
+          "navigation"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "pricing",
+          "docs",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/animated-tabs.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/animated-tabs.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-aurora",
+      "type": "registry:component",
+      "title": "Aurora Background",
+      "description": "Three heavily blurred color blobs drift on out-of-phase loops behind your hero. Pure CSS, theme-friendly.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "background",
+          "aurora",
+          "gradient",
+          "hero",
+          "ambient",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "auth",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-aurora.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-aurora.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "auto-animate-list",
+      "type": "registry:component",
+      "title": "Auto-Animate List",
+      "description": "Add, remove and shuffle items and everything animates: entries pop in, exits blur out, siblings slide into the gap.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "list",
+          "add remove",
+          "layout",
+          "product ui"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/auto-animate-list.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/auto-animate-list.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "chart-bar-grow",
+      "type": "registry:component",
+      "title": "Bar Chart Grow",
+      "description": "Bars spring up from the baseline in a left-to-right wave when the chart scrolls into view; hover reveals values.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "chart",
+          "bar",
+          "analytics",
+          "spring"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/chart-bar-grow.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/chart-bar-grow.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bento-grid",
+      "type": "registry:component",
+      "title": "Bento Grid",
+      "description": "Apple-style bento layout where each tile's visual lifts and a CTA slides in on hover or keyboard focus.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "bento",
+          "features",
+          "grid",
+          "landing",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bento-grid.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bento-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-blur-in",
+      "type": "registry:component",
+      "title": "Blur In Text",
+      "description": "Words (or characters) fade up while un-blurring, staggered — the soft, Apple-keynote style entrance.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "subtitle",
+          "soft",
+          "in-view"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-blur-in.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-blur-in.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-border-beam",
+      "type": "registry:component",
+      "title": "Border Beam Button",
+      "description": "A comet of light orbits the button's border with a soft glow trail — powered by an animated @property conic gradient.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "border",
+          "glow",
+          "announcement",
+          "badge",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-border-beam.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-border-beam.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "copy-button",
+      "type": "registry:component",
+      "title": "Copy Button",
+      "description": "Clipboard icon pops into a self-drawing checkmark, then returns. Tiny, but it's on every docs site.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "clipboard",
+          "docs",
+          "icon morph",
+          "feedback"
+        ],
+        "pageTypes": [
+          "docs",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/copy-button.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/copy-button.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "spotlight",
+      "type": "registry:component",
+      "title": "Cursor Spotlight",
+      "description": "A soft radial light follows the pointer across a section — fades in on enter, out on leave.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "cursor",
+          "spotlight",
+          "hero",
+          "glow",
+          "pointer"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/spotlight.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/spotlight.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "carousel-drag",
+      "type": "registry:component",
+      "title": "Drag Carousel",
+      "description": "Flick-able carousel with velocity-projected snapping, scaled neighbours, morphing pagination dots and button/keyboard controls.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "carousel",
+          "slider",
+          "drag",
+          "gallery",
+          "inertia"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/carousel-drag.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/carousel-drag.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "drawer-draggable",
+      "type": "registry:component",
+      "title": "Draggable Drawer",
+      "description": "Bottom sheet that follows your finger, rubber-bands upward and dismisses on distance or flick velocity — Vaul-style.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "drawer",
+          "bottom sheet",
+          "drag",
+          "mobile",
+          "vaul"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "dashboard",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/drawer-draggable.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/drawer-draggable.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "checkbox-draw",
+      "type": "registry:component",
+      "title": "Drawn Checkbox",
+      "description": "The checkmark draws itself with a stroke-dashoffset transition; optional strike-through sweeps across the label.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "checkbox",
+          "todo",
+          "form",
+          "svg",
+          "css-only"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/checkbox-draw.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/checkbox-draw.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "dynamic-island",
+      "type": "registry:component",
+      "title": "Dynamic Island",
+      "description": "A black pill that morphs between sizes — idle, incoming call, now playing, timer — with Apple's slightly bouncy spring.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "ios",
+          "morph",
+          "notification",
+          "status",
+          "apple"
+        ],
+        "pageTypes": [
+          "landing",
+          "dashboard",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/dynamic-island.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/dynamic-island.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "error-shake",
+      "type": "registry:component",
+      "title": "Error Shake",
+      "description": "The macOS login 'no' — a damped horizontal shake triggered by any changing value. Pair with color and text for accessibility.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "error",
+          "shake",
+          "validation",
+          "form",
+          "feedback"
+        ],
+        "pageTypes": [
+          "auth",
+          "settings",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/error-shake.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/error-shake.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "expandable-card",
+      "type": "registry:component",
+      "title": "Expandable Card",
+      "description": "List rows morph into a full dialog: image, title and subtitle fly into place with shared layout animations.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "layoutId",
+          "modal",
+          "shared layout",
+          "list",
+          "detail"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "portfolio",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/expandable-card.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/expandable-card.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-noise",
+      "type": "registry:component",
+      "title": "Film Grain",
+      "description": "An SVG feTurbulence grain overlay that jitters in steps like film — instantly makes flat gradients feel tactile and kills banding.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "noise",
+          "grain",
+          "texture",
+          "gradient",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-noise.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-noise.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "input-floating-label",
+      "type": "registry:component",
+      "title": "Floating Label Input",
+      "description": "Material-style floating label driven entirely by CSS (:focus and :placeholder-shown) with a center-out focus underline.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "input",
+          "form",
+          "floating label",
+          "css-only"
+        ],
+        "pageTypes": [
+          "auth",
+          "settings",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/input-floating-label.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/input-floating-label.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "form-stepper",
+      "type": "registry:component",
+      "title": "Form Stepper",
+      "description": "Multi-step form where steps slide in the direction of travel, connectors fill as you progress, and completed steps morph into checks.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "stepper",
+          "wizard",
+          "onboarding",
+          "checkout",
+          "multi-step"
+        ],
+        "pageTypes": [
+          "onboarding",
+          "ecommerce",
+          "auth"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/form-stepper.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/form-stepper.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-grid-dots",
+      "type": "registry:component",
+      "title": "Grid & Dot Pattern",
+      "description": "Dot or line grid backgrounds with a radial vignette mask and optional slow pan — the dev-tool aesthetic.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "background",
+          "grid",
+          "dots",
+          "pattern",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "docs",
+          "auth"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-grid-dots.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-grid-dots.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-hold-confirm",
+      "type": "registry:component",
+      "title": "Hold to Confirm",
+      "description": "Destructive actions require a press-and-hold: a fill wipes across the button and reverses smoothly if released early.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "destructive",
+          "confirm",
+          "delete",
+          "safety",
+          "hold"
+        ],
+        "pageTypes": [
+          "settings",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-hold-confirm.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-hold-confirm.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "horizontal-scroll-section",
+      "type": "registry:component",
+      "title": "Horizontal Scroll Section",
+      "description": "Vertical scrolling slides a pinned track sideways — the classic portfolio / case-study gallery.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "horizontal",
+          "pin",
+          "gallery",
+          "portfolio",
+          "scrolltrigger"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/horizontal-scroll-section.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/horizontal-scroll-section.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "image-reveal-mask",
+      "type": "registry:component",
+      "title": "Image Reveal Mask",
+      "description": "Images wipe in with a clip-path curtain (up, left, center-out) while the photo settles from 1.25× zoom — editorial gallery feel.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "image",
+          "reveal",
+          "clip-path",
+          "gallery",
+          "editorial"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "blog",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/image-reveal-mask.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/image-reveal-mask.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "stat-counter-grid",
+      "type": "registry:component",
+      "title": "KPI Stat Grid",
+      "description": "Dashboard KPI cards that stagger in, tick up their numbers, draw sparklines and badge the delta — all on first view.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "kpi",
+          "dashboard",
+          "stats",
+          "sparkline",
+          "analytics"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/stat-counter-grid.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/stat-counter-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "like-burst",
+      "type": "registry:component",
+      "title": "Like Burst",
+      "description": "Twitter-style heart: squash-and-pop, an expanding ring, a confetti of particles and a rolling counter.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "like",
+          "heart",
+          "social",
+          "particles",
+          "delight"
+        ],
+        "pageTypes": [
+          "blog",
+          "ecommerce",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/like-burst.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/like-burst.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "chart-line-draw",
+      "type": "registry:component",
+      "title": "Line Chart Draw",
+      "description": "A smooth bezier line draws itself on view, the gradient area fades in after, and hover springs a marker with a tooltip.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "chart",
+          "line",
+          "analytics",
+          "svg",
+          "hover"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/chart-line-draw.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/chart-line-draw.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-magnetic",
+      "type": "registry:component",
+      "title": "Magnetic Button",
+      "description": "The button leans toward the cursor on a bouncy spring, its label leaning further for parallax depth. Snaps back on leave.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "cursor",
+          "magnetic",
+          "portfolio",
+          "cta",
+          "awwwards"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-magnetic.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-magnetic.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "dock-magnify",
+      "type": "registry:component",
+      "title": "Magnifying Dock",
+      "description": "The macOS Dock: icons swell based on cursor distance with springy, interruptible physics and hover labels.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "dock",
+          "macos",
+          "magnify",
+          "toolbar",
+          "apps"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/dock-magnify.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/dock-magnify.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-highlighter",
+      "type": "registry:component",
+      "title": "Marker Highlight",
+      "description": "A highlighter-pen stroke or underline draws behind key phrases when they come into view. Wraps across lines.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "emphasis",
+          "copywriting",
+          "in-view",
+          "marker"
+        ],
+        "pageTypes": [
+          "landing",
+          "blog",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-highlighter.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-highlighter.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "marquee",
+      "type": "registry:component",
+      "title": "Marquee",
+      "description": "Seamless infinite marquee for logos and testimonials: horizontal or vertical, reverse, edge fade, pause on hover and an optional pause button.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "marquee",
+          "logos",
+          "testimonials",
+          "infinite",
+          "ticker"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/marquee.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/marquee.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-meteors",
+      "type": "registry:component",
+      "title": "Meteor Shower",
+      "description": "Shooting stars streak diagonally across a card or hero with randomized timing — deterministic so SSR matches.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "meteors",
+          "stars",
+          "space",
+          "launch",
+          "background"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-meteors.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-meteors.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "menu-toggle-morph",
+      "type": "registry:component",
+      "title": "Morphing Menu",
+      "description": "Hamburger morphs to an X while a full-screen menu circle-wipes open from the button and links rise from masks in sequence.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "menu",
+          "hamburger",
+          "fullscreen",
+          "mobile nav",
+          "clip-path"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/menu-toggle-morph.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/menu-toggle-morph.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "motion-provider",
+      "type": "registry:component",
+      "title": "Motion Provider",
+      "description": "One provider for the whole app: default spring from tokens, reduced-motion wiring and LazyMotion feature loading.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "foundations"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "provider",
+          "setup",
+          "reduced motion",
+          "bundle size"
+        ],
+        "pageTypes": [
+          "landing",
+          "dashboard",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/motion-provider.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/motion-provider.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "dialog-animated",
+      "type": "registry:component",
+      "title": "Native Animated Dialog",
+      "description": "A real <dialog> with enter and exit animations in pure CSS (@starting-style + allow-discrete), blurred backdrop and click-outside.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "dialog",
+          "modal",
+          "@starting-style",
+          "native",
+          "top layer"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings",
+          "auth"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/dialog-animated.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/dialog-animated.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "number-ticker",
+      "type": "registry:component",
+      "title": "Number Ticker",
+      "description": "Counts up to a value when it scrolls into view, with locale-aware formatting, decimals, prefix and suffix.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "stats",
+          "kpi",
+          "counter",
+          "pricing"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/number-ticker.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/number-ticker.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "otp-input",
+      "type": "registry:component",
+      "title": "OTP Input",
+      "description": "One-time-code input: digits pop into cells, a caret blinks in the active cell, wrong codes shake and clear, right codes turn green.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "otp",
+          "2fa",
+          "verification",
+          "auth",
+          "pin"
+        ],
+        "pageTypes": [
+          "auth",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/otp-input.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/otp-input.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "parallax-layer",
+      "type": "registry:component",
+      "title": "Parallax Layer",
+      "description": "Wrap anything to give it its own scroll speed. Stack several with different speeds for collage-style depth.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "parallax",
+          "depth",
+          "collage",
+          "scroll",
+          "images"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/parallax-layer.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/parallax-layer.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "password-strength",
+      "type": "registry:component",
+      "title": "Password Strength",
+      "description": "A segmented meter that springs and recolors as rules are met, with a live checklist whose checks pop in.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "password",
+          "signup",
+          "validation",
+          "meter"
+        ],
+        "pageTypes": [
+          "auth",
+          "onboarding",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/password-strength.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/password-strength.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-press",
+      "type": "registry:component",
+      "title": "Press Button",
+      "description": "The foundation button: 2px hover lift, 0.97 press squash, layered shadow and a crisp focus ring. CSS only.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "button",
+          "cta",
+          "press",
+          "css-only",
+          "foundation"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing",
+          "auth",
+          "dashboard",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-press.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-press.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "progress-bar-animated",
+      "type": "registry:component",
+      "title": "Progress Bar",
+      "description": "Determinate (springy expo-out fill, optional moving stripes) and indeterminate progress, colored with currentColor.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "loaders"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "progress",
+          "upload",
+          "loading",
+          "css-only"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "onboarding",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/progress-bar-animated.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/progress-bar-animated.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "progress-ring",
+      "type": "registry:component",
+      "title": "Progress Ring",
+      "description": "Circular progress whose arc and centered percentage spring smoothly to every new value — interruptible mid-flight.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "loaders"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "progress",
+          "ring",
+          "goal",
+          "fitness",
+          "kpi"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/progress-ring.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/progress-ring.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "transition-slide-stack",
+      "type": "registry:component",
+      "title": "Push / Pop Stack",
+      "description": "Native-feeling navigation stack for the web: new screens slide over while the previous one parallaxes 30% and dims.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "transitions"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "ios",
+          "navigation",
+          "stack",
+          "mobile web",
+          "settings"
+        ],
+        "pageTypes": [
+          "settings",
+          "onboarding",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/transition-slide-stack.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/transition-slide-stack.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "reorder-list",
+      "type": "registry:component",
+      "title": "Reorder List",
+      "description": "Drag a handle to reorder; siblings spring out of the way. Up/down buttons give a keyboard-accessible alternative.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "drag",
+          "reorder",
+          "sortable",
+          "todo",
+          "kanban"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/reorder-list.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/reorder-list.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-rotate",
+      "type": "registry:component",
+      "title": "Rotating Word",
+      "description": "A word inside a sentence rolls to the next option while its container smoothly resizes to fit — no layout jump.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "headline",
+          "rotating",
+          "layout"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-rotate.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-rotate.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-scramble",
+      "type": "registry:component",
+      "title": "Scramble Text",
+      "description": "Characters decode from random glyphs into the final string — on mount, on hover/focus, or both. Great for nav links and techy headlines.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "hover",
+          "nav",
+          "tech",
+          "decode",
+          "hacker"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-scramble.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-scramble.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-scroll-highlight",
+      "type": "registry:component",
+      "title": "Scroll Highlight Text",
+      "description": "Words light up one by one, scrubbed to scroll position — the 'read along' manifesto paragraph.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "scroll",
+          "manifesto",
+          "scrub",
+          "storytelling"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-scroll-highlight.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-scroll-highlight.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "scroll-progress",
+      "type": "registry:component",
+      "title": "Scroll Progress",
+      "description": "Reading-progress bar or ring linked to scroll with CSS scroll timelines (zero JS on modern browsers) and a passive-listener fallback.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "progress",
+          "reading",
+          "blog",
+          "scroll-driven"
+        ],
+        "pageTypes": [
+          "blog",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/scroll-progress.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/scroll-progress.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "scroll-reveal",
+      "type": "registry:component",
+      "title": "Scroll Reveal",
+      "description": "Six reveal variants (fade-up, scale, blur, slide-left/right, fade) scrubbed by native CSS scroll-driven animations, with an IntersectionObserver fallback.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "scroll",
+          "reveal",
+          "in-view",
+          "scroll-driven",
+          "sections"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio",
+          "blog",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/scroll-reveal.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/scroll-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "vt-shared-element",
+      "type": "registry:component",
+      "title": "Shared Element (View Transitions)",
+      "description": "A card's image and title morph into a detail view using the native View Transitions API — the web's answer to iOS hero transitions.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "transitions"
+      ],
+      "meta": {
+        "engine": "view-transitions",
+        "tags": [
+          "view transitions",
+          "hero",
+          "shared element",
+          "gallery",
+          "zero-dependency"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "portfolio",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/vt-shared-element.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/vt-shared-element.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-shimmer",
+      "type": "registry:component",
+      "title": "Shimmer Button",
+      "description": "A glossy light sweep crosses the CTA every few seconds, pulling the eye without being noisy.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "cta",
+          "shimmer",
+          "upgrade",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-shimmer.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-shimmer.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-shimmer",
+      "type": "registry:component",
+      "title": "Shimmer Text",
+      "description": "A light band sweeps across text — the universal 'AI is working' / loading label. Inherits your text color.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "loading",
+          "ai",
+          "status",
+          "css-only"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-shimmer.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-shimmer.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "skeleton-shimmer",
+      "type": "registry:component",
+      "title": "Skeleton Shimmer",
+      "description": "Theme-aware skeleton blocks with a soft sweeping highlight. Shape them with Tailwind classes to match your layout.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "loaders"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "skeleton",
+          "loading",
+          "placeholder",
+          "css-only"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "blog",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/skeleton-shimmer.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/skeleton-shimmer.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "navbar-hide-on-scroll",
+      "type": "registry:component",
+      "title": "Smart Navbar",
+      "description": "Full-width bar that morphs into a floating glass pill after scrolling, hides on scroll-down and reappears on scroll-up.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "navbar",
+          "header",
+          "sticky",
+          "scroll",
+          "glass"
+        ],
+        "pageTypes": [
+          "landing",
+          "blog",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/navbar-hide-on-scroll.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/navbar-hide-on-scroll.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "accordion-smooth",
+      "type": "registry:component",
+      "title": "Smooth Accordion",
+      "description": "Height-auto accordion with asymmetric easing (slow open, quick close) and a rotating plus icon.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "faq",
+          "accordion",
+          "disclosure",
+          "height auto"
+        ],
+        "pageTypes": [
+          "pricing",
+          "landing",
+          "docs",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/accordion-smooth.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/accordion-smooth.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "smooth-scroll",
+      "type": "registry:component",
+      "title": "Smooth Scroll (Lenis)",
+      "description": "Lenis provider with GSAP ticker sync, anchor links, a useLenis() hook and an optional contained mode for scrolling a panel.",
+      "dependencies": [
+        "lenis",
+        "gsap"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "foundations"
+      ],
+      "meta": {
+        "engine": "lenis",
+        "tags": [
+          "smooth scroll",
+          "lenis",
+          "provider",
+          "scrolltrigger"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/smooth-scroll.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/smooth-scroll.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "spinner-set",
+      "type": "registry:component",
+      "title": "Spinner Set",
+      "description": "Eight pure-CSS loaders — ring, dots, bars, orbit, pulse, wave, morphing square, bounce — that inherit currentColor.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "loaders"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "spinner",
+          "loader",
+          "loading",
+          "css-only"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "auth",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/spinner-set.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/spinner-set.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-split-reveal",
+      "type": "registry:component",
+      "title": "Split Text Reveal",
+      "description": "Lines, words or characters slide up from a mask as the headline enters the viewport — the signature move of award-winning editorial sites.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "hero",
+          "headline",
+          "scroll",
+          "premium",
+          "editorial"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-split-reveal.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-split-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-spotlight-border",
+      "type": "registry:component",
+      "title": "Spotlight Border Cards",
+      "description": "Card borders light up near the cursor, and the glow flows continuously across neighbouring cards in the grid.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "cards",
+          "border",
+          "glow",
+          "features",
+          "cursor"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-spotlight-border.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-spotlight-border.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "toggle-switch",
+      "type": "registry:component",
+      "title": "Spring Switch",
+      "description": "iOS-feel switch: the thumb springs across with layout animation and stretches while pressed.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "switch",
+          "toggle",
+          "settings",
+          "ios",
+          "form"
+        ],
+        "pageTypes": [
+          "settings",
+          "pricing",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/toggle-switch.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/toggle-switch.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "tooltip-animated",
+      "type": "registry:component",
+      "title": "Spring Tooltip",
+      "description": "Tooltips that spring from their anchor (origin-aware), with hover delay, instant on keyboard focus and a quick exit.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "tooltip",
+          "hint",
+          "toolbar",
+          "spring"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "docs",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/tooltip-animated.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/tooltip-animated.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-stateful",
+      "type": "registry:component",
+      "title": "Stateful Button",
+      "description": "Idle → spinner → success/error in one element. Width morphs between states with a spring; errors shake.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "async",
+          "loading",
+          "success",
+          "form",
+          "feedback"
+        ],
+        "pageTypes": [
+          "auth",
+          "ecommerce",
+          "settings",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-stateful.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-stateful.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "sticky-stack-cards",
+      "type": "registry:component",
+      "title": "Sticky Stacking Cards",
+      "description": "Cards pin as you scroll and stack on top of each other; the ones underneath shrink and dim for depth.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "sticky",
+          "stack",
+          "features",
+          "steps",
+          "scroll"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/sticky-stack-cards.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/sticky-stack-cards.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "success-check",
+      "type": "registry:component",
+      "title": "Success / Error Mark",
+      "description": "The circle draws, the check (or cross) strokes in, then the whole mark pops — the moment-of-completion signature.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "loaders"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "success",
+          "error",
+          "checkmark",
+          "payment",
+          "feedback"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "auth",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/success-check.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/success-check.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "svg-path-draw",
+      "type": "registry:component",
+      "title": "SVG Path Draw",
+      "description": "Every stroke inside an SVG draws itself — once on view, or scrubbed with scroll — with GSAP DrawSVG. Illustrations, signatures, diagrams.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "svg"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "svg",
+          "draw",
+          "line art",
+          "signature",
+          "scroll"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/svg-path-draw.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/svg-path-draw.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "theme-toggle",
+      "type": "registry:component",
+      "title": "Theme Toggle + Circle Reveal",
+      "description": "Sun morphs into a moon with springs, and the new theme expands from the button as a circle using the View Transitions API.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "view-transitions",
+        "tags": [
+          "dark mode",
+          "theme",
+          "view transitions",
+          "icon morph"
+        ],
+        "pageTypes": [
+          "landing",
+          "docs",
+          "dashboard",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/theme-toggle.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/theme-toggle.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "toast-stack",
+      "type": "registry:component",
+      "title": "Toast Stack",
+      "description": "Sonner-style stacked toasts: they pile up with depth, fan out on hover/focus and swipe away to the right.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "toast",
+          "notification",
+          "sonner",
+          "swipe",
+          "feedback"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/toast-stack.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/toast-stack.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-typewriter",
+      "type": "registry:component",
+      "title": "Typewriter",
+      "description": "Types, holds, deletes and cycles through a list of phrases with a blinking caret.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "rotating",
+          "caret",
+          "terminal"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-typewriter.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-typewriter.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-split-text",
+      "type": "registry:block",
+      "title": "Hero — Split Text + Aurora",
+      "description": "Landing hero: border-beam announcement pill, words rising from masks, blur-in subhead, shimmer CTA over a grainy aurora.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react",
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json",
+        "https://kinetik.dev/r/text-split-reveal.json",
+        "https://kinetik.dev/r/text-blur-in.json",
+        "https://kinetik.dev/r/bg-aurora.json",
+        "https://kinetik.dev/r/bg-noise.json",
+        "https://kinetik.dev/r/button-shimmer.json",
+        "https://kinetik.dev/r/button-border-beam.json",
+        "https://kinetik.dev/r/button-press.json",
+        "https://kinetik.dev/r/scroll-reveal.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "hero",
+          "landing",
+          "headline",
+          "aurora",
+          "cta"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-split-text.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/hero-split-text.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "cta-spotlight",
+      "type": "registry:block",
+      "title": "CTA — Spotlight & Meteors",
+      "description": "Closing call-to-action panel with a cursor spotlight, meteor shower, animated gradient word and a magnetic button.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json",
+        "https://kinetik.dev/r/spotlight.json",
+        "https://kinetik.dev/r/bg-meteors.json",
+        "https://kinetik.dev/r/text-gradient-animated.json",
+        "https://kinetik.dev/r/button-magnetic.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "cta",
+          "landing",
+          "spotlight",
+          "footer"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/cta-spotlight.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/cta-spotlight.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "faq-section",
+      "type": "registry:block",
+      "title": "FAQ Section",
+      "description": "Two-column FAQ: highlighted heading on the left, smooth height-auto accordion on the right.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json",
+        "https://kinetik.dev/r/accordion-smooth.json",
+        "https://kinetik.dev/r/text-highlighter.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "faq",
+          "accordion",
+          "landing",
+          "pricing"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/faq-section.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/faq-section.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "features-bento",
+      "type": "registry:block",
+      "title": "Features — Animated Bento",
+      "description": "Feature section with a bento grid whose tiles each carry a live micro-animation: beams, tickers, shimmer.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json",
+        "https://kinetik.dev/r/bento-grid.json",
+        "https://kinetik.dev/r/animated-beam.json",
+        "https://kinetik.dev/r/number-ticker.json",
+        "https://kinetik.dev/r/text-shimmer.json",
+        "https://kinetik.dev/r/scroll-reveal.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "features",
+          "bento",
+          "landing",
+          "section"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/features-bento.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/features-bento.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "social-proof-marquee",
+      "type": "registry:block",
+      "title": "Logo Cloud + Testimonial Wall",
+      "description": "Logo marquee with a pause control, then two opposite-direction testimonial marquees with faded edges.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json",
+        "https://kinetik.dev/r/marquee.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "testimonials",
+          "logos",
+          "social proof",
+          "marquee"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/social-proof-marquee.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/social-proof-marquee.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "pricing-toggle",
+      "type": "registry:block",
+      "title": "Pricing — Period Toggle",
+      "description": "Three-tier pricing with a sliding Monthly/Yearly toggle; prices roll vertically to the new value and the savings badge lights up.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json",
+        "https://kinetik.dev/r/animated-tabs.json",
+        "https://kinetik.dev/r/button-shimmer.json",
+        "https://kinetik.dev/r/button-press.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "pricing",
+          "toggle",
+          "plans",
+          "saas"
+        ],
+        "pageTypes": [
+          "pricing",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/pricing-toggle.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/pricing-toggle.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "auth-card",
+      "type": "registry:block",
+      "title": "Auth — Magic Code Sign-in",
+      "description": "Email → OTP → success in one morphing card: stateful button, shaking OTP on wrong codes, animated success mark.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json",
+        "https://kinetik.dev/r/input-floating-label.json",
+        "https://kinetik.dev/r/button-stateful.json",
+        "https://kinetik.dev/r/otp-input.json",
+        "https://kinetik.dev/r/success-check.json",
+        "https://kinetik.dev/r/bg-grid-dots.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "auth",
+          "login",
+          "otp",
+          "magic link",
+          "flow"
+        ],
+        "pageTypes": [
+          "auth"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/auth-card.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/auth-card.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "dashboard-shell",
+      "type": "registry:block",
+      "title": "Dashboard Shell",
+      "description": "Collapsible spring sidebar with a gliding active indicator, period tabs, KPI tickers with sparklines and a self-drawing chart.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json",
+        "https://kinetik.dev/r/stat-counter-grid.json",
+        "https://kinetik.dev/r/chart-line-draw.json",
+        "https://kinetik.dev/r/animated-tabs.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "dashboard",
+          "sidebar",
+          "admin",
+          "analytics",
+          "app shell"
+        ],
+        "pageTypes": [
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/dashboard-shell.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/dashboard-shell.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "checkout-steps",
+      "type": "registry:block",
+      "title": "Checkout — Stepper + Confetti",
+      "description": "Shipping → payment → review stepper beside an order summary, ending in a drawn success mark and a confetti burst.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json",
+        "https://kinetik.dev/r/form-stepper.json",
+        "https://kinetik.dev/r/input-floating-label.json",
+        "https://kinetik.dev/r/success-check.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "checkout",
+          "ecommerce",
+          "stepper",
+          "confetti",
+          "success"
+        ],
+        "pageTypes": [
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/checkout-steps.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/checkout-steps.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "not-found-playful",
+      "type": "registry:block",
+      "title": "404 — Drifting Orb",
+      "description": "A playful 404: the zero floats as a glowing orb, the message decodes itself, and the CTA is magnetic.",
+      "dependencies": [
+        "motion",
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json",
+        "https://kinetik.dev/r/text-scramble.json",
+        "https://kinetik.dev/r/button-magnetic.json",
+        "https://kinetik.dev/r/bg-grid-dots.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "404",
+          "error page",
+          "playful",
+          "empty state"
+        ],
+        "pageTypes": [
+          "landing",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/not-found-playful.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/not-found-playful.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-paywall",
+      "type": "registry:block",
+      "title": "Paywall",
+      "description": "Subscription paywall: features stagger in, plan cards share a sliding selection ring, trial switch springs, and the CTA shimmers into a success state.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "paywall",
+          "subscription",
+          "pricing",
+          "iap",
+          "mobile"
+        ],
+        "pageTypes": [
+          "pricing",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-paywall.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-paywall.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-auth",
+      "type": "registry:block",
+      "title": "Phone Sign-in",
+      "description": "Phone number → SMS code → verified, with a custom keypad, popping digits, a shake on wrong codes and a drawn success check.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "auth",
+          "otp",
+          "phone",
+          "keypad",
+          "mobile"
+        ],
+        "pageTypes": [
+          "auth",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-auth.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-auth.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-onboarding",
+      "type": "registry:block",
+      "title": "Onboarding Pager",
+      "description": "Swipeable 3-page onboarding: pages slide with a spring, hero images parallax and settle, the dot indicator stretches, and the CTA morphs into “Get started”.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "onboarding",
+          "pager",
+          "swipe",
+          "mobile",
+          "intro"
+        ],
+        "pageTypes": [
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-onboarding.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-onboarding.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-habit-check-in",
+      "type": "registry:block",
+      "title": "Habit Check-in",
+      "description": "Daily habit tracker: checking a habit bursts particles, fills the streak ring, and completing all of them extends the 🔥 streak with a celebration toast.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "habits",
+          "streak",
+          "progress ring",
+          "gamification",
+          "mobile"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-habit-check-in.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-habit-check-in.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-checkout",
+      "type": "registry:block",
+      "title": "Swipe-to-Pay Checkout",
+      "description": "Mobile bag with rolling quantity stepper and a swipe-to-pay slider that fills green, snaps home if released early, and lands on a spinning success badge.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "checkout",
+          "swipe to pay",
+          "cart",
+          "ecommerce",
+          "mobile"
+        ],
+        "pageTypes": [
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-checkout.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-checkout.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-profile-settings",
+      "type": "registry:block",
+      "title": "Profile & Settings",
+      "description": "iOS-style profile: the avatar shrinks and the large title hands off to a compact blurred header as you scroll; spring toggles with haptics.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://kinetik.dev/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "settings",
+          "profile",
+          "collapsing header",
+          "toggles",
+          "mobile"
+        ],
+        "pageTypes": [
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-profile-settings.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-profile-settings.tsx"
+        }
+      ]
+    }
+  ]
+}

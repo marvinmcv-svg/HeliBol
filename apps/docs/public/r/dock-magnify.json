@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dock-magnify",
+  "type": "registry:component",
+  "title": "Magnifying Dock",
+  "description": "The macOS Dock: icons swell based on cursor distance with springy, interruptible physics and hover labels.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/dock-magnify.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/dock-magnify.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { motion, useMotionValue, useSpring, useTransform, type MotionValue } from \"motion/react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface DockItem {\n  label: string;\n  icon: ReactNode;\n  onClick?: () => void;\n}\n\nfunction DockIcon({ item, mouseX, base, max, distance }: { item: DockItem; mouseX: MotionValue<number>; base: number; max: number; distance: number }) {\n  const ref = useRef<HTMLButtonElement>(null);\n  const d = useTransform(mouseX, (x) => {\n    const r = ref.current?.getBoundingClientRect();\n    return r ? x - r.left - r.width / 2 : Infinity;\n  });\n  const size = useSpring(useTransform(d, [-distance, 0, distance], [base, max, base]), { stiffness: 400, damping: 28, mass: 0.2 });\n  return (\n    <motion.button\n      ref={ref}\n      onClick={item.onClick}\n      aria-label={item.label}\n      style={{ width: size, height: size }}\n      whileTap={{ scale: 0.9 }}\n      className=\"group relative grid aspect-square place-items-center rounded-2xl bg-gradient-to-b from-zinc-100 to-zinc-300 text-zinc-800 shadow-md outline-none focus-visible:ring-2 focus-visible:ring-ring dark:from-zinc-700 dark:to-zinc-800 dark:text-zinc-100\"\n    >\n      <span className=\"pointer-events-none absolute -top-9 whitespace-nowrap rounded-md bg-foreground px-2 py-0.5 text-xs text-background opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100\">{item.label}</span>\n      <span className=\"grid size-1/2 place-items-center [&>svg]:size-full\">{item.icon}</span>\n    </motion.button>\n  );\n}\n\nexport function DockMagnify({ items, base = 44, max = 76, distance = 140, className }: { items: DockItem[]; base?: number; max?: number; distance?: number; className?: string }) {\n  const mouseX = useMotionValue(Infinity);\n  const off = useReducedMotion() || usePrefersTouch();\n  return (\n    <nav\n      onPointerMove={(e) => !off && mouseX.set(e.clientX)}\n      onPointerLeave={() => mouseX.set(Infinity)}\n      className={cn(\"mx-auto flex h-[68px] items-end gap-3 rounded-3xl border border-border bg-background/60 px-3 pb-3 backdrop-blur-xl\", className)}\n    >\n      {items.map((it) => <DockIcon key={it.label} item={it} mouseX={mouseX} base={base} max={off ? base : max} distance={distance} />)}\n    </nav>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "dock",
+      "macos",
+      "magnify",
+      "toolbar",
+      "apps"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "dashboard"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "features-bento",
+  "type": "registry:block",
+  "title": "Features — Animated Bento",
+  "description": "Feature section with a bento grid whose tiles each carry a live micro-animation: beams, tickers, shimmer.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json",
+    "https://kinetik.dev/r/bento-grid.json",
+    "https://kinetik.dev/r/animated-beam.json",
+    "https://kinetik.dev/r/number-ticker.json",
+    "https://kinetik.dev/r/text-shimmer.json",
+    "https://kinetik.dev/r/scroll-reveal.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/features-bento.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/features-bento.tsx",
+      "content": "\"use client\";\nimport { useRef } from \"react\";\nimport { Bot, Code2, Layers, Sparkles } from \"lucide-react\";\nimport { AnimatedBeam } from \"@/components/kinetik/animated-beam\";\nimport { BentoGrid, BentoTile } from \"@/components/kinetik/bento-grid\";\nimport { NumberTicker } from \"@/components/kinetik/number-ticker\";\nimport { TextShimmer } from \"@/components/kinetik/text-shimmer\";\nimport { ScrollReveal } from \"@/components/kinetik/scroll-reveal\";\n\nfunction BeamVisual() {\n  const c = useRef<HTMLDivElement>(null);\n  const a = useRef<HTMLDivElement>(null);\n  const b = useRef<HTMLDivElement>(null);\n  const d = useRef<HTMLDivElement>(null);\n  const node = \"z-10 grid size-11 place-items-center rounded-full border border-border bg-background shadow\";\n  return (\n    <div ref={c} className=\"relative flex h-full items-start justify-between px-10 pt-8 text-muted-foreground\">\n      <div ref={a} className={node}><Code2 className=\"size-5\" /></div>\n      <div ref={b} className={`${node} size-14`}><Sparkles className=\"size-6 text-brand\" /></div>\n      <div ref={d} className={node}><Bot className=\"size-5\" /></div>\n      <AnimatedBeam container={c} from={a} to={b} curvature={-30} />\n      <AnimatedBeam container={c} from={b} to={d} curvature={-30} delay={1.2} />\n    </div>\n  );\n}\n\nexport function FeaturesBento() {\n  return (\n    <section className=\"mx-auto max-w-5xl px-6 py-14\">\n      <ScrollReveal className=\"mb-8 text-center\">\n        <p className=\"text-sm font-medium text-brand\">Why kinetik</p>\n        <h2 className=\"mt-2 text-3xl font-semibold tracking-tight sm:text-4xl\">Everything motion, nothing to maintain.</h2>\n      </ScrollReveal>\n      <BentoGrid>\n        <BentoTile className=\"sm:col-span-2\" title=\"From registry to your agent\" description=\"Install with shadcn, or paste the AI prompt into Claude Code, Cursor or v0.\" visual={<BeamVisual />} />\n        <BentoTile title=\"Components\" description=\"And counting.\" visual={<div className=\"grid h-full place-items-center pb-10 text-6xl font-semibold tracking-tight\"><NumberTicker value={71} suffix=\"+\" /></div>} />\n        <BentoTile title=\"Engines\" description=\"CSS, Motion, GSAP, Lenis, R3F.\" visual={<div className=\"flex flex-wrap gap-1.5 p-5\">{[\"CSS\", \"Motion\", \"GSAP\", \"Lenis\", \"R3F\", \"View Transitions\"].map((e) => <span key={e} className=\"rounded-full border border-border bg-background px-2.5 py-1 text-xs\">{e}</span>)}</div>} />\n        <BentoTile className=\"sm:col-span-2\" title=\"Accessible by default\" description=\"Every animation ships a tested reduced-motion fallback.\" visual={<div className=\"grid h-full place-items-center pb-12\"><div className=\"flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm\"><Layers className=\"size-4 text-brand\" /><TextShimmer>prefers-reduced-motion: handled</TextShimmer></div></div>} />\n      </BentoGrid>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "features",
+      "bento",
+      "landing",
+      "section"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

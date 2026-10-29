@@ -1,0 +1,1 @@
+Create a button with a light beam travelling around its border: register `@property --k-beam-angle` (<angle>), paint a conic-gradient (transparent for 70%, then colorFrom → colorTo) on a `::before` with 1.5px padding masked to a ring via `mask-composite: exclude`, plus a blurred `::after` glow using the same angle, and animate the angle 0→360deg linearly. Reduced motion: static.

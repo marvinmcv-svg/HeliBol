@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bento-grid",
+  "type": "registry:component",
+  "title": "Bento Grid",
+  "description": "Apple-style bento layout where each tile's visual lifts and a CTA slides in on hover or keyboard focus.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bento-grid.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bento-grid.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nexport function BentoGrid({ children, className }: { children: ReactNode; className?: string }) {\n  return <div className={cn(\"grid auto-rows-[11rem] grid-cols-1 gap-3 sm:grid-cols-3\", className)}>{children}</div>;\n}\n\nexport interface BentoTileProps {\n  title: string;\n  description?: string;\n  /** Visual area — put a micro-animation here. */\n  visual?: ReactNode;\n  className?: string;\n}\n\n/** A tile that lifts its visual and reveals a CTA on hover/focus-within. */\nexport function BentoTile({ title, description, visual, className }: BentoTileProps) {\n  return (\n    <div\n      tabIndex={0}\n      className={cn(\n        \"group relative flex flex-col justify-end overflow-hidden rounded-3xl border border-border bg-card p-5 outline-none transition-shadow duration-300 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-ring\",\n        className,\n      )}\n    >\n      <div className=\"absolute inset-0 transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.02] group-focus-within:-translate-y-2 motion-reduce:transform-none\">\n        {visual}\n      </div>\n      <div className=\"relative transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:-translate-y-6 group-focus-within:-translate-y-6 motion-reduce:transform-none\">\n        <h3 className=\"font-semibold\">{title}</h3>\n        {description && <p className=\"mt-1 max-w-xs text-sm text-muted-foreground\">{description}</p>}\n      </div>\n      <span className=\"absolute bottom-4 left-5 translate-y-6 text-xs font-medium text-brand opacity-0 transition-all duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100\">\n        Learn more →\n      </span>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "bento",
+      "features",
+      "grid",
+      "landing",
+      "css-only"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

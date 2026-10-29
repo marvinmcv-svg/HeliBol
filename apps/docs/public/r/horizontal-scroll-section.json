@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "horizontal-scroll-section",
+  "type": "registry:component",
+  "title": "Horizontal Scroll Section",
+  "description": "Vertical scrolling slides a pinned track sideways — the classic portfolio / case-study gallery.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/horizontal-scroll-section.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/horizontal-scroll-section.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger, useGSAP);\n\nexport interface HorizontalScrollSectionProps {\n  children: ReactNode;\n  /** Scroll container (defaults to window). */\n  scroller?: RefObject<HTMLElement | null>;\n  /** Vertical scroll distance as a multiple of the viewport height. */\n  length?: number;\n  className?: string;\n  trackClassName?: string;\n}\n\n/**\n * Vertical scroll drives a horizontal track. Pinning is native `position: sticky`\n * (robust inside any scroller); GSAP ScrollTrigger scrubs the x translation.\n */\nexport function HorizontalScrollSection({ children, scroller, length = 3, className, trackClassName }: HorizontalScrollSectionProps) {\n  const section = useRef<HTMLElement>(null);\n  const track = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n\n  useGSAP(\n    () => {\n      if (reduced || !track.current) return;\n      gsap.to(track.current, {\n        x: () => -(track.current!.scrollWidth - track.current!.parentElement!.clientWidth),\n        ease: \"none\",\n        scrollTrigger: {\n          trigger: section.current,\n          scroller: scroller?.current ?? undefined,\n          start: \"top top\",\n          end: \"bottom bottom\",\n          scrub: 0.6,\n          invalidateOnRefresh: true,\n        },\n      });\n    },\n    { scope: section, dependencies: [reduced] },\n  );\n\n  if (reduced) {\n    return (\n      <section className={className}>\n        <div className={cn(\"flex snap-x snap-mandatory gap-6 overflow-x-auto p-6\", trackClassName)}>{children}</div>\n      </section>\n    );\n  }\n\n  return (\n    <section ref={section} className={cn(\"relative\", className)} style={{ height: `${length * 100}cqh` }}>\n      {/* cqh = nearest size container (a scroll panel) or the viewport when there is none */}\n      <div className=\"sticky top-0 flex h-[100cqh] items-center overflow-hidden\">\n        <div ref={track} className={cn(\"flex gap-6 px-6 will-change-transform\", trackClassName)}>\n          {children}\n        </div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "horizontal",
+      "pin",
+      "gallery",
+      "portfolio",
+      "scrolltrigger"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

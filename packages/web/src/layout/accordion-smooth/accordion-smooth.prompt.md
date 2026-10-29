@@ -1,0 +1,1 @@
+Create an FAQ accordion: panels animate `height: 0 ↔ "auto"` with Motion inside AnimatePresence — open uses 320ms expo-out with opacity delayed 50ms, close uses a faster 220ms standard ease. The plus icon rotates 45° into an ×. Use the disclosure pattern (button in heading, aria-expanded, aria-controls, role=region).

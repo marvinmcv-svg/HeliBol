@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-bar-grow",
+  "type": "registry:component",
+  "title": "Bar Chart Grow",
+  "description": "Bars spring up from the baseline in a left-to-right wave when the chart scrolls into view; hover reveals values.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/chart-bar-grow.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/chart-bar-grow.tsx",
+      "content": "\"use client\";\nimport { useRef } from \"react\";\nimport { motion, useInView } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface ChartBarGrowProps {\n  data: { label: string; value: number; highlight?: boolean }[];\n  height?: number;\n  className?: string;\n}\n\nexport function ChartBarGrow({ data, height = 200, className }: ChartBarGrowProps) {\n  const ref = useRef<HTMLDivElement>(null);\n  const inView = useInView(ref, { once: true, amount: 0.5 });\n  const max = Math.max(...data.map((d) => d.value));\n  return (\n    <div ref={ref} role=\"img\" aria-label={`Bar chart: ${data.map((d) => `${d.label} ${d.value}`).join(\", \")}`} className={cn(\"flex w-full items-end gap-2\", className)} style={{ height }}>\n      {data.map((d, i) => (\n        <div key={d.label} className=\"group flex h-full flex-1 flex-col items-center justify-end gap-2\">\n          <motion.span className=\"text-[11px] font-medium tabular-nums text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100\" aria-hidden>{d.value}</motion.span>\n          <motion.div\n            className={cn(\"w-full origin-bottom rounded-t-lg\", d.highlight ? \"bg-gradient-to-t from-violet-600 to-fuchsia-400\" : \"bg-muted-foreground/25 group-hover:bg-muted-foreground/40\")}\n            style={{ height: `${(d.value / max) * 85}%` }}\n            initial={{ scaleY: 0 }}\n            animate={{ scaleY: inView ? 1 : 0 }}\n            transition={{ type: \"spring\", stiffness: 120, damping: 16, delay: i * 0.06 }}\n          />\n          <span className=\"text-[11px] text-muted-foreground\" aria-hidden>{d.label}</span>\n        </div>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "chart",
+      "bar",
+      "analytics",
+      "spring"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "landing",
+      "pricing"
+    ]
+  }
+}

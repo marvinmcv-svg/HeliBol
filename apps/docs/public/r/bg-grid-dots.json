@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-grid-dots",
+  "type": "registry:component",
+  "title": "Grid & Dot Pattern",
+  "description": "Dot or line grid backgrounds with a radial vignette mask and optional slow pan — the dev-tool aesthetic.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-grid-dots.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-grid-dots.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nexport interface BgGridDotsProps {\n  children?: ReactNode;\n  variant?: \"dots\" | \"grid\";\n  size?: number;\n  /** Fade the pattern toward the edges with a radial mask. */\n  vignette?: boolean;\n  /** Slowly pan the pattern. */\n  animate?: boolean;\n  className?: string;\n}\n\nconst css = `\n@keyframes k-grid-pan{to{background-position:var(--k-gs) var(--k-gs)}}\n.k-grid-pan{animation:k-grid-pan 3s linear infinite}\n@media (prefers-reduced-motion:reduce){.k-grid-pan{animation:none}}\n[data-reduce-motion] .k-grid-pan{animation:none}`;\n\nexport function BgGridDots({ children, variant = \"dots\", size = 24, vignette = true, animate = false, className }: BgGridDotsProps) {\n  const line = \"color-mix(in oklab, var(--color-foreground, currentColor) 18%, transparent)\";\n  const bg =\n    variant === \"dots\"\n      ? `radial-gradient(circle at 1px 1px, ${line} 1px, transparent 0)`\n      : `linear-gradient(${line} 1px, transparent 1px), linear-gradient(90deg, ${line} 1px, transparent 1px)`;\n  return (\n    <div className={cn(\"relative isolate\", className)}>\n      <style href=\"k-grid\" precedence=\"kinetik\">{css}</style>\n      <div\n        aria-hidden\n        className={cn(\"absolute inset-0 -z-10\", animate && \"k-grid-pan\")}\n        style={\n          {\n            backgroundImage: bg,\n            backgroundSize: `${size}px ${size}px`,\n            \"--k-gs\": `${size}px`,\n            maskImage: vignette ? \"radial-gradient(ellipse at center, #000 30%, transparent 75%)\" : undefined,\n            WebkitMaskImage: vignette ? \"radial-gradient(ellipse at center, #000 30%, transparent 75%)\" : undefined,\n          } as React.CSSProperties\n        }\n      />\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "background",
+      "grid",
+      "dots",
+      "pattern",
+      "css-only"
+    ],
+    "pageTypes": [
+      "landing",
+      "docs",
+      "auth"
+    ]
+  }
+}

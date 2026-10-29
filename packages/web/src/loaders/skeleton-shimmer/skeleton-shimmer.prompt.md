@@ -1,0 +1,1 @@
+Create a Skeleton block: background = foreground at 8% (color-mix, theme-aware), and an ::after highlight gradient that translates from -100% to 100% every 1.6s. Demo a card that toggles between skeleton and loaded content with matching shapes. Static under reduced motion.

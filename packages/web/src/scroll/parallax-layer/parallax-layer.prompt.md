@@ -1,0 +1,1 @@
+Create a ParallaxLayer wrapper: Motion `useScroll({ target: ref, offset: ["start end", "end start"] })` mapped with `useTransform` to `y` from +speed/2 to -speed/2, applied as a transform. Demo three absolutely positioned layers (two photos, one glass card) with different speeds (80, 260, -160). Reduced motion: y = 0.

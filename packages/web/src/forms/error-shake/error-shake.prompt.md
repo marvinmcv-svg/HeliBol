@@ -1,0 +1,1 @@
+Create an ErrorShake wrapper: whenever the `trigger` prop changes (truthy), remount the child wrapper via an incrementing key with a damped `translate` keyframe (-8, 7, -5, 4, -2px over 450ms, cubic-bezier(.36,.07,.19,.97)). Demo a password field that also gets aria-invalid, red styling and a role=alert message. No shake under reduced motion.

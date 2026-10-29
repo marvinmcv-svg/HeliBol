@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-scroll-highlight",
+  "type": "registry:component",
+  "title": "Scroll Highlight Text",
+  "description": "Words light up one by one, scrubbed to scroll position — the 'read along' manifesto paragraph.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-scroll-highlight.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-scroll-highlight.tsx",
+      "content": "\"use client\";\nimport { useRef, type RefObject } from \"react\";\nimport { motion, useScroll, useTransform, type MotionValue } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextScrollHighlightProps {\n  children: string;\n  /** Scroll container (defaults to the window). */\n  container?: RefObject<HTMLElement | null>;\n  className?: string;\n  /** Opacity of not-yet-read words. */\n  dim?: number;\n}\n\nfunction Word({ word, range, progress, dim }: { word: string; range: [number, number]; progress: MotionValue<number>; dim: number }) {\n  const opacity = useTransform(progress, range, [dim, 1]);\n  return (\n    <motion.span style={{ opacity }} className=\"inline-block whitespace-pre\">\n      {word}\n    </motion.span>\n  );\n}\n\nexport function TextScrollHighlight({ children, container, className, dim = 0.15 }: TextScrollHighlightProps) {\n  const ref = useRef<HTMLParagraphElement>(null);\n  const reduced = useReducedMotion();\n  const { scrollYProgress } = useScroll({ target: ref, container, offset: [\"start 0.85\", \"end 0.4\"] });\n  const words = children.split(\" \");\n\n  if (reduced) return <p ref={ref} className={className}>{children}</p>;\n\n  return (\n    <p ref={ref} className={cn(\"flex flex-wrap\", className)} aria-label={children}>\n      {words.map((w, i) => (\n        <span key={i} aria-hidden className=\"relative mr-[0.25em]\">\n          <Word word={w} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} dim={dim} />\n        </span>\n      ))}\n    </p>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "scroll",
+      "manifesto",
+      "scrub",
+      "storytelling"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

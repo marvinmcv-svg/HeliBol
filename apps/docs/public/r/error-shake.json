@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "error-shake",
+  "type": "registry:component",
+  "title": "Error Shake",
+  "description": "The macOS login 'no' — a damped horizontal shake triggered by any changing value. Pair with color and text for accessibility.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/error-shake.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/error-shake.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState, type ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface ErrorShakeProps {\n  /** Change this value (e.g. increment a counter) to trigger a shake. */\n  trigger: unknown;\n  children: ReactNode;\n  className?: string;\n}\n\nconst css = `\n@keyframes k-shake{0%,100%{translate:0}15%{translate:-8px}30%{translate:7px}45%{translate:-5px}60%{translate:4px}75%{translate:-2px}}\n.k-shake{animation:k-shake .45s cubic-bezier(.36,.07,.19,.97)}\n@media (prefers-reduced-motion:reduce){.k-shake{animation:none}}\n[data-reduce-motion] .k-shake{animation:none}`;\n\n/** Shakes its children whenever `trigger` changes. Reduced motion: no movement (pair with a color/text error). */\nexport function ErrorShake({ trigger, children, className }: ErrorShakeProps) {\n  const [n, setN] = useState(0);\n  useEffect(() => {\n    if (trigger) setN((x) => x + 1);\n  }, [trigger]);\n  return (\n    <>\n      <style href=\"k-shake\" precedence=\"kinetik\">{css}</style>\n      <div key={n} className={cn(n > 0 && \"k-shake\", className)}>{children}</div>\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "error",
+      "shake",
+      "validation",
+      "form",
+      "feedback"
+    ],
+    "pageTypes": [
+      "auth",
+      "settings",
+      "ecommerce"
+    ]
+  }
+}

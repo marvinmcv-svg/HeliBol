@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-stateful",
+  "type": "registry:component",
+  "title": "Stateful Button",
+  "description": "Idle → spinner → success/error in one element. Width morphs between states with a spring; errors shake.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-stateful.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-stateful.tsx",
+      "content": "\"use client\";\nimport { useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check, Loader2, X } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { durationS, spring } from \"@/lib/kinetik/tokens\";\n\ntype Status = \"idle\" | \"loading\" | \"success\" | \"error\";\n\nexport interface ButtonStatefulProps {\n  children: ReactNode;\n  /** Async action. Resolve → success, reject → error. */\n  onAction: () => Promise<unknown>;\n  successLabel?: string;\n  errorLabel?: string;\n  /** ms to show success/error before returning to idle */\n  resetAfter?: number;\n  className?: string;\n}\n\nexport function ButtonStateful({ children, onAction, successLabel = \"Done\", errorLabel = \"Try again\", resetAfter = 1800, className }: ButtonStatefulProps) {\n  const [status, setStatus] = useState<Status>(\"idle\");\n\n  const run = async () => {\n    if (status !== \"idle\") return;\n    setStatus(\"loading\");\n    try {\n      await onAction();\n      setStatus(\"success\");\n    } catch {\n      setStatus(\"error\");\n    }\n    setTimeout(() => setStatus(\"idle\"), resetAfter);\n  };\n\n  const content = {\n    idle: <span>{children}</span>,\n    loading: <Loader2 className=\"size-4 animate-spin\" aria-label=\"Loading\" />,\n    success: <span className=\"flex items-center gap-1.5\"><Check className=\"size-4\" />{successLabel}</span>,\n    error: <span className=\"flex items-center gap-1.5\"><X className=\"size-4\" />{errorLabel}</span>,\n  }[status];\n\n  return (\n    <motion.button\n      layout\n      onClick={run}\n      aria-busy={status === \"loading\"}\n      aria-live=\"polite\"\n      transition={spring.smooth}\n      animate={status === \"error\" ? { x: [0, -6, 6, -4, 4, 0] } : { x: 0 }}\n      className={cn(\n        \"relative inline-flex h-11 min-w-11 items-center justify-center overflow-hidden rounded-full px-5 text-sm font-medium outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background\",\n        status === \"success\" ? \"bg-emerald-500 text-white\" : status === \"error\" ? \"bg-destructive text-white\" : \"bg-primary text-primary-foreground\",\n        className,\n      )}\n    >\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        <motion.span\n          key={status}\n          className=\"flex items-center\"\n          initial={{ opacity: 0, y: 12, filter: \"blur(4px)\" }}\n          animate={{ opacity: 1, y: 0, filter: \"blur(0px)\" }}\n          exit={{ opacity: 0, y: -12, filter: \"blur(4px)\" }}\n          transition={{ duration: durationS.base }}\n        >\n          {content}\n        </motion.span>\n      </AnimatePresence>\n    </motion.button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "async",
+      "loading",
+      "success",
+      "form",
+      "feedback"
+    ],
+    "pageTypes": [
+      "auth",
+      "ecommerce",
+      "settings",
+      "dashboard"
+    ]
+  }
+}

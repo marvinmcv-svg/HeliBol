@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-split-text",
+  "type": "registry:block",
+  "title": "Hero — Split Text + Aurora",
+  "description": "Landing hero: border-beam announcement pill, words rising from masks, blur-in subhead, shimmer CTA over a grainy aurora.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react",
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json",
+    "https://kinetik.dev/r/text-split-reveal.json",
+    "https://kinetik.dev/r/text-blur-in.json",
+    "https://kinetik.dev/r/bg-aurora.json",
+    "https://kinetik.dev/r/bg-noise.json",
+    "https://kinetik.dev/r/button-shimmer.json",
+    "https://kinetik.dev/r/button-border-beam.json",
+    "https://kinetik.dev/r/button-press.json",
+    "https://kinetik.dev/r/scroll-reveal.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-split-text.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/hero-split-text.tsx",
+      "content": "\"use client\";\nimport { ArrowRight } from \"lucide-react\";\nimport { BgAurora } from \"@/components/kinetik/bg-aurora\";\nimport { BgNoise } from \"@/components/kinetik/bg-noise\";\nimport { ButtonBorderBeam } from \"@/components/kinetik/button-border-beam\";\nimport { ButtonShimmer } from \"@/components/kinetik/button-shimmer\";\nimport { ButtonPress } from \"@/components/kinetik/button-press\";\nimport { TextSplitReveal } from \"@/components/kinetik/text-split-reveal\";\nimport { TextBlurIn } from \"@/components/kinetik/text-blur-in\";\nimport { ScrollReveal } from \"@/components/kinetik/scroll-reveal\";\n\nexport function HeroSplitText() {\n  return (\n    <BgNoise opacity={0.12} className=\"h-full\">\n      <BgAurora className=\"flex min-h-full flex-col items-center justify-center px-6 py-20 text-center\">\n        <ScrollReveal variant=\"blur\">\n          <ButtonBorderBeam className=\"h-8 px-4 text-xs\">✦ kinetik 1.0 — 70+ components</ButtonBorderBeam>\n        </ScrollReveal>\n        <TextSplitReveal as=\"h1\" by=\"words\" trigger=\"mount\" delay={0.15} className=\"mt-6 max-w-3xl text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl\">\n          Interfaces that feel alive.\n        </TextSplitReveal>\n        <TextBlurIn delay={0.7} className=\"mt-5 max-w-xl text-base text-muted-foreground sm:text-lg\">\n          Copy-paste motion components for React and React Native — with live previews, accessible fallbacks and an AI prompt for every piece.\n        </TextBlurIn>\n        <div className=\"mt-8 flex flex-wrap justify-center gap-3\">\n          <ButtonShimmer>Browse components <ArrowRight className=\"size-4\" /></ButtonShimmer>\n          <ButtonPress variant=\"secondary\" className=\"h-11 rounded-full px-6\">Read the docs</ButtonPress>\n        </div>\n      </BgAurora>\n    </BgNoise>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "hero",
+      "landing",
+      "headline",
+      "aurora",
+      "cta"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Build a magnetic button: on pointer move, set x/y motion values to the cursor's offset from center × strength (0.35), smoothed by a bouncy spring (stiffness 400, damping 15); the inner label follows at 40% extra for parallax; reset to 0 on leave; scale 0.95 while pressed. Disable on touch (`(hover: none)`) and reduced motion.

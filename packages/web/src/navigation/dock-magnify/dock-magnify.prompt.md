@@ -1,0 +1,1 @@
+Recreate the macOS dock: a shared `mouseX` motion value (Infinity when outside); each icon derives its distance to the cursor from its bounding rect and maps [-140, 0, 140] → [44, 76, 44]px through a spring (400/28/0.2) for width/height. Items align to the bottom so they grow upward; tooltips on hover/focus.

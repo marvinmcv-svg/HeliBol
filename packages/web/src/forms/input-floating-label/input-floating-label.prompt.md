@@ -1,0 +1,1 @@
+Create a floating-label input in pure Tailwind: input has `placeholder=" "` and class `peer`; the label is centered and moves to top 10px with scale .8 and brand color on `peer-focus` or `peer-[:not(:placeholder-shown)]`. A bottom underline scales from 0 to 1 from the center on focus (300ms expo-out). Error text via aria-describedby.

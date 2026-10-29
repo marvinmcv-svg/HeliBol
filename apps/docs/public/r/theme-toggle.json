@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-toggle",
+  "type": "registry:component",
+  "title": "Theme Toggle + Circle Reveal",
+  "description": "Sun morphs into a moon with springs, and the new theme expands from the button as a circle using the View Transitions API.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/theme-toggle.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/theme-toggle.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useState } from \"react\";\nimport { flushSync } from \"react-dom\";\nimport { motion } from \"motion/react\";\nimport { cn, prefersReducedMotion } from \"@/lib/kinetik/core\";\nimport { duration, ease, spring } from \"@/lib/kinetik/tokens\";\n\nexport type Theme = \"light\" | \"dark\";\n\nexport interface ThemeToggleProps {\n  /** Controlled theme. When omitted the toggle manages `.dark` on <html> and localStorage(\"theme\"). */\n  theme?: Theme;\n  onThemeChange?: (theme: Theme) => void;\n  /** Circle-reveal the new theme from the button using the View Transitions API. */\n  reveal?: boolean;\n  className?: string;\n}\n\nfunction applyTheme(t: Theme) {\n  document.documentElement.classList.toggle(\"dark\", t === \"dark\");\n  try {\n    localStorage.setItem(\"theme\", t);\n  } catch {}\n}\n\nexport function ThemeToggle({ theme: controlled, onThemeChange, reveal = true, className }: ThemeToggleProps) {\n  const [internal, setInternal] = useState<Theme>(\"dark\");\n  const theme = controlled ?? internal;\n\n  useEffect(() => {\n    if (!controlled) setInternal(document.documentElement.classList.contains(\"dark\") ? \"dark\" : \"light\");\n  }, [controlled]);\n\n  const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {\n    const next: Theme = theme === \"dark\" ? \"light\" : \"dark\";\n    const commit = () => {\n      if (!controlled) {\n        setInternal(next);\n        applyTheme(next);\n      }\n      onThemeChange?.(next);\n    };\n    if (!reveal || !document.startViewTransition || prefersReducedMotion()) return commit();\n\n    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();\n    const x = left + width / 2;\n    const y = top + height / 2;\n    const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));\n    const vt = document.startViewTransition(() => flushSync(commit));\n    vt.ready.then(() => {\n      document.documentElement.animate(\n        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },\n        { duration: duration.slower, easing: ease.expoOut, pseudoElement: \"::view-transition-new(root)\" },\n      );\n    });\n  };\n\n  const dark = theme === \"dark\";\n  const maskId = `k-moon-${useId().replace(/[^a-zA-Z0-9-]/g, \"\")}`;\n  return (\n    <button\n      type=\"button\"\n      onClick={toggle}\n      aria-label={dark ? \"Switch to light theme\" : \"Switch to dark theme\"}\n      className={cn(\"relative grid size-9 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground\", className)}\n    >\n      <motion.svg viewBox=\"0 0 24 24\" className=\"size-[18px]\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"2\" strokeLinecap=\"round\" animate={{ rotate: dark ? 40 : 90 }} transition={spring.smooth}>\n        <mask id={maskId}>\n          <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" fill=\"white\" />\n          <motion.circle r=\"9\" fill=\"black\" initial={false} animate={dark ? { cx: 17, cy: 5 } : { cx: 30, cy: 0 }} transition={spring.smooth} />\n        </mask>\n        <motion.circle cx=\"12\" cy=\"12\" fill=\"currentColor\" stroke=\"none\" mask={`url(#${maskId})`} initial={false} animate={{ r: dark ? 9 : 5 }} transition={spring.smooth} />\n        <motion.g initial={false} animate={{ opacity: dark ? 0 : 1, scale: dark ? 0.5 : 1 }} transition={spring.smooth} style={{ transformOrigin: \"12px 12px\" }}>\n          {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (\n            <line key={a} x1=\"12\" y1=\"1.5\" x2=\"12\" y2=\"3.5\" transform={`rotate(${a} 12 12)`} />\n          ))}\n        </motion.g>\n      </motion.svg>\n    </button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "view-transitions",
+    "tags": [
+      "dark mode",
+      "theme",
+      "view transitions",
+      "icon morph"
+    ],
+    "pageTypes": [
+      "landing",
+      "docs",
+      "dashboard",
+      "settings"
+    ]
+  }
+}

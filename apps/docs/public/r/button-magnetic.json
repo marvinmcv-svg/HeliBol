@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-magnetic",
+  "type": "registry:component",
+  "title": "Magnetic Button",
+  "description": "The button leans toward the cursor on a bouncy spring, its label leaning further for parallax depth. Snaps back on leave.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-magnetic.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-magnetic.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { motion, useMotionValue, useSpring, useTransform } from \"motion/react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\nimport { springConfig } from \"@/lib/kinetik/tokens\";\n\nexport interface ButtonMagneticProps {\n  children: ReactNode;\n  /** 0–1: how far the button follows the cursor. */\n  strength?: number;\n  className?: string;\n  onClick?: () => void;\n}\n\nexport function ButtonMagnetic({ children, strength = 0.35, className, onClick }: ButtonMagneticProps) {\n  const ref = useRef<HTMLButtonElement>(null);\n  const reduced = useReducedMotion();\n  const touch = usePrefersTouch();\n  const x = useMotionValue(0);\n  const y = useMotionValue(0);\n  const sx = useSpring(x, springConfig.bouncy);\n  const sy = useSpring(y, springConfig.bouncy);\n  // label moves a bit further than the button for depth\n  const lx = useTransform(sx, (v) => v * 0.4);\n  const ly = useTransform(sy, (v) => v * 0.4);\n  const off = reduced || touch;\n\n  const onMove = (e: React.PointerEvent) => {\n    if (off || !ref.current) return;\n    const r = ref.current.getBoundingClientRect();\n    x.set((e.clientX - (r.left + r.width / 2)) * strength);\n    y.set((e.clientY - (r.top + r.height / 2)) * strength);\n  };\n  const reset = () => {\n    x.set(0);\n    y.set(0);\n  };\n\n  return (\n    <motion.button\n      ref={ref}\n      onPointerMove={onMove}\n      onPointerLeave={reset}\n      onClick={onClick}\n      style={{ x: sx, y: sy }}\n      whileTap={{ scale: 0.95 }}\n      className={cn(\n        \"relative inline-flex h-14 items-center justify-center rounded-full bg-foreground px-8 text-sm font-medium text-background outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background\",\n        className,\n      )}\n    >\n      <motion.span style={{ x: lx, y: ly }} className=\"inline-flex items-center gap-2\">\n        {children}\n      </motion.span>\n    </motion.button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "cursor",
+      "magnetic",
+      "portfolio",
+      "cta",
+      "awwwards"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

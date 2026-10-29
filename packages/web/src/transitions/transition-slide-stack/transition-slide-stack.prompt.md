@@ -1,0 +1,1 @@
+Create an iOS-style push/pop screen transition for web: on push the new screen slides in from 100% over the old one, which shifts to -30% and dims to 60%; pop reverses it. Use `AnimatePresence` with a `custom` direction and variant functions, spring (stiffness 260, damping 30), and a soft left-edge shadow on the incoming screen. Reduced motion: crossfade.

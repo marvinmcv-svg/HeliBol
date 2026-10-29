@@ -1,0 +1,30 @@
+import type { ComponentMeta } from "../../types";
+
+export const meta: ComponentMeta = {
+  id: "text-split-reveal",
+  name: "Split Text Reveal",
+  description: "Lines, words or characters slide up from a mask as the headline enters the viewport — the signature move of award-winning editorial sites.",
+  category: "text",
+  platforms: ["web"],
+  engine: "gsap",
+  dependencies: ["gsap", "@gsap/react"],
+  registryDependencies: ["kinetik-core"],
+  tags: ["hero", "headline", "scroll", "premium", "editorial"],
+  pageTypes: ["landing", "portfolio", "blog"],
+  inspiration: ["Codrops text reveals", "GSAP SplitText demos"],
+  a11y: "SplitText adds aria-label to the wrapper and aria-hidden to fragments, so screen readers hear one sentence. Reduced motion: a plain fade.",
+  perf: "Animates transform + opacity only. autoSplit re-splits on font load / resize and reverts on unmount.",
+  status: "stable",
+  priority: "P1",
+  previewHeight: 380,
+  props: [
+    { name: "children", type: "string", description: "Text to split. Must be a plain string." },
+    { name: "as", type: "ElementType", default: '"h2"', description: "Element to render." },
+    { name: "by", type: '"lines" | "words" | "chars"', default: '"lines"', description: "Split granularity." },
+    { name: "trigger", type: '"mount" | "view"', default: '"view"', description: "Play immediately or when scrolled into view." },
+    { name: "duration", type: "number", default: "0.7", description: "Seconds per fragment." },
+    { name: "stagger", type: "number", description: "Seconds between fragments (defaults by granularity)." },
+    { name: "delay", type: "number", default: "0", description: "Start delay in seconds." },
+    { name: "once", type: "boolean", default: "true", description: "Reverse when leaving the viewport if false." },
+  ],
+};

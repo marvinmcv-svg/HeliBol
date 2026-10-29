@@ -1,0 +1,1 @@
+Build an analytics dashboard shell: a sidebar that springs between 208px and 64px (labels fade out, icons keep aria-labels, badge moves to the icon corner), a shared-layout active-item highlight, a header with 7d/30d/90d tabs, a 4-up KPI grid with tickers + sparklines, and a line chart that draws on view.

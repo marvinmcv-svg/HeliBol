@@ -1,0 +1,1 @@
+Create a meteor shower: N 2px white dots rotated to ~145°, each with an 80px gradient tail via ::after, translating 900px along their axis with randomized left, delay (0–6s) and duration (3–8s) — generated deterministically (sine hash of index) to avoid hydration mismatch. Fade in/out at the ends; hidden under reduced motion.

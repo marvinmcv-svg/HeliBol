@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "social-proof-marquee",
+  "type": "registry:block",
+  "title": "Logo Cloud + Testimonial Wall",
+  "description": "Logo marquee with a pause control, then two opposite-direction testimonial marquees with faded edges.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json",
+    "https://kinetik.dev/r/marquee.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/social-proof-marquee.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/social-proof-marquee.tsx",
+      "content": "\"use client\";\nimport { Marquee } from \"@/components/kinetik/marquee\";\n\nconst logos = [\"Northwind\", \"Acme\", \"Globex\", \"Initech\", \"Umbrella\", \"Hooli\", \"Stark\", \"Wayne\", \"Tyrell\"];\nconst quotes = [\n  [\"Ava Lin\", \"Design Eng, Northwind\", \"The AI prompts alone saved us a sprint.\"],\n  [\"Kai Moreno\", \"Founder, Hooli\", \"Reduced motion that's actually designed, not bolted on.\"],\n  [\"Noor Haddad\", \"CTO, Globex\", \"Our landing page finally feels expensive.\"],\n  [\"Leo Park\", \"Mobile lead, Acme\", \"Same springs on web and native. Chef's kiss.\"],\n  [\"Mila Rossi\", \"PM, Initech\", \"We replaced three animation libraries with one folder.\"],\n  [\"Ezra Cole\", \"Indie hacker\", \"Shipped a paywall flow in an afternoon.\"],\n];\n\nfunction Quote({ q, i }: { q: string[]; i: number }) {\n  return (\n    <figure className=\"w-72 shrink-0 rounded-2xl border border-border bg-card p-5\">\n      <blockquote className=\"text-sm leading-relaxed\">“{q[2]}”</blockquote>\n      <figcaption className=\"mt-4 flex items-center gap-3\">\n        <img src={`/demo/photo-${(i % 8) + 1}.jpg`} alt=\"\" className=\"size-8 rounded-full object-cover\" />\n        <div><p className=\"text-sm font-medium\">{q[0]}</p><p className=\"text-xs text-muted-foreground\">{q[1]}</p></div>\n      </figcaption>\n    </figure>\n  );\n}\n\nexport function SocialProofMarquee() {\n  return (\n    <section className=\"space-y-10 py-14\">\n      <div className=\"space-y-4\">\n        <p className=\"text-center text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground\">Trusted by teams who sweat the details</p>\n        <Marquee duration={35} controls>\n          {logos.map((l) => <span key={l} className=\"text-2xl font-semibold tracking-tight text-muted-foreground/60\">{l}</span>)}\n        </Marquee>\n      </div>\n      <div className=\"space-y-4\">\n        <Marquee duration={50} gap=\"1rem\">{quotes.map((q, i) => <Quote key={q[0]} q={q} i={i} />)}</Marquee>\n        <Marquee duration={50} gap=\"1rem\" reverse>{[...quotes].reverse().map((q, i) => <Quote key={q[0]} q={q} i={i + 3} />)}</Marquee>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "testimonials",
+      "logos",
+      "social proof",
+      "marquee"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing"
+    ]
+  }
+}

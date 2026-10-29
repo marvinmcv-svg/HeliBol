@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion-smooth",
+  "type": "registry:component",
+  "title": "Smooth Accordion",
+  "description": "Height-auto accordion with asymmetric easing (slow open, quick close) and a rotating plus icon.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/accordion-smooth.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/accordion-smooth.tsx",
+      "content": "\"use client\";\nimport { useId, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { durationS, easeBezier, spring } from \"@/lib/kinetik/tokens\";\n\nexport interface AccordionItem {\n  id: string;\n  title: ReactNode;\n  content: ReactNode;\n}\n\nexport interface AccordionSmoothProps {\n  items: AccordionItem[];\n  /** Allow several panels open at once. */\n  multiple?: boolean;\n  defaultOpen?: string[];\n  className?: string;\n}\n\nexport function AccordionSmooth({ items, multiple = false, defaultOpen = [], className }: AccordionSmoothProps) {\n  const [open, setOpen] = useState<string[]>(defaultOpen);\n  const base = useId();\n  const toggle = (id: string) =>\n    setOpen((o) => (o.includes(id) ? o.filter((x) => x !== id) : multiple ? [...o, id] : [id]));\n\n  return (\n    <div className={cn(\"divide-y divide-border rounded-2xl border border-border bg-card\", className)}>\n      {items.map((item) => {\n        const isOpen = open.includes(item.id);\n        return (\n          <div key={item.id}>\n            <h3>\n              <button\n                id={`${base}-h-${item.id}`}\n                aria-expanded={isOpen}\n                aria-controls={`${base}-p-${item.id}`}\n                onClick={() => toggle(item.id)}\n                className=\"flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm font-medium outline-none hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring\"\n              >\n                {item.title}\n                <motion.span animate={{ rotate: isOpen ? 45 : 0 }} transition={spring.snappy} className=\"grid size-6 shrink-0 place-items-center rounded-full border border-border text-muted-foreground\">\n                  <svg viewBox=\"0 0 12 12\" className=\"size-3\" stroke=\"currentColor\" strokeWidth=\"1.6\" strokeLinecap=\"round\"><path d=\"M6 2v8M2 6h8\" /></svg>\n                </motion.span>\n              </button>\n            </h3>\n            <AnimatePresence initial={false}>\n              {isOpen && (\n                <motion.div\n                  id={`${base}-p-${item.id}`}\n                  role=\"region\"\n                  aria-labelledby={`${base}-h-${item.id}`}\n                  initial={{ height: 0, opacity: 0 }}\n                  animate={{ height: \"auto\", opacity: 1, transition: { height: { duration: durationS.moderate, ease: easeBezier.expoOut }, opacity: { duration: durationS.base, delay: 0.05 } } }}\n                  exit={{ height: 0, opacity: 0, transition: { height: { duration: durationS.base, ease: easeBezier.standard }, opacity: { duration: durationS.fast } } }}\n                  className=\"overflow-hidden\"\n                >\n                  <div className=\"px-5 pb-4 text-sm leading-relaxed text-muted-foreground\">{item.content}</div>\n                </motion.div>\n              )}\n            </AnimatePresence>\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "faq",
+      "accordion",
+      "disclosure",
+      "height auto"
+    ],
+    "pageTypes": [
+      "pricing",
+      "landing",
+      "docs",
+      "settings"
+    ]
+  }
+}

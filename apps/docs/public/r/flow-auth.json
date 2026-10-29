@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flow-auth",
+  "type": "registry:block",
+  "title": "Phone Sign-in",
+  "description": "Phone number → SMS code → verified, with a custom keypad, popping digits, a shake on wrong codes and a drawn success check.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/flow-auth.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/flow-auth.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion, useAnimation } from \"motion/react\";\nimport { ArrowLeft, Delete } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { haptic } from \"@/components/kinetik/phone\" /* demo frame + haptic() stand-in */;\n\nconst keys = [\"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"\", \"0\", \"del\"];\n\nexport function FlowAuth({ initialStep = 0 }: { initialStep?: number }) {\n  const [step, setStep] = useState(initialStep);\n  const [phone, setPhone] = useState(\"4155550142\");\n  const [code, setCode] = useState(initialStep === 1 ? \"42\" : \"\");\n  const shake = useAnimation();\n\n  const press = async (k: string) => {\n    haptic(\"light\");\n    if (step === 0) {\n      setPhone((p) => (k === \"del\" ? p.slice(0, -1) : (p + k).slice(0, 10)));\n      return;\n    }\n    const next = k === \"del\" ? code.slice(0, -1) : (code + k).slice(0, 4);\n    setCode(next);\n    if (next.length === 4) {\n      if (next === \"4242\") {\n        haptic(\"success\");\n        setTimeout(() => setStep(2), 350);\n      } else {\n        haptic(\"error\");\n        await shake.start({ x: [0, -12, 12, -8, 8, -3, 0], transition: { duration: 0.45 } });\n        setCode(\"\");\n      }\n    }\n  };\n\n  const fmt = (p: string) => p.replace(/(\\d{0,3})(\\d{0,3})(\\d{0,4})/, (_, a, b, c) => [a && `(${a}`, a.length === 3 ? \") \" : \"\", b, c && `-${c}`].join(\"\"));\n\n  return (\n    <div className=\"flex h-full flex-col bg-white px-6 pt-14 pb-6 text-zinc-900\">\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        {step === 0 && (\n          <motion.div key=\"p\" className=\"flex-1\" initial={{ x: -40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -40, opacity: 0 }} transition={spring.smooth}>\n            <h2 className=\"text-[26px] font-semibold tracking-tight\">What&apos;s your number?</h2>\n            <p className=\"mt-1 text-sm text-zinc-500\">We&apos;ll text you a code to sign in.</p>\n            <div className=\"mt-8 flex items-center gap-2 border-b-2 border-zinc-900 pb-2 text-2xl font-medium tabular-nums\">\n              <span className=\"text-zinc-400\">+1</span>\n              <span>{fmt(phone) || <span className=\"text-zinc-300\">(555) 000-0000</span>}</span>\n              <span className=\"h-7 w-0.5 animate-pulse bg-violet-500\" />\n            </div>\n          </motion.div>\n        )}\n        {step === 1 && (\n          <motion.div key=\"c\" className=\"flex-1\" initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -40, opacity: 0 }} transition={spring.smooth}>\n            <button onClick={() => setStep(0)} aria-label=\"Back\" className=\"-ml-1 mb-3 grid size-8 place-items-center rounded-full bg-zinc-100\"><ArrowLeft className=\"size-4\" /></button>\n            <h2 className=\"text-[26px] font-semibold tracking-tight\">Enter the code</h2>\n            <p className=\"mt-1 text-sm text-zinc-500\">Sent to +1 {fmt(phone)} · try <b>4242</b></p>\n            <motion.div animate={shake} className=\"mt-8 flex justify-center gap-3\">\n              {[0, 1, 2, 3].map((n) => (\n                <div key={n} className={cn(\"grid size-14 place-items-center rounded-2xl border-2 text-2xl font-semibold transition-colors\", n === code.length ? \"border-violet-500\" : code[n] ? \"border-zinc-900\" : \"border-zinc-200\")}>\n                  <AnimatePresence>{code[n] && <motion.span initial={{ scale: 0.3, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.3, opacity: 0 }} transition={spring.bouncy}>{code[n]}</motion.span>}</AnimatePresence>\n                </div>\n              ))}\n            </motion.div>\n          </motion.div>\n        )}\n        {step === 2 && (\n          <motion.div key=\"s\" className=\"flex flex-1 flex-col items-center justify-center text-center\" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={spring.bouncy}>\n            <svg viewBox=\"0 0 52 52\" className=\"size-24\">\n              <motion.circle cx=\"26\" cy=\"26\" r=\"24\" fill=\"none\" stroke=\"#10b981\" strokeWidth=\"3\" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.5 }} />\n              <motion.path d=\"M15 27l7 7 15-16\" fill=\"none\" stroke=\"#10b981\" strokeWidth=\"4\" strokeLinecap=\"round\" strokeLinejoin=\"round\" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.35, delay: 0.4 }} />\n            </svg>\n            <h2 className=\"mt-4 text-2xl font-semibold\">You&apos;re verified</h2>\n            <button onClick={() => { setStep(0); setCode(\"\"); }} className=\"mt-4 text-xs text-zinc-400\">Restart demo</button>\n          </motion.div>\n        )}\n      </AnimatePresence>\n      {step < 2 && (\n        <>\n          {step === 0 && (\n            <motion.button whileTap={{ scale: 0.97 }} disabled={phone.length < 10} onClick={() => { haptic(\"medium\"); setStep(1); }} className=\"mb-4 h-13 rounded-2xl bg-zinc-900 py-3.5 text-[15px] font-semibold text-white transition-opacity disabled:opacity-30\">\n              Send code\n            </motion.button>\n          )}\n          <div className=\"grid grid-cols-3 gap-y-1\">\n            {keys.map((k, n) => (\n              k ? (\n                <motion.button key={n} whileTap={{ scale: 0.88, backgroundColor: \"rgb(228 228 231)\" }} onClick={() => press(k)} aria-label={k === \"del\" ? \"Delete\" : k} className=\"mx-auto grid h-12 w-20 place-items-center rounded-2xl text-2xl font-medium\">\n                  {k === \"del\" ? <Delete className=\"size-6\" /> : k}\n                </motion.button>\n              ) : <span key={n} />\n            ))}\n          </div>\n        </>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "auth",
+      "otp",
+      "phone",
+      "keypad",
+      "mobile"
+    ],
+    "pageTypes": [
+      "auth",
+      "onboarding"
+    ]
+  }
+}

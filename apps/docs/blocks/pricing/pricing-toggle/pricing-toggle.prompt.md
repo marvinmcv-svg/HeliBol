@@ -1,0 +1,1 @@
+Build a SaaS pricing section: heading, a pill tab toggle Monthly/Yearly (shared-layout indicator) with a "Save 20%" badge that brightens for yearly, and three plan cards (featured middle card raised with "Most popular" tag and shimmer CTA). When the period changes, each price rolls vertically with blur to the new value (AnimatePresence popLayout).

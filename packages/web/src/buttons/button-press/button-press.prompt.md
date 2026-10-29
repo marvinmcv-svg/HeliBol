@@ -1,0 +1,1 @@
+Create a base button with premium tactile feedback in pure CSS/Tailwind: translateY(-2px) + stronger shadow on hover, scale(0.97) on :active with a faster 100ms duration, `cubic-bezier(.2,0,0,1)` easing, focus-visible ring with offset, three variants and three sizes. Reduced motion removes the lift and squash.

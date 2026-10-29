@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress-bar-animated",
+  "type": "registry:component",
+  "title": "Progress Bar",
+  "description": "Determinate (springy expo-out fill, optional moving stripes) and indeterminate progress, colored with currentColor.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/progress-bar-animated.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/progress-bar-animated.tsx",
+      "content": "import { cn } from \"@/lib/kinetik/utils\";\n\nexport interface ProgressBarAnimatedProps {\n  /** 0–100. Omit for indeterminate. */\n  value?: number;\n  label?: string;\n  striped?: boolean;\n  className?: string;\n}\n\nconst css = `\n.k-pb-fill{transition:scale .6s cubic-bezier(.16,1,.3,1);transform-origin:left}\n.k-pb-indet{position:absolute;inset:0;width:40%;border-radius:inherit;background:currentColor;animation:k-pb-indet 1.4s cubic-bezier(.65,0,.35,1) infinite}\n@keyframes k-pb-indet{from{translate:-100% 0}to{translate:250% 0}}\n.k-pb-stripes{background-image:linear-gradient(45deg,rgb(255 255 255/.25) 25%,transparent 25% 50%,rgb(255 255 255/.25) 50% 75%,transparent 75%);background-size:16px 16px;animation:k-pb-stripes .8s linear infinite}\n@keyframes k-pb-stripes{to{background-position:16px 0}}\n@media (prefers-reduced-motion:reduce){.k-pb-stripes{animation:none}.k-pb-indet{animation-duration:3s}}`;\n\nexport function ProgressBarAnimated({ value, label = \"Progress\", striped = false, className }: ProgressBarAnimatedProps) {\n  const indeterminate = value === undefined;\n  return (\n    <>\n      <style href=\"k-pb\" precedence=\"kinetik\">{css}</style>\n      <div\n        role=\"progressbar\"\n        aria-label={label}\n        aria-valuemin={0}\n        aria-valuemax={100}\n        aria-valuenow={indeterminate ? undefined : Math.round(value)}\n        className={cn(\"relative h-2 w-full overflow-hidden rounded-full bg-muted text-foreground\", className)}\n      >\n        {indeterminate ? (\n          <div className=\"k-pb-indet\" />\n        ) : (\n          <div className={cn(\"k-pb-fill h-full rounded-full bg-current\", striped && \"k-pb-stripes\")} style={{ scale: `${Math.max(0, Math.min(100, value)) / 100} 1` }} />\n        )}\n      </div>\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "loaders"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "progress",
+      "upload",
+      "loading",
+      "css-only"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "onboarding",
+      "settings"
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "smooth-scroll",
+  "type": "registry:component",
+  "title": "Smooth Scroll (Lenis)",
+  "description": "Lenis provider with GSAP ticker sync, anchor links, a useLenis() hook and an optional contained mode for scrolling a panel.",
+  "dependencies": [
+    "lenis",
+    "gsap"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/smooth-scroll.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/smooth-scroll.tsx",
+      "content": "\"use client\";\nimport { createContext, useContext, useEffect, useRef, useState, type ReactNode, type RefObject } from \"react\";\nimport Lenis from \"lenis\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger);\n\nconst LenisContext = createContext<Lenis | null>(null);\n/** Access the Lenis instance, e.g. `useLenis()?.scrollTo(\"#pricing\")`. */\nexport const useLenis = () => useContext(LenisContext);\n\nexport interface SmoothScrollProps {\n  children: ReactNode;\n  /** Scroll a wrapper element instead of the window (wrapper = this component's root). */\n  contained?: boolean;\n  /** 0–1, lower = smoother/heavier. */\n  lerp?: number;\n  /** Keep native touch scrolling on phones (recommended). */\n  syncTouch?: boolean;\n  className?: string;\n}\n\n/** Lenis smooth scrolling synced to GSAP's ticker so ScrollTrigger stays frame-perfect. */\nexport function SmoothScroll({ children, contained = false, lerp = 0.09, syncTouch = false, className }: SmoothScrollProps) {\n  const wrapper = useRef<HTMLDivElement>(null);\n  const content = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n  const [lenis, setLenis] = useState<Lenis | null>(null);\n\n  useEffect(() => {\n    if (reduced) return;\n    const instance = new Lenis({\n      lerp,\n      syncTouch,\n      anchors: true,\n      autoRaf: false,\n      ...(contained && wrapper.current && content.current ? { wrapper: wrapper.current, content: content.current } : {}),\n    });\n    instance.on(\"scroll\", ScrollTrigger.update);\n    const tick = (time: number) => instance.raf(time * 1000);\n    gsap.ticker.add(tick);\n    gsap.ticker.lagSmoothing(0);\n    setLenis(instance);\n    return () => {\n      gsap.ticker.remove(tick);\n      instance.destroy();\n      setLenis(null);\n    };\n  }, [reduced, lerp, syncTouch, contained]);\n\n  return (\n    <LenisContext.Provider value={lenis}>\n      {contained ? (\n        <div ref={wrapper} className={cn(\"h-full overflow-y-auto\", className)}>\n          <div ref={content}>{children}</div>\n        </div>\n      ) : (\n        children\n      )}\n    </LenisContext.Provider>\n  );\n}\n\nexport type { RefObject };\n"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "meta": {
+    "engine": "lenis",
+    "tags": [
+      "smooth scroll",
+      "lenis",
+      "provider",
+      "scrolltrigger"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

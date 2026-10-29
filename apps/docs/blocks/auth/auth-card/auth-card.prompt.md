@@ -1,0 +1,1 @@
+Build a passwordless sign-in card over a dot-grid background: step 1 floating-label email + async stateful button ("Code sent"); step 2 six-digit OTP that shakes and clears on a wrong code; step 3 animated success check. The card animates its height with Motion `layout` and steps slide horizontally with AnimatePresence popLayout.

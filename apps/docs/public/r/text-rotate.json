@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-rotate",
+  "type": "registry:component",
+  "title": "Rotating Word",
+  "description": "A word inside a sentence rolls to the next option while its container smoothly resizes to fit — no layout jump.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-rotate.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-rotate.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\nimport { durationS, easeBezier, spring } from \"@/lib/kinetik/tokens\";\n\nexport interface TextRotateProps {\n  words: string[];\n  /** ms each word is shown */\n  interval?: number;\n  className?: string;\n  paused?: boolean;\n}\n\nexport function TextRotate({ words, interval = 2200, className, paused }: TextRotateProps) {\n  const [i, setI] = useState(0);\n  const reduced = useReducedMotion();\n\n  useEffect(() => {\n    if (paused) return;\n    const id = setInterval(() => setI((n) => (n + 1) % words.length), interval);\n    return () => clearInterval(id);\n  }, [words.length, interval, paused]);\n\n  return (\n    <motion.span layout transition={spring.smooth} className={cn(\"relative inline-flex overflow-hidden align-bottom\", className)}>\n      <span className=\"sr-only\">{words.join(\", \")}</span>\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        <motion.span\n          key={words[i]}\n          aria-hidden\n          className=\"inline-block whitespace-nowrap\"\n          initial={reduced ? { opacity: 0 } : { y: \"100%\", opacity: 0, filter: \"blur(4px)\" }}\n          animate={{ y: 0, opacity: 1, filter: \"blur(0px)\" }}\n          exit={reduced ? { opacity: 0 } : { y: \"-100%\", opacity: 0, filter: \"blur(4px)\" }}\n          transition={{ duration: durationS.slow, ease: easeBezier.expoOut }}\n        >\n          {words[i]}\n        </motion.span>\n      </AnimatePresence>\n    </motion.span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "hero",
+      "headline",
+      "rotating",
+      "layout"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

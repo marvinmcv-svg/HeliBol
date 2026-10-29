@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-highlighter",
+  "type": "registry:component",
+  "title": "Marker Highlight",
+  "description": "A highlighter-pen stroke or underline draws behind key phrases when they come into view. Wraps across lines.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-highlighter.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-highlighter.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { cn, useInView } from \"@/lib/kinetik/core\";\n\nexport interface TextHighlighterProps {\n  children: ReactNode;\n  variant?: \"marker\" | \"underline\";\n  color?: string;\n  delay?: number;\n  duration?: number;\n  className?: string;\n}\n\nconst css = `\n.k-hl{background-repeat:no-repeat;background-size:0% var(--k-hl-h);background-position:0 var(--k-hl-y);transition:background-size var(--k-hl-d) cubic-bezier(.16,1,.3,1) var(--k-hl-delay);padding:0 .1em;margin:0 -.1em;-webkit-box-decoration-break:clone;box-decoration-break:clone}\n.k-hl[data-in]{background-size:100% var(--k-hl-h)}\n@media (prefers-reduced-motion:reduce){.k-hl{transition:none}}\n[data-reduce-motion] .k-hl{transition:none}`;\n\nexport function TextHighlighter({ children, variant = \"marker\", color = \"rgb(250 204 21 / .55)\", delay = 0, duration = 0.9, className }: TextHighlighterProps) {\n  const ref = useRef<HTMLElement>(null);\n  const inView = useInView(ref, { amount: 0.8 });\n  return (\n    <>\n      <style href=\"k-hl\" precedence=\"kinetik\">{css}</style>\n      <mark\n        ref={ref}\n        data-in={inView ? \"\" : undefined}\n        className={cn(\"k-hl rounded-sm bg-transparent text-inherit\", className)}\n        style={\n          {\n            backgroundImage: `linear-gradient(${color},${color})`,\n            \"--k-hl-h\": variant === \"marker\" ? \"88%\" : \"0.18em\",\n            \"--k-hl-y\": variant === \"marker\" ? \"60%\" : \"100%\",\n            \"--k-hl-d\": `${duration}s`,\n            \"--k-hl-delay\": `${delay}s`,\n          } as React.CSSProperties\n        }\n      >\n        {children}\n      </mark>\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "emphasis",
+      "copywriting",
+      "in-view",
+      "marker"
+    ],
+    "pageTypes": [
+      "landing",
+      "blog",
+      "pricing"
+    ]
+  }
+}

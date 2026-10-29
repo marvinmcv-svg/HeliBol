@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "reorder-list",
+  "type": "registry:component",
+  "title": "Reorder List",
+  "description": "Drag a handle to reorder; siblings spring out of the way. Up/down buttons give a keyboard-accessible alternative.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/reorder-list.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/reorder-list.tsx",
+      "content": "\"use client\";\nimport { Reorder, useDragControls } from \"motion/react\";\nimport { ChevronDown, ChevronUp, GripVertical } from \"lucide-react\";\nimport type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface ReorderListProps<T extends { id: string }> {\n  items: T[];\n  onReorder: (items: T[]) => void;\n  render: (item: T) => ReactNode;\n  className?: string;\n}\n\nfunction Row<T extends { id: string }>({ item, index, items, onReorder, children }: { item: T; index: number; items: T[]; onReorder: (i: T[]) => void; children: ReactNode }) {\n  const controls = useDragControls();\n  const move = (d: -1 | 1) => {\n    const j = index + d;\n    if (j < 0 || j >= items.length) return;\n    const next = [...items];\n    [next[index], next[j]] = [next[j], next[index]];\n    onReorder(next);\n  };\n  return (\n    <Reorder.Item\n      value={item}\n      dragListener={false}\n      dragControls={controls}\n      transition={spring.smooth}\n      whileDrag={{ scale: 1.03, boxShadow: \"0 16px 40px -12px rgb(0 0 0 / .35)\", zIndex: 10 }}\n      className=\"relative flex items-center gap-2 rounded-xl border border-border bg-card p-2 pr-3\"\n    >\n      <button\n        onPointerDown={(e) => controls.start(e)}\n        aria-label=\"Drag to reorder\"\n        className=\"grid size-8 cursor-grab touch-none place-items-center rounded-lg text-muted-foreground hover:bg-accent active:cursor-grabbing\"\n      >\n        <GripVertical className=\"size-4\" />\n      </button>\n      <div className=\"min-w-0 flex-1\">{children}</div>\n      <div className=\"flex flex-col\">\n        <button onClick={() => move(-1)} disabled={index === 0} aria-label=\"Move up\" className=\"rounded text-muted-foreground hover:text-foreground disabled:opacity-30\"><ChevronUp className=\"size-4\" /></button>\n        <button onClick={() => move(1)} disabled={index === items.length - 1} aria-label=\"Move down\" className=\"rounded text-muted-foreground hover:text-foreground disabled:opacity-30\"><ChevronDown className=\"size-4\" /></button>\n      </div>\n    </Reorder.Item>\n  );\n}\n\nexport function ReorderList<T extends { id: string }>({ items, onReorder, render, className }: ReorderListProps<T>) {\n  return (\n    <Reorder.Group axis=\"y\" values={items} onReorder={onReorder} className={cn(\"space-y-2\", className)}>\n      {items.map((item, i) => (\n        <Row key={item.id} item={item} index={i} items={items} onReorder={onReorder}>\n          {render(item)}\n        </Row>\n      ))}\n    </Reorder.Group>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "drag",
+      "reorder",
+      "sortable",
+      "todo",
+      "kanban"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "settings"
+    ]
+  }
+}

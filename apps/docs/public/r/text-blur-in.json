@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-blur-in",
+  "type": "registry:component",
+  "title": "Blur In Text",
+  "description": "Words (or characters) fade up while un-blurring, staggered — the soft, Apple-keynote style entrance.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-blur-in.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-blur-in.tsx",
+      "content": "\"use client\";\nimport { motion } from \"motion/react\";\nimport type { ElementType } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\nimport { blur, durationS, easeBezier, stagger as staggerTokens } from \"@/lib/kinetik/tokens\";\n\nexport interface TextBlurInProps {\n  children: string;\n  as?: ElementType;\n  by?: \"words\" | \"chars\";\n  delay?: number;\n  duration?: number;\n  stagger?: number;\n  once?: boolean;\n  className?: string;\n}\n\nexport function TextBlurIn({\n  children,\n  as: Tag = \"p\",\n  by = \"words\",\n  delay = 0,\n  duration = durationS.slow,\n  stagger,\n  once = true,\n  className,\n}: TextBlurInProps) {\n  const reduced = useReducedMotion();\n  const parts = by === \"words\" ? children.split(/(\\s+)/) : Array.from(children);\n  const step = stagger ?? (by === \"words\" ? staggerTokens.base : staggerTokens.tight);\n\n  return (\n    <Tag className={cn(className)} aria-label={children}>\n      <motion.span\n        aria-hidden\n        initial=\"hidden\"\n        whileInView=\"visible\"\n        viewport={{ once, amount: 0.5 }}\n        transition={{ staggerChildren: step, delayChildren: delay }}\n      >\n        {parts.map((part, i) =>\n          /^\\s+$/.test(part) ? (\n            <span key={i}>{part}</span>\n          ) : (\n            <motion.span\n              key={i}\n              className=\"inline-block whitespace-pre will-change-[transform,filter,opacity]\"\n              variants={{\n                hidden: reduced ? { opacity: 0 } : { opacity: 0, y: 8, filter: `blur(${blur.in}px)` },\n                visible: { opacity: 1, y: 0, filter: \"blur(0px)\", transition: { duration, ease: easeBezier.expoOut } },\n              }}\n            >\n              {part}\n            </motion.span>\n          ),\n        )}\n      </motion.span>\n    </Tag>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "hero",
+      "subtitle",
+      "soft",
+      "in-view"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio",
+      "onboarding"
+    ]
+  }
+}

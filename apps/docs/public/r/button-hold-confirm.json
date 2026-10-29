@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-hold-confirm",
+  "type": "registry:component",
+  "title": "Hold to Confirm",
+  "description": "Destructive actions require a press-and-hold: a fill wipes across the button and reverses smoothly if released early.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-hold-confirm.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-hold-confirm.tsx",
+      "content": "\"use client\";\nimport { useRef, useState, type ReactNode } from \"react\";\nimport { animate, motion, useMotionValue, useTransform, type AnimationPlaybackControls } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { durationS } from \"@/lib/kinetik/tokens\";\n\nexport interface ButtonHoldConfirmProps {\n  children: ReactNode;\n  onConfirm: () => void;\n  /** Seconds the user must hold. */\n  holdDuration?: number;\n  confirmedLabel?: ReactNode;\n  className?: string;\n}\n\nexport function ButtonHoldConfirm({ children, onConfirm, holdDuration = 1.4, confirmedLabel = \"Deleted\", className }: ButtonHoldConfirmProps) {\n  const progress = useMotionValue(0);\n  const clip = useTransform(progress, (p) => `inset(0 ${100 - p * 100}% 0 0)`);\n  const ctrl = useRef<AnimationPlaybackControls | null>(null);\n  const [done, setDone] = useState(false);\n\n  const start = () => {\n    if (done) return;\n    ctrl.current?.stop();\n    ctrl.current = animate(progress, 1, {\n      duration: holdDuration * (1 - progress.get()),\n      ease: \"linear\",\n      onComplete: () => {\n        setDone(true);\n        onConfirm();\n        setTimeout(() => {\n          setDone(false);\n          progress.set(0);\n        }, 1600);\n      },\n    });\n  };\n  const cancel = () => {\n    if (done) return;\n    ctrl.current?.stop();\n    ctrl.current = animate(progress, 0, { duration: durationS.moderate, ease: [0.4, 0, 1, 1] });\n  };\n\n  const label = done ? confirmedLabel : children;\n  return (\n    <button\n      onPointerDown={start}\n      onPointerUp={cancel}\n      onPointerLeave={cancel}\n      onKeyDown={(e) => (e.key === \"Enter\" || e.key === \" \") && !e.repeat && (e.preventDefault(), start())}\n      onKeyUp={(e) => (e.key === \"Enter\" || e.key === \" \") && cancel()}\n      aria-label={typeof children === \"string\" ? `${children} (press and hold to confirm)` : undefined}\n      className={cn(\n        \"relative inline-flex h-11 select-none items-center justify-center overflow-hidden rounded-xl border border-destructive/30 bg-destructive/10 px-5 text-sm font-medium text-destructive outline-none transition-transform active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring\",\n        className,\n      )}\n    >\n      <span className=\"flex items-center gap-2\">{label}</span>\n      <motion.span aria-hidden style={{ clipPath: clip }} className=\"absolute inset-0 flex items-center justify-center gap-2 bg-destructive text-white\">\n        {label}\n      </motion.span>\n    </button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "destructive",
+      "confirm",
+      "delete",
+      "safety",
+      "hold"
+    ],
+    "pageTypes": [
+      "settings",
+      "dashboard"
+    ]
+  }
+}

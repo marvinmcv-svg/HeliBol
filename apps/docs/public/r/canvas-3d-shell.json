@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "canvas-3d-shell",
+  "type": "registry:component",
+  "title": "3D Canvas Shell",
+  "description": "A production-ready React Three Fiber canvas: clamped DPR, pauses off-screen and in background tabs, reduced-motion aware, lazy-loadable.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/canvas-3d-shell.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/canvas-3d-shell.tsx",
+      "content": "\"use client\";\nimport { Suspense, useRef, useState, useEffect, type ReactNode } from \"react\";\nimport { Canvas } from \"@react-three/fiber\";\nimport { cn, usePageVisible, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface Canvas3DShellProps {\n  children: ReactNode;\n  className?: string;\n  /** Max device pixel ratio (clamped for performance). */\n  maxDpr?: number;\n  camera?: { position?: [number, number, number]; fov?: number };\n  fallback?: ReactNode;\n}\n\n/**\n * Production wrapper for React Three Fiber: lazy-mountable, DPR clamped, renders only while\n * on-screen and the tab is visible (\"demand\" frameloop otherwise), static under reduced motion.\n * Load it with next/dynamic or React.lazy so three.js never lands in your main bundle.\n */\nexport function Canvas3DShell({ children, className, maxDpr = 2, camera = { position: [0, 0, 5], fov: 45 }, fallback }: Canvas3DShellProps) {\n  const ref = useRef<HTMLDivElement>(null);\n  const [onScreen, setOnScreen] = useState(false);\n  const visible = usePageVisible();\n  const reduced = useReducedMotion();\n\n  useEffect(() => {\n    const el = ref.current;\n    if (!el) return;\n    const io = new IntersectionObserver(([e]) => setOnScreen(e.isIntersecting), { rootMargin: \"100px\" });\n    io.observe(el);\n    return () => io.disconnect();\n  }, []);\n\n  const active = onScreen && visible && !reduced;\n  return (\n    <div ref={ref} className={cn(\"relative h-full w-full\", className)}>\n      <Suspense fallback={fallback ?? null}>\n        <Canvas dpr={[1, maxDpr]} camera={camera} frameloop={active ? \"always\" : \"demand\"} gl={{ antialias: true, alpha: true, powerPreference: \"high-performance\" }}>\n          {children}\n        </Canvas>\n      </Suspense>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "3d",
+      "webgl",
+      "three.js",
+      "r3f",
+      "hero"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

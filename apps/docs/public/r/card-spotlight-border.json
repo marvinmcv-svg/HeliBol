@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-spotlight-border",
+  "type": "registry:component",
+  "title": "Spotlight Border Cards",
+  "description": "Card borders light up near the cursor, and the glow flows continuously across neighbouring cards in the grid.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-spotlight-border.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-spotlight-border.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface SpotlightBorderGridProps {\n  children: ReactNode;\n  color?: string;\n  className?: string;\n}\n\n/**\n * Wrap a grid of <SpotlightBorderCard>s: one pointer listener on the grid sets per-card CSS\n * variables so the border glow is continuous across neighbouring cards.\n */\nexport function SpotlightBorderGrid({ children, color = \"rgb(168 85 247)\", className }: SpotlightBorderGridProps) {\n  const ref = useRef<HTMLDivElement>(null);\n  const onMove = (e: React.PointerEvent) => {\n    if (e.pointerType === \"touch\") return;\n    ref.current?.querySelectorAll<HTMLElement>(\"[data-k-sb]\").forEach((card) => {\n      const r = card.getBoundingClientRect();\n      card.style.setProperty(\"--k-x\", `${e.clientX - r.left}px`);\n      card.style.setProperty(\"--k-y\", `${e.clientY - r.top}px`);\n    });\n  };\n  return (\n    <div ref={ref} onPointerMove={onMove} className={cn(\"group/sb\", className)} style={{ \"--k-sb-color\": color } as React.CSSProperties}>\n      {children}\n    </div>\n  );\n}\n\nexport function SpotlightBorderCard({ children, className }: { children: ReactNode; className?: string }) {\n  return (\n    <div data-k-sb className={cn(\"relative rounded-2xl bg-border p-px\", className)}>\n      <div\n        aria-hidden\n        className=\"pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover/sb:opacity-100 motion-reduce:hidden\"\n        style={{ background: \"radial-gradient(260px circle at var(--k-x) var(--k-y), var(--k-sb-color), transparent 70%)\" }}\n      />\n      <div className=\"relative h-full overflow-hidden rounded-[calc(1rem-1px)] bg-card\">\n        <div\n          aria-hidden\n          className=\"pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/sb:opacity-100 motion-reduce:hidden\"\n          style={{ background: \"radial-gradient(360px circle at var(--k-x) var(--k-y), color-mix(in oklab, var(--k-sb-color) 10%, transparent), transparent 70%)\" }}\n        />\n        <div className=\"relative h-full\">{children}</div>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "cards",
+      "border",
+      "glow",
+      "features",
+      "cursor"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing",
+      "dashboard"
+    ]
+  }
+}

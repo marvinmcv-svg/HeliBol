@@ -1,0 +1,1 @@
+Create an animated success/error mark in SVG: the circle stroke draws (pathLength 0→1, 400ms ease-in-out) starting at 12 o'clock, a 12% fill fades in, then the check (or two cross strokes, staggered) draws, then the whole SVG pops scale [.8, 1.08, 1]. Green for success, red for error; role=img with label; instant under reduced motion.

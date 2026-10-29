@@ -1,0 +1,1 @@
+Create a progress ring: SVG circle with pathLength=100 and strokeDasharray 100, rotated -90°; a Motion spring (90/20) follows the value and drives strokeDashoffset (100 - v) and the centered percentage text via useTransform. Color from currentColor; role=progressbar.

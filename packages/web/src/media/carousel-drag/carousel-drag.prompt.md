@@ -1,0 +1,1 @@
+Build a drag carousel with Motion: a flex track with `drag="x"`, elastic constraints, and on drag end project the position with velocity (−x − vx·0.2), round to the nearest slide and spring there (260/30). Inactive slides scale .94 and dim. Pagination dots morph width (6→24px) with a layoutId fill. Prev/next buttons and arrow keys; ARIA carousel roles.

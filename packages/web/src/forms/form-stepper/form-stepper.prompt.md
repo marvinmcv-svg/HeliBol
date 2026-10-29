@@ -1,0 +1,1 @@
+Create a multi-step form: numbered step indicators (bouncy scale on the current one, checkmark when completed) joined by connectors that fill with scaleX; content swaps with `AnimatePresence mode="popLayout"` using a `custom` direction so forward slides left (x ±60 + blur) and back slides right. Back/Continue/Finish controls.

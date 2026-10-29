@@ -1,0 +1,1 @@
+Create a bar chart where each bar's height is set statically and it animates `scaleY 0→1` from a bottom origin with a spring (120/16) staggered 60ms left-to-right on first view. Highlighted bars use a violet→fuchsia gradient; others are muted and brighten on hover with the value shown above. role=img + aria-label summary.

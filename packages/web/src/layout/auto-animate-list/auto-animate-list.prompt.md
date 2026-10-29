@@ -1,0 +1,1 @@
+Create a generic list where every `motion.li` has `layout` and lives inside `AnimatePresence mode="popLayout"`: enter from opacity 0, scale .9, y -8; exit to opacity 0, scale .9, blur 4px; spring 260/30. Demo with add, shuffle and per-row remove.

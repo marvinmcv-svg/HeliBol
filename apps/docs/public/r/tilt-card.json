@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tilt-card",
+  "type": "registry:component",
+  "title": "3D Tilt Card",
+  "description": "The card rotates in 3D toward the pointer on soft springs, with a moving specular glare. Children can pop out with translateZ.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/tilt-card.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/tilt-card.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from \"motion/react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TiltCardProps {\n  children: ReactNode;\n  /** Max rotation in degrees. */\n  max?: number;\n  glare?: boolean;\n  className?: string;\n}\n\nexport function TiltCard({ children, max = 12, glare = true, className }: TiltCardProps) {\n  const ref = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n  const touch = usePrefersTouch();\n  const px = useMotionValue(0.5);\n  const py = useMotionValue(0.5);\n  const cfg = { stiffness: 200, damping: 20, mass: 0.6 };\n  const rx = useSpring(useTransform(py, [0, 1], [max, -max]), cfg);\n  const ry = useSpring(useTransform(px, [0, 1], [-max, max]), cfg);\n  const gx = useTransform(px, (v) => `${v * 100}%`);\n  const gy = useTransform(py, (v) => `${v * 100}%`);\n  const glareBg = useMotionTemplate`radial-gradient(circle at ${gx} ${gy}, rgb(255 255 255 / .35), transparent 55%)`;\n  const off = reduced || touch;\n\n  return (\n    <motion.div\n      ref={ref}\n      onPointerMove={(e) => {\n        if (off || !ref.current) return;\n        const r = ref.current.getBoundingClientRect();\n        px.set((e.clientX - r.left) / r.width);\n        py.set((e.clientY - r.top) / r.height);\n      }}\n      onPointerLeave={() => {\n        px.set(0.5);\n        py.set(0.5);\n      }}\n      style={off ? undefined : { rotateX: rx, rotateY: ry, transformPerspective: 900 }}\n      className={cn(\"group relative [transform-style:preserve-3d]\", className)}\n    >\n      {children}\n      {glare && !off && <motion.div aria-hidden className=\"pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100\" style={{ background: glareBg }} />}\n    </motion.div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "3d",
+      "tilt",
+      "card",
+      "glare",
+      "collectible"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "portfolio",
+      "landing"
+    ]
+  }
+}

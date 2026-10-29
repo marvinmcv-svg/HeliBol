@@ -1,0 +1,1 @@
+Build a features section: centered eyebrow + H2 that reveal on scroll, then a 3-column bento grid with four tiles — (1, wide) an animated-beam diagram code → AI → agent, (2) a big number ticker "71+", (3) engine pills, (4, wide) a shimmer status pill "prefers-reduced-motion: handled". Tiles lift their visual and reveal "Learn more" on hover/focus.

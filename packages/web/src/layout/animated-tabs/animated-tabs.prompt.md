@@ -1,0 +1,1 @@
+Build accessible tabs with a sliding indicator: render the indicator inside the selected tab with a Motion `layoutId` (scoped with `useId`) and a snappy spring (500/35); pill and underline variants. Panels swap with `AnimatePresence mode="popLayout"`, sliding ±24px in the direction of travel with blur. Implement the WAI-ARIA tabs pattern with roving tabindex and arrow keys.

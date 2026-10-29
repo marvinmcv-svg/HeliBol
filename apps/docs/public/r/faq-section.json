@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "faq-section",
+  "type": "registry:block",
+  "title": "FAQ Section",
+  "description": "Two-column FAQ: highlighted heading on the left, smooth height-auto accordion on the right.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json",
+    "https://kinetik.dev/r/accordion-smooth.json",
+    "https://kinetik.dev/r/text-highlighter.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/faq-section.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/faq-section.tsx",
+      "content": "\"use client\";\nimport { AccordionSmooth } from \"@/components/kinetik/accordion-smooth\";\nimport { TextHighlighter } from \"@/components/kinetik/text-highlighter\";\n\nexport function FaqSection() {\n  return (\n    <section className=\"mx-auto grid max-w-5xl gap-10 px-6 py-14 md:grid-cols-[1fr_1.4fr]\">\n      <div>\n        <h2 className=\"text-3xl font-semibold tracking-tight\">Questions, <TextHighlighter>answered</TextHighlighter>.</h2>\n        <p className=\"mt-3 text-sm text-muted-foreground\">Can&apos;t find what you need? Ask in our community — we reply within a day.</p>\n      </div>\n      <AccordionSmooth\n        defaultOpen={[\"a\"]}\n        items={[\n          { id: \"a\", title: \"Is kinetik really free?\", content: \"Yes — MIT licensed. Components are source code in your repo, not a dependency you rent.\" },\n          { id: \"b\", title: \"Which frameworks are supported?\", content: \"React 19 / Next.js on the web, and Expo / React Native (Reanimated 4) for mobile flows.\" },\n          { id: \"c\", title: \"Will it bloat my bundle?\", content: \"Most components are CSS-only. Motion components can use LazyMotion (~4.6 KB). 3D is always lazy-loaded.\" },\n          { id: \"d\", title: \"How do AI prompts work?\", content: \"Each page has a Copy AI prompt button with intent, constraints, source and helpers — paste it into your coding agent.\" },\n          { id: \"e\", title: \"Accessibility?\", content: \"Every component honours prefers-reduced-motion and has keyboard parity for hover/drag interactions.\" },\n        ]}\n      />\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "faq",
+      "accordion",
+      "landing",
+      "pricing"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing",
+      "docs"
+    ]
+  }
+}

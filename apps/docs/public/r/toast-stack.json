@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toast-stack",
+  "type": "registry:component",
+  "title": "Toast Stack",
+  "description": "Sonner-style stacked toasts: they pile up with depth, fan out on hover/focus and swipe away to the right.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/toast-stack.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/toast-stack.tsx",
+      "content": "\"use client\";\nimport { createContext, useCallback, useContext, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface Toast {\n  id: number;\n  title: string;\n  description?: string;\n  tone?: \"default\" | \"success\" | \"error\";\n}\n\nconst Ctx = createContext<(t: Omit<Toast, \"id\">) => void>(() => {});\nexport const useToast = () => useContext(Ctx);\n\nconst GAP = 12;\nconst PEEK = 10;\n\nexport function ToastProvider({ children, duration = 4000, contained = false }: { children: ReactNode; duration?: number; contained?: boolean }) {\n  const [toasts, setToasts] = useState<Toast[]>([]);\n  const [expanded, setExpanded] = useState(false);\n\n  const dismiss = useCallback((id: number) => setToasts((t) => t.filter((x) => x.id !== id)), []);\n  const push = useCallback(\n    (t: Omit<Toast, \"id\">) => {\n      const id = Date.now() + Math.random();\n      setToasts((s) => [...s.slice(-4), { ...t, id }]);\n      setTimeout(() => dismiss(id), duration);\n    },\n    [dismiss, duration],\n  );\n\n  const visible = [...toasts].reverse();\n  return (\n    <Ctx.Provider value={push}>\n      {children}\n      <ol\n        aria-live=\"polite\"\n        aria-label=\"Notifications\"\n        onPointerEnter={() => setExpanded(true)}\n        onPointerLeave={() => setExpanded(false)}\n        onFocus={() => setExpanded(true)}\n        onBlur={() => setExpanded(false)}\n        className={cn(contained ? \"absolute\" : \"fixed\", \"right-4 bottom-4 z-50 h-0 w-[min(22rem,calc(100%-2rem))]\")}\n      >\n        <AnimatePresence initial={false}>\n          {visible.map((t, i) => (\n            <motion.li\n              key={t.id}\n              layout\n              drag=\"x\"\n              dragConstraints={{ left: 0, right: 0 }}\n              dragElastic={{ left: 0.1, right: 1 }}\n              onDragEnd={(_, info) => (info.offset.x > 90 || info.velocity.x > 400) && dismiss(t.id)}\n              initial={{ opacity: 0, y: 40, scale: 0.95 }}\n              animate={{\n                opacity: i > 2 && !expanded ? 0 : 1,\n                y: expanded ? -i * (64 + GAP) : -i * PEEK,\n                scale: expanded ? 1 : 1 - i * 0.05,\n              }}\n              exit={{ opacity: 0, x: 120, transition: { duration: 0.2 } }}\n              transition={spring.smooth}\n              style={{ zIndex: 100 - i }}\n              className={cn(\n                \"absolute right-0 bottom-0 flex h-16 w-full cursor-grab touch-pan-y items-center gap-3 rounded-2xl border border-border bg-popover px-4 shadow-xl active:cursor-grabbing\",\n              )}\n            >\n              <span className={cn(\"size-2 shrink-0 rounded-full\", t.tone === \"success\" ? \"bg-emerald-500\" : t.tone === \"error\" ? \"bg-destructive\" : \"bg-brand\")} />\n              <div className=\"min-w-0 flex-1\">\n                <p className=\"truncate text-sm font-medium\">{t.title}</p>\n                {t.description && <p className=\"truncate text-xs text-muted-foreground\">{t.description}</p>}\n              </div>\n              <button onClick={() => dismiss(t.id)} aria-label=\"Dismiss\" className=\"text-xs text-muted-foreground hover:text-foreground\">✕</button>\n            </motion.li>\n          ))}\n        </AnimatePresence>\n      </ol>\n    </Ctx.Provider>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "toast",
+      "notification",
+      "sonner",
+      "swipe",
+      "feedback"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "settings",
+      "ecommerce"
+    ]
+  }
+}

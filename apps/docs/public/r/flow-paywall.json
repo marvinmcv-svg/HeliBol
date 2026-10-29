@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flow-paywall",
+  "type": "registry:block",
+  "title": "Paywall",
+  "description": "Subscription paywall: features stagger in, plan cards share a sliding selection ring, trial switch springs, and the CTA shimmers into a success state.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/flow-paywall.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/flow-paywall.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check, X } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { haptic } from \"@/components/kinetik/phone\" /* demo frame + haptic() stand-in */;\n\nconst plans = [\n  { id: \"year\", name: \"Yearly\", price: \"$59.99\", per: \"$4.99/mo\", badge: \"Save 58%\" },\n  { id: \"month\", name: \"Monthly\", price: \"$11.99\", per: \"per month\" },\n  { id: \"life\", name: \"Lifetime\", price: \"$149\", per: \"one-time\" },\n];\nconst features = [\"Unlimited projects\", \"All 70+ animations\", \"Mobile flows & Figma kit\", \"Priority support\"];\n\nexport function FlowPaywall({ initialStep = 0 }: { initialStep?: number }) {\n  const [plan, setPlan] = useState(initialStep === 1 ? \"month\" : \"year\");\n  const [trial, setTrial] = useState(true);\n  const [done, setDone] = useState(initialStep === 2);\n  return (\n    <div className=\"relative flex h-full flex-col overflow-hidden bg-zinc-950 px-5 pt-14 pb-8 text-white\">\n      <div className=\"pointer-events-none absolute -top-24 left-1/2 size-80 -translate-x-1/2 rounded-full bg-violet-600/40 blur-3xl\" />\n      <button aria-label=\"Close\" className=\"absolute top-12 right-4 z-10 grid size-8 place-items-center rounded-full bg-white/10\"><X className=\"size-4\" /></button>\n      <AnimatePresence mode=\"wait\">\n        {done ? (\n          <motion.div key=\"done\" className=\"relative flex flex-1 flex-col items-center justify-center text-center\" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={spring.bouncy}>\n            <motion.div className=\"grid size-20 place-items-center rounded-full bg-emerald-500\" initial={{ scale: 0 }} animate={{ scale: [0, 1.15, 1] }} transition={{ duration: 0.5 }}><Check className=\"size-10\" strokeWidth={3} /></motion.div>\n            <h2 className=\"mt-5 text-2xl font-semibold\">Welcome to Pro</h2>\n            <p className=\"mt-1 text-sm text-white/60\">{trial ? \"Your 7-day trial has started.\" : \"Thanks for subscribing.\"}</p>\n            <button onClick={() => setDone(false)} className=\"mt-6 text-xs text-white/50\">Restart demo</button>\n          </motion.div>\n        ) : (\n          <motion.div key=\"form\" className=\"relative flex flex-1 flex-col\" exit={{ opacity: 0, y: 20 }}>\n            <motion.h2 className=\"text-[26px] leading-tight font-semibold tracking-tight\" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>Unlock everything<br />in kinetik Pro</motion.h2>\n            <ul className=\"mt-5 space-y-2.5\">\n              {features.map((f, n) => (\n                <motion.li key={f} className=\"flex items-center gap-2.5 text-sm\" initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 + n * 0.06, ...spring.smooth }}>\n                  <span className=\"grid size-5 place-items-center rounded-full bg-violet-500\"><Check className=\"size-3\" strokeWidth={3} /></span>{f}\n                </motion.li>\n              ))}\n            </ul>\n            <div className=\"mt-6 space-y-2.5\" role=\"radiogroup\" aria-label=\"Plans\">\n              {plans.map((p) => {\n                const on = plan === p.id;\n                return (\n                  <button key={p.id} role=\"radio\" aria-checked={on} onClick={() => { setPlan(p.id); haptic(\"light\"); }} className={cn(\"relative flex w-full items-center gap-3 rounded-2xl border p-3.5 text-left transition-colors\", on ? \"border-violet-400\" : \"border-white/10 bg-white/5\")}>\n                    {on && <motion.span layoutId=\"paywall-sel\" transition={spring.snappy} className=\"absolute inset-0 rounded-2xl bg-violet-500/15 ring-2 ring-violet-400\" />}\n                    <span className={cn(\"relative grid size-5 place-items-center rounded-full border-2\", on ? \"border-violet-400\" : \"border-white/30\")}>{on && <motion.span layoutId=\"paywall-dot\" className=\"size-2.5 rounded-full bg-violet-400\" transition={spring.snappy} />}</span>\n                    <span className=\"relative flex-1\"><span className=\"block text-sm font-semibold\">{p.name}</span><span className=\"text-xs text-white/50\">{p.per}</span></span>\n                    {p.badge && <span className=\"relative rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-bold text-black\">{p.badge}</span>}\n                    <span className=\"relative text-sm font-semibold\">{p.price}</span>\n                  </button>\n                );\n              })}\n            </div>\n            <label className=\"mt-4 flex items-center justify-between rounded-2xl bg-white/5 px-3.5 py-3 text-sm\">\n              Free 7-day trial\n              <button role=\"switch\" aria-checked={trial} onClick={() => { setTrial((t) => !t); haptic(\"light\"); }} className={cn(\"flex h-7 w-12 rounded-full p-0.5 transition-colors\", trial ? \"justify-end bg-emerald-500\" : \"justify-start bg-white/20\")}>\n                <motion.span layout transition={spring.snappy} className=\"size-6 rounded-full bg-white\" />\n              </button>\n            </label>\n            <motion.button whileTap={{ scale: 0.97 }} onClick={() => { haptic(\"success\"); setDone(true); }} className=\"relative mt-auto h-14 overflow-hidden rounded-2xl bg-white text-[15px] font-semibold text-black\">\n              <motion.span aria-hidden className=\"absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-violet-300/60 to-transparent\" animate={{ x: [\"-120%\", \"320%\"] }} transition={{ duration: 2.2, repeat: Infinity, ease: \"easeInOut\", repeatDelay: 0.6 }} />\n              <span className=\"relative\">{trial ? \"Start free trial\" : \"Subscribe\"}</span>\n            </motion.button>\n            <p className=\"mt-2 text-center text-[11px] text-white/40\">Cancel anytime · Restore purchases</p>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "paywall",
+      "subscription",
+      "pricing",
+      "iap",
+      "mobile"
+    ],
+    "pageTypes": [
+      "pricing",
+      "onboarding"
+    ]
+  }
+}

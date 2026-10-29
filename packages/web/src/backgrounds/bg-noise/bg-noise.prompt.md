@@ -1,0 +1,1 @@
+Create a grain overlay: an inline SVG data URI using `feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3"` tiled as a background on an oversized (-20% inset) aria-hidden layer with mix-blend overlay; animate it with `steps(1)` translate keyframes at 0.6s for a film jitter. Pause under reduced motion.

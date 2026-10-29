@@ -1,0 +1,1 @@
+Build a social proof section: an uppercase eyebrow, a slow logo marquee with a pause button, then two testimonial-card marquees running in opposite directions (avatar, quote, name, role), all with faded edges and pause on hover.

@@ -1,0 +1,1 @@
+Create an SVG wrapper that draws all stroked children (path, line, polyline, circle, rect, ellipse) with GSAP `DrawSVGPlugin`: `gsap.from(shapes, { drawSVG: 0, stagger })` triggered by ScrollTrigger at "top 80%", or scrubbed between "top 80%" and "bottom 40%" in scrub mode. Inside `useGSAP()`; skip under reduced motion.

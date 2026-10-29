@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "animated-beam",
+  "type": "registry:component",
+  "title": "Animated Beam",
+  "description": "Light pulses travel along curved connectors between any two elements — the go-to integrations / data-flow diagram.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/animated-beam.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/animated-beam.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useState, type RefObject } from \"react\";\nimport { motion } from \"motion/react\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface AnimatedBeamProps {\n  container: RefObject<HTMLElement | null>;\n  from: RefObject<HTMLElement | null>;\n  to: RefObject<HTMLElement | null>;\n  /** Bend of the curve in px (negative bends up). */\n  curvature?: number;\n  duration?: number;\n  delay?: number;\n  reverse?: boolean;\n  colorFrom?: string;\n  colorTo?: string;\n}\n\n/** An SVG path between two elements with a light pulse travelling along it. Recomputes on resize. */\nexport function AnimatedBeam({ container, from, to, curvature = 0, duration = 3, delay = 0, reverse = false, colorFrom = \"#a855f7\", colorTo = \"#22d3ee\" }: AnimatedBeamProps) {\n  const id = useId().replace(/[^a-zA-Z0-9-]/g, \"\");\n  const reduced = useReducedMotion();\n  const [d, setD] = useState(\"\");\n  const [size, setSize] = useState({ w: 0, h: 0 });\n\n  useEffect(() => {\n    const update = () => {\n      const c = container.current?.getBoundingClientRect();\n      const a = from.current?.getBoundingClientRect();\n      const b = to.current?.getBoundingClientRect();\n      if (!c || !a || !b) return;\n      const x1 = a.left - c.left + a.width / 2;\n      const y1 = a.top - c.top + a.height / 2;\n      const x2 = b.left - c.left + b.width / 2;\n      const y2 = b.top - c.top + b.height / 2;\n      setSize({ w: c.width, h: c.height });\n      setD(`M ${x1},${y1} Q ${(x1 + x2) / 2},${(y1 + y2) / 2 + curvature} ${x2},${y2}`);\n    };\n    update();\n    const ro = new ResizeObserver(update);\n    if (container.current) ro.observe(container.current);\n    return () => ro.disconnect();\n  }, [container, from, to, curvature]);\n\n  const x = reverse ? [\"110%\", \"-10%\"] : [\"-10%\", \"110%\"];\n  return (\n    <svg aria-hidden className=\"pointer-events-none absolute inset-0\" width={size.w} height={size.h} viewBox={`0 0 ${size.w} ${size.h}`} fill=\"none\">\n      <path d={d} stroke=\"currentColor\" strokeOpacity={0.15} strokeWidth={2} strokeLinecap=\"round\" />\n      <path d={d} stroke={`url(#${id})`} strokeWidth={2} strokeLinecap=\"round\" />\n      <defs>\n        <motion.linearGradient\n          id={id}\n          gradientUnits=\"userSpaceOnUse\"\n          initial={{ x1: \"0%\", x2: \"0%\" }}\n          animate={reduced ? { x1: \"0%\", x2: \"100%\" } : { x1: x, x2: x.map((v) => `${parseFloat(v) + 10}%`) }}\n          transition={reduced ? { duration: 0 } : { duration, delay, repeat: Infinity, ease: [0.16, 1, 0.3, 1], repeatDelay: 0.4 }}\n        >\n          <stop stopColor={colorFrom} stopOpacity=\"0\" />\n          <stop stopColor={colorFrom} />\n          <stop offset=\"32.5%\" stopColor={colorTo} />\n          <stop offset=\"100%\" stopColor={colorTo} stopOpacity=\"0\" />\n        </motion.linearGradient>\n      </defs>\n    </svg>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "integrations",
+      "diagram",
+      "beam",
+      "svg",
+      "connections"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

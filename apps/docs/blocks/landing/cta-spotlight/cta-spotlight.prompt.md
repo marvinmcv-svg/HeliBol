@@ -1,0 +1,1 @@
+Create a dark rounded CTA panel (radial indigo→black) with a violet cursor spotlight, a subtle meteor shower, an H2 where one word has a flowing gradient, a muted subline and a white magnetic CTA button.

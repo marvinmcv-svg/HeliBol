@@ -1,0 +1,1 @@
+Create a pointer spotlight section: onPointerMove writes `--k-x`/`--k-y` (pointer position relative to the element) and `--k-o: 1` as CSS variables; an aria-hidden absolute layer paints `radial-gradient(420px circle at var(--k-x) var(--k-y), color, transparent 70%)` with opacity var(--k-o) and a 500ms opacity transition. Skip touch pointers; hide under reduced motion.

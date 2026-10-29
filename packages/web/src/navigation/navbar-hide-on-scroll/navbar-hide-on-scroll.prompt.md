@@ -1,0 +1,1 @@
+Create a smart header: Motion `useScroll` + `useMotionValueEvent` compares current vs previous scrollY — hide (y: -120%) while scrolling down past 160px, show when scrolling up; past a 40px threshold the inner nav `layout`-morphs from a full-width transparent bar into a rounded, blurred, shadowed pill. Force visible on focus.

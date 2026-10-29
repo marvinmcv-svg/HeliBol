@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-animated",
+  "type": "registry:component",
+  "title": "Spring Tooltip",
+  "description": "Tooltips that spring from their anchor (origin-aware), with hover delay, instant on keyboard focus and a quick exit.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/tooltip-animated.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/tooltip-animated.tsx",
+      "content": "\"use client\";\nimport { cloneElement, useId, useRef, useState, type ReactElement, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface TooltipAnimatedProps {\n  content: ReactNode;\n  children: ReactElement<Record<string, unknown>>;\n  side?: \"top\" | \"bottom\";\n  delay?: number;\n  className?: string;\n}\n\nexport function TooltipAnimated({ content, children, side = \"top\", delay = 300, className }: TooltipAnimatedProps) {\n  const [open, setOpen] = useState(false);\n  const id = useId();\n  const t = useRef<ReturnType<typeof setTimeout>>(undefined);\n  const show = () => {\n    t.current = setTimeout(() => setOpen(true), delay);\n  };\n  const hide = () => {\n    clearTimeout(t.current);\n    setOpen(false);\n  };\n  const dy = side === \"top\" ? 6 : -6;\n  return (\n    <span className=\"relative inline-flex\" onPointerEnter={show} onPointerLeave={hide} onFocus={() => setOpen(true)} onBlur={hide} onKeyDown={(e) => e.key === \"Escape\" && hide()}>\n      {cloneElement(children, { \"aria-describedby\": open ? id : undefined })}\n      <AnimatePresence>\n        {open && (\n          <motion.span\n            id={id}\n            role=\"tooltip\"\n            initial={{ opacity: 0, scale: 0.85, y: dy }}\n            animate={{ opacity: 1, scale: 1, y: 0 }}\n            exit={{ opacity: 0, scale: 0.9, y: dy / 2, transition: { duration: 0.1 } }}\n            transition={{ type: \"spring\", stiffness: 500, damping: 30 }}\n            className={cn(\n              \"pointer-events-none absolute left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-foreground px-2.5 py-1.5 text-xs font-medium text-background shadow-lg\",\n              side === \"top\" ? \"bottom-full mb-2 origin-bottom\" : \"top-full mt-2 origin-top\",\n              className,\n            )}\n          >\n            {content}\n            <span className={cn(\"absolute left-1/2 size-2 -translate-x-1/2 rotate-45 bg-foreground\", side === \"top\" ? \"-bottom-1\" : \"-top-1\")} />\n          </motion.span>\n        )}\n      </AnimatePresence>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "tooltip",
+      "hint",
+      "toolbar",
+      "spring"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "docs",
+      "settings"
+    ]
+  }
+}

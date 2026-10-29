@@ -1,0 +1,1 @@
+Create a Spinner component with 8 CSS-only variants (ring, dots, bars, orbit, pulse, wave, morphing square, bounce) sharing one stylesheet; children are empty <i> elements; color = currentColor so Tailwind text-* sets it; size via width/height; role=status + aria-label. Under reduced motion slow them to 3s instead of stopping.

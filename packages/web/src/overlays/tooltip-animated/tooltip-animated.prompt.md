@@ -1,0 +1,1 @@
+Build a tooltip that springs in from its anchor: transform-origin at the anchor side, scale .85→1 and y 6→0 with a spring (500/30), fast 100ms exit. Hover opens after 300ms, focus opens instantly, blur/Esc/leave close. Inject aria-describedby into the trigger via cloneElement; role=tooltip; small rotated-square arrow.

@@ -1,0 +1,1 @@
+Recreate the iPhone Dynamic Island for the web: a black, overflow-hidden pill whose width, height and border-radius animate to each state's size with a spring (stiffness 400, damping 30, mass 0.9). Content swaps with `AnimatePresence mode="popLayout"`: exit fast with blur, enter after an 80ms delay with scale .9→1 and blur. States: idle, incoming call, now playing, timer.

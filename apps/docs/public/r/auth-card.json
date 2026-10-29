@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "auth-card",
+  "type": "registry:block",
+  "title": "Auth — Magic Code Sign-in",
+  "description": "Email → OTP → success in one morphing card: stateful button, shaking OTP on wrong codes, animated success mark.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json",
+    "https://kinetik.dev/r/input-floating-label.json",
+    "https://kinetik.dev/r/button-stateful.json",
+    "https://kinetik.dev/r/otp-input.json",
+    "https://kinetik.dev/r/success-check.json",
+    "https://kinetik.dev/r/bg-grid-dots.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/auth-card.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/auth-card.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { BgGridDots } from \"@/components/kinetik/bg-grid-dots\";\nimport { ButtonStateful } from \"@/components/kinetik/button-stateful\";\nimport { InputFloatingLabel } from \"@/components/kinetik/input-floating-label\";\nimport { OtpInput } from \"@/components/kinetik/otp-input\";\nimport { SuccessCheck } from \"@/components/kinetik/success-check\";\n\nconst wait = (ms: number) => new Promise((r) => setTimeout(r, ms));\n\nexport function AuthCard() {\n  const [step, setStep] = useState<\"email\" | \"code\" | \"done\">(\"email\");\n  const [email, setEmail] = useState(\"ava@kinetik.dev\");\n  return (\n    <BgGridDots className=\"grid h-full place-items-center p-6\">\n      <motion.div layout transition={spring.smooth} className=\"w-full max-w-sm overflow-hidden rounded-3xl border border-border bg-card/90 p-7 shadow-2xl backdrop-blur\">\n        <AnimatePresence mode=\"popLayout\" initial={false}>\n          {step === \"email\" && (\n            <motion.div key=\"email\" initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={spring.smooth} className=\"space-y-5\">\n              <div><h2 className=\"text-xl font-semibold\">Sign in to kinetik</h2><p className=\"text-sm text-muted-foreground\">We&apos;ll email you a magic code.</p></div>\n              <InputFloatingLabel label=\"Work email\" type=\"email\" value={email} onChange={(e) => setEmail(e.target.value)} />\n              <ButtonStateful className=\"w-full\" successLabel=\"Code sent\" onAction={async () => { await wait(900); setTimeout(() => setStep(\"code\"), 600); }}>Continue with email</ButtonStateful>\n            </motion.div>\n          )}\n          {step === \"code\" && (\n            <motion.div key=\"code\" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={spring.smooth} className=\"space-y-5 text-center\">\n              <div><h2 className=\"text-xl font-semibold\">Check your inbox</h2><p className=\"text-sm text-muted-foreground\">Code sent to {email}. Try <b className=\"font-mono text-foreground\">424242</b>.</p></div>\n              <OtpInput onComplete={(c) => { const ok = c === \"424242\"; if (ok) setTimeout(() => setStep(\"done\"), 500); return ok; }} />\n              <button onClick={() => setStep(\"email\")} className=\"text-xs text-muted-foreground hover:text-foreground\">← Use a different email</button>\n            </motion.div>\n          )}\n          {step === \"done\" && (\n            <motion.div key=\"done\" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={spring.smooth} className=\"flex flex-col items-center gap-3 py-4 text-center\">\n              <SuccessCheck status=\"success\" />\n              <h2 className=\"text-xl font-semibold\">You&apos;re in</h2>\n              <button onClick={() => setStep(\"email\")} className=\"text-xs text-muted-foreground hover:text-foreground\">Restart demo</button>\n            </motion.div>\n          )}\n        </AnimatePresence>\n      </motion.div>\n    </BgGridDots>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "auth",
+      "login",
+      "otp",
+      "magic link",
+      "flow"
+    ],
+    "pageTypes": [
+      "auth"
+    ]
+  }
+}

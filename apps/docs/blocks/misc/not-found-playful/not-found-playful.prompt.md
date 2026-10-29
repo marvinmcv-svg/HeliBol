@@ -1,0 +1,1 @@
+Create a playful 404 page over a dot grid: giant mono "4 0 4" where the 0 is a glowing violet→cyan gradient orb floating and wobbling on a 4s loop, a "PAGE NOT FOUND" line that decodes with a scramble effect, a friendly subline, and a magnetic "Take me home" button.

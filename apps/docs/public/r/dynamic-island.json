@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dynamic-island",
+  "type": "registry:component",
+  "title": "Dynamic Island",
+  "description": "A black pill that morphs between sizes — idle, incoming call, now playing, timer — with Apple's slightly bouncy spring.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/dynamic-island.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/dynamic-island.tsx",
+      "content": "\"use client\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface IslandState {\n  id: string;\n  /** Width/height of the pill in this state. */\n  size: { width: number; height: number };\n  radius?: number;\n  content: ReactNode;\n}\n\nexport interface DynamicIslandProps {\n  state: IslandState;\n  className?: string;\n}\n\nconst islandSpring = { type: \"spring\" as const, stiffness: 400, damping: 30, mass: 0.9 };\n\n/** A black pill that morphs between arbitrary sizes and contents with a slightly bouncy spring. */\nexport function DynamicIsland({ state, className }: DynamicIslandProps) {\n  return (\n    <motion.div\n      role=\"status\"\n      aria-live=\"polite\"\n      initial={false}\n      animate={{ width: state.size.width, height: state.size.height, borderRadius: state.radius ?? state.size.height / 2 }}\n      transition={islandSpring}\n      className={cn(\"relative mx-auto overflow-hidden bg-black text-white shadow-[0_8px_30px_rgb(0_0_0/.35)] ring-1 ring-white/10\", className)}\n    >\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        <motion.div\n          key={state.id}\n          initial={{ opacity: 0, scale: 0.9, filter: \"blur(6px)\" }}\n          animate={{ opacity: 1, scale: 1, filter: \"blur(0px)\", transition: { delay: 0.08, duration: 0.25 } }}\n          exit={{ opacity: 0, scale: 0.9, filter: \"blur(6px)\", transition: { duration: 0.12 } }}\n          className=\"absolute inset-0\"\n        >\n          {state.content}\n        </motion.div>\n      </AnimatePresence>\n    </motion.div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "ios",
+      "morph",
+      "notification",
+      "status",
+      "apple"
+    ],
+    "pageTypes": [
+      "landing",
+      "dashboard",
+      "onboarding"
+    ]
+  }
+}

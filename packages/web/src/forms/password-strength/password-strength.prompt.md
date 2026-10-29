@@ -1,0 +1,1 @@
+Build a password field with a 4-segment strength meter: score = number of passed rules (8+ chars, mixed case, number, symbol); segments fill via scaleX with a spring and a 40ms stagger, all recoloring red→orange→amber→lime→emerald; an aria-live label states the level; a 2-column checklist pops checks in with a bouncy spring. Show/hide password toggle.

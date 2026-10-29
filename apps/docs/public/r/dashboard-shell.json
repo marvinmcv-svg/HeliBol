@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard-shell",
+  "type": "registry:block",
+  "title": "Dashboard Shell",
+  "description": "Collapsible spring sidebar with a gliding active indicator, period tabs, KPI tickers with sparklines and a self-drawing chart.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json",
+    "https://kinetik.dev/r/stat-counter-grid.json",
+    "https://kinetik.dev/r/chart-line-draw.json",
+    "https://kinetik.dev/r/animated-tabs.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/dashboard-shell.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/dashboard-shell.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { BarChart3, ChevronsLeft, Home, Inbox, Settings, Users } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { StatCounterGrid } from \"@/components/kinetik/stat-counter-grid\";\nimport { ChartLineDraw } from \"@/components/kinetik/chart-line-draw\";\nimport { AnimatedTabs } from \"@/components/kinetik/animated-tabs\";\n\nconst nav = [\n  { icon: Home, label: \"Overview\" },\n  { icon: BarChart3, label: \"Analytics\" },\n  { icon: Inbox, label: \"Inbox\", badge: 3 },\n  { icon: Users, label: \"Customers\" },\n  { icon: Settings, label: \"Settings\" },\n];\n\nexport function DashboardShell() {\n  const [collapsed, setCollapsed] = useState(false);\n  const [active, setActive] = useState(\"Overview\");\n  return (\n    <div className=\"flex h-full overflow-hidden bg-background text-sm\">\n      <motion.aside animate={{ width: collapsed ? 64 : 208 }} transition={spring.smooth} className=\"flex shrink-0 flex-col border-r border-border bg-card/50 p-3\">\n        <div className=\"mb-4 flex h-8 items-center gap-2 px-1.5 font-semibold\">\n          <span className=\"grid size-7 shrink-0 place-items-center rounded-lg bg-foreground text-background\">◆</span>\n          <AnimatePresence>{!collapsed && <motion.span initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }}>Northwind</motion.span>}</AnimatePresence>\n        </div>\n        <nav className=\"space-y-1\">\n          {nav.map((n) => (\n            <button key={n.label} onClick={() => setActive(n.label)} aria-label={collapsed ? n.label : undefined} aria-current={active === n.label ? \"page\" : undefined} className={cn(\"relative flex h-9 w-full items-center gap-3 rounded-lg px-2.5\", active === n.label ? \"text-foreground\" : \"text-muted-foreground hover:text-foreground\")}>\n              {active === n.label && <motion.span layoutId=\"dash-active\" transition={spring.snappy} className=\"absolute inset-0 rounded-lg bg-accent\" />}\n              <n.icon className=\"relative size-4 shrink-0\" />\n              <AnimatePresence>{!collapsed && <motion.span className=\"relative whitespace-nowrap\" initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.1 } }} exit={{ opacity: 0, transition: { duration: 0.05 } }}>{n.label}</motion.span>}</AnimatePresence>\n              {n.badge && <span className={cn(\"relative ml-auto grid size-5 place-items-center rounded-full bg-brand text-[10px] font-semibold text-white\", collapsed && \"absolute top-0.5 right-1 size-4\")}>{n.badge}</span>}\n            </button>\n          ))}\n        </nav>\n        <button onClick={() => setCollapsed((c) => !c)} aria-label={collapsed ? \"Expand sidebar\" : \"Collapse sidebar\"} className=\"mt-auto flex h-9 items-center gap-3 rounded-lg px-2.5 text-muted-foreground hover:bg-accent\">\n          <motion.span animate={{ rotate: collapsed ? 180 : 0 }} transition={spring.smooth}><ChevronsLeft className=\"size-4\" /></motion.span>\n        </button>\n      </motion.aside>\n      <main className=\"min-w-0 flex-1 space-y-5 overflow-auto p-5\">\n        <div className=\"flex flex-wrap items-center justify-between gap-3\">\n          <div><h1 className=\"text-lg font-semibold\">{active}</h1><p className=\"text-xs text-muted-foreground\">Last 7 days</p></div>\n          <AnimatedTabs className=\"w-auto\" tabs={[{ id: \"7d\", label: \"7d\" }, { id: \"30d\", label: \"30d\" }, { id: \"90d\", label: \"90d\" }]} />\n        </div>\n        <StatCounterGrid stats={[\n          { label: \"Revenue\", value: 48210, prefix: \"$\", delta: 12.4, spark: [4, 6, 5, 8, 7, 9, 12, 11, 14] },\n          { label: \"Active users\", value: 9284, delta: 4.1, spark: [5, 5, 6, 7, 6, 8, 8, 9, 10] },\n          { label: \"Churn\", value: 2.3, suffix: \"%\", decimals: 1, delta: -0.6, spark: [9, 8, 8, 7, 6, 6, 5, 4, 4] },\n          { label: \"NPS\", value: 71, delta: 3, spark: [5, 6, 6, 7, 8, 7, 8, 9, 9] },\n        ]} />\n        <div className=\"rounded-2xl border border-border bg-card p-5\">\n          <p className=\"mb-3 font-semibold\">Signups</p>\n          <ChartLineDraw height={180} data={[\"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Fri\", \"Sat\", \"Sun\"].map((label, i) => ({ label, value: [120, 180, 150, 260, 240, 330, 410][i] }))} />\n        </div>\n      </main>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "dashboard",
+      "sidebar",
+      "admin",
+      "analytics",
+      "app shell"
+    ],
+    "pageTypes": [
+      "dashboard"
+    ]
+  }
+}

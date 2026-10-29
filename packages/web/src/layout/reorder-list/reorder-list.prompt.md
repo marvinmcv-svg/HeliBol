@@ -1,0 +1,1 @@
+Create a sortable list with Motion `Reorder.Group`/`Reorder.Item`: drag only from a grip handle (`dragListener={false}` + `useDragControls`), lift the dragged row (scale 1.03, big shadow), siblings spring aside. Include Move up/Move down buttons per row for keyboard users.

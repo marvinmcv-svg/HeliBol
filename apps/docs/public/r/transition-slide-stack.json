@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "transition-slide-stack",
+  "type": "registry:component",
+  "title": "Push / Pop Stack",
+  "description": "Native-feeling navigation stack for the web: new screens slide over while the previous one parallaxes 30% and dims.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/transition-slide-stack.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/transition-slide-stack.tsx",
+      "content": "\"use client\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport type { ReactNode } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface TransitionSlideStackProps {\n  /** Key of the current screen — changing it triggers the transition. */\n  screenKey: string;\n  /** 1 = push (new screen from the right), -1 = pop. */\n  direction: 1 | -1;\n  children: ReactNode;\n  className?: string;\n}\n\n/** iOS-style push/pop between screens: incoming slides over, outgoing parallaxes 30% and dims. */\nexport function TransitionSlideStack({ screenKey, direction, children, className }: TransitionSlideStackProps) {\n  const reduced = useReducedMotion();\n  const variants = {\n    enter: (d: number) => (reduced ? { opacity: 0 } : { x: d > 0 ? \"100%\" : \"-30%\", opacity: d > 0 ? 1 : 0.6, zIndex: d > 0 ? 2 : 0 }),\n    center: { x: 0, opacity: 1, zIndex: 1 },\n    exit: (d: number) => (reduced ? { opacity: 0 } : { x: d > 0 ? \"-30%\" : \"100%\", opacity: d > 0 ? 0.6 : 1, zIndex: d > 0 ? 0 : 2 }),\n  };\n  return (\n    <div className={cn(\"relative h-full overflow-hidden\", className)}>\n      <AnimatePresence initial={false} custom={direction}>\n        <motion.div\n          key={screenKey}\n          custom={direction}\n          variants={variants}\n          initial=\"enter\"\n          animate=\"center\"\n          exit=\"exit\"\n          transition={spring.smooth}\n          className=\"absolute inset-0 bg-background shadow-[-12px_0_32px_-12px_rgb(0_0_0/0.25)]\"\n        >\n          {children}\n        </motion.div>\n      </AnimatePresence>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "transitions"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "ios",
+      "navigation",
+      "stack",
+      "mobile web",
+      "settings"
+    ],
+    "pageTypes": [
+      "settings",
+      "onboarding",
+      "dashboard"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Build a KPI grid (<dl>): on first view, cards stagger in (80ms, y 12→0), each value counts from 0 with an expo-out over 1.6s (motion value → textContent, Intl formatting), a sparkline polyline draws via pathLength, and a delta pill shows ↑/↓ with green/red. Reduced motion jumps to final values.

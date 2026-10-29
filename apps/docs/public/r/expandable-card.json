@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "expandable-card",
+  "type": "registry:component",
+  "title": "Expandable Card",
+  "description": "List rows morph into a full dialog: image, title and subtitle fly into place with shared layout animations.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://kinetik.dev/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/expandable-card.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/expandable-card.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useRef, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { X } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface ExpandableItem {\n  id: string;\n  title: string;\n  subtitle: string;\n  image: string;\n  content: ReactNode;\n}\n\nexport function ExpandableCards({ items, className }: { items: ExpandableItem[]; className?: string }) {\n  const [active, setActive] = useState<ExpandableItem | null>(null);\n  const uid = useId();\n  const dialog = useRef<HTMLDivElement>(null);\n  const lastTrigger = useRef<HTMLElement | null>(null);\n\n  useEffect(() => {\n    if (!active) return;\n    const onKey = (e: KeyboardEvent) => e.key === \"Escape\" && setActive(null);\n    window.addEventListener(\"keydown\", onKey);\n    dialog.current?.focus();\n    return () => window.removeEventListener(\"keydown\", onKey);\n  }, [active]);\n\n  const lid = (part: string, id: string) => `${uid}-${part}-${id}`;\n\n  return (\n    <>\n      <AnimatePresence>\n        {active && <motion.div className=\"fixed inset-0 z-40 bg-black/40 backdrop-blur-sm\" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActive(null)} />}\n      </AnimatePresence>\n      <AnimatePresence onExitComplete={() => lastTrigger.current?.focus()}>\n        {active && (\n          <div className=\"fixed inset-0 z-50 grid place-items-center p-4\">\n            <motion.div\n              ref={dialog}\n              role=\"dialog\"\n              aria-modal=\"true\"\n              aria-labelledby={lid(\"t\", active.id)}\n              tabIndex={-1}\n              layoutId={lid(\"card\", active.id)}\n              transition={spring.smooth}\n              className=\"flex max-h-full w-full max-w-lg flex-col overflow-hidden rounded-3xl bg-card shadow-2xl outline-none\"\n            >\n              <motion.img layoutId={lid(\"img\", active.id)} transition={spring.smooth} src={active.image} alt=\"\" className=\"aspect-[16/10] w-full object-cover\" />\n              <div className=\"flex items-start justify-between gap-4 p-5\">\n                <div>\n                  <motion.h3 layoutId={lid(\"t\", active.id)} id={lid(\"t\", active.id)} className=\"text-lg font-semibold\">{active.title}</motion.h3>\n                  <motion.p layoutId={lid(\"s\", active.id)} className=\"text-sm text-muted-foreground\">{active.subtitle}</motion.p>\n                </div>\n                <button onClick={() => setActive(null)} aria-label=\"Close\" className=\"grid size-8 shrink-0 place-items-center rounded-full bg-muted hover:bg-accent\">\n                  <X className=\"size-4\" />\n                </button>\n              </div>\n              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.15 } }} exit={{ opacity: 0, transition: { duration: 0.1 } }} className=\"overflow-auto px-5 pb-6 text-sm leading-relaxed text-muted-foreground\">\n                {active.content}\n              </motion.div>\n            </motion.div>\n          </div>\n        )}\n      </AnimatePresence>\n      <ul className={cn(\"grid gap-3\", className)}>\n        {items.map((item) => (\n          <motion.li key={item.id} layoutId={lid(\"card\", item.id)} transition={spring.smooth} className=\"overflow-hidden rounded-2xl bg-card ring-1 ring-border\">\n            <button\n              onClick={(e) => {\n                lastTrigger.current = e.currentTarget;\n                setActive(item);\n              }}\n              className=\"flex w-full items-center gap-3 p-2 pr-4 text-left outline-none hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring\"\n            >\n              <motion.img layoutId={lid(\"img\", item.id)} transition={spring.smooth} src={item.image} alt=\"\" className=\"size-14 rounded-xl object-cover\" />\n              <div className=\"min-w-0 flex-1\">\n                <motion.h3 layoutId={lid(\"t\", item.id)} className=\"truncate text-sm font-semibold\">{item.title}</motion.h3>\n                <motion.p layoutId={lid(\"s\", item.id)} className=\"truncate text-xs text-muted-foreground\">{item.subtitle}</motion.p>\n              </div>\n              <span className=\"rounded-full bg-muted px-3 py-1 text-xs font-medium\">Open</span>\n            </button>\n          </motion.li>\n        ))}\n      </ul>\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "layoutId",
+      "modal",
+      "shared layout",
+      "list",
+      "detail"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "portfolio",
+      "dashboard"
+    ]
+  }
+}
