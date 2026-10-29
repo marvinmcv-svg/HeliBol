@@ -9,10 +9,10 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json",
-    "https://kinetik.dev/r/animated-tabs.json",
-    "https://kinetik.dev/r/button-shimmer.json",
-    "https://kinetik.dev/r/button-press.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/animated-tabs.json",
+    "https://marvzkineticlibrary.vercel.app/r/button-shimmer.json",
+    "https://marvzkineticlibrary.vercel.app/r/button-press.json"
   ],
   "files": [
     {

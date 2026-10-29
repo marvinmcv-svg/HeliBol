@@ -6,7 +6,7 @@
   "description": "Reading-progress bar or ring linked to scroll with CSS scroll timelines (zero JS on modern browsers) and a passive-listener fallback.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

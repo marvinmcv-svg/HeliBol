@@ -8,7 +8,7 @@
     "motion"
   ],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

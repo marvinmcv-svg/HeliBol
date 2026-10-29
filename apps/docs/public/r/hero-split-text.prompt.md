@@ -14,9 +14,9 @@ Compose a landing hero: full-height section with an aurora background (3 driftin
 - Put the component at `components/kinetik/hero-split-text.tsx`.
 
 ## Built from these kinetik components
-Install them first (each also has its own prompt at `https://kinetik.dev/r/<id>.prompt.md`):
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
 ```bash
-npx shadcn@latest add https://kinetik.dev/r/text-split-reveal.json https://kinetik.dev/r/text-blur-in.json https://kinetik.dev/r/bg-aurora.json https://kinetik.dev/r/bg-noise.json https://kinetik.dev/r/button-shimmer.json https://kinetik.dev/r/button-border-beam.json https://kinetik.dev/r/button-press.json https://kinetik.dev/r/scroll-reveal.json
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/text-split-reveal.json https://marvzkineticlibrary.vercel.app/r/text-blur-in.json https://marvzkineticlibrary.vercel.app/r/bg-aurora.json https://marvzkineticlibrary.vercel.app/r/bg-noise.json https://marvzkineticlibrary.vercel.app/r/button-shimmer.json https://marvzkineticlibrary.vercel.app/r/button-border-beam.json https://marvzkineticlibrary.vercel.app/r/button-press.json https://marvzkineticlibrary.vercel.app/r/scroll-reveal.json
 ```
 
 ## Non-negotiables

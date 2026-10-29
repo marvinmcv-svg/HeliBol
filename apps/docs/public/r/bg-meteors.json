@@ -6,7 +6,7 @@
   "description": "Shooting stars streak diagonally across a card or hero with randomized timing — deterministic so SSR matches.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

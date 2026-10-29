@@ -6,7 +6,7 @@
   "description": "Images wipe in with a clip-path curtain (up, left, center-out) while the photo settles from 1.25× zoom — editorial gallery feel.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

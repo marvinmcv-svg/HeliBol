@@ -8,9 +8,9 @@
     "motion"
   ],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json",
-    "https://kinetik.dev/r/accordion-smooth.json",
-    "https://kinetik.dev/r/text-highlighter.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/accordion-smooth.json",
+    "https://marvzkineticlibrary.vercel.app/r/text-highlighter.json"
   ],
   "files": [
     {

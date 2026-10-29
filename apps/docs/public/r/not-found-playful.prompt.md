@@ -14,9 +14,9 @@ Create a playful 404 page over a dot grid: giant mono "4 0 4" where the 0 is a g
 - Put the component at `components/kinetik/not-found-playful.tsx`.
 
 ## Built from these kinetik components
-Install them first (each also has its own prompt at `https://kinetik.dev/r/<id>.prompt.md`):
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
 ```bash
-npx shadcn@latest add https://kinetik.dev/r/text-scramble.json https://kinetik.dev/r/button-magnetic.json https://kinetik.dev/r/bg-grid-dots.json
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/text-scramble.json https://marvzkineticlibrary.vercel.app/r/button-magnetic.json https://marvzkineticlibrary.vercel.app/r/bg-grid-dots.json
 ```
 
 ## Non-negotiables

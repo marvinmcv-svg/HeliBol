@@ -177,7 +177,7 @@ export default function Home() {
           <div className="grid gap-4 md:grid-cols-3">
             {[
               { icon: Boxes, t: "1 · Browse", d: "Filter by category, engine or page type. Replay previews, flip reduced motion, resize to mobile." },
-              { icon: Terminal, t: "2 · Install", d: "One shadcn command drops source + motion tokens into your project.", code: "npx shadcn@latest add kinetik.dev/r/like-burst.json" },
+              { icon: Terminal, t: "2 · Install", d: "One shadcn command drops source + motion tokens into your project.", code: "npx shadcn@latest add marvzkineticlibrary.vercel.app/r/like-burst.json" },
               { icon: Sparkles, t: "3 · Prompt", d: "Or copy the AI prompt — intent, constraints, full source — into Claude Code, Cursor, v0 or Lovable." },
             ].map((s, i) => (
               <ScrollReveal key={s.t} index={i} className="rounded-2xl border border-border bg-card p-6">

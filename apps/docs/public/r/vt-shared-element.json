@@ -6,7 +6,7 @@
   "description": "A card's image and title morph into a detail view using the native View Transitions API — the web's answer to iOS hero transitions.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

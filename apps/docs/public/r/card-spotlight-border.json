@@ -6,7 +6,7 @@
   "description": "Card borders light up near the cursor, and the glow flows continuously across neighbouring cards in the grid.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

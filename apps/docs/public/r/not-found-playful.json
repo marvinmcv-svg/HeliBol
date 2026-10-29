@@ -10,10 +10,10 @@
     "@gsap/react"
   ],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json",
-    "https://kinetik.dev/r/text-scramble.json",
-    "https://kinetik.dev/r/button-magnetic.json",
-    "https://kinetik.dev/r/bg-grid-dots.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/text-scramble.json",
+    "https://marvzkineticlibrary.vercel.app/r/button-magnetic.json",
+    "https://marvzkineticlibrary.vercel.app/r/bg-grid-dots.json"
   ],
   "files": [
     {

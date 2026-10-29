@@ -6,7 +6,7 @@
   "description": "Eight pure-CSS loaders — ring, dots, bars, orbit, pulse, wave, morphing square, bounce — that inherit currentColor.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

@@ -6,7 +6,7 @@
   "description": "The checkmark draws itself with a stroke-dashoffset transition; optional strike-through sweeps across the label.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

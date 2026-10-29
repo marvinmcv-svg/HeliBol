@@ -17,9 +17,9 @@ Build an analytics dashboard shell: a sidebar that springs between 208px and 64p
 - Motion tokens go at `lib/kinetik/tokens.ts` (source below). Use tokens instead of magic numbers.
 
 ## Built from these kinetik components
-Install them first (each also has its own prompt at `https://kinetik.dev/r/<id>.prompt.md`):
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
 ```bash
-npx shadcn@latest add https://kinetik.dev/r/stat-counter-grid.json https://kinetik.dev/r/chart-line-draw.json https://kinetik.dev/r/animated-tabs.json
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/stat-counter-grid.json https://marvzkineticlibrary.vercel.app/r/chart-line-draw.json https://marvzkineticlibrary.vercel.app/r/animated-tabs.json
 ```
 
 ## Non-negotiables

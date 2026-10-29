@@ -6,7 +6,7 @@
   "description": "The foundation button: 2px hover lift, 0.97 press squash, layered shadow and a crisp focus ring. CSS only.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

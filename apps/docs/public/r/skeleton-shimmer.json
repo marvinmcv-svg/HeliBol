@@ -6,7 +6,7 @@
   "description": "Theme-aware skeleton blocks with a soft sweeping highlight. Shape them with Tailwind classes to match your layout.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

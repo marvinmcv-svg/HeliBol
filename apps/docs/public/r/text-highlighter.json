@@ -6,7 +6,7 @@
   "description": "A highlighter-pen stroke or underline draws behind key phrases when they come into view. Wraps across lines.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

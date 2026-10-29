@@ -15,9 +15,9 @@ Build a checkout: left card = 3-step form stepper (shipping, payment, review) wi
 - Motion tokens go at `lib/kinetik/tokens.ts` (source below). Use tokens instead of magic numbers.
 
 ## Built from these kinetik components
-Install them first (each also has its own prompt at `https://kinetik.dev/r/<id>.prompt.md`):
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
 ```bash
-npx shadcn@latest add https://kinetik.dev/r/form-stepper.json https://kinetik.dev/r/input-floating-label.json https://kinetik.dev/r/success-check.json
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/form-stepper.json https://marvzkineticlibrary.vercel.app/r/input-floating-label.json https://marvzkineticlibrary.vercel.app/r/success-check.json
 ```
 
 ## Non-negotiables

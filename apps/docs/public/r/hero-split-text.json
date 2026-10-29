@@ -11,15 +11,15 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json",
-    "https://kinetik.dev/r/text-split-reveal.json",
-    "https://kinetik.dev/r/text-blur-in.json",
-    "https://kinetik.dev/r/bg-aurora.json",
-    "https://kinetik.dev/r/bg-noise.json",
-    "https://kinetik.dev/r/button-shimmer.json",
-    "https://kinetik.dev/r/button-border-beam.json",
-    "https://kinetik.dev/r/button-press.json",
-    "https://kinetik.dev/r/scroll-reveal.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/text-split-reveal.json",
+    "https://marvzkineticlibrary.vercel.app/r/text-blur-in.json",
+    "https://marvzkineticlibrary.vercel.app/r/bg-aurora.json",
+    "https://marvzkineticlibrary.vercel.app/r/bg-noise.json",
+    "https://marvzkineticlibrary.vercel.app/r/button-shimmer.json",
+    "https://marvzkineticlibrary.vercel.app/r/button-border-beam.json",
+    "https://marvzkineticlibrary.vercel.app/r/button-press.json",
+    "https://marvzkineticlibrary.vercel.app/r/scroll-reveal.json"
   ],
   "files": [
     {

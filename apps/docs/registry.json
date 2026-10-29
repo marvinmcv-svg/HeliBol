@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "kinetik",
-  "homepage": "https://kinetik.dev",
+  "homepage": "https://marvzkineticlibrary.vercel.app",
   "items": [
     {
       "name": "kinetik-core",
@@ -42,7 +42,7 @@
         "@react-three/drei"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "3d"
@@ -79,7 +79,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "cursor"
@@ -117,7 +117,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "cards"
@@ -183,7 +183,7 @@
       "description": "Three radial color fields whose anchor points wander via animated @property percentages — a buttery mesh gradient in pure CSS.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "backgrounds"
@@ -222,7 +222,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "layout"
@@ -258,7 +258,7 @@
       "description": "Three heavily blurred color blobs drift on out-of-phase loops behind your hero. Pure CSS, theme-friendly.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "backgrounds"
@@ -297,7 +297,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "layout"
@@ -334,7 +334,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "data"
@@ -369,7 +369,7 @@
       "description": "Apple-style bento layout where each tile's visual lifts and a CTA slides in on hover or keyboard focus.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "cards"
@@ -406,7 +406,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "text"
@@ -441,7 +441,7 @@
       "description": "A comet of light orbits the button's border with a soft glow trail — powered by an animated @property conic gradient.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -478,7 +478,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -512,7 +512,7 @@
       "description": "A soft radial light follows the pointer across a section — fades in on enter, out on leave.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "cursor"
@@ -550,7 +550,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "media"
@@ -588,7 +588,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "overlays"
@@ -624,7 +624,7 @@
       "description": "The checkmark draws itself with a stroke-dashoffset transition; optional strike-through sweeps across the label.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -662,7 +662,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "layout"
@@ -698,7 +698,7 @@
       "description": "The macOS login 'no' — a damped horizontal shake triggered by any changing value. Pair with color and text for accessibility.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "forms"
@@ -737,7 +737,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "layout"
@@ -773,7 +773,7 @@
       "description": "An SVG feTurbulence grain overlay that jitters in steps like film — instantly makes flat gradients feel tactile and kills banding.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "backgrounds"
@@ -808,7 +808,7 @@
       "description": "Material-style floating label driven entirely by CSS (:focus and :placeholder-shown) with a center-out focus underline.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "forms"
@@ -846,7 +846,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "forms"
@@ -882,7 +882,7 @@
       "description": "Dot or line grid backgrounds with a radial vignette mask and optional slow pan — the dev-tool aesthetic.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "backgrounds"
@@ -920,7 +920,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -958,7 +958,7 @@
         "@gsap/react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "scroll"
@@ -993,7 +993,7 @@
       "description": "Images wipe in with a clip-path curtain (up, left, center-out) while the photo settles from 1.25× zoom — editorial gallery feel.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "media"
@@ -1031,7 +1031,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "data"
@@ -1068,7 +1068,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -1106,7 +1106,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "data"
@@ -1143,7 +1143,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -1180,7 +1180,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "navigation"
@@ -1215,7 +1215,7 @@
       "description": "A highlighter-pen stroke or underline draws behind key phrases when they come into view. Wraps across lines.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "text"
@@ -1252,7 +1252,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "media"
@@ -1287,7 +1287,7 @@
       "description": "Shooting stars streak diagonally across a card or hero with randomized timing — deterministic so SSR matches.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "backgrounds"
@@ -1323,7 +1323,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "navigation"
@@ -1360,7 +1360,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "foundations"
@@ -1397,7 +1397,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "overlays"
@@ -1435,7 +1435,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "text"
@@ -1472,7 +1472,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "forms"
@@ -1509,7 +1509,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "scroll"
@@ -1547,7 +1547,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "forms"
@@ -1582,7 +1582,7 @@
       "description": "The foundation button: 2px hover lift, 0.97 press squash, layered shadow and a crisp focus ring. CSS only.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -1620,7 +1620,7 @@
       "description": "Determinate (springy expo-out fill, optional moving stripes) and indeterminate progress, colored with currentColor.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "loaders"
@@ -1657,7 +1657,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "loaders"
@@ -1694,7 +1694,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "transitions"
@@ -1733,7 +1733,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "layout"
@@ -1770,7 +1770,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "text"
@@ -1806,7 +1806,7 @@
         "@gsap/react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "text"
@@ -1843,7 +1843,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "text"
@@ -1877,7 +1877,7 @@
       "description": "Reading-progress bar or ring linked to scroll with CSS scroll timelines (zero JS on modern browsers) and a passive-listener fallback.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "scroll"
@@ -1911,7 +1911,7 @@
       "description": "Six reveal variants (fade-up, scale, blur, slide-left/right, fade) scrubbed by native CSS scroll-driven animations, with an IntersectionObserver fallback.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "scroll"
@@ -1948,7 +1948,7 @@
       "description": "A card's image and title morph into a detail view using the native View Transitions API — the web's answer to iOS hero transitions.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "transitions"
@@ -1984,7 +1984,7 @@
       "description": "A glossy light sweep crosses the CTA every few seconds, pulling the eye without being noisy.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -2051,7 +2051,7 @@
       "description": "Theme-aware skeleton blocks with a soft sweeping highlight. Shape them with Tailwind classes to match your layout.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "loaders"
@@ -2088,7 +2088,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "navigation"
@@ -2126,7 +2126,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "layout"
@@ -2165,7 +2165,7 @@
         "gsap"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "foundations"
@@ -2199,7 +2199,7 @@
       "description": "Eight pure-CSS loaders — ring, dots, bars, orbit, pulse, wave, morphing square, bounce — that inherit currentColor.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "loaders"
@@ -2237,7 +2237,7 @@
         "@gsap/react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "text"
@@ -2273,7 +2273,7 @@
       "description": "Card borders light up near the cursor, and the glow flows continuously across neighbouring cards in the grid.",
       "dependencies": [],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "cards"
@@ -2311,7 +2311,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -2349,7 +2349,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "overlays"
@@ -2387,7 +2387,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -2426,7 +2426,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "scroll"
@@ -2463,7 +2463,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "loaders"
@@ -2502,7 +2502,7 @@
         "@gsap/react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "svg"
@@ -2540,7 +2540,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "buttons"
@@ -2578,7 +2578,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "overlays"
@@ -2616,7 +2616,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "text"
@@ -2654,15 +2654,15 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json",
-        "https://kinetik.dev/r/text-split-reveal.json",
-        "https://kinetik.dev/r/text-blur-in.json",
-        "https://kinetik.dev/r/bg-aurora.json",
-        "https://kinetik.dev/r/bg-noise.json",
-        "https://kinetik.dev/r/button-shimmer.json",
-        "https://kinetik.dev/r/button-border-beam.json",
-        "https://kinetik.dev/r/button-press.json",
-        "https://kinetik.dev/r/scroll-reveal.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/text-split-reveal.json",
+        "https://marvzkineticlibrary.vercel.app/r/text-blur-in.json",
+        "https://marvzkineticlibrary.vercel.app/r/bg-aurora.json",
+        "https://marvzkineticlibrary.vercel.app/r/bg-noise.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-shimmer.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-border-beam.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-press.json",
+        "https://marvzkineticlibrary.vercel.app/r/scroll-reveal.json"
       ],
       "categories": [
         "text"
@@ -2698,11 +2698,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json",
-        "https://kinetik.dev/r/spotlight.json",
-        "https://kinetik.dev/r/bg-meteors.json",
-        "https://kinetik.dev/r/text-gradient-animated.json",
-        "https://kinetik.dev/r/button-magnetic.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/spotlight.json",
+        "https://marvzkineticlibrary.vercel.app/r/bg-meteors.json",
+        "https://marvzkineticlibrary.vercel.app/r/text-gradient-animated.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-magnetic.json"
       ],
       "categories": [
         "cursor"
@@ -2738,9 +2738,9 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json",
-        "https://kinetik.dev/r/accordion-smooth.json",
-        "https://kinetik.dev/r/text-highlighter.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/accordion-smooth.json",
+        "https://marvzkineticlibrary.vercel.app/r/text-highlighter.json"
       ],
       "categories": [
         "layout"
@@ -2778,12 +2778,12 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json",
-        "https://kinetik.dev/r/bento-grid.json",
-        "https://kinetik.dev/r/animated-beam.json",
-        "https://kinetik.dev/r/number-ticker.json",
-        "https://kinetik.dev/r/text-shimmer.json",
-        "https://kinetik.dev/r/scroll-reveal.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/bento-grid.json",
+        "https://marvzkineticlibrary.vercel.app/r/animated-beam.json",
+        "https://marvzkineticlibrary.vercel.app/r/number-ticker.json",
+        "https://marvzkineticlibrary.vercel.app/r/text-shimmer.json",
+        "https://marvzkineticlibrary.vercel.app/r/scroll-reveal.json"
       ],
       "categories": [
         "cards"
@@ -2818,8 +2818,8 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json",
-        "https://kinetik.dev/r/marquee.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/marquee.json"
       ],
       "categories": [
         "media"
@@ -2856,10 +2856,10 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json",
-        "https://kinetik.dev/r/animated-tabs.json",
-        "https://kinetik.dev/r/button-shimmer.json",
-        "https://kinetik.dev/r/button-press.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/animated-tabs.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-shimmer.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-press.json"
       ],
       "categories": [
         "layout"
@@ -2896,12 +2896,12 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json",
-        "https://kinetik.dev/r/input-floating-label.json",
-        "https://kinetik.dev/r/button-stateful.json",
-        "https://kinetik.dev/r/otp-input.json",
-        "https://kinetik.dev/r/success-check.json",
-        "https://kinetik.dev/r/bg-grid-dots.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/input-floating-label.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-stateful.json",
+        "https://marvzkineticlibrary.vercel.app/r/otp-input.json",
+        "https://marvzkineticlibrary.vercel.app/r/success-check.json",
+        "https://marvzkineticlibrary.vercel.app/r/bg-grid-dots.json"
       ],
       "categories": [
         "forms"
@@ -2938,10 +2938,10 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json",
-        "https://kinetik.dev/r/stat-counter-grid.json",
-        "https://kinetik.dev/r/chart-line-draw.json",
-        "https://kinetik.dev/r/animated-tabs.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/stat-counter-grid.json",
+        "https://marvzkineticlibrary.vercel.app/r/chart-line-draw.json",
+        "https://marvzkineticlibrary.vercel.app/r/animated-tabs.json"
       ],
       "categories": [
         "data"
@@ -2978,10 +2978,10 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json",
-        "https://kinetik.dev/r/form-stepper.json",
-        "https://kinetik.dev/r/input-floating-label.json",
-        "https://kinetik.dev/r/success-check.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/form-stepper.json",
+        "https://marvzkineticlibrary.vercel.app/r/input-floating-label.json",
+        "https://marvzkineticlibrary.vercel.app/r/success-check.json"
       ],
       "categories": [
         "forms"
@@ -3019,10 +3019,10 @@
         "@gsap/react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json",
-        "https://kinetik.dev/r/text-scramble.json",
-        "https://kinetik.dev/r/button-magnetic.json",
-        "https://kinetik.dev/r/bg-grid-dots.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/text-scramble.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-magnetic.json",
+        "https://marvzkineticlibrary.vercel.app/r/bg-grid-dots.json"
       ],
       "categories": [
         "text"
@@ -3059,7 +3059,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "layout"
@@ -3097,7 +3097,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "forms"
@@ -3134,7 +3134,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "layout"
@@ -3171,7 +3171,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "data"
@@ -3209,7 +3209,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "forms"
@@ -3246,7 +3246,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://kinetik.dev/r/kinetik-core.json"
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
       ],
       "categories": [
         "navigation"

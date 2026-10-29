@@ -17,9 +17,9 @@ Build a SaaS pricing section: heading, a pill tab toggle Monthly/Yearly (shared-
 - Motion tokens go at `lib/kinetik/tokens.ts` (source below). Use tokens instead of magic numbers.
 
 ## Built from these kinetik components
-Install them first (each also has its own prompt at `https://kinetik.dev/r/<id>.prompt.md`):
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
 ```bash
-npx shadcn@latest add https://kinetik.dev/r/animated-tabs.json https://kinetik.dev/r/button-shimmer.json https://kinetik.dev/r/button-press.json
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/animated-tabs.json https://marvzkineticlibrary.vercel.app/r/button-shimmer.json https://marvzkineticlibrary.vercel.app/r/button-press.json
 ```
 
 ## Non-negotiables

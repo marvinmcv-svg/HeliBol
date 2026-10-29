@@ -14,5 +14,5 @@ export function getContent(id: string): ItemContent {
   return JSON.parse(fs.readFileSync(file, "utf8"));
 }
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kinetik.dev";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marvzkineticlibrary.vercel.app";
 export const installCommand = (id: string) => `npx shadcn@latest add ${SITE_URL}/r/${id}.json`;

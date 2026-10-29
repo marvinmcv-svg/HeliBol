@@ -14,9 +14,9 @@ Create a dark rounded CTA panel (radial indigo→black) with a violet cursor spo
 - Put the component at `components/kinetik/cta-spotlight.tsx`.
 
 ## Built from these kinetik components
-Install them first (each also has its own prompt at `https://kinetik.dev/r/<id>.prompt.md`):
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
 ```bash
-npx shadcn@latest add https://kinetik.dev/r/spotlight.json https://kinetik.dev/r/bg-meteors.json https://kinetik.dev/r/text-gradient-animated.json https://kinetik.dev/r/button-magnetic.json
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/spotlight.json https://marvzkineticlibrary.vercel.app/r/bg-meteors.json https://marvzkineticlibrary.vercel.app/r/text-gradient-animated.json https://marvzkineticlibrary.vercel.app/r/button-magnetic.json
 ```
 
 ## Non-negotiables

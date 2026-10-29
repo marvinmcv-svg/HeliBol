@@ -14,9 +14,9 @@ Build a social proof section: an uppercase eyebrow, a slow logo marquee with a p
 - Put the component at `components/kinetik/social-proof-marquee.tsx`.
 
 ## Built from these kinetik components
-Install them first (each also has its own prompt at `https://kinetik.dev/r/<id>.prompt.md`):
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
 ```bash
-npx shadcn@latest add https://kinetik.dev/r/marquee.json
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/marquee.json
 ```
 
 ## Non-negotiables

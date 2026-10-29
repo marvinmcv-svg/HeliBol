@@ -6,7 +6,7 @@
   "description": "Six reveal variants (fade-up, scale, blur, slide-left/right, fade) scrubbed by native CSS scroll-driven animations, with an IntersectionObserver fallback.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

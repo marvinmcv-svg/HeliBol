@@ -6,7 +6,7 @@
   "description": "Three radial color fields whose anchor points wander via animated @property percentages — a buttery mesh gradient in pure CSS.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

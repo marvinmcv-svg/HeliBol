@@ -6,7 +6,7 @@
   "description": "Dot or line grid backgrounds with a radial vignette mask and optional slow pan — the dev-tool aesthetic.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

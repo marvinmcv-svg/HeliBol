@@ -8,8 +8,8 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json",
-    "https://kinetik.dev/r/marquee.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/marquee.json"
   ],
   "files": [
     {

@@ -14,9 +14,9 @@ Build a two-column FAQ section: left column H2 with one word getting a marker hi
 - Put the component at `components/kinetik/faq-section.tsx`.
 
 ## Built from these kinetik components
-Install them first (each also has its own prompt at `https://kinetik.dev/r/<id>.prompt.md`):
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
 ```bash
-npx shadcn@latest add https://kinetik.dev/r/accordion-smooth.json https://kinetik.dev/r/text-highlighter.json
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/accordion-smooth.json https://marvzkineticlibrary.vercel.app/r/text-highlighter.json
 ```
 
 ## Non-negotiables

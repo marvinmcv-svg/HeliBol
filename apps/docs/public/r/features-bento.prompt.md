@@ -14,9 +14,9 @@ Build a features section: centered eyebrow + H2 that reveal on scroll, then a 3-
 - Put the component at `components/kinetik/features-bento.tsx`.
 
 ## Built from these kinetik components
-Install them first (each also has its own prompt at `https://kinetik.dev/r/<id>.prompt.md`):
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
 ```bash
-npx shadcn@latest add https://kinetik.dev/r/bento-grid.json https://kinetik.dev/r/animated-beam.json https://kinetik.dev/r/number-ticker.json https://kinetik.dev/r/text-shimmer.json https://kinetik.dev/r/scroll-reveal.json
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/bento-grid.json https://marvzkineticlibrary.vercel.app/r/animated-beam.json https://marvzkineticlibrary.vercel.app/r/number-ticker.json https://marvzkineticlibrary.vercel.app/r/text-shimmer.json https://marvzkineticlibrary.vercel.app/r/scroll-reveal.json
 ```
 
 ## Non-negotiables

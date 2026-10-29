@@ -6,7 +6,7 @@
   "description": "The macOS login 'no' — a damped horizontal shake triggered by any changing value. Pair with color and text for accessibility.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

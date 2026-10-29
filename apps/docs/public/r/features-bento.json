@@ -9,12 +9,12 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json",
-    "https://kinetik.dev/r/bento-grid.json",
-    "https://kinetik.dev/r/animated-beam.json",
-    "https://kinetik.dev/r/number-ticker.json",
-    "https://kinetik.dev/r/text-shimmer.json",
-    "https://kinetik.dev/r/scroll-reveal.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/bento-grid.json",
+    "https://marvzkineticlibrary.vercel.app/r/animated-beam.json",
+    "https://marvzkineticlibrary.vercel.app/r/number-ticker.json",
+    "https://marvzkineticlibrary.vercel.app/r/text-shimmer.json",
+    "https://marvzkineticlibrary.vercel.app/r/scroll-reveal.json"
   ],
   "files": [
     {

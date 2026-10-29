@@ -8,7 +8,7 @@ Every item ships with:
 
 - a **live, interactive preview** (replay, desktop/tablet/mobile viewports, light/dark, and a **Reduce motion** toggle that shows the accessible fallback)
 - **source + usage** with syntax highlighting
-- a one-line **install**: `npx shadcn@latest add https://kinetik.dev/r/<id>.json`
+- a one-line **install**: `npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/<id>.json`
 - a **Copy AI prompt** button — intent, motion spec, a11y/perf constraints, full source and helpers, ready for Claude Code, Cursor, v0, Bolt or Lovable
 - props table, accessibility and performance notes, engine badge, similar items
 

@@ -17,7 +17,7 @@ const webSrc = path.join(root, "packages/web/src");
 const docs = path.join(root, "apps/docs");
 const outR = path.join(docs, "public/r");
 const outContent = path.join(docs, "content");
-const SITE = process.env.KINETIK_URL ?? "https://kinetik.dev";
+const SITE = process.env.KINETIK_URL ?? "https://marvzkineticlibrary.vercel.app";
 
 fs.mkdirSync(outR, { recursive: true });
 fs.mkdirSync(outContent, { recursive: true });

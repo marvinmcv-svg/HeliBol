@@ -6,7 +6,7 @@
   "description": "A comet of light orbits the button's border with a soft glow trail — powered by an animated @property conic gradient.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

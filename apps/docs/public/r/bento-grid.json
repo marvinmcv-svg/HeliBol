@@ -6,7 +6,7 @@
   "description": "Apple-style bento layout where each tile's visual lifts and a CTA slides in on hover or keyboard focus.",
   "dependencies": [],
   "registryDependencies": [
-    "https://kinetik.dev/r/kinetik-core.json"
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
   ],
   "files": [
     {

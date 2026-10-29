@@ -15,9 +15,9 @@ Build a passwordless sign-in card over a dot-grid background: step 1 floating-la
 - Motion tokens go at `lib/kinetik/tokens.ts` (source below). Use tokens instead of magic numbers.
 
 ## Built from these kinetik components
-Install them first (each also has its own prompt at `https://kinetik.dev/r/<id>.prompt.md`):
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
 ```bash
-npx shadcn@latest add https://kinetik.dev/r/input-floating-label.json https://kinetik.dev/r/button-stateful.json https://kinetik.dev/r/otp-input.json https://kinetik.dev/r/success-check.json https://kinetik.dev/r/bg-grid-dots.json
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/input-floating-label.json https://marvzkineticlibrary.vercel.app/r/button-stateful.json https://marvzkineticlibrary.vercel.app/r/otp-input.json https://marvzkineticlibrary.vercel.app/r/success-check.json https://marvzkineticlibrary.vercel.app/r/bg-grid-dots.json
 ```
 
 ## Non-negotiables
