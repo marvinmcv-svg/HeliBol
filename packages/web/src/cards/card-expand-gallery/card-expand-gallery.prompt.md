@@ -1,0 +1,1 @@
+Build an expanding gallery: a flex row of image buttons; the active one has flex 5, others 1, animated with Motion layout spring; active caption fades/slides in after 150ms; collapsed panels show a vertical title.

@@ -1,0 +1,1 @@
+Create cover flow with perspective 1100px: item offset o = n − i; centered item at z 80, rotateY 0; others at x = o·70 ± 70, z −|o|·40, rotateY −sign(o)·58°, springs; drag/keys/clicks change the index; reflection under each cover.

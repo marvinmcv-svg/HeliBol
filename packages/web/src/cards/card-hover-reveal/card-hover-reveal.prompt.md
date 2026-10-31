@@ -1,0 +1,1 @@
+Make a hover-reveal image card: image scales 1.1 and drops to brightness .5 over 700ms expo-out; the bottom text block lifts 4px and an extra details row expands with grid-template-rows 0fr→1fr then fades in. Same on :focus-visible.

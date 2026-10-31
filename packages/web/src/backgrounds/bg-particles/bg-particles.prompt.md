@@ -1,0 +1,1 @@
+Build a particle network on canvas: particle count = area × density; particles drift with damping and wrap around edges, are pushed away within 120px of the pointer; draw lines between pairs closer than `link` with alpha (1 − d/link)·.35.

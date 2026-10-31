@@ -1,0 +1,22 @@
+{
+  "flow-paywall": {
+    "evidence_id": "ev_02614d47c2836fbf314c3e7c0b8031908f808ffea37ba6d87b9a56cfa7f03200",
+    "png_sha256": "930e04f3f81df53cc43f8bf4b2aa86fa0582a453b3a3ee72818a5e76e8d1c5a2",
+    "viewport": {
+      "width": 1200,
+      "height": 750
+    },
+    "captured_at": "2026-10-31T19:21:38.491Z",
+    "provider": "rea-cdp-browser"
+  },
+  "bg-aurora": {
+    "evidence_id": "ev_e6b731ff4e5352a0f1137002df790b24aee357bb029e9e380242a4a460750492",
+    "png_sha256": "a607e97caac7c7d23226726a4c93574af0993bea3c8b147906ca99298f9a4c7e",
+    "viewport": {
+      "width": 1200,
+      "height": 750
+    },
+    "captured_at": "2026-10-31T19:21:39.714Z",
+    "provider": "rea-cdp-browser"
+  }
+}

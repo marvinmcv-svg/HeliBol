@@ -1,0 +1,1 @@
+Create a contribution heatmap: a 7-row column-flow grid of 12px cells with 0–4 intensity levels (color alpha), scaling in from 0 with delay (week + day) × 15ms when in view; hover shows the value in a caption.

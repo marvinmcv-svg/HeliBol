@@ -1,0 +1,1 @@
+Create a shape morph: author each shape as the same command structure (M + 8 C segments + Z) so Motion can tween `d` point-by-point with a soft spring (90/14); cycle through the sequence on an interval; gradient fill.

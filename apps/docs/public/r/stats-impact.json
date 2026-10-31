@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stats-impact",
+  "type": "registry:block",
+  "title": "Stats — Live Impact",
+  "description": "Impact section: a live odometer counter, KPI grid and a bar chart that grows on view.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/text-odometer.json",
+    "https://marvzkineticlibrary.vercel.app/r/chart-bar-grow.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/stats-impact.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/stats-impact.tsx",
+      "content": "\"use client\";\nimport { TextOdometer } from \"@/components/kinetik/text-odometer\";\nimport { ChartBarGrow } from \"@/components/kinetik/chart-bar-grow\";\nimport { useEffect, useState } from \"react\";\n\nexport function StatsImpact() {\n  const [live, setLive] = useState(2489120);\n  useEffect(() => {\n    const t = setInterval(() => setLive((v) => v + Math.floor(Math.random() * 900)), 1500);\n    return () => clearInterval(t);\n  }, []);\n  return (\n    <section className=\"mx-auto max-w-5xl px-6 py-12\">\n      <div className=\"grid gap-8 md:grid-cols-[1fr_1.2fr]\">\n        <div>\n          <p className=\"text-sm font-medium text-brand\">Impact</p>\n          <h2 className=\"mt-2 text-3xl font-semibold tracking-tight\">Animations served, live</h2>\n          <TextOdometer value={live} className=\"mt-4 text-5xl font-semibold tracking-tight\" />\n          <dl className=\"mt-8 grid grid-cols-2 gap-6\">\n            {[[\"194\", \"Components\"], [\"99.98%\", \"Uptime\"], [\"38\", \"Edge regions\"], [\"4.6 KB\", \"Min. runtime\"]].map(([v, l]) => <div key={l}><dd className=\"text-2xl font-semibold\">{v}</dd><dt className=\"text-xs text-muted-foreground\">{l}</dt></div>)}\n          </dl>\n        </div>\n        <div className=\"rounded-3xl border border-border bg-card p-6\">\n          <p className=\"mb-4 text-sm font-semibold\">Monthly installs (k)</p>\n          <ChartBarGrow height={240} data={[\"J\", \"F\", \"M\", \"A\", \"M\", \"J\", \"J\", \"A\", \"S\", \"O\"].map((label, i) => ({ label, value: [12, 18, 22, 31, 29, 44, 52, 61, 78, 96][i], highlight: i === 9 }))} />\n        </div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "stats",
+      "kpi",
+      "counter",
+      "chart"
+    ],
+    "pageTypes": [
+      "landing",
+      "dashboard"
+    ]
+  }
+}

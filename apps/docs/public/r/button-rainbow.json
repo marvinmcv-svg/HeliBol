@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-rainbow",
+  "type": "registry:component",
+  "title": "Rainbow Border Button",
+  "description": "Dark pill with a rotating rainbow conic border and a blurred rainbow glow pooling underneath.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-rainbow.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-rainbow.tsx",
+      "content": "import type { ButtonHTMLAttributes } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nconst css = `\n@property --k-rb-a{syntax:\"<angle>\";initial-value:0deg;inherits:false}\n.k-rainbow{position:relative;isolation:isolate;background:linear-gradient(var(--color-foreground,#111),var(--color-foreground,#111)) padding-box,conic-gradient(from var(--k-rb-a),#f43f5e,#f59e0b,#84cc16,#06b6d4,#8b5cf6,#f43f5e) border-box;border:2px solid transparent;animation:k-rb 3s linear infinite}\n.k-rainbow::after{content:\"\";position:absolute;inset:auto 12% -14px;height:60%;z-index:-1;background:conic-gradient(from var(--k-rb-a),#f43f5e,#f59e0b,#84cc16,#06b6d4,#8b5cf6,#f43f5e);filter:blur(16px);opacity:.7;animation:k-rb 3s linear infinite}\n@keyframes k-rb{to{--k-rb-a:360deg}}\n@media (prefers-reduced-motion:reduce){.k-rainbow,.k-rainbow::after{animation:none}}\n[data-reduce-motion] .k-rainbow,[data-reduce-motion] .k-rainbow::after{animation:none}`;\n\n/** Dark pill with a rotating rainbow border and a soft rainbow glow underneath. */\nexport function ButtonRainbow({ className, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {\n  return (\n    <>\n      <style href=\"k-rainbow\" precedence=\"kinetik\">{css}</style>\n      <button className={cn(\"k-rainbow inline-flex h-11 items-center gap-2 rounded-xl px-6 text-sm font-semibold text-background outline-none transition-transform active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background\", className)} {...props} />\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "cta",
+      "rainbow",
+      "glow",
+      "border",
+      "css-only"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing"
+    ]
+  }
+}

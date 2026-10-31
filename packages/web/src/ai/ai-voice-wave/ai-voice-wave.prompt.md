@@ -1,0 +1,1 @@
+Build a voice input pill: a round mic button (turns red, icon swaps to mic-off when recording) and, while recording, a row of 3px bars whose heights spring to levels (simulated or from an AnalyserNode) plus an m:ss timer; pill grows with Motion layout.

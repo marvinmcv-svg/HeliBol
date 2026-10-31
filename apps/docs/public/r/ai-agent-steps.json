@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-agent-steps",
+  "type": "registry:component",
+  "title": "Agent Run Timeline",
+  "description": "Agent tool calls appear one by one with a pulsing running state, then resolve to a check with their result.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/ai-agent-steps.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/ai-agent-steps.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface AgentStep {\n  icon: ReactNode;\n  title: string;\n  detail?: string;\n  /** ms the step \"runs\" */\n  duration?: number;\n}\n\n/** Agent run timeline: tool calls appear one by one with a running spinner, then collapse to a check with their result. */\nexport function AiAgentSteps({ steps, className }: { steps: AgentStep[]; className?: string }) {\n  const [i, setI] = useState(0);\n  useEffect(() => {\n    if (i >= steps.length) return;\n    const t = setTimeout(() => setI((n) => n + 1), steps[i].duration ?? 1200);\n    return () => clearTimeout(t);\n  }, [i, steps]);\n  return (\n    <ol className={cn(\"relative space-y-3\", className)} aria-live=\"polite\">\n      <span aria-hidden className=\"absolute top-3 bottom-3 left-[15px] w-px bg-border\" />\n      <AnimatePresence initial={false}>\n        {steps.slice(0, Math.min(i + 1, steps.length)).map((s, n) => {\n          const running = n === i;\n          return (\n            <motion.li key={s.title} layout initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={spring.smooth} className=\"relative flex gap-3\">\n              <span className={cn(\"relative z-10 grid size-8 shrink-0 place-items-center rounded-full border bg-card transition-colors\", running ? \"border-violet-500 text-violet-500\" : \"border-emerald-500/40 bg-emerald-500/10 text-emerald-500\")}>\n                {running ? <span className=\"[&>svg]:size-4\">{s.icon}</span> : <Check className=\"size-4\" />}\n                {running && <span className=\"absolute inset-0 animate-ping rounded-full border border-violet-500/50\" />}\n              </span>\n              <div className=\"pt-1 text-sm\">\n                <p className=\"font-medium\">{s.title}{running && <span className=\"text-muted-foreground\">…</span>}</p>\n                <AnimatePresence>{!running && s.detail && <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: \"auto\" }} className=\"text-xs text-muted-foreground\">{s.detail}</motion.p>}</AnimatePresence>\n              </div>\n            </motion.li>\n          );\n        })}\n      </AnimatePresence>\n    </ol>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "ai",
+      "agent",
+      "tool calls",
+      "timeline",
+      "status"
+    ],
+    "pageTypes": [
+      "ai-app",
+      "dashboard"
+    ]
+  }
+}

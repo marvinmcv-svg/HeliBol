@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-neon",
+  "type": "registry:component",
+  "title": "Neon Gradient Card",
+  "description": "A two-tone neon gradient border that slowly rotates, with a matching bloom glowing behind the card.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-neon.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-neon.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nconst css = `\n@property --k-neon-a{syntax:\"<angle>\";initial-value:0deg;inherits:false}\n.k-neon{position:relative;border-radius:1.5rem;padding:2px;background:conic-gradient(from var(--k-neon-a),var(--k-n1),var(--k-n2),var(--k-n1));animation:k-neon 5s linear infinite}\n.k-neon::before{content:\"\";position:absolute;inset:0;border-radius:inherit;background:inherit;filter:blur(24px);opacity:.65;z-index:-1}\n@keyframes k-neon{to{--k-neon-a:360deg}}\n@media (prefers-reduced-motion:reduce){.k-neon{animation:none}}\n[data-reduce-motion] .k-neon{animation:none}`;\n\n/** Card with a living two-tone neon gradient border and a matching bloom behind it. */\nexport function CardNeon({ children, from = \"#ff2975\", to = \"#00d4ff\", className }: { children: ReactNode; from?: string; to?: string; className?: string }) {\n  return (\n    <>\n      <style href=\"k-neon\" precedence=\"kinetik\">{css}</style>\n      <div className=\"relative isolate\">\n        <div className=\"k-neon\" style={{ \"--k-n1\": from, \"--k-n2\": to } as React.CSSProperties}>\n          <div className={cn(\"relative rounded-[calc(1.5rem-2px)] bg-card\", className)}>{children}</div>\n        </div>\n      </div>\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "neon",
+      "glow",
+      "border",
+      "dark"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing"
+    ]
+  }
+}

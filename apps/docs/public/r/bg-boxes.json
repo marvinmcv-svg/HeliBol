@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-boxes",
+  "type": "registry:component",
+  "title": "Interactive Boxes",
+  "description": "A skewed isometric grid of cells that flash random colors under the cursor and fade back slowly.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-boxes.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-boxes.tsx",
+      "content": "\"use client\";\nimport { useMemo, type ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nconst palette = [\"#f472b6\", \"#a78bfa\", \"#60a5fa\", \"#34d399\", \"#facc15\", \"#fb923c\"];\n\n/** A skewed isometric grid of cells that light up in random colors as the cursor passes and fade back slowly. */\nexport function BgBoxes({ children, rows = 18, cols = 22, className }: { children?: ReactNode; rows?: number; cols?: number; className?: string }) {\n  const colors = useMemo(() => Array.from({ length: rows * cols }, (_, i) => palette[(i * 7) % palette.length]), [rows, cols]);\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)}>\n      <div\n        className=\"absolute -top-1/4 left-1/4 -z-10 grid origin-top-left [transform:translate(-40%,-10%)_skewX(-48deg)_skewY(14deg)_scale(.7)] motion-reduce:pointer-events-none\"\n        style={{ gridTemplateColumns: `repeat(${cols}, 4rem)` }}\n      >\n        {colors.map((c, i) => (\n          <div\n            key={i}\n            className=\"h-8 w-16 border-r border-b border-border transition-colors duration-[1.6s] hover:duration-0\"\n            onPointerEnter={(e) => (e.currentTarget.style.background = c)}\n            onPointerLeave={(e) => (e.currentTarget.style.background = \"transparent\")}\n          />\n        ))}\n      </div>\n      <div aria-hidden className=\"pointer-events-none absolute inset-0 -z-[5] [background:radial-gradient(ellipse_at_center,transparent_20%,var(--color-background,#000)_75%)]\" />\n      <div className=\"pointer-events-none relative\">{children}</div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "grid",
+      "interactive",
+      "isometric",
+      "hover"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

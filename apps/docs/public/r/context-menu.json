@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-menu",
+  "type": "registry:component",
+  "title": "Context Menu",
+  "description": "Right-click menu that scales from the click point with staggered items, shortcuts and full arrow-key navigation.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/context-menu.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/context-menu.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface MenuAction {\n  label: string;\n  icon?: ReactNode;\n  shortcut?: string;\n  danger?: boolean;\n  onSelect?: () => void;\n}\n\n/** Right-click (or Shift+F10) menu that scales from the click point with staggered items and arrow-key navigation. */\nexport function ContextMenu({ actions, children, className }: { actions: MenuAction[]; children: ReactNode; className?: string }) {\n  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);\n  const box = useRef<HTMLDivElement>(null);\n  const menu = useRef<HTMLUListElement>(null);\n  useEffect(() => {\n    if (!pos) return;\n    menu.current?.querySelector<HTMLButtonElement>(\"button\")?.focus();\n    const close = () => setPos(null);\n    addEventListener(\"pointerdown\", close);\n    addEventListener(\"scroll\", close, true);\n    return () => (removeEventListener(\"pointerdown\", close), removeEventListener(\"scroll\", close, true));\n  }, [pos]);\n  const openAt = (x: number, y: number) => {\n    const r = box.current!.getBoundingClientRect();\n    setPos({ x: Math.min(x - r.left, r.width - 200), y: Math.min(y - r.top, r.height - actions.length * 36 - 12) });\n  };\n  return (\n    <div\n      ref={box}\n      tabIndex={0}\n      onContextMenu={(e) => (e.preventDefault(), openAt(e.clientX, e.clientY))}\n      onKeyDown={(e) => {\n        if ((e.shiftKey && e.key === \"F10\") || e.key === \"ContextMenu\") {\n          e.preventDefault();\n          const r = box.current!.getBoundingClientRect();\n          openAt(r.left + 24, r.top + 24);\n        }\n      }}\n      className={cn(\"relative outline-none focus-visible:ring-2 focus-visible:ring-ring\", className)}\n    >\n      {children}\n      <AnimatePresence>\n        {pos && (\n          <motion.ul\n            ref={menu}\n            role=\"menu\"\n            onPointerDown={(e) => e.stopPropagation()}\n            onKeyDown={(e) => {\n              const btns = [...(menu.current?.querySelectorAll<HTMLButtonElement>(\"button\") ?? [])];\n              const i = btns.indexOf(document.activeElement as HTMLButtonElement);\n              if (e.key === \"ArrowDown\") (e.preventDefault(), btns[(i + 1) % btns.length]?.focus());\n              if (e.key === \"ArrowUp\") (e.preventDefault(), btns[(i - 1 + btns.length) % btns.length]?.focus());\n              if (e.key === \"Escape\") setPos(null);\n            }}\n            initial={{ opacity: 0, scale: 0.9 }}\n            animate={{ opacity: 1, scale: 1 }}\n            exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.1 } }}\n            transition={{ type: \"spring\", stiffness: 500, damping: 32 }}\n            style={{ left: pos.x, top: pos.y }}\n            className=\"absolute z-50 w-48 origin-top-left rounded-xl border border-border bg-popover p-1 shadow-2xl\"\n          >\n            {actions.map((a, i) => (\n              <motion.li key={a.label} role=\"none\" initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.025 }}>\n                <button role=\"menuitem\" onClick={() => (a.onSelect?.(), setPos(null))} className={cn(\"flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm outline-none hover:bg-accent focus:bg-accent [&>svg]:size-4\", a.danger && \"text-destructive\")}>\n                  {a.icon}\n                  {a.label}\n                  {a.shortcut && <kbd className=\"ml-auto text-[10px] text-muted-foreground\">{a.shortcut}</kbd>}\n                </button>\n              </motion.li>\n            ))}\n          </motion.ul>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "context menu",
+      "right click",
+      "menu",
+      "shortcuts"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "docs"
+    ]
+  }
+}

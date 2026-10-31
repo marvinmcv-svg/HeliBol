@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-ripple",
+  "type": "registry:component",
+  "title": "Ripple Button",
+  "description": "Material ink ripple that grows from the exact press point and fades, sized to cover the whole button.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-ripple.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-ripple.tsx",
+      "content": "\"use client\";\nimport { useState, type ButtonHTMLAttributes } from \"react\";\nimport { cn, prefersReducedMotion } from \"@/lib/kinetik/core\";\n\ninterface Ripple { id: number; x: number; y: number; size: number }\n\nconst css = `@keyframes k-ripple{from{transform:scale(0);opacity:.45}to{transform:scale(1);opacity:0}}`;\n\n/** Material-style ink ripple that grows from the exact press point. */\nexport function ButtonRipple({ className, children, onPointerDown, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {\n  const [ripples, setRipples] = useState<Ripple[]>([]);\n  return (\n    <>\n      <style href=\"k-ripple\" precedence=\"kinetik\">{css}</style>\n      <button\n        {...props}\n        onPointerDown={(e) => {\n          onPointerDown?.(e);\n          if (prefersReducedMotion()) return;\n          const r = e.currentTarget.getBoundingClientRect();\n          const size = Math.hypot(r.width, r.height) * 2;\n          const id = Date.now() + Math.random();\n          setRipples((rs) => [...rs, { id, x: e.clientX - r.left - size / 2, y: e.clientY - r.top - size / 2, size }]);\n          setTimeout(() => setRipples((rs) => rs.filter((x) => x.id !== id)), 650);\n        }}\n        className={cn(\"relative inline-flex h-11 items-center justify-center overflow-hidden rounded-xl bg-primary px-6 text-sm font-medium text-primary-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background\", className)}\n      >\n        {ripples.map((r) => (\n          <span key={r.id} aria-hidden className=\"pointer-events-none absolute rounded-full bg-current\" style={{ left: r.x, top: r.y, width: r.size, height: r.size, animation: \"k-ripple .65s cubic-bezier(.2,0,0,1) forwards\" }} />\n        ))}\n        <span className=\"relative\">{children}</span>\n      </button>\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "ripple",
+      "material",
+      "press",
+      "feedback"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "settings",
+      "auth"
+    ]
+  }
+}

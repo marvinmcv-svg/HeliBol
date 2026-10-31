@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "nav-sidebar",
+  "type": "registry:component",
+  "title": "Collapsible Sidebar",
+  "description": "App sidebar that springs between full width and an icon rail, with a gliding active indicator, badges and native tooltips.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/nav-sidebar.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/nav-sidebar.tsx",
+      "content": "\"use client\";\nimport { useId, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { PanelLeftClose } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface SidebarItem {\n  icon: ReactNode;\n  label: string;\n  badge?: number;\n}\n\n/** App sidebar that springs between expanded and icon rail, with a gliding active indicator and tooltips when collapsed. */\nexport function NavSidebar({ items, brand, className }: { items: SidebarItem[]; brand?: ReactNode; className?: string }) {\n  const [collapsed, setCollapsed] = useState(false);\n  const [active, setActive] = useState(items[0]?.label);\n  const id = useId();\n  return (\n    <motion.aside animate={{ width: collapsed ? 68 : 232 }} transition={spring.smooth} className={cn(\"flex h-full shrink-0 flex-col border-r border-border bg-card/60 p-3\", className)}>\n      <div className=\"mb-4 flex h-9 items-center gap-2 overflow-hidden px-1.5\">\n        <span className=\"grid size-8 shrink-0 place-items-center rounded-lg bg-foreground text-background\">◆</span>\n        <AnimatePresence>{!collapsed && <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className=\"font-semibold whitespace-nowrap\">{brand ?? \"Workspace\"}</motion.span>}</AnimatePresence>\n      </div>\n      <nav className=\"flex-1 space-y-1\">\n        {items.map((it) => (\n          <button key={it.label} onClick={() => setActive(it.label)} aria-current={active === it.label ? \"page\" : undefined} aria-label={collapsed ? it.label : undefined} title={collapsed ? it.label : undefined} className={cn(\"relative flex h-10 w-full items-center gap-3 rounded-xl px-3 text-sm\", active === it.label ? \"text-foreground\" : \"text-muted-foreground hover:text-foreground\")}>\n            {active === it.label && <motion.span layoutId={id} transition={spring.snappy} className=\"absolute inset-0 rounded-xl bg-accent\" />}\n            <span className=\"relative shrink-0 [&>svg]:size-[18px]\">{it.icon}</span>\n            <AnimatePresence>{!collapsed && <motion.span initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0, transition: { delay: 0.08 } }} exit={{ opacity: 0, transition: { duration: 0.05 } }} className=\"relative whitespace-nowrap\">{it.label}</motion.span>}</AnimatePresence>\n            {it.badge ? <span className={cn(\"relative ml-auto grid min-w-5 place-items-center rounded-full bg-brand px-1 text-[10px] font-semibold text-white\", collapsed && \"absolute top-1 right-1 ml-0 size-4 min-w-0\")}>{it.badge}</span> : null}\n          </button>\n        ))}\n      </nav>\n      <button onClick={() => setCollapsed((c) => !c)} aria-label={collapsed ? \"Expand sidebar\" : \"Collapse sidebar\"} className=\"flex h-10 items-center gap-3 rounded-xl px-3 text-muted-foreground hover:bg-accent\">\n        <motion.span animate={{ rotate: collapsed ? 180 : 0 }} transition={spring.smooth}><PanelLeftClose className=\"size-[18px]\" /></motion.span>\n      </button>\n    </motion.aside>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "sidebar",
+      "app shell",
+      "collapse",
+      "dashboard"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "settings"
+    ]
+  }
+}

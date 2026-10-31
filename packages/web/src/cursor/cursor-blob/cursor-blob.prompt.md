@@ -1,0 +1,1 @@
+Create a gooey cursor: three circles (sizes 72/54/36px) follow pointer x/y through springs of decreasing stiffness (400, 160, 80) inside a layer filtered by feGaussianBlur(12) + alpha feColorMatrix (30, −12), so they merge into a stretching liquid shape.

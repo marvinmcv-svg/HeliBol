@@ -1,0 +1,1 @@
+Build a circular text badge: an SVG circle path (`M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0`) with uppercase tracked text on a `<textPath>` (textLength fitted), the SVG rotating 360° linearly forever with Motion; a center slot for an icon that scales 1.1 and rotates −12° with a back-out ease on hover.

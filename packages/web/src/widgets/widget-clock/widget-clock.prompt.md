@@ -1,0 +1,1 @@
+Make an analog world clock: Intl.DateTimeFormat parts for the zone, hands rotated by hour·30 + minute/2, minute·6, second·6 (+ms for a smooth sweep via rAF), 12 tick marks, an orange seconds hand and center cap.

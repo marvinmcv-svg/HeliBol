@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rating-stars",
+  "type": "registry:component",
+  "title": "Rating Stars",
+  "description": "Star rating built as a real radio group: hovering previews, choosing pops the stars in sequence.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/rating-stars.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/rating-stars.tsx",
+      "content": "\"use client\";\nimport { useId, useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface RatingStarsProps {\n  value?: number;\n  defaultValue?: number;\n  onChange?: (v: number) => void;\n  max?: number;\n  label?: string;\n  className?: string;\n}\n\n/** Star rating as an accessible radio group; hovering previews, choosing pops the stars in sequence. */\nexport function RatingStars({ value: controlled, defaultValue = 0, onChange, max = 5, label = \"Rating\", className }: RatingStarsProps) {\n  const [internal, setInternal] = useState(defaultValue);\n  const [hover, setHover] = useState(0);\n  const [pop, setPop] = useState(0);\n  const value = controlled ?? internal;\n  const shown = hover || value;\n  const name = useId();\n  const set = (v: number) => {\n    if (controlled === undefined) setInternal(v);\n    onChange?.(v);\n    setPop((p) => p + 1);\n  };\n  return (\n    <div role=\"radiogroup\" aria-label={label} className={cn(\"inline-flex gap-1\", className)} onPointerLeave={() => setHover(0)}>\n      {Array.from({ length: max }, (_, i) => {\n        const n = i + 1;\n        const on = n <= shown;\n        return (\n          <label key={n} className=\"cursor-pointer\" onPointerEnter={() => setHover(n)}>\n            <input type=\"radio\" name={name} value={n} checked={value === n} onChange={() => set(n)} className=\"peer sr-only\" aria-label={`${n} star${n > 1 ? \"s\" : \"\"}`} />\n            <motion.svg\n              key={`${pop}-${n}`}\n              viewBox=\"0 0 24 24\"\n              className=\"size-8 rounded peer-focus-visible:ring-2 peer-focus-visible:ring-ring\"\n              initial={false}\n              animate={n <= value && pop ? { scale: [1, 1.35, 1], rotate: [0, -12, 0] } : { scale: on ? 1.08 : 1 }}\n              transition={{ duration: 0.4, delay: n <= value ? i * 0.06 : 0 }}\n            >\n              <path d=\"M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z\" fill={on ? \"#facc15\" : \"transparent\"} stroke={on ? \"#eab308\" : \"currentColor\"} strokeOpacity={on ? 1 : 0.35} strokeWidth=\"1.5\" strokeLinejoin=\"round\" className=\"transition-[fill] duration-150\" />\n            </motion.svg>\n          </label>\n        );\n      })}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "rating",
+      "stars",
+      "review",
+      "form",
+      "feedback"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "social"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Build a neon card: a 2px-padded wrapper painted with conic-gradient(from var(--angle), c1, c2, c1) rotating via @property, a ::before copy blurred 24px at .65 opacity behind it, and the card body inside.

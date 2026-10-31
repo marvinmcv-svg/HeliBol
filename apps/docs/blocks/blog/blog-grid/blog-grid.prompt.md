@@ -1,0 +1,1 @@
+Create a filterable blog grid: title + pill tabs; selecting a category filters posts with AnimatePresence popLayout + layout so remaining cards slide into place and removed ones scale out; each post is an image card that reveals its excerpt on hover.

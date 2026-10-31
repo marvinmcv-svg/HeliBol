@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-folder",
+  "type": "registry:component",
+  "title": "Folder Card",
+  "description": "A folder whose flap tilts open on hover/click while the papers inside slide up and fan out.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-folder.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-folder.tsx",
+      "content": "\"use client\";\nimport { useState, type ReactNode } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** A folder whose front flap tilts open on hover/click and whose papers slide up and fan out. */\nexport function CardFolder({ papers, color = \"#6366f1\", label = \"Folder\", className }: { papers: ReactNode[]; color?: string; label?: string; className?: string }) {\n  const [open, setOpen] = useState(false);\n  return (\n    <button\n      onPointerEnter={() => setOpen(true)}\n      onPointerLeave={() => setOpen(false)}\n      onClick={() => setOpen((o) => !o)}\n      aria-expanded={open}\n      aria-label={label}\n      className={cn(\"relative h-40 w-52 outline-none [perspective:700px] focus-visible:ring-2 focus-visible:ring-ring rounded-2xl\", className)}\n    >\n      <div className=\"absolute inset-x-0 bottom-0 h-[85%] rounded-2xl rounded-tl-none\" style={{ background: color, filter: \"brightness(.8)\" }}>\n        <div className=\"absolute -top-4 left-0 h-5 w-20 rounded-t-xl\" style={{ background: color, filter: \"brightness(.8)\" }} />\n      </div>\n      {papers.slice(0, 3).map((p, i) => (\n        <motion.div key={i} className=\"absolute inset-x-6 bottom-4 h-[70%] overflow-hidden rounded-lg bg-white shadow-md\" animate={open ? { y: -48 - i * 6, x: (i - 1) * 36, rotate: (i - 1) * 10 } : { y: -i * 4, x: 0, rotate: 0 }} transition={{ ...spring.smooth, delay: open ? i * 0.04 : 0 }}>\n          {p}\n        </motion.div>\n      ))}\n      <motion.div className=\"absolute inset-x-0 bottom-0 h-[72%] origin-bottom rounded-2xl\" style={{ background: color }} animate={{ rotateX: open ? -32 : 0 }} transition={spring.smooth} />\n    </button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "folder",
+      "files",
+      "playful",
+      "3d"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "dashboard"
+    ]
+  }
+}

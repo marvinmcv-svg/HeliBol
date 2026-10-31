@@ -1,0 +1,1 @@
+Build an AI assistant screen: header with status pill; main area shows an empty state (headline + suggestion chips) that, on pick or submit, crossfades into a thread: user bubble, a 'thinking' trace, then a streamed assistant reply; composer pinned at the bottom.

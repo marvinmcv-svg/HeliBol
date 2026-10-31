@@ -1,0 +1,1 @@
+Create a voice orb on canvas with globalCompositeOperation 'lighter': for each color draw a radial gradient circle orbiting the center (angle = t·spin + offset); radius and orbit wobble with an amplitude that depends on state (listening: .15 + level·.35, speaking: pulsing, thinking: faster spin). Light CSS blur.

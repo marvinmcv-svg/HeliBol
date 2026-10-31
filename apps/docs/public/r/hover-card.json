@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hover-card",
+  "type": "registry:component",
+  "title": "Hover Card",
+  "description": "Rich preview card that springs up from a link after a short hover-intent delay — profiles and link previews.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hover-card.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/hover-card.tsx",
+      "content": "\"use client\";\nimport { useId, useRef, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\n/** Rich preview card that springs up from a link after a short hover/focus intent delay (profiles, link previews). */\nexport function HoverCard({ trigger, children, openDelay = 350, className }: { trigger: ReactNode; children: ReactNode; openDelay?: number; className?: string }) {\n  const [open, setOpen] = useState(false);\n  const t = useRef<ReturnType<typeof setTimeout>>(undefined);\n  const id = useId();\n  const show = () => {\n    clearTimeout(t.current);\n    t.current = setTimeout(() => setOpen(true), openDelay);\n  };\n  const hide = () => {\n    clearTimeout(t.current);\n    t.current = setTimeout(() => setOpen(false), 120);\n  };\n  return (\n    <span className={cn(\"relative inline-block\", className)} onPointerEnter={show} onPointerLeave={hide} onFocus={() => setOpen(true)} onBlur={hide}>\n      <span aria-describedby={open ? id : undefined}>{trigger}</span>\n      <AnimatePresence>\n        {open && (\n          <motion.span id={id} role=\"tooltip\" onPointerEnter={() => clearTimeout(t.current)} onPointerLeave={hide} initial={{ opacity: 0, y: 6, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 4, scale: 0.98, transition: { duration: 0.12 } }} transition={{ type: \"spring\", stiffness: 420, damping: 30 }} className=\"absolute top-full left-1/2 z-40 mt-2 block w-72 -translate-x-1/2 origin-top rounded-2xl border border-border bg-popover p-4 text-left shadow-2xl\">\n            {children}\n          </motion.span>\n        )}\n      </AnimatePresence>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "hover card",
+      "preview",
+      "profile",
+      "popover"
+    ],
+    "pageTypes": [
+      "social",
+      "blog",
+      "docs"
+    ]
+  }
+}

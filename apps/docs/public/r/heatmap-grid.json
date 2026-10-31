@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "heatmap-grid",
+  "type": "registry:component",
+  "title": "Contribution Heatmap",
+  "description": "GitHub-style contribution grid whose cells fill in a diagonal wave on view, with a hover readout.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/heatmap-grid.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/heatmap-grid.tsx",
+      "content": "\"use client\";\nimport { useMemo, useRef, useState } from \"react\";\nimport { motion, useInView } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\n/** GitHub-style contribution heatmap whose cells fill in a diagonal wave on view, with a hover readout. */\nexport function HeatmapGrid({ weeks = 26, seed = 7, color = \"34 197 94\", className }: { weeks?: number; seed?: number; color?: string; className?: string }) {\n  const ref = useRef<HTMLDivElement>(null);\n  const inView = useInView(ref, { once: true, amount: 0.3 });\n  const [hot, setHot] = useState<{ w: number; d: number; v: number } | null>(null);\n  const data = useMemo(() => Array.from({ length: weeks * 7 }, (_, i) => {\n    const x = Math.sin(i * 12.9898 + seed) * 43758.5453;\n    const r = x - Math.floor(x);\n    return r < 0.3 ? 0 : Math.ceil(r * 4);\n  }), [weeks, seed]);\n  const total = data.reduce((s, v) => s + v, 0);\n  return (\n    <div ref={ref} className={cn(\"inline-block\", className)}>\n      <div className=\"grid grid-flow-col grid-rows-7 gap-[3px]\" role=\"img\" aria-label={`${total} contributions in the last ${weeks} weeks`} onPointerLeave={() => setHot(null)}>\n        {data.map((v, i) => {\n          const w = Math.floor(i / 7);\n          const d = i % 7;\n          return <motion.span key={i} onPointerEnter={() => setHot({ w, d, v })} className=\"size-3 rounded-[3px]\" style={{ background: v ? `rgb(${color} / ${0.25 + v * 0.19})` : \"color-mix(in oklab, var(--color-foreground, #888) 8%, transparent)\" }} initial={{ scale: 0, opacity: 0 }} animate={inView ? { scale: 1, opacity: 1 } : {}} transition={{ delay: (w + d) * 0.015, type: \"spring\", stiffness: 400, damping: 22 }} />;\n        })}\n      </div>\n      <p className=\"mt-2 h-4 text-xs text-muted-foreground\">{hot ? `${hot.v * 3} contributions · week ${hot.w + 1}, day ${hot.d + 1}` : `${total * 3} contributions in the last ${weeks} weeks`}</p>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "heatmap",
+      "contributions",
+      "calendar",
+      "github"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "portfolio"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Build a CSS letter-roll hover: each letter is a 2-row inline-flex column (letter + duplicate) inside an overflow-hidden line; on hover/focus-visible (or parent a/button hover) translate each column −50% with `cubic-bezier(.76,0,.24,1)` 450ms, delayed by a per-letter CSS var computed from start/center/end distance.

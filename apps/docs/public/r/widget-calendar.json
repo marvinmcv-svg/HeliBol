@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-calendar",
+  "type": "registry:component",
+  "title": "Mini Calendar",
+  "description": "Month calendar where the selected-day pill glides between dates, months slide in their travel direction, and event dots mark days.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/widget-calendar.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/widget-calendar.tsx",
+      "content": "\"use client\";\nimport { useId, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ChevronLeft, ChevronRight } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** Mini month calendar: the selected-day pill glides between dates, months slide in their travel direction, event dots below days. */\nexport function WidgetCalendar({ events = {}, className }: { events?: Record<string, string>; className?: string }) {\n  const [cursor, setCursor] = useState(() => new Date(2026, 9, 1));\n  const [dir, setDir] = useState(1);\n  const [sel, setSel] = useState<string>(\"2026-10-29\");\n  const pill = useId();\n  const y = cursor.getFullYear();\n  const m = cursor.getMonth();\n  const first = (new Date(y, m, 1).getDay() + 6) % 7;\n  const days = new Date(y, m + 1, 0).getDate();\n  const key = (d: number) => `${y}-${String(m + 1).padStart(2, \"0\")}-${String(d).padStart(2, \"0\")}`;\n  const go = (d: number) => (setDir(d), setCursor(new Date(y, m + d, 1)));\n  return (\n    <div className={cn(\"w-72 rounded-3xl border border-border bg-card p-4\", className)}>\n      <div className=\"mb-3 flex items-center justify-between\">\n        <p className=\"font-semibold\">{cursor.toLocaleString(\"en\", { month: \"long\", year: \"numeric\" })}</p>\n        <div className=\"flex gap-1\">\n          <button onClick={() => go(-1)} aria-label=\"Previous month\" className=\"grid size-7 place-items-center rounded-full hover:bg-accent\"><ChevronLeft className=\"size-4\" /></button>\n          <button onClick={() => go(1)} aria-label=\"Next month\" className=\"grid size-7 place-items-center rounded-full hover:bg-accent\"><ChevronRight className=\"size-4\" /></button>\n        </div>\n      </div>\n      <div className=\"grid grid-cols-7 text-center text-[11px] text-muted-foreground\">{[\"M\", \"T\", \"W\", \"T\", \"F\", \"S\", \"S\"].map((d, i) => <span key={i}>{d}</span>)}</div>\n      <div className=\"relative mt-1 h-[13.5rem] overflow-hidden\">\n        <AnimatePresence initial={false} custom={dir} mode=\"popLayout\">\n          <motion.div key={`${y}-${m}`} custom={dir} variants={{ in: (d: number) => ({ x: d * 60, opacity: 0 }), c: { x: 0, opacity: 1 }, out: (d: number) => ({ x: d * -60, opacity: 0 }) }} initial=\"in\" animate=\"c\" exit=\"out\" transition={spring.smooth} className=\"grid grid-cols-7 gap-y-1\" role=\"grid\">\n            {Array.from({ length: first }, (_, i) => <span key={`e${i}`} />)}\n            {Array.from({ length: days }, (_, i) => {\n              const d = i + 1;\n              const k = key(d);\n              const on = k === sel;\n              return (\n                <button key={k} onClick={() => setSel(k)} aria-pressed={on} aria-label={`${k}${events[k] ? `, ${events[k]}` : \"\"}`} className={cn(\"relative mx-auto grid size-8 place-items-center rounded-full text-sm\", on ? \"text-background\" : \"hover:bg-accent\")}>\n                  {on && <motion.span layoutId={pill} transition={spring.snappy} className=\"absolute inset-0 rounded-full bg-foreground\" />}\n                  <span className=\"relative\">{d}</span>\n                  {events[k] && <span className={cn(\"absolute bottom-0.5 size-1 rounded-full\", on ? \"bg-background\" : \"bg-orange-500\")} />}\n                </button>\n              );\n            })}\n          </motion.div>\n        </AnimatePresence>\n      </div>\n      <AnimatePresence mode=\"wait\">\n        <motion.p key={sel} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className=\"mt-1 truncate rounded-xl bg-muted px-3 py-2 text-xs\">{events[sel] ? `● ${events[sel]}` : \"No events\"}</motion.p>\n      </AnimatePresence>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "widgets"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "calendar",
+      "date",
+      "widget",
+      "events"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "settings"
+    ]
+  }
+}

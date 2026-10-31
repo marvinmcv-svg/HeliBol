@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "masonry-reveal",
+  "type": "registry:component",
+  "title": "Masonry Reveal",
+  "description": "Pinterest-style masonry whose tiles rise and unblur in a staggered wave as they scroll into view.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/masonry-reveal.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/masonry-reveal.tsx",
+      "content": "\"use client\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** Pinterest-style masonry (CSS columns) whose tiles rise and unblur in a staggered wave as they enter view. */\nexport function MasonryReveal({ items, columns = 3, className }: { items: { src: string; alt: string; ratio: number }[]; columns?: number; className?: string }) {\n  const reduced = useReducedMotion();\n  return (\n    <div className={cn(\"gap-3\", className)} style={{ columnCount: columns }}>\n      {items.map((it, i) => (\n        <motion.figure\n          key={i}\n          className=\"mb-3 break-inside-avoid overflow-hidden rounded-2xl\"\n          initial={reduced ? false : { opacity: 0, y: 40, filter: \"blur(8px)\" }}\n          whileInView={{ opacity: 1, y: 0, filter: \"blur(0px)\" }}\n          viewport={{ once: true, amount: 0.2 }}\n          transition={{ duration: 0.7, delay: (i % columns) * 0.08, ease: [0.16, 1, 0.3, 1] }}\n        >\n          <img src={it.src} alt={it.alt} className=\"w-full object-cover transition-transform duration-700 hover:scale-105\" style={{ aspectRatio: it.ratio }} />\n        </motion.figure>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "masonry",
+      "gallery",
+      "pinterest",
+      "scroll reveal"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "social",
+      "blog"
+    ]
+  }
+}

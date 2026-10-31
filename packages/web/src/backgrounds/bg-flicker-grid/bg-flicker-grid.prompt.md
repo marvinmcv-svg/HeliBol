@@ -1,0 +1,1 @@
+Create a flickering grid background: a DPR-aware canvas filled with square cells; each frame, each cell re-rolls its opacity with probability flicker·dt; masked with a radial vignette. Pause when off-screen/hidden; one frame under reduced motion.

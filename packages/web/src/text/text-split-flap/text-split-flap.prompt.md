@@ -1,0 +1,1 @@
+Create a split-flap display: each character is a dark rounded cell with a horizontal seam line; an interval advances every unsettled cell to the next char in ` ABC…Z0-9:-.` until it equals its target, then stops. Monospace amber text.

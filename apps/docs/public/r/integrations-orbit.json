@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "integrations-orbit",
+  "type": "registry:block",
+  "title": "Integrations Orbit",
+  "description": "Integrations section: flip-word headline on the left, icons orbiting the product logo on the right.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/orbit-icons.json",
+    "https://marvzkineticlibrary.vercel.app/r/text-flip-words.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/integrations-orbit.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/integrations-orbit.tsx",
+      "content": "\"use client\";\nimport { Cloud, Code2, Database, GitBranch, Mail, MessageSquare, Shield, Zap } from \"lucide-react\";\nimport { OrbitIcons } from \"@/components/kinetik/orbit-icons\";\nimport { TextFlipWords } from \"@/components/kinetik/text-flip-words\";\n\nexport function IntegrationsOrbit() {\n  return (\n    <section className=\"mx-auto grid max-w-5xl items-center gap-10 px-6 py-12 md:grid-cols-2\">\n      <div>\n        <p className=\"text-sm font-medium text-brand\">Integrations</p>\n        <h2 className=\"mt-2 text-4xl font-semibold tracking-tight\">Plugs into <TextFlipWords words={[\"GitHub\", \"Slack\", \"Postgres\", \"your stack\"]} className=\"text-brand\" /></h2>\n        <p className=\"mt-3 text-muted-foreground\">80+ integrations, one motion language. Connect once and every surface animates the same way.</p>\n        <a href=\"#\" className=\"mt-6 inline-flex rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background\">Browse integrations →</a>\n      </div>\n      <div className=\"grid place-items-center overflow-hidden\">\n        <OrbitIcons center={<span className=\"text-2xl font-bold\">k</span>} rings={[{ radius: 80, duration: 20, icons: [<Code2 key=\"1\" />, <Zap key=\"2\" />, <Mail key=\"3\" />] }, { radius: 145, duration: 34, reverse: true, icons: [<Cloud key=\"4\" />, <Database key=\"5\" />, <GitBranch key=\"6\" />, <MessageSquare key=\"7\" />, <Shield key=\"8\" />] }]} />\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "integrations",
+      "ecosystem",
+      "orbit",
+      "landing"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

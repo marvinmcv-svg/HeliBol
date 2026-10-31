@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-3d-layers",
+  "type": "registry:component",
+  "title": "3D Layered Card",
+  "description": "The card tilts toward the pointer and its child layers lift out to different depths with translateZ.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-3d-layers.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-3d-layers.tsx",
+      "content": "\"use client\";\nimport { createContext, useContext, useRef, type ReactNode } from \"react\";\nimport { motion, useMotionValue, useSpring, useTransform, type MotionValue } from \"motion/react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\nconst Ctx = createContext<{ hover: MotionValue<number> } | null>(null);\n\n/** 3D card where child layers pop out at different depths (translateZ) as the card tilts toward the pointer. */\nexport function Card3D({ children, className }: { children: ReactNode; className?: string }) {\n  const ref = useRef<HTMLDivElement>(null);\n  const off = useReducedMotion() || usePrefersTouch();\n  const rx = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });\n  const ry = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });\n  const hover = useSpring(useMotionValue(0), { stiffness: 200, damping: 25 });\n  return (\n    <Ctx.Provider value={{ hover }}>\n      <div className=\"[perspective:1000px]\">\n        <motion.div\n          ref={ref}\n          onPointerMove={(e) => {\n            if (off || !ref.current) return;\n            const r = ref.current.getBoundingClientRect();\n            ry.set(((e.clientX - r.left) / r.width - 0.5) * 24);\n            rx.set(-((e.clientY - r.top) / r.height - 0.5) * 24);\n            hover.set(1);\n          }}\n          onPointerLeave={() => (rx.set(0), ry.set(0), hover.set(0))}\n          style={{ rotateX: rx, rotateY: ry, transformStyle: \"preserve-3d\" }}\n          className={cn(\"relative\", className)}\n        >\n          {children}\n        </motion.div>\n      </div>\n    </Ctx.Provider>\n  );\n}\n\n/** A layer inside <Card3D>; `depth` (px) is how far it lifts toward the viewer on hover. */\nexport function Card3DLayer({ depth = 40, children, className }: { depth?: number; children: ReactNode; className?: string }) {\n  const ctx = useContext(Ctx);\n  const fallback = useMotionValue(0);\n  const z = useTransform(ctx?.hover ?? fallback, [0, 1], [0, depth]);\n  return <motion.div style={{ translateZ: z, transformStyle: \"preserve-3d\" }} className={className}>{children}</motion.div>;\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "3d",
+      "parallax",
+      "tilt",
+      "depth"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-circular",
+  "type": "registry:component",
+  "title": "Circular Text Badge",
+  "description": "Text set on a circle with an SVG textPath slowly spins around a center icon; the center pops on hover.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-circular.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-circular.tsx",
+      "content": "\"use client\";\nimport { useId, type ReactNode } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextCircularProps {\n  text: string;\n  /** seconds per revolution */\n  duration?: number;\n  size?: number;\n  reverse?: boolean;\n  /** speed up on hover */\n  hoverBoost?: boolean;\n  children?: ReactNode;\n  className?: string;\n}\n\n/** Text set on a circle (SVG textPath) that slowly spins around a center badge. */\nexport function TextCircular({ text, duration = 14, size = 160, reverse = false, hoverBoost = true, children, className }: TextCircularProps) {\n  const id = `k-circ-${useId().replace(/[^a-zA-Z0-9-]/g, \"\")}`;\n  const reduced = useReducedMotion();\n  return (\n    <div className={cn(\"group relative grid place-items-center\", className)} style={{ width: size, height: size }} aria-label={text}>\n      <motion.svg\n        viewBox=\"0 0 100 100\"\n        className=\"absolute inset-0 h-full w-full overflow-visible\"\n        aria-hidden\n        animate={reduced ? undefined : { rotate: reverse ? -360 : 360 }}\n        transition={{ duration, repeat: Infinity, ease: \"linear\" }}\n        style={{ animationPlayState: \"running\" }}\n      >\n        <defs>\n          <path id={id} d=\"M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0\" />\n        </defs>\n        <text className=\"fill-current text-[9.5px] font-semibold tracking-[0.32em] uppercase\">\n          <textPath href={`#${id}`} textLength={238}>{text}</textPath>\n        </text>\n      </motion.svg>\n      <div className={cn(\"relative transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)]\", hoverBoost && \"group-hover:scale-110 group-hover:rotate-[-12deg]\")}>{children}</div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "badge",
+      "circular",
+      "spinning",
+      "portfolio",
+      "cta"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

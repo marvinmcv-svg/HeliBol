@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-pixel-reveal",
+  "type": "registry:component",
+  "title": "Pixel Dissolve Card",
+  "description": "A pixel mosaic covers the image and dissolves square by square in pseudo-random order on hover or focus.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-pixel-reveal.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-pixel-reveal.tsx",
+      "content": "\"use client\";\nimport { useMemo, useState } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** A pixel mosaic covers the image and dissolves square by square (random order) on hover/focus. */\nexport function CardPixelReveal({ image, alt, cols = 12, rows = 8, color = \"var(--color-foreground, #111)\", className }: { image: string; alt: string; cols?: number; rows?: number; color?: string; className?: string }) {\n  const [on, setOn] = useState(false);\n  const reduced = useReducedMotion();\n  const delays = useMemo(() => Array.from({ length: cols * rows }, (_, i) => ((i * 7919) % 97) / 97), [cols, rows]);\n  return (\n    <div\n      tabIndex={0}\n      onPointerEnter={() => setOn(true)}\n      onPointerLeave={() => setOn(false)}\n      onFocus={() => setOn(true)}\n      onBlur={() => setOn(false)}\n      className={cn(\"relative overflow-hidden rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-ring\", className)}\n    >\n      <img src={image} alt={alt} className=\"h-full w-full object-cover\" />\n      <div aria-hidden className=\"absolute inset-0 grid\" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>\n        {delays.map((d, i) => (\n          <span key={i} style={{ background: color, opacity: on ? 0 : 1, transition: reduced ? \"opacity .2s\" : `opacity 0s linear ${d * 0.45}s` }} />\n        ))}\n      </div>\n      <span className={cn(\"pointer-events-none absolute inset-0 grid place-items-center text-sm font-medium text-background transition-opacity\", on && \"opacity-0\")}>Hover to reveal</span>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "pixel",
+      "dissolve",
+      "reveal",
+      "retro"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

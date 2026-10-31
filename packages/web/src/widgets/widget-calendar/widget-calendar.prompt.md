@@ -1,0 +1,1 @@
+Create a mini calendar: header with month name and prev/next buttons; a 7-column grid (Monday first) that slides ±60px on month change (custom direction); selected day highlighted by a layoutId pill (snappy spring); event days show a dot; below, the selected day's event fades in.

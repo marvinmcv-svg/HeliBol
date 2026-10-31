@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-subscribe",
+  "type": "registry:component",
+  "title": "Subscribe Morph",
+  "description": "Newsletter input + button pill that morphs into a compact green 'You're on the list' confirmation.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-subscribe.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-subscribe.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** Newsletter field where the whole pill morphs into a \"You're in\" confirmation after submit. */\nexport function ButtonSubscribe({ onSubscribe, className }: { onSubscribe?: (email: string) => Promise<unknown> | void; className?: string }) {\n  const [email, setEmail] = useState(\"\");\n  const [state, setState] = useState<\"idle\" | \"busy\" | \"done\">(\"idle\");\n  const valid = /\\S+@\\S+\\.\\S+/.test(email);\n  return (\n    <motion.form\n      layout\n      transition={spring.smooth}\n      onSubmit={async (e) => {\n        e.preventDefault();\n        if (!valid || state !== \"idle\") return;\n        setState(\"busy\");\n        await onSubscribe?.(email);\n        await new Promise((r) => setTimeout(r, 700));\n        setState(\"done\");\n      }}\n      className={cn(\"flex h-12 items-center overflow-hidden rounded-full border border-border bg-card p-1\", state === \"done\" && \"border-emerald-500/40 bg-emerald-500/10\", className)}\n      style={{ width: state === \"done\" ? 230 : 360 }}\n    >\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        {state === \"done\" ? (\n          <motion.p key=\"done\" role=\"status\" className=\"flex w-full items-center justify-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400\" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>\n            <motion.span initial={{ scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} transition={spring.bouncy}>✓</motion.span> You&apos;re on the list\n          </motion.p>\n        ) : (\n          <motion.div key=\"form\" className=\"flex w-full items-center\" exit={{ opacity: 0 }}>\n            <label className=\"sr-only\" htmlFor=\"k-sub-email\">Email</label>\n            <input id=\"k-sub-email\" type=\"email\" value={email} onChange={(e) => setEmail(e.target.value)} placeholder=\"you@studio.com\" className=\"min-w-0 flex-1 bg-transparent px-3 text-sm outline-none\" />\n            <button disabled={!valid || state === \"busy\"} className=\"h-10 shrink-0 rounded-full bg-foreground px-4 text-sm font-medium text-background transition-opacity disabled:opacity-40\">\n              {state === \"busy\" ? \"…\" : \"Subscribe\"}\n            </button>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </motion.form>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "newsletter",
+      "subscribe",
+      "form",
+      "morph"
+    ],
+    "pageTypes": [
+      "landing",
+      "blog"
+    ]
+  }
+}

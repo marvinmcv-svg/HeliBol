@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "file-dropzone",
+  "type": "registry:component",
+  "title": "File Dropzone",
+  "description": "Drop zone that lifts and glows on drag-over; dropped files fly into a list with per-file animated upload progress.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/file-dropzone.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/file-dropzone.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { FileUp, X } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\ninterface Up { id: number; name: string; size: number; p: number }\n\n/** Drop zone that lifts and glows on drag-over; dropped files fly into a list with individual animated upload progress. */\nexport function FileDropzone({ accept, className }: { accept?: string; className?: string }) {\n  const [over, setOver] = useState(false);\n  const [files, setFiles] = useState<Up[]>([]);\n  const input = useRef<HTMLInputElement>(null);\n  const add = (list: FileList | null) => {\n    if (!list) return;\n    const ups = [...list].map((f, i) => ({ id: Date.now() + i, name: f.name, size: f.size, p: 0 }));\n    setFiles((s) => [...ups, ...s]);\n    ups.forEach((u) => {\n      const t = setInterval(() => setFiles((s) => s.map((x) => (x.id === u.id ? { ...x, p: Math.min(100, x.p + 6 + Math.random() * 14) } : x))), 160);\n      setTimeout(() => clearInterval(t), 3200);\n    });\n  };\n  return (\n    <div className={cn(\"w-full max-w-md space-y-3\", className)}>\n      <motion.button\n        type=\"button\"\n        onClick={() => input.current?.click()}\n        onDragOver={(e) => (e.preventDefault(), setOver(true))}\n        onDragLeave={() => setOver(false)}\n        onDrop={(e) => (e.preventDefault(), setOver(false), add(e.dataTransfer.files))}\n        animate={{ scale: over ? 1.02 : 1, y: over ? -2 : 0 }}\n        transition={spring.smooth}\n        className={cn(\"flex w-full flex-col items-center gap-2 rounded-2xl border-2 border-dashed p-8 text-center transition-colors\", over ? \"border-brand bg-brand/10\" : \"border-border bg-card hover:bg-accent/50\")}\n      >\n        <motion.span animate={over ? { y: [0, -6, 0] } : { y: 0 }} transition={{ duration: 0.8, repeat: over ? Infinity : 0 }} className=\"grid size-12 place-items-center rounded-2xl bg-muted\"><FileUp className=\"size-6 text-muted-foreground\" /></motion.span>\n        <span className=\"text-sm font-medium\">{over ? \"Drop to upload\" : \"Drag files here or click to browse\"}</span>\n        <span className=\"text-xs text-muted-foreground\">PNG, JPG or PDF up to 10MB</span>\n      </motion.button>\n      <input ref={input} type=\"file\" multiple accept={accept} className=\"sr-only\" onChange={(e) => add(e.target.files)} aria-label=\"Upload files\" />\n      <ul className=\"space-y-2\" aria-live=\"polite\">\n        <AnimatePresence initial={false}>\n          {files.map((f) => (\n            <motion.li key={f.id} layout initial={{ opacity: 0, y: -10, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, x: 40 }} transition={spring.smooth} className=\"flex items-center gap-3 rounded-xl border border-border bg-card p-3\">\n              <span className=\"grid size-9 shrink-0 place-items-center rounded-lg bg-muted text-xs font-semibold uppercase\">{f.name.split(\".\").pop()?.slice(0, 3)}</span>\n              <div className=\"min-w-0 flex-1\">\n                <p className=\"truncate text-sm font-medium\">{f.name}</p>\n                <div className=\"mt-1.5 h-1 overflow-hidden rounded-full bg-muted\"><motion.div className={cn(\"h-full rounded-full\", f.p >= 100 ? \"bg-emerald-500\" : \"bg-brand\")} animate={{ width: `${f.p}%` }} /></div>\n              </div>\n              <span className=\"w-10 text-right text-xs text-muted-foreground tabular-nums\">{f.p >= 100 ? \"✓\" : `${Math.round(f.p)}%`}</span>\n              <button onClick={() => setFiles((s) => s.filter((x) => x.id !== f.id))} aria-label={`Remove ${f.name}`} className=\"text-muted-foreground hover:text-foreground\"><X className=\"size-4\" /></button>\n            </motion.li>\n          ))}\n        </AnimatePresence>\n      </ul>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "upload",
+      "dropzone",
+      "files",
+      "progress",
+      "drag and drop"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "settings"
+    ]
+  }
+}

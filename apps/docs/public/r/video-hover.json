@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "video-hover",
+  "type": "registry:component",
+  "title": "Video Hover Preview",
+  "description": "Card that plays a muted preview on hover/focus — or a Ken Burns pan without video — with a progress line.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/video-hover.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/video-hover.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** Card that plays a muted preview on hover/focus (or a Ken Burns pan when there's no video), pausing and rewinding on leave. */\nexport function VideoHover({ poster, src, title, meta, className }: { poster: string; src?: string; title: string; meta?: string; className?: string }) {\n  const v = useRef<HTMLVideoElement>(null);\n  const [on, setOn] = useState(false);\n  const reduced = useReducedMotion();\n  const start = () => {\n    setOn(true);\n    if (!reduced) v.current?.play().catch(() => {});\n  };\n  const stop = () => {\n    setOn(false);\n    if (v.current) (v.current.pause(), (v.current.currentTime = 0));\n  };\n  return (\n    <a href=\"#\" onPointerEnter={start} onPointerLeave={stop} onFocus={start} onBlur={stop} className={cn(\"group block overflow-hidden rounded-2xl border border-border bg-card outline-none focus-visible:ring-2 focus-visible:ring-ring\", className)}>\n      <div className=\"relative aspect-video overflow-hidden\">\n        {src ? <video ref={v} src={src} poster={poster} muted loop playsInline preload=\"none\" className=\"h-full w-full object-cover\" /> : <img src={poster} alt=\"\" className={cn(\"h-full w-full object-cover transition-transform duration-[4s] ease-linear\", on && !reduced && \"scale-125 -translate-x-[6%]\")} />}\n        <span className={cn(\"absolute right-2 bottom-2 rounded-md bg-black/70 px-1.5 py-0.5 text-[11px] font-medium text-white transition-opacity\", on && \"opacity-0\")}>2:14</span>\n        <span className={cn(\"absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-red-500 transition-transform duration-[4s] ease-linear\", on && \"scale-x-100\")} />\n      </div>\n      <div className=\"p-3\"><p className=\"text-sm font-medium\">{title}</p>{meta && <p className=\"text-xs text-muted-foreground\">{meta}</p>}</div>\n    </a>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "video",
+      "preview",
+      "hover",
+      "youtube"
+    ],
+    "pageTypes": [
+      "media",
+      "blog",
+      "portfolio"
+    ]
+  }
+}

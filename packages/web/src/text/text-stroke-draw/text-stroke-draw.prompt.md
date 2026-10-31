@@ -1,0 +1,1 @@
+Create stroke-draw text: SVG <text> with stroke = fill = currentColor, strokeDasharray 600 → strokeDashoffset 600→0 over `duration` (ease-in-out) when in view, then fill-opacity 0→1 starting at 75% of the draw.

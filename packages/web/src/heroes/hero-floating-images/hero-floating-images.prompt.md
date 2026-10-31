@@ -1,0 +1,1 @@
+Build a floating-gallery hero: six rotated photos absolutely placed around a centered headline, each translated by the springed pointer offset × −60px × its depth factor (0.6–2.2) for multi-layer parallax; pop in with stagger.

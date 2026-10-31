@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flow-chat",
+  "type": "registry:block",
+  "title": "Messaging",
+  "description": "iMessage-style thread: bubbles spring in from their side, a typing indicator precedes replies, double-tap reacts with a popping heart.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/flow-chat.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/flow-chat.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ArrowUp, ChevronLeft } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { haptic } from \"@/components/kinetik/phone\" /* demo frame + haptic() stand-in */;\n\ntype M = { id: number; me: boolean; text: string; react?: string };\nconst replies = [\"haha yes 😂\", \"on my way!\", \"send me the link\", \"that spring feels perfect\"];\n\nexport function FlowChat({ initialStep = 0 }: { initialStep?: number }) {\n  const [msgs, setMsgs] = useState<M[]>([{ id: 1, me: false, text: \"did you ship the paywall?\" }, { id: 2, me: true, text: \"just now 🚀\" }, ...(initialStep >= 1 ? [{ id: 3, me: false, text: \"it looks amazing\", react: initialStep >= 2 ? \"❤️\" : undefined }] : [])]);\n  const [text, setText] = useState(\"\");\n  const [typing, setTyping] = useState(false);\n  const end = useRef<HTMLDivElement>(null);\n  useEffect(() => end.current?.scrollIntoView({ block: \"end\" }), [msgs, typing]);\n  const send = () => {\n    if (!text.trim()) return;\n    haptic(\"light\");\n    setMsgs((m) => [...m, { id: Date.now(), me: true, text }]);\n    setText(\"\");\n    setTimeout(() => setTyping(true), 500);\n    setTimeout(() => (setTyping(false), setMsgs((m) => [...m, { id: Date.now(), me: false, text: replies[m.length % replies.length] }]), haptic(\"light\")), 1800);\n  };\n  const react = (id: number) => (haptic(\"medium\"), setMsgs((m) => m.map((x) => (x.id === id ? { ...x, react: x.react ? undefined : \"❤️\" } : x))));\n  return (\n    <div className=\"flex h-full flex-col bg-white text-zinc-900\">\n      <header className=\"flex items-center gap-2 border-b border-zinc-100 px-3 pt-12 pb-2\"><ChevronLeft className=\"size-5 text-sky-500\" /><img src=\"/demo/photo-8.jpg\" alt=\"\" className=\"size-8 rounded-full object-cover\" /><div className=\"text-sm\"><p className=\"font-semibold\">Ava</p><p className=\"text-[11px] text-zinc-400\">{typing ? \"typing…\" : \"online\"}</p></div></header>\n      <div className=\"flex-1 space-y-1.5 overflow-y-auto px-3 py-3\">\n        <AnimatePresence initial={false}>\n          {msgs.map((m) => (\n            <motion.div key={m.id} layout initial={{ opacity: 0, y: 14, scale: 0.9, originX: m.me ? 1 : 0 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={spring.smooth} className={`flex ${m.me ? \"justify-end\" : \"\"}`}>\n              <button onDoubleClick={() => react(m.id)} className={`relative max-w-[75%] rounded-2xl px-3 py-1.5 text-left text-[14px] ${m.me ? \"rounded-br-sm bg-sky-500 text-white\" : \"rounded-bl-sm bg-zinc-100\"}`}>\n                {m.text}\n                <AnimatePresence>{m.react && <motion.span initial={{ scale: 0, rotate: -30 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }} transition={spring.bouncy} className={`absolute -bottom-3 ${m.me ? \"left-0\" : \"right-0\"} rounded-full bg-white px-1 text-xs shadow`}>{m.react}</motion.span>}</AnimatePresence>\n              </button>\n            </motion.div>\n          ))}\n          {typing && <motion.div key=\"t\" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className=\"flex w-14 gap-1 rounded-2xl bg-zinc-100 px-3 py-2.5\">{[0, 1, 2].map((i) => <motion.span key={i} className=\"size-1.5 rounded-full bg-zinc-400\" animate={{ y: [0, -3, 0] }} transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.15 }} />)}</motion.div>}\n        </AnimatePresence>\n        <div ref={end} />\n      </div>\n      <p className=\"pb-1 text-center text-[10px] text-zinc-400\">Double-tap a bubble to ❤️</p>\n      <form onSubmit={(e) => (e.preventDefault(), send())} className=\"flex items-center gap-2 border-t border-zinc-100 p-2 pb-6\">\n        <input value={text} onChange={(e) => setText(e.target.value)} placeholder=\"Message\" aria-label=\"Message\" className=\"h-9 flex-1 rounded-full border border-zinc-200 px-3 text-sm outline-none\" />\n        <motion.button whileTap={{ scale: 0.85 }} animate={{ scale: text ? 1 : 0.7, opacity: text ? 1 : 0.4 }} aria-label=\"Send\" className=\"grid size-9 place-items-center rounded-full bg-sky-500 text-white\"><ArrowUp className=\"size-4\" /></motion.button>\n      </form>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "chat",
+      "messaging",
+      "social",
+      "mobile"
+    ],
+    "pageTypes": [
+      "social"
+    ]
+  }
+}

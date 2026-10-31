@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-suggestions",
+  "type": "registry:component",
+  "title": "Prompt Suggestions",
+  "description": "Suggested-prompt chips cascade in with blur and lift on hover; picking one hands its text to your composer.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/ai-suggestions.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/ai-suggestions.tsx",
+      "content": "\"use client\";\nimport { motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** Suggested-prompt chips that cascade in and lift on hover; clicking one hands its text to your composer. */\nexport function AiSuggestions({ items, onPick, className }: { items: { icon?: string; label: string }[]; onPick?: (label: string) => void; className?: string }) {\n  return (\n    <motion.ul className={cn(\"flex flex-wrap justify-center gap-2\", className)} initial=\"h\" animate=\"s\" variants={{ s: { transition: { staggerChildren: 0.06 } } }}>\n      {items.map((it) => (\n        <motion.li key={it.label} variants={{ h: { opacity: 0, y: 10, filter: \"blur(4px)\" }, s: { opacity: 1, y: 0, filter: \"blur(0px)\", transition: spring.smooth } }}>\n          <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} onClick={() => onPick?.(it.label)} className=\"flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-2 text-sm shadow-sm transition-colors hover:bg-accent\">\n            {it.icon && <span>{it.icon}</span>}\n            {it.label}\n          </motion.button>\n        </motion.li>\n      ))}\n    </motion.ul>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "ai",
+      "suggestions",
+      "chips",
+      "empty state"
+    ],
+    "pageTypes": [
+      "ai-app"
+    ]
+  }
+}

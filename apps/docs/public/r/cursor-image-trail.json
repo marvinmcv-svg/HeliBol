@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cursor-image-trail",
+  "type": "registry:component",
+  "title": "Image Trail",
+  "description": "Moving across the area drops a trail of images that pop in, drift in your direction and fade away.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/cursor-image-trail.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/cursor-image-trail.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** Moving the cursor across the area drops a trail of images that pop in, drift and fade — the editorial portfolio hover. */\nexport function CursorImageTrail({ images, children, threshold = 80, className }: { images: string[]; children?: ReactNode; threshold?: number; className?: string }) {\n  const box = useRef<HTMLDivElement>(null);\n  const last = useRef<{ x: number; y: number } | null>(null);\n  const idx = useRef(0);\n  const off = useReducedMotion() || usePrefersTouch();\n  const move = (e: React.PointerEvent) => {\n    if (off || !box.current) return;\n    const r = box.current.getBoundingClientRect();\n    const x = e.clientX - r.left;\n    const y = e.clientY - r.top;\n    if (last.current && Math.hypot(x - last.current.x, y - last.current.y) < threshold) return;\n    const dx = last.current ? x - last.current.x : 0;\n    const dy = last.current ? y - last.current.y : 0;\n    last.current = { x, y };\n    const img = document.createElement(\"img\");\n    img.src = images[idx.current++ % images.length];\n    img.alt = \"\";\n    img.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:140px;aspect-ratio:3/4;object-fit:cover;border-radius:14px;pointer-events:none;translate:-50% -50%;box-shadow:0 20px 40px -12px rgb(0 0 0/.45);z-index:1`;\n    box.current.appendChild(img);\n    img.animate(\n      [\n        { transform: \"scale(.4) rotate(-6deg)\", opacity: 0 },\n        { transform: \"scale(1) rotate(0deg)\", opacity: 1, offset: 0.15 },\n        { transform: `translate(${dx * 0.6}px, ${dy * 0.6}px) scale(.85)`, opacity: 1, offset: 0.7 },\n        { transform: `translate(${dx}px, ${dy + 40}px) scale(.6)`, opacity: 0 },\n      ],\n      { duration: 1100, easing: \"cubic-bezier(.16,1,.3,1)\" },\n    ).onfinish = () => img.remove();\n  };\n  return (\n    <div ref={box} onPointerMove={move} className={cn(\"relative isolate overflow-hidden\", className)}>\n      <div className=\"relative z-[2]\">{children}</div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "image trail",
+      "cursor",
+      "portfolio",
+      "editorial"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

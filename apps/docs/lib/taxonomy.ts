@@ -1,6 +1,7 @@
 import type { Category, Engine, PageType } from "@web/types";
 
 export const categories: { id: Category; name: string; blurb: string }[] = [
+  { id: "heroes", name: "Heroes", blurb: "Full-bleed openers with motion built in" },
   { id: "text", name: "Text", blurb: "Split reveals, scramble, typewriters, tickers" },
   { id: "buttons", name: "Buttons & Micro", blurb: "Press, shimmer, magnetic, stateful, toggles" },
   { id: "scroll", name: "Scroll & Story", blurb: "Reveals, parallax, sticky stacks, horizontal" },
@@ -17,6 +18,9 @@ export const categories: { id: Category; name: string; blurb: string }[] = [
   { id: "data", name: "Data Viz", blurb: "KPI tickers, line draws, charts" },
   { id: "svg", name: "SVG", blurb: "Path drawing, morphing, motion paths" },
   { id: "3d", name: "3D & WebGL", blurb: "R3F canvas, shaders, particles" },
+  { id: "ai", name: "AI Interfaces", blurb: "Prompt boxes, thinking states, streaming, orbs" },
+  { id: "widgets", name: "Widgets", blurb: "Weather, music, clocks, terminals, timers" },
+  { id: "mockups", name: "Device Mockups", blurb: "Phones, browsers, laptops, windows" },
   { id: "foundations", name: "Foundations", blurb: "Providers, smooth scroll, in-view" },
 ];
 
@@ -30,6 +34,7 @@ export const engines: Record<Engine, { name: string; color: string }> = {
   r3f: { name: "R3F", color: "bg-orange-500/15 text-orange-700 dark:text-orange-300 ring-orange-500/30" },
   "view-transitions": { name: "View Transitions", color: "bg-teal-500/15 text-teal-700 dark:text-teal-300 ring-teal-500/30" },
   canvas: { name: "Canvas", color: "bg-rose-500/15 text-rose-700 dark:text-rose-300 ring-rose-500/30" },
+  js: { name: "Vanilla JS", color: "bg-yellow-500/15 text-yellow-700 dark:text-yellow-300 ring-yellow-500/30" },
   svg: { name: "SVG", color: "bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 ring-indigo-500/30" },
 };
 
@@ -44,4 +49,7 @@ export const pageTypes: Record<PageType, string> = {
   docs: "Docs",
   settings: "Settings",
   onboarding: "Onboarding",
+  "ai-app": "AI app",
+  social: "Social",
+  media: "Media",
 };

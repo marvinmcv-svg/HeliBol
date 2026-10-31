@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-waves",
+  "type": "registry:component",
+  "title": "Liquid Waves",
+  "description": "Layered translucent sine waves undulate at different speeds and lean toward the pointer.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-waves.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-waves.tsx",
+      "content": "\"use client\";\nimport type { ReactNode } from \"react\";\nimport { cn, useCanvas } from \"@/lib/kinetik/core\";\n\n/** Layered translucent sine waves that undulate and lean toward the pointer — calm, liquid, endless. */\nexport function BgWaves({ children, colors = [\"#8b5cf6\", \"#06b6d4\", \"#ec4899\"], className }: { children?: ReactNode; colors?: string[]; className?: string }) {\n  const ref = useCanvas(({ ctx, width, height, time, pointer }) => {\n    ctx.clearRect(0, 0, width, height);\n    const lean = pointer ? (pointer.y / height - 0.5) * 60 : 0;\n    colors.forEach((c, i) => {\n      ctx.beginPath();\n      const base = height * (0.55 + i * 0.1) + lean * (1 - i * 0.3);\n      ctx.moveTo(0, height);\n      for (let x = 0; x <= width; x += 8) {\n        const y = base + Math.sin(x * 0.006 + time * (0.6 + i * 0.25) + i) * (28 + i * 8) + Math.sin(x * 0.017 - time * 0.9) * 10;\n        ctx.lineTo(x, y);\n      }\n      ctx.lineTo(width, height);\n      ctx.closePath();\n      ctx.fillStyle = c;\n      ctx.globalAlpha = 0.28;\n      ctx.fill();\n    });\n    ctx.globalAlpha = 1;\n  });\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)}>\n      <canvas ref={ref} aria-hidden className=\"absolute inset-0 -z-10 h-full w-full\" />\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "waves",
+      "liquid",
+      "calm",
+      "canvas"
+    ],
+    "pageTypes": [
+      "landing",
+      "onboarding"
+    ]
+  }
+}

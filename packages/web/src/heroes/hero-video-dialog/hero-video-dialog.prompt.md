@@ -1,0 +1,1 @@
+Create a hero with a video thumbnail button (pulsing ping ring + white play disc) sharing a layoutId with a centered dialog that holds the video, so clicking morphs the thumbnail into the player; blurred backdrop; Esc closes.

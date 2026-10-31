@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-code-stream",
+  "type": "registry:component",
+  "title": "Code Stream",
+  "description": "A code window that streams in token by token like an AI writing it, with syntax colors, a block caret and a 'writing' status.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/ai-code-stream.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/ai-code-stream.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport type CodeToken = [text: string, kind?: \"kw\" | \"str\" | \"fn\" | \"num\" | \"com\" | \"punct\"];\n\nconst color: Record<string, string> = { kw: \"text-fuchsia-400\", str: \"text-emerald-400\", fn: \"text-sky-400\", num: \"text-amber-300\", com: \"text-zinc-500 italic\", punct: \"text-zinc-400\" };\n\n/** Code block that \"streams\" in token by token like an AI writing it, with a block caret and file tab. */\nexport function AiCodeStream({ tokens, file = \"component.tsx\", speed = 18, className }: { tokens: CodeToken[]; file?: string; speed?: number; className?: string }) {\n  const total = tokens.reduce((n, [t]) => n + t.length, 0);\n  const reduced = useReducedMotion();\n  const [n, setN] = useState(0);\n  useEffect(() => {\n    if (reduced) return setN(total);\n    setN(0);\n    const id = setInterval(() => setN((x) => (x >= total ? (clearInterval(id), x) : x + 2)), speed);\n    return () => clearInterval(id);\n  }, [total, speed, reduced]);\n  let left = n;\n  return (\n    <div className={cn(\"overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 font-mono text-[13px] text-zinc-200 shadow-2xl\", className)}>\n      <div className=\"flex items-center gap-2 border-b border-white/10 px-4 py-2 text-xs text-zinc-400\">\n        <span className=\"size-2.5 rounded-full bg-rose-500/80\" /><span className=\"size-2.5 rounded-full bg-amber-500/80\" /><span className=\"size-2.5 rounded-full bg-emerald-500/80\" />\n        <span className=\"ml-2\">{file}</span>\n        {n < total && <span className=\"ml-auto animate-pulse text-violet-400\">● writing</span>}\n      </div>\n      <pre className=\"overflow-x-auto p-4 leading-relaxed\" aria-label={tokens.map(([t]) => t).join(\"\")}>\n        <code aria-hidden>\n          {tokens.map(([t, k], i) => {\n            if (left <= 0) return null;\n            const part = t.slice(0, left);\n            left -= t.length;\n            return <span key={i} className={k ? color[k] : undefined}>{part}</span>;\n          })}\n          {n < total && <span className=\"inline-block h-4 w-2 translate-y-0.5 animate-pulse bg-violet-400\" />}\n        </code>\n      </pre>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "code",
+      "ai",
+      "typing",
+      "terminal",
+      "dev tools"
+    ],
+    "pageTypes": [
+      "ai-app",
+      "landing",
+      "docs"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Build a morphing popover: the trigger button and the panel share a layoutId (and the label shares one with the panel title) inside AnimatePresence popLayout, so clicking stretches the pill into the card; content fades in after 120ms; Esc/outside click reverse it.

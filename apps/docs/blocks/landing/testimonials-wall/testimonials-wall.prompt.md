@@ -1,0 +1,1 @@
+Build a testimonials wall: centered star rating + headline, then CSS-column masonry of quote cards (every 4th larger) that enter with y 30 + blur 6 on view, staggered by column, and lift 4px on hover.

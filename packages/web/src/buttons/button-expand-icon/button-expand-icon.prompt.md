@@ -1,0 +1,1 @@
+Build an expanding icon button with the CSS grid trick: label wrapper is `display:grid; grid-template-columns: 0fr` transitioning to `1fr` on hover/focus-visible (300ms), inner overflow hidden, label fades in after 100ms.

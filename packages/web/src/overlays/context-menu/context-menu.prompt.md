@@ -1,0 +1,1 @@
+Create a context menu: on contextmenu (or Shift+F10) open a role=menu at the pointer clamped inside the area, scale .9→1 from top-left with a stiff spring, items stagger in 25ms; arrow keys cycle focus, Enter selects, Esc/scroll/outside click close.

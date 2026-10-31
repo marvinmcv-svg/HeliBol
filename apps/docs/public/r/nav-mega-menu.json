@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "nav-mega-menu",
+  "type": "registry:component",
+  "title": "Morphing Mega Menu",
+  "description": "Stripe-style dropdown: one shared panel morphs its size between menus and slides content in the direction you move.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/nav-mega-menu.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/nav-mega-menu.tsx",
+      "content": "\"use client\";\nimport { useId, useRef, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ChevronDown } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface MegaItem {\n  label: string;\n  content: ReactNode;\n}\n\n/** Stripe-style mega menu: one shared panel that morphs its size and slides its content in the direction you move between triggers. */\nexport function NavMegaMenu({ items, className }: { items: MegaItem[]; className?: string }) {\n  const [active, setActive] = useState<number | null>(null);\n  const prev = useRef<number | null>(null);\n  const id = useId();\n  const dir = active !== null && prev.current !== null ? Math.sign(active - prev.current) : 0;\n  const open = (i: number) => {\n    prev.current = active;\n    setActive(i);\n  };\n  return (\n    <nav className={cn(\"relative\", className)} onPointerLeave={() => setActive(null)} onKeyDown={(e) => e.key === \"Escape\" && setActive(null)}>\n      <ul className=\"flex gap-1\">\n        {items.map((it, i) => (\n          <li key={it.label}>\n            <button onPointerEnter={() => open(i)} onFocus={() => open(i)} onClick={() => (active === i ? setActive(null) : open(i))} aria-expanded={active === i} aria-controls={`${id}-panel`} className={cn(\"flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium transition-colors\", active === i ? \"bg-accent text-foreground\" : \"text-muted-foreground hover:text-foreground\")}>\n              {it.label}\n              <ChevronDown className={cn(\"size-3.5 transition-transform\", active === i && \"rotate-180\")} />\n            </button>\n          </li>\n        ))}\n      </ul>\n      <AnimatePresence>\n        {active !== null && (\n          <motion.div id={`${id}-panel`} initial={{ opacity: 0, y: 8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.97 }} transition={spring.smooth} className=\"absolute top-full left-0 z-30 pt-2\">\n            <motion.div layout transition={spring.smooth} className=\"overflow-hidden rounded-2xl border border-border bg-popover shadow-2xl\">\n              <AnimatePresence mode=\"popLayout\" initial={false} custom={dir}>\n                <motion.div key={active} custom={dir} initial={{ opacity: 0, x: dir * 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: dir * -40 }} transition={spring.smooth} className=\"p-4\">\n                  {items[active].content}\n                </motion.div>\n              </AnimatePresence>\n            </motion.div>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </nav>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "mega menu",
+      "dropdown",
+      "stripe",
+      "navigation"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

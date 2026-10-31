@@ -1,0 +1,1 @@
+Build a product detail page: left — main image crossfading/zooming between selected thumbnails, with a like-burst button overlay; right — title, rating, price that updates with size, a size radiogroup whose selection ring glides (layoutId), and an async stateful Add-to-bag button.

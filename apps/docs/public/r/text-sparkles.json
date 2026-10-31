@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-sparkles",
+  "type": "registry:component",
+  "title": "Sparkle Text",
+  "description": "Four-point stars twinkle in and out around a word — for 'magic' moments, upgrades and AI features.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-sparkles.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-sparkles.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ninterface Sparkle {\n  id: number;\n  x: number;\n  y: number;\n  size: number;\n  color: string;\n}\n\nexport interface TextSparklesProps {\n  children: ReactNode;\n  colors?: string[];\n  /** sparkles alive at once */\n  count?: number;\n  className?: string;\n}\n\nlet uid = 0;\nconst DEFAULT_COLORS = [\"#facc15\", \"#a78bfa\", \"#f472b6\"];\nconst make = (colors: string[]): Sparkle => ({ id: uid++, x: Math.random() * 100, y: Math.random() * 100, size: 8 + Math.random() * 12, color: colors[Math.floor(Math.random() * colors.length)] });\n\n/** Four-point stars twinkle in and out around the text. */\nexport function TextSparkles({ children, colors = DEFAULT_COLORS, count = 8, className }: TextSparklesProps) {\n  const reduced = useReducedMotion();\n  const [sparkles, setSparkles] = useState<Sparkle[]>([]);\n  useEffect(() => {\n    if (reduced) return setSparkles([]);\n    setSparkles(Array.from({ length: count }, () => make(colors)));\n    const t = setInterval(() => setSparkles((s) => [...s.slice(1), make(colors)]), 420);\n    return () => clearInterval(t);\n  }, [reduced, count, colors.join()]); // eslint-disable-line react-hooks/exhaustive-deps\n  return (\n    <span className={cn(\"relative inline-block\", className)}>\n      <AnimatePresence>\n        {sparkles.map((s) => (\n          <motion.svg\n            key={s.id}\n            aria-hidden\n            viewBox=\"0 0 24 24\"\n            className=\"pointer-events-none absolute\"\n            style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.size, height: s.size, translate: \"-50% -50%\" }}\n            initial={{ scale: 0, rotate: 0, opacity: 0 }}\n            animate={{ scale: 1, rotate: 90, opacity: 1 }}\n            exit={{ scale: 0, rotate: 180, opacity: 0 }}\n            transition={{ duration: 0.7, ease: \"easeInOut\" }}\n          >\n            <path d=\"M12 0C12.8 7.2 16.8 11.2 24 12C16.8 12.8 12.8 16.8 12 24C11.2 16.8 7.2 12.8 0 12C7.2 11.2 11.2 7.2 12 0Z\" fill={s.color} />\n          </motion.svg>\n        ))}\n      </AnimatePresence>\n      <span className=\"relative\">{children}</span>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "sparkles",
+      "magic",
+      "ai",
+      "highlight"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing",
+      "ai-app"
+    ]
+  }
+}

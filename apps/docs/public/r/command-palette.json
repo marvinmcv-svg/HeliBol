@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "command-palette",
+  "type": "registry:component",
+  "title": "Command Palette",
+  "description": "⌘K palette that springs open, filters and groups commands, with a highlight gliding between results.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/command-palette.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/command-palette.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useMemo, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Search } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface Command {\n  id: string;\n  label: string;\n  group: string;\n  icon?: ReactNode;\n  shortcut?: string;\n  run?: () => void;\n}\n\n/** ⌘K command palette: springs open, fuzzy filters, groups results, and a highlight glides between items (arrow keys + Enter). */\nexport function CommandPalette({ commands, open, onOpenChange, className }: { commands: Command[]; open: boolean; onOpenChange: (o: boolean) => void; className?: string }) {\n  const [q, setQ] = useState(\"\");\n  const [sel, setSel] = useState(0);\n  const hl = useId();\n  useEffect(() => {\n    const k = (e: KeyboardEvent) => {\n      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === \"k\") (e.preventDefault(), onOpenChange(!open));\n    };\n    addEventListener(\"keydown\", k);\n    return () => removeEventListener(\"keydown\", k);\n  }, [open, onOpenChange]);\n  const results = useMemo(() => commands.filter((c) => q.toLowerCase().split(\" \").every((t) => `${c.label} ${c.group}`.toLowerCase().includes(t))), [q, commands]);\n  useEffect(() => setSel(0), [q]);\n  const groups = [...new Set(results.map((r) => r.group))];\n  const run = (c?: Command) => {\n    if (!c) return;\n    c.run?.();\n    onOpenChange(false);\n    setQ(\"\");\n  };\n  return (\n    <AnimatePresence>\n      {open && (\n        <div className={cn(\"fixed inset-0 z-50 flex items-start justify-center p-4 pt-[10vh]\", className)}>\n          <motion.div className=\"absolute inset-0 bg-black/40 backdrop-blur-[2px]\" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => onOpenChange(false)} />\n          <motion.div role=\"dialog\" aria-modal=\"true\" aria-label=\"Command palette\" initial={{ opacity: 0, scale: 0.95, y: -10 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97 }} transition={spring.snappy} className=\"relative w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-popover shadow-2xl\">\n            <div className=\"flex items-center gap-2 border-b border-border px-4\">\n              <Search className=\"size-4 text-muted-foreground\" />\n              <input\n                autoFocus\n                value={q}\n                onChange={(e) => setQ(e.target.value)}\n                onKeyDown={(e) => {\n                  if (e.key === \"ArrowDown\") (e.preventDefault(), setSel((s) => Math.min(s + 1, results.length - 1)));\n                  if (e.key === \"ArrowUp\") (e.preventDefault(), setSel((s) => Math.max(s - 1, 0)));\n                  if (e.key === \"Enter\") run(results[sel]);\n                  if (e.key === \"Escape\") onOpenChange(false);\n                }}\n                placeholder=\"Type a command or search…\"\n                role=\"combobox\"\n                aria-expanded\n                className=\"h-12 flex-1 bg-transparent text-sm outline-none\"\n              />\n              <kbd className=\"rounded border border-border px-1.5 text-[10px] text-muted-foreground\">esc</kbd>\n            </div>\n            <motion.div layout className=\"max-h-80 overflow-y-auto p-2\" role=\"listbox\">\n              {results.length === 0 && <p className=\"p-6 text-center text-sm text-muted-foreground\">No results</p>}\n              {groups.map((g) => (\n                <div key={g}>\n                  <p className=\"px-2 pt-2 pb-1 text-[11px] font-medium text-muted-foreground\">{g}</p>\n                  {results.filter((r) => r.group === g).map((c) => {\n                    const i = results.indexOf(c);\n                    return (\n                      <button key={c.id} role=\"option\" aria-selected={i === sel} onMouseMove={() => setSel(i)} onClick={() => run(c)} className=\"relative flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-sm [&>svg]:size-4\">\n                        {i === sel && <motion.span layoutId={hl} transition={spring.snappy} className=\"absolute inset-0 rounded-lg bg-accent\" />}\n                        <span className=\"relative text-muted-foreground [&>svg]:size-4\">{c.icon}</span>\n                        <span className=\"relative\">{c.label}</span>\n                        {c.shortcut && <kbd className=\"relative ml-auto text-[11px] text-muted-foreground\">{c.shortcut}</kbd>}\n                      </button>\n                    );\n                  })}\n                </div>\n              ))}\n            </motion.div>\n          </motion.div>\n        </div>\n      )}\n    </AnimatePresence>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "command palette",
+      "cmdk",
+      "search",
+      "keyboard"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "docs",
+      "ai-app"
+    ]
+  }
+}

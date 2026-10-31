@@ -1,0 +1,1 @@
+Create a video hover card: on pointerenter/focus play a muted looping <video preload=none>; on leave pause and reset currentTime; fallback without src: slow scale/translate Ken Burns on the poster; a red progress bar scales X over 4s while previewing.

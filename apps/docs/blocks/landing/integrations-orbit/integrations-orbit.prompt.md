@@ -1,0 +1,1 @@
+Build an integrations section: left column with eyebrow, H2 ending in 3D flip-words cycling integration names, copy and CTA; right column two orbits of integration icons (inner 3, outer 5, opposite directions) around a logo tile.

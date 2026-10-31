@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flow-ride",
+  "type": "registry:block",
+  "title": "Ride Booking Sheet",
+  "description": "Uber-style booking: the route draws on the map, a draggable bottom sheet snaps between three detents with velocity, the ride selection ring glides.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/flow-ride.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/flow-ride.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { animate, motion, useMotionValue, type PanInfo } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { haptic } from \"@/components/kinetik/phone\" /* demo frame + haptic() stand-in */;\n\nconst rides = [[\"Economy\", \"$12.40\", \"3 min\", \"🚗\"], [\"Comfort\", \"$18.90\", \"5 min\", \"🚙\"], [\"XL\", \"$24.10\", \"7 min\", \"🚐\"]];\nconst SNAPS = [80, 300, 520];\n\nexport function FlowRide({ initialStep = 0 }: { initialStep?: number }) {\n  const y = useMotionValue(SNAPS[initialStep === 0 ? 1 : initialStep === 1 ? 0 : 1]);\n  const [sel, setSel] = useState(1);\n  const [booked, setBooked] = useState(initialStep === 2);\n  const end = (_: unknown, i: PanInfo) => {\n    const target = y.get() + i.velocity.y * 0.2;\n    const snap = SNAPS.reduce((a, b) => (Math.abs(b - target) < Math.abs(a - target) ? b : a));\n    animate(y, snap, spring.smooth);\n    haptic();\n  };\n  return (\n    <div className=\"relative h-full overflow-hidden bg-[#e8eef3]\">\n      <svg viewBox=\"0 0 320 660\" className=\"absolute inset-0 h-full w-full\" aria-hidden>\n        {[60, 140, 230, 330, 450].map((v) => <path key={v} d={`M0 ${v} Q160 ${v + 40} 320 ${v - 20}`} stroke=\"#fff\" strokeWidth=\"10\" fill=\"none\" />)}\n        {[50, 150, 250].map((v) => <path key={v} d={`M${v} 0 L${v + 30} 660`} stroke=\"#fff\" strokeWidth=\"8\" fill=\"none\" />)}\n        <motion.path d=\"M70 420 C110 340 190 330 210 230 S240 120 250 90\" stroke=\"#111\" strokeWidth=\"4\" fill=\"none\" strokeLinecap=\"round\" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1] }} />\n        <circle cx=\"70\" cy=\"420\" r=\"7\" fill=\"#111\" /><rect x=\"243\" y=\"83\" width=\"14\" height=\"14\" fill=\"#111\" />\n        <motion.text x=\"0\" y=\"0\" fontSize=\"18\" animate={{ offsetDistance: [\"0%\", \"100%\"] } as never} style={{ offsetPath: 'path(\"M70 420 C110 340 190 330 210 230 S240 120 250 90\")' } as React.CSSProperties} transition={{ duration: 6, repeat: Infinity, ease: \"linear\" }}>🚗</motion.text>\n      </svg>\n      <motion.div drag=\"y\" dragConstraints={{ top: SNAPS[0], bottom: SNAPS[2] }} dragElastic={0.1} onDragEnd={end} style={{ y }} className=\"absolute inset-x-0 top-0 h-[600px] cursor-grab touch-none rounded-t-3xl bg-white p-4 shadow-[0_-10px_30px_rgb(0_0_0/.12)] active:cursor-grabbing\">\n        <span className=\"mx-auto mb-3 block h-1.5 w-10 rounded-full bg-zinc-300\" />\n        {booked ? (\n          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className=\"text-center text-zinc-900\"><p className=\"text-4xl\">🚙</p><p className=\"mt-2 text-lg font-semibold\">Driver on the way</p><p className=\"text-sm text-zinc-500\">Maya · Grey Tesla · 4 min</p><button onClick={() => setBooked(false)} className=\"mt-4 text-xs text-zinc-400\">Restart demo</button></motion.div>\n        ) : (\n          <div className=\"text-zinc-900\">\n            <p className=\"mb-3 font-semibold\">Choose a ride</p>\n            <div className=\"space-y-2\" role=\"radiogroup\">\n              {rides.map(([n, p, eta, e], i) => (\n                <button key={n} role=\"radio\" aria-checked={sel === i} onClick={() => (haptic(), setSel(i))} className=\"relative flex w-full items-center gap-3 rounded-2xl p-3 text-left\">\n                  {sel === i && <motion.span layoutId=\"ride-sel\" className=\"absolute inset-0 rounded-2xl border-2 border-zinc-900\" transition={spring.snappy} />}\n                  <span className=\"relative text-3xl\">{e}</span><span className=\"relative flex-1\"><span className=\"block font-medium\">{n}</span><span className=\"text-xs text-zinc-500\">{eta} away</span></span><span className=\"relative font-semibold\">{p}</span>\n                </button>\n              ))}\n            </div>\n            <motion.button whileTap={{ scale: 0.97 }} onClick={() => (haptic(\"success\"), setBooked(true))} className=\"mt-4 h-12 w-full rounded-2xl bg-zinc-900 font-semibold text-white\">Confirm {rides[sel][0]}</motion.button>\n          </div>\n        )}\n      </motion.div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "bottom sheet",
+      "snap points",
+      "map",
+      "ride hailing",
+      "mobile"
+    ],
+    "pageTypes": [
+      "ecommerce"
+    ]
+  }
+}

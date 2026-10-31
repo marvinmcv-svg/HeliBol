@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-wave",
+  "type": "registry:component",
+  "title": "Wave Letters",
+  "description": "Letters ripple upward one after another like a stadium wave — on hover/focus or continuously.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-wave.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-wave.tsx",
+      "content": "\"use client\";\nimport { useState, type ElementType } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextWaveProps {\n  children: string;\n  as?: ElementType;\n  /** \"hover\" waves on hover/focus, \"loop\" waves continuously */\n  trigger?: \"hover\" | \"loop\";\n  height?: number;\n  className?: string;\n}\n\n/** Letters ripple upward one after another, like a stadium wave. */\nexport function TextWave({ children, as: Tag = \"span\", trigger = \"hover\", height = 10, className }: TextWaveProps) {\n  const [k, setK] = useState(0);\n  const reduced = useReducedMotion();\n  const loop = trigger === \"loop\";\n  return (\n    <Tag className={cn(\"inline-block\", className)} aria-label={children} onPointerEnter={() => setK((x) => x + 1)} onFocus={() => setK((x) => x + 1)} tabIndex={trigger === \"hover\" ? 0 : undefined}>\n      {Array.from(children).map((ch, i) => (\n        <motion.span\n          key={`${k}-${i}`}\n          aria-hidden\n          className=\"inline-block whitespace-pre\"\n          initial={false}\n          animate={reduced || (!loop && k === 0) ? { y: 0 } : { y: [0, -height, 0] }}\n          transition={{ duration: 0.5, delay: i * 0.035, ease: [0.34, 1.56, 0.64, 1], repeat: loop ? Infinity : 0, repeatDelay: loop ? 1.2 : 0 }}\n        >\n          {ch}\n        </motion.span>\n      ))}\n    </Tag>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "hover",
+      "nav",
+      "playful",
+      "letters"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

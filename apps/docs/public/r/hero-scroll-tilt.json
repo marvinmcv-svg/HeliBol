@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-scroll-tilt",
+  "type": "registry:component",
+  "title": "Hero — Scroll Tilt Screenshot",
+  "description": "Product screenshot starts tilted back in 3D under the headline and rotates flat while scaling up as you scroll.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-scroll-tilt.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/hero-scroll-tilt.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode, type RefObject } from \"react\";\nimport { motion, useScroll, useTransform } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** Product screenshot starts tilted back in 3D under the headline and rotates flat, scaling up, as you scroll. */\nexport function HeroScrollTilt({ title, children, container, className }: { title: ReactNode; children: ReactNode; container?: RefObject<HTMLElement | null>; className?: string }) {\n  const ref = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n  const { scrollYProgress } = useScroll({ target: ref, container, offset: [\"start start\", \"end end\"] });\n  const rotateX = useTransform(scrollYProgress, [0, 0.6], [24, 0]);\n  const scale = useTransform(scrollYProgress, [0, 0.6], [0.9, 1]);\n  const titleY = useTransform(scrollYProgress, [0, 0.6], [0, -80]);\n  return (\n    <div ref={ref} className={cn(\"relative h-[180cqh] px-4\", className)}>\n      <div className=\"sticky top-0 flex h-[100cqh] flex-col items-center justify-center [perspective:1000px]\">\n        <motion.div style={reduced ? undefined : { y: titleY }} className=\"mb-8 text-center\">{title}</motion.div>\n        <motion.div style={reduced ? undefined : { rotateX, scale }} className=\"w-full max-w-4xl origin-top rounded-3xl border-4 border-zinc-700 bg-zinc-900 p-2 shadow-[0_40px_120px_-30px_rgb(0_0_0/.6)]\">\n          <div className=\"overflow-hidden rounded-2xl\">{children}</div>\n        </motion.div>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "hero",
+      "scroll",
+      "3d",
+      "screenshot",
+      "product"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

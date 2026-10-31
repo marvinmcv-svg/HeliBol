@@ -1,0 +1,1 @@
+Draw layered waves on canvas: for each color, a filled path along y = base + sin(x·.006 + t·(.6+.25i))·(28+8i) + sin(x·.017 − .9t)·10 at 28% alpha, with base offset by the pointer's vertical position.

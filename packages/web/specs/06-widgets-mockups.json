@@ -1,0 +1,596 @@
+[
+ {
+  "id": "widget-weather",
+  "name": "Weather Widget",
+  "category": "widgets",
+  "engine": "motion",
+  "previewHeight": 320,
+  "description": "Weather card whose sky gradient and scene (rotating sun rays, drifting clouds, rain, twinkling stars) crossfade per condition.",
+  "tags": [
+   "weather",
+   "widget",
+   "ios",
+   "scene"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "media"
+  ],
+  "inspiration": [
+   "iOS Weather widgets",
+   "Animata weather card"
+  ],
+  "a11y": "role=group labelled with city, temperature and condition; scene is aria-hidden and frozen under reduced motion.",
+  "perf": "A handful of transformed elements per scene.",
+  "props": [
+   [
+    "weather",
+    "\"sunny\" | \"cloudy\" | \"rainy\" | \"night\"",
+    "",
+    "Condition."
+   ],
+   [
+    "city / temp / hi / lo",
+    "string / number",
+    "",
+    "Data."
+   ]
+  ],
+  "prompt": "Build a weather widget: rounded card with a per-condition gradient crossfading via AnimatePresence; scenes: a slowly rotating sun with 12 rays, clouds drifting across, rain streaks falling with staggered durations, twinkling stars at night; temperature and H/L text on top."
+ },
+ {
+  "id": "widget-music",
+  "name": "Now Playing",
+  "category": "widgets",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "previewHeight": 320,
+  "description": "Music widget: spinning vinyl art, bouncing equalizer, live progress and a play\u2194pause morphing icon.",
+  "tags": [
+   "music",
+   "player",
+   "widget",
+   "media"
+  ],
+  "pageTypes": [
+   "media",
+   "dashboard"
+  ],
+  "inspiration": [
+   "Spotify / Apple Music mini players"
+  ],
+  "a11y": "Labelled transport buttons; progress is a progressbar; motion stops when paused or reduced.",
+  "perf": "Interval for time; transforms only.",
+  "props": [
+   [
+    "title / artist / cover",
+    "string",
+    "",
+    "Track."
+   ],
+   [
+    "duration",
+    "number",
+    "214",
+    "Seconds."
+   ]
+  ],
+  "prompt": "Create a now-playing card: cover art inside a vinyl disc rotating while playing, 4 equalizer bars with looping heights, progress bar and elapsed/remaining time ticking each second, previous/next buttons and a play button whose icon morphs triangle\u2194bars by animating path `d`."
+ },
+ {
+  "id": "widget-clock",
+  "name": "World Clock",
+  "category": "widgets",
+  "engine": "js",
+  "deps": [],
+  "previewHeight": 280,
+  "description": "Analog clocks per time zone with a smooth sweeping second hand and a digital caption.",
+  "tags": [
+   "clock",
+   "time zones",
+   "widget",
+   "analog"
+  ],
+  "pageTypes": [
+   "dashboard"
+  ],
+  "inspiration": [
+   "macOS World Clock widget"
+  ],
+  "a11y": "role=img labelled with the time; reduced motion ticks once per second instead of sweeping.",
+  "perf": "One rAF per clock (cheap style updates).",
+  "props": [
+   [
+    "timeZone",
+    "string",
+    "",
+    "IANA zone."
+   ],
+   [
+    "label",
+    "string",
+    "",
+    "City name."
+   ]
+  ],
+  "prompt": "Make an analog world clock: Intl.DateTimeFormat parts for the zone, hands rotated by hour\u00b730 + minute/2, minute\u00b76, second\u00b76 (+ms for a smooth sweep via rAF), 12 tick marks, an orange seconds hand and center cap."
+ },
+ {
+  "id": "widget-battery",
+  "name": "Battery Level",
+  "category": "widgets",
+  "engine": "motion",
+  "previewHeight": 260,
+  "description": "Battery with a sloshing liquid fill that springs to the level, colors by charge, and a pulsing bolt while charging.",
+  "tags": [
+   "battery",
+   "meter",
+   "widget",
+   "device"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "settings"
+  ],
+  "inspiration": [
+   "iOS Batteries widget"
+  ],
+  "a11y": "role=meter with value and label; status text ('Charging', 'Low power').",
+  "perf": "Fill height spring + looping wave transform.",
+  "props": [
+   [
+    "level",
+    "number",
+    "",
+    "0\u2013100."
+   ],
+   [
+    "charging",
+    "boolean",
+    "false",
+    "Show the bolt."
+   ],
+   [
+    "label",
+    "string",
+    "\"iPhone\"",
+    "Device name."
+   ]
+  ],
+  "prompt": "Create a battery widget: a rounded battery outline whose fill springs to the level (red \u226420, amber \u226450, green), with an SVG wave strip on top translating horizontally for a liquid look and a pulsing \u26a1 when charging."
+ },
+ {
+  "id": "widget-timer",
+  "name": "Countdown Timer",
+  "category": "widgets",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "previewHeight": 340,
+  "description": "Countdown ring that drains smoothly, with start/pause/reset and a celebratory pulse when time is up.",
+  "tags": [
+   "timer",
+   "countdown",
+   "pomodoro",
+   "ring"
+  ],
+  "pageTypes": [
+   "dashboard"
+  ],
+  "inspiration": [
+   "Apple Clock timer"
+  ],
+  "a11y": "role=timer display; completion announced via an aria-live region.",
+  "perf": "One timeout per second; ring pathLength tween.",
+  "props": [
+   [
+    "seconds",
+    "number",
+    "90",
+    "Duration."
+   ],
+   [
+    "label",
+    "string",
+    "\"Focus\"",
+    "Caption."
+   ]
+  ],
+  "prompt": "Build a countdown timer: SVG ring (pathLength 1) animating to left/total linearly each second, mm:ss in the center, play/pause and reset buttons; at zero the ring turns green, label says Done! and the card pulses scale [1,1.04,1] on repeat."
+ },
+ {
+  "id": "widget-calendar",
+  "name": "Mini Calendar",
+  "category": "widgets",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "previewHeight": 420,
+  "description": "Month calendar where the selected-day pill glides between dates, months slide in their travel direction, and event dots mark days.",
+  "tags": [
+   "calendar",
+   "date",
+   "widget",
+   "events"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "settings"
+  ],
+  "inspiration": [
+   "Animata calendar widget",
+   "Cal.com"
+  ],
+  "a11y": "Day buttons labelled with date and event; aria-pressed for the selection.",
+  "perf": "Shared layoutId pill; month swap via popLayout.",
+  "props": [
+   [
+    "events",
+    "Record<'YYYY-MM-DD', string>",
+    "",
+    "Events by date."
+   ]
+  ],
+  "prompt": "Create a mini calendar: header with month name and prev/next buttons; a 7-column grid (Monday first) that slides \u00b160px on month change (custom direction); selected day highlighted by a layoutId pill (snappy spring); event days show a dot; below, the selected day's event fades in."
+ },
+ {
+  "id": "widget-stock",
+  "name": "Live Stock Ticker",
+  "category": "widgets",
+  "engine": "js",
+  "deps": [
+   "motion"
+  ],
+  "previewHeight": 280,
+  "description": "Ticker card with a streaming sparkline, a price that flashes green/red on each change, and a delta badge.",
+  "tags": [
+   "stocks",
+   "finance",
+   "sparkline",
+   "live"
+  ],
+  "pageTypes": [
+   "dashboard"
+  ],
+  "inspiration": [
+   "Robinhood",
+   "Apple Stocks"
+  ],
+  "a11y": "Chart has role=img with a label; color is paired with \u25b2/\u25bc glyphs.",
+  "perf": "40-point series updated ~1\u00d7/s; polyline re-render.",
+  "props": [
+   [
+    "symbol / name",
+    "string",
+    "",
+    "Instrument."
+   ],
+   [
+    "start",
+    "number",
+    "182.4",
+    "Starting price."
+   ]
+  ],
+  "prompt": "Build a live ticker card: keep a rolling 40-point series updated every 900ms; draw an area + polyline sparkline green or red by overall delta; the price text flashes a tinted background that fades out on each change; \u25b2/\u25bc percentage badge."
+ },
+ {
+  "id": "widget-terminal",
+  "name": "Animated Terminal",
+  "category": "widgets",
+  "engine": "js",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Terminal that types its commands character by character and reveals output lines with a beat in between.",
+  "tags": [
+   "terminal",
+   "cli",
+   "install",
+   "dev tools",
+   "typing"
+  ],
+  "pageTypes": [
+   "landing",
+   "docs"
+  ],
+  "inspiration": [
+   "Magic UI Terminal"
+  ],
+  "a11y": "role=log; reduced motion shows all lines immediately.",
+  "perf": "Single timeout chain.",
+  "props": [
+   [
+    "lines",
+    "({ cmd } | { out, tone? })[]",
+    "",
+    "Script."
+   ],
+   [
+    "title",
+    "string",
+    "",
+    "Window title."
+   ]
+  ],
+  "prompt": "Create an animated terminal window (traffic lights, title): a step machine types each `cmd` line at 40ms/char with a block caret, pauses 350ms, then reveals each output line after 220ms (slide-in), with tone colors (ok/muted/warn)."
+ },
+ {
+  "id": "widget-file-tree",
+  "name": "File Tree",
+  "category": "widgets",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "previewHeight": 380,
+  "description": "Collapsible file tree with smooth height animation, rotating chevrons and open/closed folder icons.",
+  "tags": [
+   "file tree",
+   "explorer",
+   "docs",
+   "ide"
+  ],
+  "pageTypes": [
+   "docs",
+   "dashboard"
+  ],
+  "inspiration": [
+   "Magic UI File Tree",
+   "VS Code explorer"
+  ],
+  "a11y": "tree / treeitem / group roles with aria-expanded and aria-selected.",
+  "perf": "Height auto animation per folder.",
+  "props": [
+   [
+    "tree",
+    "{ name, children? }[]",
+    "",
+    "Nodes."
+   ]
+  ],
+  "prompt": "Build a recursive file tree (role=tree): folders toggle with a chevron that springs to 90\u00b0 and children animate height 0\u2194auto (250ms); files are selectable; folder icon switches open/closed."
+ },
+ {
+  "id": "widget-notifications",
+  "name": "Notification Feed",
+  "category": "widgets",
+  "engine": "motion",
+  "previewHeight": 380,
+  "description": "New notifications drop in at the top on a loop, pushing older ones down \u2014 the animated list for social proof and dashboards.",
+  "tags": [
+   "notifications",
+   "feed",
+   "animated list",
+   "social proof"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard"
+  ],
+  "inspiration": [
+   "Magic UI Animated List"
+  ],
+  "a11y": "aria-live polite list.",
+  "perf": "Max N items; layout animation on insert.",
+  "props": [
+   [
+    "items",
+    "{ icon, title, body, time, color }[]",
+    "",
+    "Notifications to cycle."
+   ],
+   [
+    "interval",
+    "number",
+    "1800",
+    "ms between items."
+   ],
+   [
+    "max",
+    "number",
+    "4",
+    "Visible items."
+   ]
+  ],
+  "prompt": "Create an animated notification list: every interval prepend the next notification (cycling) and cap the list; items enter from y \u221224 with scale .9, siblings shift via layout springs, exits scale out."
+ },
+ {
+  "id": "widget-water",
+  "name": "Water Tracker",
+  "category": "widgets",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P3",
+  "previewHeight": 280,
+  "description": "Hydration tracker: a glass fills with a wobbling wave as you log cups, with bubbles rising on each change.",
+  "tags": [
+   "health",
+   "tracker",
+   "habit",
+   "liquid"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "onboarding"
+  ],
+  "inspiration": [
+   "Animata water tracker",
+   "WaterMinder"
+  ],
+  "a11y": "role=meter with value; labelled add/remove buttons.",
+  "perf": "Spring height + looping wave transform.",
+  "props": [
+   [
+    "goal",
+    "number",
+    "8",
+    "Cups per day."
+   ]
+  ],
+  "prompt": "Build a water tracker: a glass shape whose water height springs (70/12) to cups/goal, an SVG wave strip looping horizontally on top, and five bubbles that rise and fade each time the value changes; +/\u2212 buttons."
+ },
+ {
+  "id": "mockup-iphone",
+  "name": "iPhone Mockup",
+  "category": "mockups",
+  "engine": "css",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 440,
+  "description": "Pure-CSS iPhone frame \u2014 titanium bezel, Dynamic Island and side buttons \u2014 that wraps any screen or screenshot.",
+  "tags": [
+   "mockup",
+   "iphone",
+   "device",
+   "frame",
+   "css-only"
+  ],
+  "pageTypes": [
+   "landing",
+   "onboarding"
+  ],
+  "inspiration": [
+   "Magic UI iPhone 15 Pro"
+  ],
+  "a11y": "Frame is presentational; give screenshots meaningful alt text.",
+  "perf": "No images for the frame; 0 KB JS.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Screen content."
+   ]
+  ],
+  "prompt": "Build a CSS iPhone mockup: 9:19.5 aspect, titanium gradient outer bezel with drop shadow, side buttons as small bars, black inner bezel, rounded screen that clips children, and a pill-shaped Dynamic Island overlay."
+ },
+ {
+  "id": "mockup-browser",
+  "name": "Browser Mockup",
+  "category": "mockups",
+  "engine": "css",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "Safari-style window chrome \u2014 traffic lights and a centered URL bar with lock \u2014 around any content.",
+  "tags": [
+   "mockup",
+   "browser",
+   "safari",
+   "frame",
+   "css-only"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "Magic UI Safari"
+  ],
+  "a11y": "Presentational chrome; content keeps its own semantics.",
+  "perf": "Plain markup; 0 KB JS.",
+  "props": [
+   [
+    "url",
+    "string",
+    "\"kinetik.dev\"",
+    "Shown in the address bar."
+   ]
+  ],
+  "prompt": "Create a browser window mockup: rounded card with a toolbar (three traffic-light dots, centered URL pill with a lock icon) and a content slot."
+ },
+ {
+  "id": "mockup-laptop",
+  "name": "Laptop Mockup",
+  "category": "mockups",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 380,
+  "description": "CSS laptop \u2014 lid with notch, 16:10 screen, hinge and base \u2014 for hero shots of web apps.",
+  "tags": [
+   "mockup",
+   "laptop",
+   "macbook",
+   "frame",
+   "css-only"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "Cult UI Mac screen"
+  ],
+  "a11y": "Presentational frame.",
+  "perf": "Pure CSS frame; 0 KB JS.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Screen content."
+   ]
+  ],
+  "prompt": "Build a laptop mockup in CSS: dark lid with notch around a 16:10 screen slot, and a wider gradient base with a thumb notch and soft shadow."
+ },
+ {
+  "id": "mockup-window",
+  "name": "macOS Window",
+  "category": "mockups",
+  "engine": "motion",
+  "priority": "P2",
+  "previewHeight": 380,
+  "description": "A macOS app window that zooms open from its dock icon and minimizes back into it.",
+  "tags": [
+   "macos",
+   "window",
+   "dock",
+   "minimize"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "macOS genie effect"
+  ],
+  "a11y": "Window is a labelled dialog; traffic lights and dock icon are labelled buttons.",
+  "perf": "Scale/translate from a bottom origin.",
+  "props": [
+   [
+    "title",
+    "string",
+    "",
+    "Window title."
+   ],
+   [
+    "icon",
+    "ReactNode",
+    "",
+    "Dock icon."
+   ],
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Window content."
+   ]
+  ],
+  "prompt": "Create a macOS window + dock icon: the window (origin bottom) enters from scale .2 / y 160 to rest with a spring and exits to scale .15 / y 200 when a traffic light is clicked; clicking the dock icon toggles it; a dot under the icon shows it's open."
+ }
+]

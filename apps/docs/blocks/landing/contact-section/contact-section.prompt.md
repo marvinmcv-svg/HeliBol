@@ -1,0 +1,1 @@
+Build a contact section on a glowing dot-matrix canvas: left headline + bullet services; right a glass card form with floating-label name/email, an animated budget select, a textarea and a paper-plane send button.

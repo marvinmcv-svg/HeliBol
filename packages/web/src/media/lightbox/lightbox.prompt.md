@@ -1,0 +1,1 @@
+Build a lightbox: grid tiles and the fullscreen image share a layoutId per index so opening morphs the tile into place; dark backdrop; prev/next buttons and ←/→ keys swap the index; Esc or backdrop click morphs it back.

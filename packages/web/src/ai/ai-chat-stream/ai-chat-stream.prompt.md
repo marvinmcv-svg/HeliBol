@@ -1,0 +1,1 @@
+Build a chat thread: user bubbles right (dark), assistant left (muted). Messages enter with y 12→0, scale .97→1 springs. Before each assistant reply show three bouncing typing dots, then stream the reply word-by-word (45ms) with a blinking block caret, then commit it as a normal bubble. Auto-scroll to the end.

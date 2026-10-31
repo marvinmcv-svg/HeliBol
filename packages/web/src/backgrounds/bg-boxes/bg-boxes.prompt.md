@@ -1,0 +1,1 @@
+Build interactive boxes: a large grid of 4rem×2rem bordered cells transformed with skewX(−48°) skewY(14°) scale(.7); on pointerenter set a palette color instantly, on leave fade to transparent over 1.6s; radial vignette over the top.

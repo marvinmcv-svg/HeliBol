@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-expand-gallery",
+  "type": "registry:component",
+  "title": "Expanding Gallery",
+  "description": "Accordion gallery: hovering or focusing a panel grows it with a spring while siblings compress, captions fade in.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-expand-gallery.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-expand-gallery.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface ExpandPanel {\n  id: string;\n  title: string;\n  image: string;\n  caption?: string;\n}\n\n/** Accordion gallery: hovering or focusing a panel grows it with a spring while the others compress. */\nexport function CardExpandGallery({ panels, className }: { panels: ExpandPanel[]; className?: string }) {\n  const [active, setActive] = useState(panels[0]?.id);\n  return (\n    <div className={cn(\"flex h-80 w-full gap-2\", className)}>\n      {panels.map((p) => {\n        const on = p.id === active;\n        return (\n          <motion.button\n            key={p.id}\n            layout\n            onPointerEnter={() => setActive(p.id)}\n            onFocus={() => setActive(p.id)}\n            aria-expanded={on}\n            transition={spring.smooth}\n            className=\"relative min-w-0 overflow-hidden rounded-3xl text-left outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            style={{ flex: on ? 5 : 1 }}\n          >\n            <img src={p.image} alt=\"\" className=\"absolute inset-0 h-full w-full object-cover\" />\n            <div className=\"absolute inset-0 bg-gradient-to-t from-black/70 via-black/10\" />\n            <motion.div className=\"absolute bottom-4 left-4 text-white\" animate={{ opacity: on ? 1 : 0, y: on ? 0 : 12 }} transition={{ delay: on ? 0.15 : 0 }}>\n              <p className=\"text-lg font-semibold whitespace-nowrap\">{p.title}</p>\n              {p.caption && <p className=\"text-xs whitespace-nowrap text-white/70\">{p.caption}</p>}\n            </motion.div>\n            <span className={cn(\"absolute bottom-4 left-1/2 -translate-x-1/2 text-xs font-medium text-white [writing-mode:vertical-rl] rotate-180 transition-opacity\", on ? \"opacity-0\" : \"opacity-90\")}>{p.title}</span>\n          </motion.button>\n        );\n      })}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "gallery",
+      "accordion",
+      "expand",
+      "images"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing",
+      "ecommerce"
+    ]
+  }
+}

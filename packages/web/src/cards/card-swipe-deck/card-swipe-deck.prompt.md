@@ -1,0 +1,1 @@
+Build a swipe deck: top card `drag="x"` with rotate = x mapped [−200,200]→[−18,18]°, LIKE/NOPE stamps fading in from x; release past 110px or 600px/s exits it off-screen with rotation; the next two cards sit scaled .95/.9 and offset 12/24px and animate up. Add Like/Nope buttons and arrow keys.

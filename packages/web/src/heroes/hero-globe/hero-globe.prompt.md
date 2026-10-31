@@ -1,0 +1,1 @@
+Draw a dotted globe on canvas: Fibonacci-sphere points filtered by a pseudo-land mask; orthographic projection with rotation = t·.25 and a pointer-driven tilt; draw only front-facing dots with depth-based alpha; arcs interpolate lat/lon, lift outward by sin(πf)·.18 and sweep along with a 40% trailing window.

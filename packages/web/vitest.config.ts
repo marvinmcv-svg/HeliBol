@@ -7,5 +7,8 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./test/setup.ts"],
     testTimeout: 20000,
+    // The contract suite discovers components with import.meta.glob; Vitest's fs module cache
+    // reuses the transformed file by content hash and misses newly added components.
+    fsModuleCache: false,
   },
 });

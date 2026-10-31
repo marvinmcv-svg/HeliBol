@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-odometer",
+  "type": "registry:component",
+  "title": "Odometer Number",
+  "description": "Each digit is a vertical reel that springs to its new number — the slot-machine counter for live stats and prices.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-odometer.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-odometer.tsx",
+      "content": "\"use client\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextOdometerProps {\n  value: number;\n  format?: Intl.NumberFormatOptions;\n  locale?: string;\n  className?: string;\n}\n\nfunction Digit({ d, reduced }: { d: number; reduced: boolean }) {\n  return (\n    <span className=\"relative inline-block h-[1em] w-[0.62em] overflow-hidden leading-none\">\n      <motion.span className=\"absolute inset-x-0 top-0 flex flex-col\" initial={false} animate={{ y: `${-d * 10}%` }} transition={reduced ? { duration: 0 } : { type: \"spring\", stiffness: 180, damping: 22 }}>\n        {Array.from({ length: 10 }, (_, n) => (\n          <span key={n} className=\"block h-[1em] text-center\">{n}</span>\n        ))}\n      </motion.span>\n    </span>\n  );\n}\n\n/** Each digit is a vertical reel that springs to its new number — the car-odometer / slot-machine counter. */\nexport function TextOdometer({ value, format, locale, className }: TextOdometerProps) {\n  const reduced = useReducedMotion();\n  const text = new Intl.NumberFormat(locale, format).format(value);\n  return (\n    <span className={cn(\"inline-flex items-baseline tabular-nums\", className)} aria-label={text} role=\"text\">\n      {Array.from(text).map((ch, i) =>\n        /\\d/.test(ch) ? <Digit key={`${text.length - i}`} d={Number(ch)} reduced={reduced} /> : <span key={`s${text.length - i}`} aria-hidden>{ch}</span>,\n      )}\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "number",
+      "counter",
+      "odometer",
+      "live",
+      "stats",
+      "pricing"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "landing",
+      "pricing"
+    ]
+  }
+}

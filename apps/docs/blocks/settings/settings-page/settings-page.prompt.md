@@ -1,0 +1,1 @@
+Create a settings page: collapsible icon sidebar; notification rows with spring switches; appearance with an animated select (including a Reduced motion option) and a tag input; a red-bordered danger zone with a hold-to-confirm delete.

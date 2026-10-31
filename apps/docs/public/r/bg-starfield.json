@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-starfield",
+  "type": "registry:component",
+  "title": "Warp Starfield",
+  "description": "Stars stream out from the center with motion trails; raise `speed` to jump to lightspeed.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-starfield.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-starfield.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { cn, useCanvas } from \"@/lib/kinetik/core\";\n\ninterface Star { x: number; y: number; z: number; pz: number }\n\n/** Warp-speed starfield: stars stream out from the center with motion trails. Speed is a prop (hover a button to boost). */\nexport function BgStarfield({ children, count = 500, speed = 0.6, className }: { children?: ReactNode; count?: number; speed?: number; className?: string }) {\n  const stars = useRef<Star[]>([]);\n  const ref = useCanvas(({ ctx, width, height, dt }) => {\n    if (!stars.current.length) stars.current = Array.from({ length: count }, () => ({ x: (Math.random() - 0.5) * 2, y: (Math.random() - 0.5) * 2, z: Math.random(), pz: 0 }));\n    ctx.fillStyle = \"rgb(2 2 10 / .35)\";\n    ctx.fillRect(0, 0, width, height);\n    const cx = width / 2;\n    const cy = height / 2;\n    const scale = Math.max(width, height) * 0.5;\n    for (const s of stars.current) {\n      s.pz = s.z;\n      s.z -= speed * dt;\n      if (s.z <= 0.01) {\n        s.x = (Math.random() - 0.5) * 2;\n        s.y = (Math.random() - 0.5) * 2;\n        s.z = 1;\n        s.pz = 1;\n      }\n      const sx = cx + (s.x / s.z) * scale;\n      const sy = cy + (s.y / s.z) * scale;\n      const px = cx + (s.x / s.pz) * scale;\n      const py = cy + (s.y / s.pz) * scale;\n      ctx.strokeStyle = `rgb(255 255 255 / ${Math.min(1, 1.2 - s.z)})`;\n      ctx.lineWidth = Math.max(0.5, (1 - s.z) * 2.2);\n      ctx.beginPath();\n      ctx.moveTo(px, py);\n      ctx.lineTo(sx, sy);\n      ctx.stroke();\n    }\n  }, { interactive: false });\n  return (\n    <div className={cn(\"relative isolate overflow-hidden bg-[#02020a]\", className)}>\n      <canvas ref={ref} aria-hidden className=\"absolute inset-0 -z-10 h-full w-full\" />\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "space",
+      "stars",
+      "warp",
+      "canvas"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

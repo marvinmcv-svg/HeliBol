@@ -1,0 +1,1 @@
+Create a profile card: cover image that zooms 1.1→1.25 on hover, avatar overlapping with a ring, a Follow button (Motion layout) that morphs to an outlined 'Following ✓' with a vertical label roll, and stats whose numbers roll when the follower count changes.

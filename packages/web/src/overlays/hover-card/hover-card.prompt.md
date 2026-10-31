@@ -1,0 +1,1 @@
+Build a hover card: after a 350ms hover intent (or immediately on focus) show a card below the trigger that springs from y 6 / scale .96; a 120ms close delay lets the pointer travel into the card, which cancels closing.

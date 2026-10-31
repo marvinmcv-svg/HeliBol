@@ -1,0 +1,1 @@
+Build a holographic card: on pointermove set --mx/--my (percent) and --rx/--ry (±9/±11deg) CSS vars; the card rotates in 3D from them; overlay a repeating 115° rainbow gradient at 300% size positioned by --mx/--my with mix-blend color-dodge, masked by a radial gradient at the pointer, plus a white radial glare (overlay blend). Reset on leave.

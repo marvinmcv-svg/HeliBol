@@ -1,0 +1,1 @@
+Build a pinned story: two columns; left has one 70vh-tall block per step (inactive steps dim to 25%); right column has a sticky 70vh visual that swaps (scale/blur crossfade, popLayout) to the step chosen by floor(scrollProgress × steps) with offsets ['start center','end center']; progress pips on the side.

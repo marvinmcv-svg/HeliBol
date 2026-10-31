@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "svg-motion-path",
+  "type": "registry:component",
+  "title": "CSS Motion Path",
+  "description": "Objects travel along an SVG path using CSS offset-path, auto-rotating to the curve — zero JavaScript.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/svg-motion-path.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/svg-motion-path.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nconst css = `\n.k-mpath{offset-path:var(--k-path);offset-rotate:auto;animation:k-mpath var(--k-mp-d) cubic-bezier(.45,0,.55,1) infinite;animation-delay:var(--k-mp-delay)}\n@keyframes k-mpath{from{offset-distance:0%}to{offset-distance:100%}}\n@media (prefers-reduced-motion:reduce){.k-mpath{animation:none;offset-distance:50%}}\n[data-reduce-motion] .k-mpath{animation:none;offset-distance:50%}`;\n\n/** Objects travel along an SVG path with CSS motion paths (offset-path), auto-rotating to the path's tangent. No JS. */\nexport function SvgMotionPath({ path, viewBox = \"0 0 400 200\", items, duration = 6, className }: { path: string; viewBox?: string; items: ReactNode[]; duration?: number; className?: string }) {\n  const [, , w, h] = viewBox.split(\" \").map(Number);\n  return (\n    <div className={cn(\"relative\", className)} style={{ aspectRatio: `${w}/${h}` }}>\n      <style href=\"k-mpath\" precedence=\"kinetik\">{css}</style>\n      <svg viewBox={viewBox} className=\"absolute inset-0 h-full w-full\" aria-hidden><path d={path} fill=\"none\" stroke=\"currentColor\" strokeOpacity=\".2\" strokeWidth=\"2\" strokeDasharray=\"6 8\" /></svg>\n      <div className=\"absolute inset-0\" style={{ transform: `scale(var(--k-s, 1))` }}>\n        {items.map((it, i) => (\n          <span key={i} aria-hidden className=\"k-mpath absolute top-0 left-0\" style={{ \"--k-path\": `path(\"${path}\")`, \"--k-mp-d\": `${duration}s`, \"--k-mp-delay\": `${(-duration / items.length) * i}s` } as React.CSSProperties}>\n            {it}\n          </span>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "svg"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "motion path",
+      "offset-path",
+      "svg",
+      "css-only",
+      "logistics"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

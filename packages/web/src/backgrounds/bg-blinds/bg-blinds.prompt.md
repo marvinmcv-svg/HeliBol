@@ -1,0 +1,1 @@
+Build 'light through blinds': a layer with a repeating 100° stripe gradient (white/7%) over a 300%-sized 3-color gradient whose position animates 0%→100% alternating over 14s with a slight translateX.

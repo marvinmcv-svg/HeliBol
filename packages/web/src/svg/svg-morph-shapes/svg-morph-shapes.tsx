@@ -1,0 +1,27 @@
+"use client";
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import { cn, useReducedMotion } from "@kinetik/core";
+
+/** Morphs between shapes built from the same 8 cubic segments (so Motion can interpolate `d` cleanly): blob, star, heart, square. */
+const shapes: Record<string, string> = {
+  blob: "M100,20 C140,20 175,45 180,85 C185,125 165,170 125,178 C85,186 45,175 28,140 C11,105 20,60 45,38 C60,26 80,20 100,20 Z",
+  star: "M100,15 C110,60 110,60 185,75 C130,110 130,110 150,185 C100,145 100,145 50,185 C70,110 70,110 15,75 C90,60 90,60 100,15 Z",
+  heart: "M100,60 C100,20 160,10 180,55 C195,95 150,140 100,182 C50,140 5,95 20,55 C40,10 100,20 100,60 Z",
+  square: "M40,30 C70,30 130,30 160,30 C170,30 170,40 170,50 C170,90 170,130 160,170 C130,170 70,170 40,170 C30,170 30,160 30,150 C30,110 30,70 40,30 Z",
+};
+
+export function SvgMorphShapes({ sequence = ["blob", "star", "heart", "square"], interval = 1800, className }: { sequence?: (keyof typeof shapes)[]; interval?: number; className?: string }) {
+  const [i, setI] = useState(0);
+  const reduced = useReducedMotion();
+  useEffect(() => {
+    const t = setInterval(() => setI((n) => (n + 1) % sequence.length), interval);
+    return () => clearInterval(t);
+  }, [sequence.length, interval]);
+  return (
+    <svg viewBox="0 0 200 200" className={cn("size-48", className)} role="img" aria-label={`Shape: ${sequence[i]}`}>
+      <defs><linearGradient id="k-morph-g" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#8b5cf6" /><stop offset="1" stopColor="#ec4899" /></linearGradient></defs>
+      <motion.path d={shapes[sequence[0]]} animate={{ d: shapes[sequence[i]] }} transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 90, damping: 14 }} fill="url(#k-morph-g)" />
+    </svg>
+  );
+}

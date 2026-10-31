@@ -1,0 +1,1 @@
+Build a ripple button: on pointerdown add a span at the press point sized to 2× the button diagonal, animate scale 0→1 and opacity .45→0 over 650ms (cubic-bezier(.2,0,0,1)), remove it after. Button is overflow-hidden; ripple uses currentColor.

@@ -1,0 +1,1 @@
+Create a morphing mega menu: one absolutely positioned panel container with Motion `layout` so its width/height spring between menu contents; contents swap with popLayout sliding ±40px in the direction of travel (compare with the previous index); open on hover/focus, close on leave/Esc.

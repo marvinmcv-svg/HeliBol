@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-ripple-rings",
+  "type": "registry:component",
+  "title": "Ripple Rings",
+  "description": "Concentric rings that breathe around a centerpiece — behind avatars, logos, product icons or a CTA.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-ripple-rings.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-ripple-rings.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nconst css = `\n.k-rings span{position:absolute;left:50%;top:50%;border-radius:9999px;border:1px solid color-mix(in oklab,var(--color-foreground,#888) 18%,transparent);background:color-mix(in oklab,var(--color-foreground,#888) 3%,transparent);translate:-50% -50%;animation:k-rings 3.6s ease-in-out infinite;animation-delay:var(--d)}\n@keyframes k-rings{0%,100%{scale:1}50%{scale:.92}}\n@media (prefers-reduced-motion:reduce){.k-rings span{animation:none}}\n[data-reduce-motion] .k-rings span{animation:none}`;\n\n/** Concentric rings that breathe outward from the center — behind avatars, logos or a CTA. CSS only. */\nexport function BgRippleRings({ children, count = 8, base = 140, step = 70, className }: { children?: ReactNode; count?: number; base?: number; step?: number; className?: string }) {\n  return (\n    <div className={cn(\"relative isolate grid place-items-center overflow-hidden\", className)}>\n      <style href=\"k-rings\" precedence=\"kinetik\">{css}</style>\n      <div aria-hidden className=\"k-rings absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,#fff,transparent)]\">\n        {Array.from({ length: count }, (_, i) => (\n          <span key={i} style={{ width: base + i * step, height: base + i * step, opacity: 1 - i * (0.8 / count), \"--d\": `${i * 0.08}s` } as React.CSSProperties} />\n        ))}\n      </div>\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "rings",
+      "ripple",
+      "logo",
+      "css-only"
+    ],
+    "pageTypes": [
+      "landing",
+      "onboarding"
+    ]
+  }
+}

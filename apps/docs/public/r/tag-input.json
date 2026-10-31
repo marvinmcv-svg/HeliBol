@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tag-input",
+  "type": "registry:component",
+  "title": "Tag Input",
+  "description": "Chip input: Enter or comma pops a tag in, Backspace arms then removes the last tag, duplicates wiggle instead of adding.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/tag-input.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/tag-input.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { X } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** Tag/chip input: Enter or comma pops a chip in, Backspace on empty removes the last (with a nudge first), duplicates wiggle. */\nexport function TagInput({ defaultTags = [], placeholder = \"Add a tag…\", label = \"Tags\", className }: { defaultTags?: string[]; placeholder?: string; label?: string; className?: string }) {\n  const [tags, setTags] = useState(defaultTags);\n  const [v, setV] = useState(\"\");\n  const [shake, setShake] = useState<string | null>(null);\n  const [armed, setArmed] = useState(false);\n  const add = () => {\n    const t = v.trim().replace(/,$/, \"\");\n    if (!t) return;\n    if (tags.includes(t)) {\n      setShake(t);\n      setTimeout(() => setShake(null), 400);\n    } else setTags((s) => [...s, t]);\n    setV(\"\");\n  };\n  return (\n    <div className={cn(\"flex w-full max-w-md flex-wrap items-center gap-1.5 rounded-xl border border-input bg-card p-2 focus-within:ring-2 focus-within:ring-ring/40\", className)}>\n      <AnimatePresence initial={false}>\n        {tags.map((t, i) => (\n          <motion.span key={t} layout initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1, x: shake === t ? [0, -5, 5, -3, 3, 0] : 0 }} exit={{ scale: 0.5, opacity: 0 }} transition={spring.bouncy} className={cn(\"flex items-center gap-1 rounded-lg px-2 py-1 text-sm transition-colors\", armed && i === tags.length - 1 ? \"bg-destructive/15 text-destructive\" : \"bg-muted\")}>\n            {t}\n            <button onClick={() => setTags((s) => s.filter((x) => x !== t))} aria-label={`Remove ${t}`} className=\"opacity-60 hover:opacity-100\"><X className=\"size-3\" /></button>\n          </motion.span>\n        ))}\n      </AnimatePresence>\n      <input\n        value={v}\n        aria-label={label}\n        onChange={(e) => (setV(e.target.value), setArmed(false), e.target.value.endsWith(\",\") && add())}\n        onKeyDown={(e) => {\n          if (e.key === \"Enter\") (e.preventDefault(), add());\n          if (e.key === \"Backspace\" && !v && tags.length) armed ? (setTags((s) => s.slice(0, -1)), setArmed(false)) : setArmed(true);\n        }}\n        placeholder={tags.length ? \"\" : placeholder}\n        className=\"min-w-24 flex-1 bg-transparent px-1 py-1 text-sm outline-none\"\n      />\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "tags",
+      "chips",
+      "input",
+      "multi-select"
+    ],
+    "pageTypes": [
+      "settings",
+      "dashboard",
+      "blog"
+    ]
+  }
+}

@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "pnpm registry && pnpm --filter @kinetik/docs dev",
     "build": "pnpm registry && turbo run build",
-    "registry": "node scripts/gen-registry.mjs",
+    "registry": "node scripts/gen-meta.mjs && node scripts/gen-registry.mjs",
     "typecheck": "pnpm registry && turbo run typecheck",
     "test": "pnpm registry && turbo run test",
     "lint": "turbo run lint",
-    "screenshots": "node scripts/screenshots.mjs"
+    "screenshots": "node scripts/screenshots.mjs",
+    "thumbs": "node scripts/capture-thumbs.mjs"
   },
   "devDependencies": {
     "turbo": "^2.11.10",

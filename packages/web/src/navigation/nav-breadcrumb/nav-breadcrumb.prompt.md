@@ -1,0 +1,1 @@
+Create animated breadcrumbs: when the path exceeds `max`, render first + '…' + last (max−2); each li uses layout + popLayout to slide in from x 12 and collapse out; last item is a highlighted aria-current pill.

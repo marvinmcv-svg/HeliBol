@@ -1,0 +1,1 @@
+Build a donut: one SVG circle per segment with pathLength 1, strokeDasharray `frac−gap 1` and strokeDashoffset animating to −cumulativeStart (staggered 120ms) on view; hover thickens the stroke and dims others, and the center shows the hovered percentage.

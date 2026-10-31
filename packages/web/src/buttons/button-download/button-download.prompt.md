@@ -1,0 +1,1 @@
+Create a download button that morphs (Motion layout) from a labeled pill into a 48px circle containing a progress ring (pathLength = progress/100 with a spring), then into a green check that pops in; resets after 1.8s. Progress can be controlled or simulated.

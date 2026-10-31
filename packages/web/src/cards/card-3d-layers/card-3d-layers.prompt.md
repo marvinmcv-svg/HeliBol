@@ -1,0 +1,1 @@
+Create a 3D card with context: container springs rotateX/rotateY ±12° from pointer position with preserve-3d; a shared hover motion value (0→1) drives each `Card3DLayer`'s translateZ from 0 to its depth.

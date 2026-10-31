@@ -1,0 +1,1 @@
+Create morphing icons by animating SVG path `d` strings with identical command structure between states (Motion animates them): hamburger lines to an X, play triangle halves to two pause bars, plus to minus (vertical stroke rotates 90° and fades), arrow to check. Snappy spring.

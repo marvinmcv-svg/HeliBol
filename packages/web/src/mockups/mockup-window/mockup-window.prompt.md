@@ -1,0 +1,1 @@
+Create a macOS window + dock icon: the window (origin bottom) enters from scale .2 / y 160 to rest with a spring and exits to scale .15 / y 200 when a traffic light is clicked; clicking the dock icon toggles it; a dot under the icon shows it's open.

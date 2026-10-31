@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "before-after",
+  "type": "registry:component",
+  "title": "Before / After Slider",
+  "description": "Drag the handle — or use the arrow keys, it's a real slider — to wipe between two images.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/before-after.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/before-after.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\n/** Before/after comparison: drag the handle (or use arrow keys — it's a slider) to wipe between two images. */\nexport function BeforeAfter({ before, after, beforeLabel = \"Before\", afterLabel = \"After\", className }: { before: string; after: string; beforeLabel?: string; afterLabel?: string; className?: string }) {\n  const [pos, setPos] = useState(50);\n  const box = useRef<HTMLDivElement>(null);\n  const drag = (x: number) => {\n    const r = box.current!.getBoundingClientRect();\n    setPos(Math.max(0, Math.min(100, ((x - r.left) / r.width) * 100)));\n  };\n  return (\n    <div ref={box} className={cn(\"relative touch-none overflow-hidden rounded-2xl select-none\", className)} onPointerDown={(e) => (e.currentTarget.setPointerCapture(e.pointerId), drag(e.clientX))} onPointerMove={(e) => e.buttons && drag(e.clientX)}>\n      <img src={after} alt={afterLabel} className=\"block w-full object-cover\" draggable={false} />\n      <img src={before} alt={beforeLabel} className=\"absolute inset-0 h-full w-full object-cover\" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }} draggable={false} />\n      <span className=\"absolute top-3 left-3 rounded-full bg-black/50 px-2.5 py-1 text-xs text-white backdrop-blur\">{beforeLabel}</span>\n      <span className=\"absolute top-3 right-3 rounded-full bg-black/50 px-2.5 py-1 text-xs text-white backdrop-blur\">{afterLabel}</span>\n      <div className=\"absolute inset-y-0 w-0.5 bg-white shadow-[0_0_12px_rgb(0_0_0/.5)]\" style={{ left: `${pos}%` }}>\n        <span\n          role=\"slider\"\n          tabIndex={0}\n          aria-label=\"Comparison position\"\n          aria-valuemin={0}\n          aria-valuemax={100}\n          aria-valuenow={Math.round(pos)}\n          onKeyDown={(e) => {\n            if (e.key === \"ArrowLeft\") setPos((p) => Math.max(0, p - 5));\n            if (e.key === \"ArrowRight\") setPos((p) => Math.min(100, p + 5));\n          }}\n          className=\"absolute top-1/2 left-1/2 grid size-10 -translate-1/2 cursor-ew-resize place-items-center rounded-full bg-white text-zinc-900 shadow-xl outline-none focus-visible:ring-4 focus-visible:ring-ring\"\n        >\n          ⇆\n        </span>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "comparison",
+      "slider",
+      "before after",
+      "images"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "portfolio",
+      "landing"
+    ]
+  }
+}

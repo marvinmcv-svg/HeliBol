@@ -1,0 +1,1 @@
+Create a battery widget: a rounded battery outline whose fill springs to the level (red ≤20, amber ≤50, green), with an SVG wave strip on top translating horizontally for a liquid look and a pulsing ⚡ when charging.

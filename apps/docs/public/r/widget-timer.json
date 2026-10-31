@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-timer",
+  "type": "registry:component",
+  "title": "Countdown Timer",
+  "description": "Countdown ring that drains smoothly, with start/pause/reset and a celebratory pulse when time is up.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/widget-timer.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/widget-timer.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { Pause, Play, RotateCcw } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\n/** Countdown ring timer: the ring drains smoothly, the digits roll, and the whole widget pulses when time is up. */\nexport function WidgetTimer({ seconds = 90, label = \"Focus\", className }: { seconds?: number; label?: string; className?: string }) {\n  const [left, setLeft] = useState(seconds);\n  const [running, setRunning] = useState(false);\n  useEffect(() => {\n    if (!running || left <= 0) return;\n    const t = setTimeout(() => setLeft((x) => x - 1), 1000);\n    return () => clearTimeout(t);\n  }, [running, left]);\n  const done = left <= 0;\n  const mm = String(Math.floor(left / 60)).padStart(2, \"0\");\n  const ss = String(left % 60).padStart(2, \"0\");\n  return (\n    <motion.div animate={done ? { scale: [1, 1.04, 1] } : { scale: 1 }} transition={{ duration: 0.6, repeat: done ? Infinity : 0 }} className={cn(\"flex flex-col items-center gap-3 rounded-3xl border border-border bg-card p-5\", className)}>\n      <div className=\"relative size-40\">\n        <svg viewBox=\"0 0 100 100\" className=\"size-full -rotate-90\">\n          <circle cx=\"50\" cy=\"50\" r=\"44\" fill=\"none\" stroke=\"currentColor\" strokeOpacity=\".1\" strokeWidth=\"7\" />\n          <motion.circle cx=\"50\" cy=\"50\" r=\"44\" fill=\"none\" stroke={done ? \"#22c55e\" : \"#f97316\"} strokeWidth=\"7\" strokeLinecap=\"round\" pathLength={1} initial={false} animate={{ pathLength: left / seconds }} transition={{ duration: 1, ease: \"linear\" }} />\n        </svg>\n        <div className=\"absolute inset-0 grid place-items-center\">\n          <div className=\"text-center\"><p className=\"text-xs text-muted-foreground\">{done ? \"Done!\" : label}</p><p className=\"font-mono text-3xl font-semibold tabular-nums\" role=\"timer\" aria-live=\"off\">{mm}:{ss}</p></div>\n        </div>\n      </div>\n      <div className=\"flex gap-2\">\n        <button onClick={() => setRunning((r) => !r)} disabled={done} aria-label={running ? \"Pause\" : \"Start\"} className=\"grid size-10 place-items-center rounded-full bg-foreground text-background disabled:opacity-40\">{running ? <Pause className=\"size-4\" /> : <Play className=\"size-4\" />}</button>\n        <button onClick={() => (setLeft(seconds), setRunning(false))} aria-label=\"Reset\" className=\"grid size-10 place-items-center rounded-full border border-border\"><RotateCcw className=\"size-4\" /></button>\n      </div>\n      <span className=\"sr-only\" aria-live=\"polite\">{done ? `${label} timer finished` : \"\"}</span>\n    </motion.div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "widgets"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "timer",
+      "countdown",
+      "pomodoro",
+      "ring"
+    ],
+    "pageTypes": [
+      "dashboard"
+    ]
+  }
+}

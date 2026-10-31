@@ -1,0 +1,1 @@
+Build a card fan: cards absolutely stacked with transform-origin bottom; open state rotates each by (i−mid)·11°, x (i−mid)·58px, y |i−mid|·10px; hovered card lifts −28px, scales 1.05 and z-indexes to top. Spring 260/30.

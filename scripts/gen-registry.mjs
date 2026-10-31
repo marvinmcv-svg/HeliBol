@@ -235,6 +235,18 @@ lines.push("");
 lines.push(`export const components: ComponentMeta[] = [${components.map((_, i) => `c${i}`).join(", ")}];`);
 lines.push(`export const blocks: ComponentMeta[] = [${blocks.map((_, i) => `b${i}`).join(", ")}];`);
 lines.push(`export const flows: ComponentMeta[] = [${flows.map((_, i) => `f${i}`).join(", ")}];`);
+// thumbnails captured by scripts/capture-thumbs.mjs (REA); cache-busted by content hash
+const thumbDir = path.join(docs, "public/thumbs");
+const thumbs = {};
+if (fs.existsSync(thumbDir)) {
+  for (const f of fs.readdirSync(thumbDir)) {
+    if (!f.endsWith(".webp")) continue;
+    const hash = (await import("node:crypto")).createHash("sha1").update(fs.readFileSync(path.join(thumbDir, f))).digest("hex").slice(0, 8);
+    thumbs[f.replace(/\.webp$/, "")] = `/thumbs/${f}?v=${hash}`;
+  }
+}
+lines.push("");
+lines.push(`export const thumbs: Record<string, string> = ${JSON.stringify(thumbs)};`);
 lines.push("");
 lines.push("export const demoLoaders: Record<string, () => Promise<{ default: ComponentType }>> = {");
 for (const c of [...components, ...blocks, ...flows]) {
@@ -246,4 +258,4 @@ for (const c of [...components, ...blocks, ...flows]) {
 lines.push("};");
 fs.writeFileSync(path.join(docs, "lib/registry.generated.ts"), lines.join("\n") + "\n");
 
-console.log(`kinetik registry: ${components.length} components, ${blocks.length} blocks, ${flows.length} flows → ${path.relative(root, outR)}`);
+console.log(`kinetik registry: ${components.length} components, ${blocks.length} blocks, ${flows.length} flows, ${Object.keys(thumbs).length} thumbnails → ${path.relative(root, outR)}`);

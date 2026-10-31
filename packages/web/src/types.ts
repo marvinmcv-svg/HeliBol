@@ -1,11 +1,12 @@
 export type Category =
   | "foundations" | "text" | "scroll" | "transitions" | "layout" | "buttons"
   | "cursor" | "backgrounds" | "cards" | "navigation" | "overlays" | "loaders"
-  | "data" | "svg" | "3d" | "media" | "forms";
+  | "data" | "svg" | "3d" | "media" | "forms"
+  | "heroes" | "ai" | "widgets" | "mockups";
 
-export type Engine = "css" | "motion" | "gsap" | "lenis" | "r3f" | "view-transitions" | "canvas" | "svg";
+export type Engine = "css" | "motion" | "gsap" | "lenis" | "r3f" | "view-transitions" | "canvas" | "svg" | "js";
 
-export type PageType = "landing" | "pricing" | "auth" | "dashboard" | "portfolio" | "blog" | "ecommerce" | "docs" | "settings" | "onboarding";
+export type PageType = "landing" | "pricing" | "auth" | "dashboard" | "portfolio" | "blog" | "ecommerce" | "docs" | "settings" | "onboarding" | "ai-app" | "social" | "media";
 
 export interface PropDoc {
   name: string;

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cursor-blob",
+  "type": "registry:component",
+  "title": "Liquid Cursor Blob",
+  "description": "Three blobs chase the cursor at different lags and fuse into one liquid shape through an SVG goo filter.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/cursor-blob.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/cursor-blob.tsx",
+      "content": "\"use client\";\nimport { useId, useRef, type ReactNode } from \"react\";\nimport { motion, useMotionValue, useSpring } from \"motion/react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** Three gooey blobs chase the cursor at different lags and fuse into one liquid shape (SVG goo filter). */\nexport function CursorBlob({ children, color = \"#8b5cf6\", className }: { children?: ReactNode; color?: string; className?: string }) {\n  const box = useRef<HTMLDivElement>(null);\n  const off = useReducedMotion() || usePrefersTouch();\n  const id = `k-blob-${useId().replace(/[^a-zA-Z0-9-]/g, \"\")}`;\n  const x = useMotionValue(-200);\n  const y = useMotionValue(-200);\n  const springs = [\n    { s: 0.6, cfg: { stiffness: 400, damping: 30 } },\n    { s: 0.45, cfg: { stiffness: 160, damping: 22 } },\n    { s: 0.3, cfg: { stiffness: 80, damping: 18 } },\n  ];\n  const sx = springs.map((b) => useSpring(x, b.cfg)); // eslint-disable-line react-hooks/rules-of-hooks\n  const sy = springs.map((b) => useSpring(y, b.cfg)); // eslint-disable-line react-hooks/rules-of-hooks\n  return (\n    <div\n      ref={box}\n      onPointerMove={(e) => {\n        if (off || !box.current) return;\n        const r = box.current.getBoundingClientRect();\n        x.set(e.clientX - r.left);\n        y.set(e.clientY - r.top);\n      }}\n      className={cn(\"relative isolate overflow-hidden\", className)}\n    >\n      <svg className=\"absolute h-0 w-0\" aria-hidden>\n        <filter id={id}>\n          <feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"12\" />\n          <feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -12\" />\n        </filter>\n      </svg>\n      {!off && (\n        <div aria-hidden className=\"pointer-events-none absolute inset-0 -z-10\" style={{ filter: `url(#${id})` }}>\n          {springs.map((b, i) => (\n            <motion.div key={i} className=\"absolute top-0 left-0 rounded-full\" style={{ x: sx[i], y: sy[i], width: 120 * b.s * 2, height: 120 * b.s * 2, translateX: \"-50%\", translateY: \"-50%\", background: color }} />\n          ))}\n        </div>\n      )}\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "blob",
+      "gooey",
+      "cursor",
+      "liquid"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

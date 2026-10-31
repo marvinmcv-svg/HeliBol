@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-page",
+  "type": "registry:block",
+  "title": "Settings Page",
+  "description": "Settings screen: collapsible sidebar, spring toggles, animated select, tag input and a hold-to-confirm danger zone.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/nav-sidebar.json",
+    "https://marvzkineticlibrary.vercel.app/r/toggle-switch.json",
+    "https://marvzkineticlibrary.vercel.app/r/select-animated.json",
+    "https://marvzkineticlibrary.vercel.app/r/tag-input.json",
+    "https://marvzkineticlibrary.vercel.app/r/button-hold-confirm.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/settings-page.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/settings-page.tsx",
+      "content": "\"use client\";\nimport { Bell, CreditCard, Palette, Shield, User } from \"lucide-react\";\nimport { NavSidebar } from \"@/components/kinetik/nav-sidebar\";\nimport { ToggleSwitch } from \"@/components/kinetik/toggle-switch\";\nimport { SelectAnimated } from \"@/components/kinetik/select-animated\";\nimport { TagInput } from \"@/components/kinetik/tag-input\";\nimport { ButtonHoldConfirm } from \"@/components/kinetik/button-hold-confirm\";\n\nexport function SettingsPage() {\n  return (\n    <div className=\"flex h-full overflow-hidden\">\n      <NavSidebar brand=\"Settings\" items={[{ icon: <User />, label: \"Profile\" }, { icon: <Bell />, label: \"Notifications\" }, { icon: <Palette />, label: \"Appearance\" }, { icon: <Shield />, label: \"Security\" }, { icon: <CreditCard />, label: \"Billing\" }]} />\n      <main className=\"flex-1 space-y-8 overflow-auto p-6\">\n        <section className=\"space-y-4\">\n          <h2 className=\"font-semibold\">Notifications</h2>\n          {[\"Product updates\", \"Weekly digest\", \"Mentions\"].map((l, i) => <div key={l} className=\"flex items-center justify-between rounded-xl border border-border p-3 text-sm\">{l}<ToggleSwitch defaultChecked={i !== 1} /></div>)}\n        </section>\n        <section className=\"space-y-3\">\n          <h2 className=\"font-semibold\">Appearance</h2>\n          <SelectAnimated label=\"Motion\" options={[{ value: \"full\", label: \"Full motion\" }, { value: \"reduced\", label: \"Reduced motion\", hint: \"Opacity-only transitions\" }, { value: \"system\", label: \"Match system\" }]} />\n          <TagInput defaultTags={[\"design\", \"motion\"]} placeholder=\"Interests…\" label=\"Interests\" />\n        </section>\n        <section className=\"space-y-3 rounded-2xl border border-destructive/30 p-4\">\n          <h2 className=\"font-semibold text-destructive\">Danger zone</h2>\n          <p className=\"text-sm text-muted-foreground\">Deleting your workspace removes all components and collections.</p>\n          <ButtonHoldConfirm onConfirm={() => {}}>Hold to delete workspace</ButtonHoldConfirm>\n        </section>\n      </main>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "settings",
+      "preferences",
+      "account",
+      "app shell"
+    ],
+    "pageTypes": [
+      "settings",
+      "dashboard"
+    ]
+  }
+}

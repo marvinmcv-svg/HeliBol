@@ -1,0 +1,1 @@
+Create an arrow-slide CTA: outlined pill with label + circular arrow badge. On hover/focus a full-width fill scales X 0→1 from the left (500ms cubic-bezier(.76,0,.24,1)), the label shifts 4px and inverts color, and inside the badge the arrow translates out to +32px while a duplicate enters from −32px.

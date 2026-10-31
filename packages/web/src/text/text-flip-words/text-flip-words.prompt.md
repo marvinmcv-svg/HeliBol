@@ -1,0 +1,1 @@
+Create flip words: AnimatePresence popLayout keyed by word; each letter is an inline-block with `transform-origin: top` animating rotateX −100°→0, y −6→0, opacity 0→1 with a spring (300/22) staggered 40ms; exit the old word with y −16 and blur 6px. Parent has perspective 600px.

@@ -1,0 +1,1 @@
+Create a gooey button: an absolutely positioned layer (pill + 5 circles) filtered by SVG `feGaussianBlur(6)` → `feColorMatrix` alpha `20 −9` → `feComposite atop`; on hover the circles translate out of the pill (±14–24px) with a back-out ease and staggered delays so they stretch like liquid. Keep the label above the filtered layer.

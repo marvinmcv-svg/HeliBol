@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blog-grid",
+  "type": "registry:block",
+  "title": "Blog Grid — Filterable",
+  "description": "Journal index: category tabs filter the grid with FLIP reshuffling; cards reveal excerpts on hover.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/animated-tabs.json",
+    "https://marvzkineticlibrary.vercel.app/r/card-hover-reveal.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/blog-grid.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/blog-grid.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { AnimatedTabs } from \"@/components/kinetik/animated-tabs\";\nimport { CardHoverReveal } from \"@/components/kinetik/card-hover-reveal\";\n\nconst posts = [\n  { t: \"Why springs beat durations\", c: \"Engineering\", i: 1 }, { t: \"Designing for reduced motion\", c: \"Accessibility\", i: 4 }, { t: \"The anatomy of a great hover\", c: \"Design\", i: 3 },\n  { t: \"Porting web motion to Expo\", c: \"Engineering\", i: 7 }, { t: \"Scroll-driven animations in 2026\", c: \"Engineering\", i: 2 }, { t: \"Color, contrast and glow\", c: \"Design\", i: 6 },\n];\n\nexport function BlogGrid() {\n  const [cat, setCat] = useState(\"All\");\n  const shown = posts.filter((p) => cat === \"All\" || p.c === cat);\n  return (\n    <section className=\"mx-auto max-w-5xl px-6 py-10\">\n      <div className=\"flex flex-wrap items-end justify-between gap-4\"><h2 className=\"text-3xl font-semibold tracking-tight\">Journal</h2><AnimatedTabs className=\"w-auto\" onChange={setCat} tabs={[\"All\", \"Design\", \"Engineering\", \"Accessibility\"].map((x) => ({ id: x, label: x }))} /></div>\n      <motion.div layout className=\"mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3\">\n        <AnimatePresence mode=\"popLayout\">\n          {shown.map((p) => (\n            <motion.div key={p.t} layout initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ type: \"spring\", stiffness: 260, damping: 30 }}>\n              <CardHoverReveal image={`/demo/photo-${p.i}.jpg`} title={p.t} subtitle={p.c} className=\"aspect-[4/5]\">Read the full article — 6 min →</CardHoverReveal>\n            </motion.div>\n          ))}\n        </AnimatePresence>\n      </motion.div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "blog",
+      "filter",
+      "grid",
+      "flip"
+    ],
+    "pageTypes": [
+      "blog"
+    ]
+  }
+}

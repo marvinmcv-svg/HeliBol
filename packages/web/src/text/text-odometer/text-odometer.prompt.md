@@ -1,0 +1,1 @@
+Build an odometer: format the value with Intl.NumberFormat; render separators as text and each digit as a 1em-tall overflow-hidden window containing a 0–9 column translated to −d×10% with a spring (180/22). Key digits by place from the right so only changed reels move.

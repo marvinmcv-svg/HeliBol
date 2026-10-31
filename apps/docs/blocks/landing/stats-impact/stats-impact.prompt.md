@@ -1,0 +1,1 @@
+Build a live impact section: left — eyebrow, H2, a large odometer counter ticking up every 1.5s, and a 2×2 KPI grid; right — a card with a bar chart whose bars spring up on view (last bar highlighted).

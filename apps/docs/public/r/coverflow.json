@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "coverflow",
+  "type": "registry:component",
+  "title": "Cover Flow",
+  "description": "Classic 3D cover flow: the centered item faces you while neighbours rotate away in perspective.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/coverflow.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/coverflow.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** 3D cover flow: the centered item faces you, neighbours rotate away in perspective; click, swipe or use arrow keys. */\nexport function Coverflow({ items, className }: { items: { src: string; title: string }[]; className?: string }) {\n  const [i, setI] = useState(Math.floor(items.length / 2));\n  const go = (n: number) => setI(Math.max(0, Math.min(items.length - 1, n)));\n  return (\n    <div\n      tabIndex={0}\n      role=\"listbox\"\n      aria-label=\"Albums\"\n      aria-activedescendant={`cf-${i}`}\n      onKeyDown={(e) => (e.key === \"ArrowRight\" ? go(i + 1) : e.key === \"ArrowLeft\" ? go(i - 1) : null)}\n      className={cn(\"relative flex h-72 items-center justify-center overflow-hidden outline-none [perspective:1100px] focus-visible:ring-2 focus-visible:ring-ring\", className)}\n    >\n      <motion.div className=\"relative h-48 w-48 [transform-style:preserve-3d]\" drag=\"x\" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.2} onDragEnd={(_, d) => (d.offset.x < -40 ? go(i + 1) : d.offset.x > 40 ? go(i - 1) : null)}>\n        {items.map((it, n) => {\n          const o = n - i;\n          return (\n            <motion.button\n              key={it.src}\n              id={`cf-${n}`}\n              role=\"option\"\n              aria-selected={o === 0}\n              aria-label={it.title}\n              onClick={() => go(n)}\n              className=\"absolute inset-0 overflow-hidden rounded-xl shadow-2xl\"\n              animate={{ x: o === 0 ? 0 : o * 70 + Math.sign(o) * 70, z: o === 0 ? 80 : -Math.abs(o) * 40, rotateY: o === 0 ? 0 : -Math.sign(o) * 58, opacity: Math.abs(o) > 4 ? 0 : 1 }}\n              transition={spring.smooth}\n              style={{ zIndex: 100 - Math.abs(o) }}\n            >\n              <img src={it.src} alt=\"\" className=\"h-full w-full object-cover\" draggable={false} />\n              <span className=\"pointer-events-none absolute inset-x-0 -bottom-full block h-full scale-y-[-1] bg-gradient-to-b from-white/20 to-transparent\" />\n            </motion.button>\n          );\n        })}\n      </motion.div>\n      <p className=\"absolute bottom-2 text-sm font-medium\">{items[i].title}</p>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "coverflow",
+      "3d",
+      "carousel",
+      "albums"
+    ],
+    "pageTypes": [
+      "media",
+      "portfolio"
+    ]
+  }
+}

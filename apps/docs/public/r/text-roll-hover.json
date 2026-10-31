@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-roll-hover",
+  "type": "registry:component",
+  "title": "Letter Roll Hover",
+  "description": "Every letter rolls up to reveal a duplicate of itself, staggered from start, center or end — the agency nav link hover.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-roll-hover.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-roll-hover.tsx",
+      "content": "\"use client\";\nimport type { ElementType } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nexport interface TextRollHoverProps {\n  children: string;\n  as?: ElementType;\n  /** stagger per letter in seconds */\n  stagger?: number;\n  /** \"center\" staggers outward from the middle */\n  from?: \"start\" | \"center\" | \"end\";\n  className?: string;\n}\n\nconst css = `\n.k-roll{display:inline-flex;overflow:hidden;line-height:1.15}\n.k-roll-ch{display:inline-flex;flex-direction:column;transition:translate .45s cubic-bezier(.76,0,.24,1) var(--k-d)}\n.k-roll:hover .k-roll-ch,.k-roll:focus-visible .k-roll-ch,a:hover>.k-roll .k-roll-ch,button:hover>.k-roll .k-roll-ch{translate:0 -50%}\n@media (prefers-reduced-motion:reduce){.k-roll-ch{transition:none}}\n[data-reduce-motion] .k-roll-ch{transition:none}`;\n\n/** Each letter rolls up to reveal a copy of itself, staggered — the agency-nav hover. CSS only. */\nexport function TextRollHover({ children, as: Tag = \"span\", stagger = 0.025, from = \"start\", className }: TextRollHoverProps) {\n  const chars = Array.from(children);\n  const mid = (chars.length - 1) / 2;\n  return (\n    <>\n      <style href=\"k-roll\" precedence=\"kinetik\">{css}</style>\n      <Tag className={cn(\"k-roll\", className)} aria-label={children}>\n        {chars.map((ch, i) => {\n          const order = from === \"center\" ? Math.abs(i - mid) : from === \"end\" ? chars.length - 1 - i : i;\n          return (\n            <span key={i} aria-hidden className=\"k-roll-ch\" style={{ \"--k-d\": `${order * stagger}s` } as React.CSSProperties}>\n              <span className=\"whitespace-pre\">{ch}</span>\n              <span className=\"whitespace-pre\">{ch}</span>\n            </span>\n          );\n        })}\n      </Tag>\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "hover",
+      "nav",
+      "links",
+      "css-only",
+      "agency"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

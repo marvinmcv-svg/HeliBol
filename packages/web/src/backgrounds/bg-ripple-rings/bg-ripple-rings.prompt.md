@@ -1,0 +1,1 @@
+Build ripple rings: N centered circles with 1px foreground/18% borders and 3% fill, sizes base + i·step, opacity fading outward, each scaling 1→.92→1 over 3.6s with an 80ms stagger; top-to-bottom fade mask.

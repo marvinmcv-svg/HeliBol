@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cursor-eyes",
+  "type": "registry:component",
+  "title": "Following Eyes",
+  "description": "A pair of googly eyes whose pupils track the cursor anywhere on the page, blinking every few seconds.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/cursor-eyes.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/cursor-eyes.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef } from \"react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** A pair of googly eyes whose pupils follow the cursor anywhere on the page, and blink occasionally. */\nexport function CursorEyes({ size = 64, className }: { size?: number; className?: string }) {\n  const refs = [useRef<HTMLSpanElement>(null), useRef<HTMLSpanElement>(null)];\n  const lids = useRef<HTMLDivElement>(null);\n  const off = useReducedMotion() || usePrefersTouch();\n  useEffect(() => {\n    if (off) return;\n    const move = (e: PointerEvent) => {\n      for (const r of refs) {\n        const p = r.current;\n        const eye = p?.parentElement;\n        if (!p || !eye) continue;\n        const b = eye.getBoundingClientRect();\n        const a = Math.atan2(e.clientY - (b.top + b.height / 2), e.clientX - (b.left + b.width / 2));\n        const d = Math.min(size * 0.22, Math.hypot(e.clientX - b.left, e.clientY - b.top) / 10);\n        p.style.translate = `${Math.cos(a) * d}px ${Math.sin(a) * d}px`;\n      }\n    };\n    const blink = setInterval(() => lids.current?.animate([{ scale: \"1 0\" }, { scale: \"1 1\" }, { scale: \"1 0\" }], { duration: 180 }), 3800);\n    window.addEventListener(\"pointermove\", move);\n    return () => {\n      window.removeEventListener(\"pointermove\", move);\n      clearInterval(blink);\n    };\n  }, [off, size]);\n  return (\n    <div className={cn(\"relative flex gap-2\", className)} aria-hidden>\n      {refs.map((r, i) => (\n        <div key={i} className=\"relative grid place-items-center overflow-hidden rounded-full border-4 border-foreground bg-white\" style={{ width: size, height: size }}>\n          <span ref={r} className=\"block rounded-full bg-zinc-900 transition-[translate] duration-75\" style={{ width: size * 0.38, height: size * 0.38 }}>\n            <span className=\"absolute mt-[18%] ml-[22%] size-1/4 rounded-full bg-white\" />\n          </span>\n        </div>\n      ))}\n      <div ref={lids} className=\"pointer-events-none absolute inset-0 origin-top bg-transparent\" style={{ scale: \"1 0\", background: \"var(--color-foreground)\", borderRadius: size }} />\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "eyes",
+      "playful",
+      "404",
+      "mascot"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

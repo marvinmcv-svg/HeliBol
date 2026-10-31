@@ -15,7 +15,7 @@ const entries = Object.entries(metas).map(([file, mod]) => {
 });
 
 // Directly scroll-linked feedback moves only as the user scrolls, so it is allowed under reduced motion.
-const USER_DRIVEN = new Set(["scroll-progress"]);
+const USER_DRIVEN = new Set(["scroll-progress", "before-after"]);
 // WebGL can't run in jsdom; covered by Playwright instead.
 const SKIP_RENDER = new Set(["canvas-3d-shell"]);
 
@@ -64,9 +64,11 @@ describe("component contract", () => {
 
     it("handles reduced motion", () => {
       const src = sources[`../src/${category}/${slug}/${slug}.tsx`];
-      const handled = /useReducedMotion|prefersReducedMotion|prefers-reduced-motion|motion-reduce|data-reduce-motion|MotionConfig|useInView/.test(src);
+      // useCanvas (core) renders a single static frame under reduced motion.
+      const handled = /useReducedMotion|prefersReducedMotion|prefers-reduced-motion|motion-reduce|data-reduce-motion|MotionConfig|useInView|useCanvas/.test(src);
+      const animates = /animation|transition|animate|motion\/react|requestAnimationFrame|gsap/.test(src);
       // Motion components without explicit handling rely on the global MotionConfig (documented in motion-provider).
-      expect(handled || meta.engine === "motion" || USER_DRIVEN.has(slug)).toBe(true);
+      expect(handled || !animates || meta.engine === "motion" || USER_DRIVEN.has(slug)).toBe(true);
     });
 
     if (!SKIP_RENDER.has(slug)) {

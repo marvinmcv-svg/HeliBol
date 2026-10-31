@@ -1,0 +1,1 @@
+Create an agent timeline: a vertical rail; steps append with y 10→0 springs; the running step shows its tool icon in a violet ring with a ping and an ellipsis, finished steps turn into green checks and reveal a detail line (height auto).

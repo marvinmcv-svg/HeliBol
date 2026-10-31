@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-voice-wave",
+  "type": "registry:component",
+  "title": "Voice Input Wave",
+  "description": "Mic button that expands into live waveform bars and a timer — plug in an AnalyserNode for real levels.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/ai-voice-wave.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/ai-voice-wave.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { Mic, MicOff } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** Voice input: a mic button that expands into live waveform bars (simulated, or pass `levels` from an AnalyserNode). */\nexport function AiVoiceWave({ levels: external, bars = 24, className }: { levels?: number[]; bars?: number; className?: string }) {\n  const [on, setOn] = useState(false);\n  const [levels, setLevels] = useState<number[]>(() => Array(bars).fill(0.1));\n  const [secs, setSecs] = useState(0);\n  const reduced = useReducedMotion();\n  useEffect(() => {\n    if (!on) return setLevels(Array(bars).fill(0.1));\n    const t = setInterval(() => setLevels((l) => l.map((_, i) => (external ? external[i] ?? 0.1 : 0.15 + Math.abs(Math.sin(Date.now() / 220 + i * 0.6)) * Math.random() * 0.85))), 90);\n    const c = setInterval(() => setSecs((s) => s + 1), 1000);\n    return () => (clearInterval(t), clearInterval(c));\n  }, [on, bars, external]);\n  return (\n    <motion.div layout className={cn(\"flex h-14 items-center gap-3 rounded-full border border-border bg-card px-2\", className)}>\n      <motion.button layout whileTap={{ scale: 0.9 }} onClick={() => (setOn((o) => !o), setSecs(0))} aria-pressed={on} aria-label={on ? \"Stop recording\" : \"Start voice input\"} className={cn(\"grid size-10 shrink-0 place-items-center rounded-full\", on ? \"bg-rose-500 text-white\" : \"bg-foreground text-background\")}>\n        {on ? <MicOff className=\"size-4\" /> : <Mic className=\"size-4\" />}\n      </motion.button>\n      {on && (\n        <motion.div initial={{ opacity: 0, width: 0 }} animate={{ opacity: 1, width: \"auto\" }} className=\"flex items-center gap-3 pr-3\">\n          <div className=\"flex h-8 items-center gap-[3px]\" aria-hidden>\n            {levels.map((v, i) => <motion.span key={i} className=\"w-[3px] rounded-full bg-foreground\" animate={{ height: `${Math.max(12, v * 100)}%` }} transition={reduced ? { duration: 0 } : { type: \"spring\", stiffness: 500, damping: 30 }} />)}\n          </div>\n          <span className=\"font-mono text-xs text-muted-foreground tabular-nums\" role=\"timer\">0:{String(secs).padStart(2, \"0\")}</span>\n        </motion.div>\n      )}\n      {!on && <span className=\"pr-3 text-sm text-muted-foreground\">Tap to speak</span>}\n    </motion.div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "voice",
+      "microphone",
+      "waveform",
+      "recording"
+    ],
+    "pageTypes": [
+      "ai-app",
+      "social"
+    ]
+  }
+}

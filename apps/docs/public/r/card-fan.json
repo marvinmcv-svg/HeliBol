@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-fan",
+  "type": "registry:component",
+  "title": "Card Fan",
+  "description": "A tidy stack that fans out like a hand of cards on hover/focus; the card under the pointer lifts and comes forward.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-fan.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-fan.tsx",
+      "content": "\"use client\";\nimport { useState, type ReactNode } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** A neat stack of cards that fans out on hover/focus, each card lifting individually under the pointer. */\nexport function CardFan({ items, className }: { items: ReactNode[]; className?: string }) {\n  const [open, setOpen] = useState(false);\n  const [hot, setHot] = useState<number | null>(null);\n  const n = items.length;\n  return (\n    <div\n      className={cn(\"relative h-64 w-48\", className)}\n      onPointerEnter={() => setOpen(true)}\n      onPointerLeave={() => (setOpen(false), setHot(null))}\n      onFocus={() => setOpen(true)}\n      onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setOpen(false)}\n    >\n      {items.map((item, i) => {\n        const mid = (n - 1) / 2;\n        const off = i - mid;\n        return (\n          <motion.div\n            key={i}\n            tabIndex={0}\n            onPointerEnter={() => setHot(i)}\n            className=\"absolute inset-0 origin-bottom rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            animate={open ? { rotate: off * 11, x: off * 58, y: Math.abs(off) * 10 - (hot === i ? 28 : 0), scale: hot === i ? 1.05 : 1 } : { rotate: off * 2, x: 0, y: 0, scale: 1 }}\n            transition={spring.smooth}\n            style={{ zIndex: hot === i ? 50 : i }}\n          >\n            {item}\n          </motion.div>\n        );\n      })}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "fan",
+      "stack",
+      "spread",
+      "photos"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing",
+      "social"
+    ]
+  }
+}

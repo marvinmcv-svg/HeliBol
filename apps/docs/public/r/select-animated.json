@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-animated",
+  "type": "registry:component",
+  "title": "Animated Select",
+  "description": "Custom listbox select: the menu unfolds from the trigger, options stagger in and a highlight follows the active option.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/select-animated.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/select-animated.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check, ChevronDown } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** Custom listbox select: the menu unfolds from the trigger, options stagger in, a highlight follows the active option. */\nexport function SelectAnimated({ options, value: controlled, onChange, label = \"Choose\", className }: { options: { value: string; label: string; hint?: string }[]; value?: string; onChange?: (v: string) => void; label?: string; className?: string }) {\n  const [open, setOpen] = useState(false);\n  const [internal, setInternal] = useState(options[0]?.value);\n  const value = controlled ?? internal;\n  const [act, setAct] = useState(0);\n  const id = useId();\n  const root = useRef<HTMLDivElement>(null);\n  useEffect(() => {\n    if (!open) return;\n    setAct(Math.max(0, options.findIndex((o) => o.value === value)));\n    const out = (e: PointerEvent) => !root.current?.contains(e.target as Node) && setOpen(false);\n    addEventListener(\"pointerdown\", out);\n    return () => removeEventListener(\"pointerdown\", out);\n  }, [open, options, value]);\n  const pick = (v: string) => {\n    if (controlled === undefined) setInternal(v);\n    onChange?.(v);\n    setOpen(false);\n  };\n  const cur = options.find((o) => o.value === value);\n  return (\n    <div ref={root} className={cn(\"relative w-64\", className)}>\n      <button\n        onClick={() => setOpen((o) => !o)}\n        onKeyDown={(e) => {\n          if (!open && (e.key === \"ArrowDown\" || e.key === \"Enter\" || e.key === \" \")) return (e.preventDefault(), setOpen(true));\n          if (!open) return;\n          if (e.key === \"ArrowDown\") (e.preventDefault(), setAct((a) => Math.min(a + 1, options.length - 1)));\n          if (e.key === \"ArrowUp\") (e.preventDefault(), setAct((a) => Math.max(a - 1, 0)));\n          if (e.key === \"Enter\") (e.preventDefault(), pick(options[act].value));\n          if (e.key === \"Escape\") setOpen(false);\n        }}\n        aria-haspopup=\"listbox\"\n        aria-expanded={open}\n        aria-controls={`${id}-lb`}\n        aria-activedescendant={open ? `${id}-o${act}` : undefined}\n        aria-label={`${label}: ${cur?.label}`}\n        className=\"flex h-11 w-full items-center justify-between rounded-xl border border-input bg-card px-3.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/40\"\n      >\n        {cur?.label}\n        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={spring.snappy}><ChevronDown className=\"size-4 text-muted-foreground\" /></motion.span>\n      </button>\n      <AnimatePresence>\n        {open && (\n          <motion.ul id={`${id}-lb`} role=\"listbox\" initial={{ opacity: 0, scaleY: 0.85, y: -4 }} animate={{ opacity: 1, scaleY: 1, y: 0 }} exit={{ opacity: 0, scaleY: 0.9, y: -4, transition: { duration: 0.12 } }} transition={spring.snappy} className=\"absolute z-30 mt-2 w-full origin-top rounded-xl border border-border bg-popover p-1 shadow-xl\">\n            {options.map((o, i) => (\n              <motion.li key={o.value} id={`${id}-o${i}`} role=\"option\" aria-selected={o.value === value} initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0, transition: { delay: i * 0.025 } }} onMouseMove={() => setAct(i)} onClick={() => pick(o.value)} className=\"relative flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-2 text-sm\">\n                {act === i && <motion.span layoutId={`${id}-hl`} transition={spring.snappy} className=\"absolute inset-0 rounded-lg bg-accent\" />}\n                <span className=\"relative flex-1\"><span className=\"block\">{o.label}</span>{o.hint && <span className=\"block text-xs text-muted-foreground\">{o.hint}</span>}</span>\n                {o.value === value && <Check className=\"relative size-4 text-brand\" />}\n              </motion.li>\n            ))}\n          </motion.ul>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "select",
+      "dropdown",
+      "listbox",
+      "form"
+    ],
+    "pageTypes": [
+      "settings",
+      "dashboard",
+      "ecommerce"
+    ]
+  }
+}

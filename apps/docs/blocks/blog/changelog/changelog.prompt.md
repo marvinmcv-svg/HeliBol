@@ -1,0 +1,1 @@
+Build a changelog timeline: an ordered list with a vertical gradient rail that scales Y 0→1 on view; each entry slides in from x −12 (staggered) and its dot pops onto the rail with a bouncy spring; version, date and tag pill above the title.

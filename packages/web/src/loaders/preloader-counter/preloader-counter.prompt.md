@@ -1,0 +1,1 @@
+Build a counter preloader overlay: dark panel with brand + Skip, a giant number counting 0→100 with a cubic ease-out over `duration` (rAF) and a progress hairline; at 100 exit with clip-path inset(0 0 100% 0) (0.9s cubic-bezier(.77,0,.18,1)).

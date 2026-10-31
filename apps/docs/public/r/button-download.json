@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-download",
+  "type": "registry:component",
+  "title": "Download Progress Button",
+  "description": "Download pill shrinks into a circular progress ring, fills, then pops a checkmark.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-download.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-download.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface ButtonDownloadProps {\n  /** Return a promise; progress is simulated unless you pass `progress`. */\n  onDownload?: () => Promise<unknown>;\n  progress?: number;\n  className?: string;\n}\n\n/** Download button that shrinks into a circular progress ring, then pops a check. */\nexport function ButtonDownload({ onDownload, progress: controlled, className }: ButtonDownloadProps) {\n  const [state, setState] = useState<\"idle\" | \"loading\" | \"done\">(\"idle\");\n  const [p, setP] = useState(0);\n  const progress = controlled ?? p;\n\n  useEffect(() => {\n    if (state !== \"loading\" || controlled !== undefined) return;\n    const t = setInterval(() => setP((x) => Math.min(100, x + 4 + Math.random() * 10)), 120);\n    return () => clearInterval(t);\n  }, [state, controlled]);\n  useEffect(() => {\n    if (state === \"loading\" && progress >= 100) {\n      setState(\"done\");\n      const t = setTimeout(() => {\n        setState(\"idle\");\n        setP(0);\n      }, 1800);\n      return () => clearTimeout(t);\n    }\n  }, [progress, state]);\n\n  return (\n    <motion.button\n      layout\n      transition={spring.smooth}\n      onClick={() => {\n        if (state !== \"idle\") return;\n        setState(\"loading\");\n        onDownload?.();\n      }}\n      aria-label={state === \"loading\" ? `Downloading ${Math.round(progress)}%` : state === \"done\" ? \"Downloaded\" : \"Download\"}\n      aria-live=\"polite\"\n      className={cn(\"relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-foreground text-sm font-medium text-background outline-none focus-visible:ring-2 focus-visible:ring-ring\", state === \"idle\" ? \"px-6\" : \"w-12\", state === \"done\" && \"bg-emerald-500 text-white\", className)}\n    >\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        {state === \"idle\" && <motion.span key=\"i\" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scale: 0.8 }} className=\"flex items-center gap-2\">↓ Download report</motion.span>}\n        {state === \"loading\" && (\n          <motion.svg key=\"l\" viewBox=\"0 0 36 36\" className=\"size-8 -rotate-90\" initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>\n            <circle cx=\"18\" cy=\"18\" r=\"15\" fill=\"none\" stroke=\"currentColor\" strokeOpacity=\".2\" strokeWidth=\"3\" />\n            <motion.circle cx=\"18\" cy=\"18\" r=\"15\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"3\" strokeLinecap=\"round\" pathLength={1} animate={{ pathLength: progress / 100 }} transition={{ type: \"spring\", stiffness: 120, damping: 20 }} />\n          </motion.svg>\n        )}\n        {state === \"done\" && (\n          <motion.svg key=\"d\" viewBox=\"0 0 24 24\" className=\"size-6\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"3\" strokeLinecap=\"round\" strokeLinejoin=\"round\" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={spring.bouncy}>\n            <motion.path d=\"M5 12.5l4.5 4.5L19 7\" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} />\n          </motion.svg>\n        )}\n      </AnimatePresence>\n    </motion.button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "download",
+      "progress",
+      "async",
+      "feedback"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "docs",
+      "ecommerce"
+    ]
+  }
+}

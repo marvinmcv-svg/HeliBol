@@ -1,0 +1,1 @@
+Create a neumorphic toggle on a #e6e9ef surface: off = raised (8px 8px 16px #c5c8ce, −8px −8px 16px #fff), on = inset versions of both shadows plus accent icon color and a slight icon scale; 300ms ease.

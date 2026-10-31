@@ -1,0 +1,1 @@
+Create activity rings: concentric circles (stroke 14, 3px gaps) with an 18%-opacity track and a progress arc (pathLength 0→min(1, value/goal), staggered 180ms, 1.4s expo-out); if over 100%, draw a second shadowed arc for the overflow after the first completes.

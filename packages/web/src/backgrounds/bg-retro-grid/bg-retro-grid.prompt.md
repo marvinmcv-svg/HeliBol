@@ -1,0 +1,1 @@
+Create a retro grid: perspective 220px container → rotateX(65deg) plane → oversized child with 60px line-grid background translating Y from −50% to 0 over 15s linear; gradient fade into the background at top and bottom.

@@ -1,0 +1,1 @@
+Create a sticky-reveal footer: the footer wrapper has a fixed height and clip-path polygon (full rect) so its fixed inner panel only shows when the page above scrolls off; inner panel = link columns with letter-roll hovers, a newsletter morph form and a giant wordmark at the bottom. The content above should have a rounded bottom and shadow.

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cursor-custom",
+  "type": "registry:component",
+  "title": "Custom Cursor",
+  "description": "Dot + lagging ring cursor with states: grows over links, becomes a 'View'/'Drag' bubble over tagged media.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/cursor-custom.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/cursor-custom.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState, type ReactNode } from \"react\";\nimport { motion, useMotionValue, useSpring } from \"motion/react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/**\n * Dot + lagging ring cursor scoped to its children. Elements can opt into states:\n * `data-cursor=\"link\"` grows the ring, `data-cursor=\"view\"` shows a \"View\" label, `data-cursor-text=\"Drag\"` any label.\n */\nexport function CursorCustom({ children, className }: { children: ReactNode; className?: string }) {\n  const box = useRef<HTMLDivElement>(null);\n  const x = useMotionValue(-100);\n  const y = useMotionValue(-100);\n  const rx = useSpring(x, { stiffness: 260, damping: 26, mass: 0.6 });\n  const ry = useSpring(y, { stiffness: 260, damping: 26, mass: 0.6 });\n  const [state, setState] = useState<{ kind: string; text?: string }>({ kind: \"default\" });\n  const [inside, setInside] = useState(false);\n  const off = useReducedMotion() || usePrefersTouch();\n\n  useEffect(() => {\n    const el = box.current;\n    if (!el || off) return;\n    const move = (e: PointerEvent) => {\n      const r = el.getBoundingClientRect();\n      x.set(e.clientX - r.left);\n      y.set(e.clientY - r.top);\n      const t = (e.target as HTMLElement).closest<HTMLElement>(\"[data-cursor],[data-cursor-text],a,button\");\n      setState(t ? { kind: t.dataset.cursor ?? (t.dataset.cursorText ? \"text\" : \"link\"), text: t.dataset.cursorText } : { kind: \"default\" });\n    };\n    el.addEventListener(\"pointermove\", move);\n    return () => el.removeEventListener(\"pointermove\", move);\n  }, [off, x, y]);\n\n  const big = state.kind === \"view\" || state.kind === \"text\";\n  return (\n    <div ref={box} onPointerEnter={() => setInside(true)} onPointerLeave={() => setInside(false)} className={cn(\"relative\", !off && \"cursor-none [&_*]:cursor-none\", className)}>\n      {children}\n      {!off && (\n        <>\n          <motion.div aria-hidden className=\"pointer-events-none absolute top-0 left-0 z-50 size-1.5 rounded-full bg-foreground\" style={{ x, y, translateX: \"-50%\", translateY: \"-50%\" }} animate={{ opacity: inside && !big ? 1 : 0 }} />\n          <motion.div\n            aria-hidden\n            className=\"pointer-events-none absolute top-0 left-0 z-50 grid place-items-center rounded-full border border-foreground/60 text-[11px] font-medium mix-blend-difference\"\n            style={{ x: rx, y: ry, translateX: \"-50%\", translateY: \"-50%\" }}\n            animate={{ width: big ? 72 : state.kind === \"link\" ? 48 : 30, height: big ? 72 : state.kind === \"link\" ? 48 : 30, opacity: inside ? 1 : 0, backgroundColor: big ? \"rgb(255 255 255)\" : \"rgb(255 255 255 / 0)\" }}\n            transition={{ type: \"spring\", stiffness: 300, damping: 25 }}\n          >\n            {big && <span className=\"text-black\">{state.text ?? \"View\"}</span>}\n          </motion.div>\n        </>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "cursor",
+      "custom cursor",
+      "portfolio",
+      "agency"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

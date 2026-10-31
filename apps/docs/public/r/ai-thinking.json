@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-thinking",
+  "type": "registry:component",
+  "title": "Thinking Steps",
+  "description": "Reasoning disclosure: the current step shimmers, finished steps tick off, then it collapses into 'Thought for Ns'.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/ai-thinking.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/ai-thinking.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check, ChevronDown } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nconst css = `\n.k-think{background:linear-gradient(90deg,color-mix(in oklab,currentColor 45%,transparent) 35%,currentColor 50%,color-mix(in oklab,currentColor 45%,transparent) 65%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:k-think 1.8s linear infinite}\n@keyframes k-think{from{background-position:100% 0}to{background-position:0 0}}\n@media (prefers-reduced-motion:reduce){.k-think{animation:none;-webkit-text-fill-color:currentColor}}`;\n\n/** Reasoning disclosure: the current step shimmers, finished steps tick off, the whole trace collapses into \"Thought for Ns\". */\nexport function AiThinking({ steps, stepMs = 1300, className }: { steps: string[]; stepMs?: number; className?: string }) {\n  const [i, setI] = useState(0);\n  const [open, setOpen] = useState(true);\n  const reduced = useReducedMotion();\n  const done = i >= steps.length;\n  useEffect(() => {\n    if (done) {\n      const t = setTimeout(() => setOpen(false), 900);\n      return () => clearTimeout(t);\n    }\n    const t = setTimeout(() => setI((n) => n + 1), stepMs);\n    return () => clearTimeout(t);\n  }, [i, done, stepMs]);\n  return (\n    <div className={cn(\"w-full max-w-md rounded-2xl border border-border bg-card p-3 text-sm\", className)}>\n      <style href=\"k-think\" precedence=\"kinetik\">{css}</style>\n      <button onClick={() => setOpen((o) => !o)} aria-expanded={open} className=\"flex w-full items-center gap-2 text-left\">\n        <span className={cn(\"font-medium\", !done && \"k-think\")}>{done ? `Thought for ${((steps.length * stepMs) / 1000).toFixed(0)}s` : steps[i]}</span>\n        <ChevronDown className={cn(\"ml-auto size-4 text-muted-foreground transition-transform\", open && \"rotate-180\")} />\n      </button>\n      <AnimatePresence initial={false}>\n        {open && (\n          <motion.ol initial={{ height: 0, opacity: 0 }} animate={{ height: \"auto\", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className=\"mt-2 space-y-1.5 overflow-hidden border-l border-border pl-3\" aria-live=\"polite\">\n            {steps.slice(0, Math.min(i + 1, steps.length)).map((s, n) => (\n              <motion.li key={s} initial={reduced ? false : { opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} className=\"flex items-center gap-2 text-muted-foreground\">\n                {n < i ? <Check className=\"size-3.5 text-emerald-500\" /> : <span className=\"size-3.5 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground\" />}\n                <span className={cn(n === i && \"text-foreground\")}>{s}</span>\n              </motion.li>\n            ))}\n          </motion.ol>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "ai",
+      "reasoning",
+      "thinking",
+      "status",
+      "shimmer"
+    ],
+    "pageTypes": [
+      "ai-app"
+    ]
+  }
+}

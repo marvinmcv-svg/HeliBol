@@ -1,0 +1,1 @@
+Create an image trail: on pointermove, once the pointer has moved `threshold` px since the last spawn, append an absolutely positioned 140px image at the pointer and animate it with WAAPI: scale .4→1 pop, then drift by 60%→100% of the movement vector while shrinking and fading over 1.1s; remove on finish.

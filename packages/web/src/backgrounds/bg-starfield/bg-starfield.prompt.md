@@ -1,0 +1,1 @@
+Create a warp starfield: stars with x,y ∈ [−1,1] and z ∈ (0,1]; each frame z −= speed·dt (respawn at z=1), project to screen as (x/z, y/z)·scale from center, draw a line from the previous projection; clear with a translucent fill for trails.

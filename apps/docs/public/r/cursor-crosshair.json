@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cursor-crosshair",
+  "type": "registry:component",
+  "title": "Crosshair Cursor",
+  "description": "Full-bleed crosshair lines track the pointer with a live x/y readout — design tools and technical brands.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/cursor-crosshair.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/cursor-crosshair.tsx",
+      "content": "\"use client\";\nimport { useRef, useState, type ReactNode } from \"react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** Full-bleed crosshair lines track the pointer with a live coordinate readout — for design tools and technical brands. */\nexport function CursorCrosshair({ children, className }: { children?: ReactNode; className?: string }) {\n  const box = useRef<HTMLDivElement>(null);\n  const [p, setP] = useState<{ x: number; y: number } | null>(null);\n  const off = useReducedMotion() || usePrefersTouch();\n  return (\n    <div\n      ref={box}\n      onPointerMove={(e) => {\n        if (off || !box.current) return;\n        const r = box.current.getBoundingClientRect();\n        setP({ x: Math.round(e.clientX - r.left), y: Math.round(e.clientY - r.top) });\n      }}\n      onPointerLeave={() => setP(null)}\n      className={cn(\"relative overflow-hidden\", !off && \"cursor-crosshair\", className)}\n    >\n      {children}\n      {p && (\n        <div aria-hidden className=\"pointer-events-none absolute inset-0\">\n          <div className=\"absolute inset-x-0 h-px bg-rose-500/70\" style={{ top: p.y }} />\n          <div className=\"absolute inset-y-0 w-px bg-rose-500/70\" style={{ left: p.x }} />\n          <span className=\"absolute rounded bg-rose-500 px-1.5 py-0.5 font-mono text-[10px] text-white\" style={{ left: p.x + 8, top: p.y + 8 }}>\n            {p.x}, {p.y}\n          </span>\n        </div>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "crosshair",
+      "coordinates",
+      "design tool",
+      "technical"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "docs"
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-shader",
+  "type": "registry:component",
+  "title": "Liquid Shader Gradient",
+  "description": "A raw WebGL fragment shader paints a slow, liquid, grain-dithered gradient — no three.js, ~1 KB.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-shader.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-shader.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, type ReactNode } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nconst VERT = `attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`;\nconst FRAG = `precision highp float;uniform vec2 r;uniform float t;uniform vec3 c1;uniform vec3 c2;uniform vec3 c3;\nfloat n(vec2 p){return sin(p.x)*sin(p.y);}\nvoid main(){vec2 uv=gl_FragCoord.xy/r;vec2 p=uv*3.;float tt=t*.15;\nfor(int i=1;i<5;i++){float fi=float(i);p.x+=.6/fi*sin(fi*p.y+tt+.3*fi)+.4;p.y+=.6/fi*cos(fi*p.x+tt+.3*fi)-.4;}\nfloat m=.5+.5*sin(p.x+p.y);float k=.5+.5*cos(p.y*.8-p.x*.3);\nvec3 col=mix(mix(c1,c2,m),c3,k*.6);\nfloat g=fract(sin(dot(gl_FragCoord.xy,vec2(12.9898,78.233)))*43758.5453);col+= (g-.5)*.035;\ngl_FragColor=vec4(col,1.);}`;\n\nconst DEFAULT: [string, string, string] = [\"#1e1b4b\", \"#7c3aed\", \"#f472b6\"];\nconst hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);\n\n/** Raw WebGL fragment shader: a slow, liquid, grain-dithered gradient (no three.js — ~1 KB). */\nexport function BgShader({ children, colors = DEFAULT, className }: { children?: ReactNode; colors?: [string, string, string]; className?: string }) {\n  const ref = useRef<HTMLCanvasElement>(null);\n  const reduced = useReducedMotion();\n  useEffect(() => {\n    const canvas = ref.current;\n    const gl = canvas?.getContext(\"webgl\", { antialias: false, premultipliedAlpha: false });\n    if (!canvas || !gl) return;\n    const sh = (type: number, src: string) => {\n      const s = gl.createShader(type)!;\n      gl.shaderSource(s, src);\n      gl.compileShader(s);\n      return s;\n    };\n    const prog = gl.createProgram()!;\n    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT));\n    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));\n    gl.linkProgram(prog);\n    gl.useProgram(prog);\n    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());\n    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);\n    const loc = gl.getAttribLocation(prog, \"p\");\n    gl.enableVertexAttribArray(loc);\n    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);\n    const u = (n: string) => gl.getUniformLocation(prog, n);\n    colors.forEach((c, i) => gl.uniform3fv(u(`c${i + 1}`), hex(c)));\n    let raf = 0;\n    let visible = true;\n    const t0 = performance.now();\n    const draw = () => {\n      const dpr = Math.min(1.5, devicePixelRatio || 1);\n      const w = Math.round(canvas.clientWidth * dpr);\n      const h = Math.round(canvas.clientHeight * dpr);\n      if (canvas.width !== w || canvas.height !== h) {\n        canvas.width = w;\n        canvas.height = h;\n        gl.viewport(0, 0, w, h);\n      }\n      gl.uniform2f(u(\"r\"), w, h);\n      gl.uniform1f(u(\"t\"), reduced ? 4 : (performance.now() - t0) / 1000);\n      gl.drawArrays(gl.TRIANGLES, 0, 3);\n      if (!reduced && visible && !document.hidden) raf = requestAnimationFrame(draw);\n    };\n    const io = new IntersectionObserver(([e]) => {\n      visible = e.isIntersecting;\n      cancelAnimationFrame(raf);\n      draw();\n    });\n    io.observe(canvas);\n    const onVis = () => (cancelAnimationFrame(raf), draw());\n    document.addEventListener(\"visibilitychange\", onVis);\n    return () => {\n      cancelAnimationFrame(raf);\n      io.disconnect();\n      document.removeEventListener(\"visibilitychange\", onVis);\n    };\n  }, [reduced, colors.join()]); // eslint-disable-line react-hooks/exhaustive-deps\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)}>\n      <canvas ref={ref} aria-hidden className=\"absolute inset-0 -z-10 h-full w-full\" />\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "shader",
+      "webgl",
+      "gradient",
+      "glsl"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing"
+    ]
+  }
+}

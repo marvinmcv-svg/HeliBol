@@ -1,0 +1,1 @@
+Create a CSS glitch: `::before`/`::after` duplicate the text via `content: attr(data-text)`, colored cyan and red, idle with `clip-path: inset(0 0 100% 0)`; in the last 12% of a cycle (steps(1)) jump through 3 random slices with ±3px translations. Faster on hover. Hidden under reduced motion.

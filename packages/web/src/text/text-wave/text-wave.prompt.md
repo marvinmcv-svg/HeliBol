@@ -1,0 +1,1 @@
+Create wave text: split into inline-block letters; on pointerenter/focus increment a key so each letter replays `y: [0, −height, 0]` (500ms back-out) delayed 35ms × index; loop mode repeats with a 1.2s pause.

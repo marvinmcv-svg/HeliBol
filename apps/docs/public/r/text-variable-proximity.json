@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-variable-proximity",
+  "type": "registry:component",
+  "title": "Variable Weight Proximity",
+  "description": "Letters thicken through a variable font's weight axis and lift slightly as the cursor approaches them.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-variable-proximity.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-variable-proximity.tsx",
+      "content": "\"use client\";\nimport { useRef, type ElementType } from \"react\";\nimport { cn, usePrefersTouch, useRafLoop, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextVariableProximityProps {\n  children: string;\n  as?: ElementType;\n  /** influence radius in px */\n  radius?: number;\n  minWeight?: number;\n  maxWeight?: number;\n  className?: string;\n}\n\n/** Letters thicken (variable-font weight) and lift as the cursor approaches them. */\nexport function TextVariableProximity({ children, as: Tag = \"p\", radius = 140, minWeight = 200, maxWeight = 900, className }: TextVariableProximityProps) {\n  const root = useRef<HTMLElement>(null);\n  const mouse = useRef({ x: -9999, y: -9999 });\n  const off = useReducedMotion() || usePrefersTouch();\n\n  useRafLoop(() => {\n    const el = root.current;\n    if (!el) return;\n    for (const span of el.querySelectorAll<HTMLElement>(\"[data-ch]\")) {\n      const r = span.getBoundingClientRect();\n      const d = Math.hypot(mouse.current.x - (r.left + r.width / 2), mouse.current.y - (r.top + r.height / 2));\n      const t = Math.max(0, 1 - d / radius);\n      const w = minWeight + (maxWeight - minWeight) * t * t;\n      span.style.fontVariationSettings = `\"wght\" ${w.toFixed(0)}`;\n      span.style.translate = `0 ${(-t * 4).toFixed(2)}px`;\n    }\n  }, !off);\n\n  return (\n    <Tag\n      ref={root}\n      aria-label={children}\n      onPointerMove={(e: React.PointerEvent) => (mouse.current = { x: e.clientX, y: e.clientY })}\n      onPointerLeave={() => (mouse.current = { x: -9999, y: -9999 })}\n      className={cn(\"cursor-default select-none\", className)}\n      style={{ fontVariationSettings: `\"wght\" ${minWeight}` }}\n    >\n      {Array.from(children).map((ch, i) => (\n        <span key={i} data-ch aria-hidden className=\"inline-block whitespace-pre\" style={{ fontVariationSettings: `\"wght\" ${minWeight}` }}>\n          {ch}\n        </span>\n      ))}\n    </Tag>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "variable font",
+      "cursor",
+      "typography",
+      "proximity"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

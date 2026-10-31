@@ -1,0 +1,1 @@
+Build a weather widget: rounded card with a per-condition gradient crossfading via AnimatePresence; scenes: a slowly rotating sun with 12 rays, clouds drifting across, rain streaks falling with staggered durations, twinkling stars at night; temperature and H/L text on top.

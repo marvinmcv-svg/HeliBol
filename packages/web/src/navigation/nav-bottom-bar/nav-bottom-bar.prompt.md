@@ -1,0 +1,1 @@
+Create a floating bottom bar: tabs are icon buttons; the active one gets a layoutId pill background, its icon plays y [0,−5,0] + rotate [0,−10,0], and its label expands from width 0 to auto beside the icon.

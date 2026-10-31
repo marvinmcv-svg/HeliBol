@@ -1,0 +1,1 @@
+Make CSS motion-path travellers: draw the path as a dashed SVG; each item has `offset-path: path("…")`, `offset-rotate: auto` and animates offset-distance 0→100% with negative delays to space them evenly. Container size should match the viewBox.

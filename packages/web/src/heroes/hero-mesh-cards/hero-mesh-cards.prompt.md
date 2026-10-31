@@ -1,0 +1,1 @@
+Build a SaaS hero: background = three radial gradients (violet, cyan, pink) whose anchor % animate via @property; left column: announcement pill, H1, subtitle and two CTAs entering with y 20 + blur 6 → 0 staggered 100ms (expo-out); right column: three product cards (volume chart, payment succeeded, conversion) that bob y [0,−10,0] on 5–7s loops.

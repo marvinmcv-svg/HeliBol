@@ -1,0 +1,1 @@
+Build a water tracker: a glass shape whose water height springs (70/12) to cups/goal, an SVG wave strip looping horizontally on top, and five bubbles that rise and fade each time the value changes; +/− buttons.

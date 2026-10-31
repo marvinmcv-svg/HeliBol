@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mockup-laptop",
+  "type": "registry:component",
+  "title": "Laptop Mockup",
+  "description": "CSS laptop — lid with notch, 16:10 screen, hinge and base — for hero shots of web apps.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/mockup-laptop.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/mockup-laptop.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\n/** CSS laptop (lid, notch, hinge and base) for hero shots of web apps. */\nexport function MockupLaptop({ children, className }: { children: ReactNode; className?: string }) {\n  return (\n    <div className={cn(\"w-full max-w-2xl\", className)}>\n      <div className=\"relative mx-auto w-[86%] rounded-t-2xl bg-zinc-800 p-[2.2%] pb-[1.5%] shadow-2xl\">\n        <span className=\"absolute top-0 left-1/2 h-[3%] w-[14%] -translate-x-1/2 rounded-b-lg bg-black\" />\n        <div className=\"relative aspect-[16/10] overflow-hidden rounded-md bg-background\">{children}</div>\n      </div>\n      <div className=\"relative h-3 rounded-b-xl bg-gradient-to-b from-zinc-400 to-zinc-600 shadow-[0_18px_30px_-10px_rgb(0_0_0/.5)] dark:from-zinc-600 dark:to-zinc-800\">\n        <span className=\"absolute top-0 left-1/2 h-1.5 w-[16%] -translate-x-1/2 rounded-b-md bg-zinc-500/80\" />\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "mockups"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "mockup",
+      "laptop",
+      "macbook",
+      "frame",
+      "css-only"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

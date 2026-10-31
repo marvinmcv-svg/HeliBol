@@ -1,0 +1,1 @@
+Create an elastic slider: pointer capture on the track sets the value; overshoot beyond either end (clamped 60px) becomes `overflow` which scales the track X by 1 + |o|/400 from the opposite origin; on release spring overflow back to 0 (500/18).

@@ -1,0 +1,1 @@
+Build a scroll-velocity marquee with Motion: `useScroll` → `useVelocity` → `useSpring(damping 50, stiffness 400)` → factor via useTransform [0,1000]→[0,5]. In `useAnimationFrame` advance a base value by baseVelocity·dt, flip direction with the velocity sign and multiply by the factor; x = wrap(−25%, −50%, base) over 4 repeated copies. Skew X ±12° from velocity.

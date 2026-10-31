@@ -1,0 +1,1 @@
+Build a speed dial: a FAB whose plus rotates 135° when open; actions spring from the FAB center to positions on a 150° arc above it (radius 88px) or a vertical stack, staggered 40ms with a bouncy spring, collapsing in reverse.

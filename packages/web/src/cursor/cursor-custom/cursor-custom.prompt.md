@@ -1,0 +1,1 @@
+Build a scoped custom cursor: hide the native cursor inside the area; a 6px dot follows the pointer exactly and a 30px ring follows on a spring (260/26/.6) with mix-blend difference. Read `data-cursor`/`data-cursor-text` from the hovered element (closest) to grow the ring to 48px (links) or a 72px white bubble with a label.

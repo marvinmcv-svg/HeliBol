@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-chat-app",
+  "type": "registry:block",
+  "title": "AI Chat App",
+  "description": "Full AI assistant screen: empty state with suggestion chips → reasoning trace → streaming reply, with a prompt composer pinned below.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/ai-prompt-box.json",
+    "https://marvzkineticlibrary.vercel.app/r/ai-suggestions.json",
+    "https://marvzkineticlibrary.vercel.app/r/ai-thinking.json",
+    "https://marvzkineticlibrary.vercel.app/r/ai-chat-stream.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/ai-chat-app.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/ai-chat-app.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { AiPromptBox } from \"@/components/kinetik/ai-prompt-box\";\nimport { AiSuggestions } from \"@/components/kinetik/ai-suggestions\";\nimport { AiThinking } from \"@/components/kinetik/ai-thinking\";\nimport { AiChatStream } from \"@/components/kinetik/ai-chat-stream\";\n\n/** AI app shell: empty state with suggestions → thinking trace → streaming reply, all in one canvas. */\nexport function AiChatApp() {\n  const [q, setQ] = useState<string | null>(null);\n  return (\n    <div className=\"flex h-full flex-col\">\n      <header className=\"flex items-center gap-2 border-b border-border px-4 py-3 text-sm\"><span className=\"grid size-6 place-items-center rounded-md bg-foreground text-xs text-background\">k</span><span className=\"font-medium\">Kinetik Assistant</span><span className=\"ml-auto rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs text-emerald-600 dark:text-emerald-400\">online</span></header>\n      <main className=\"relative flex-1 overflow-hidden\">\n        <AnimatePresence mode=\"wait\">\n          {!q ? (\n            <motion.div key=\"empty\" exit={{ opacity: 0, y: -10 }} className=\"flex h-full flex-col items-center justify-center gap-5 p-6 text-center\">\n              <h2 className=\"text-2xl font-semibold tracking-tight\">How can I help you animate today?</h2>\n              <AiSuggestions onPick={setQ} className=\"max-w-lg\" items={[{ icon: \"🎛️\", label: \"Tune my tab indicator spring\" }, { icon: \"📱\", label: \"Port my paywall to Expo\" }, { icon: \"♿\", label: \"Audit reduced motion\" }]} />\n            </motion.div>\n          ) : (\n            <motion.div key=\"chat\" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className=\"flex h-full flex-col gap-3 overflow-y-auto p-4\">\n              <div className=\"ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-foreground px-3.5 py-2 text-sm text-background\">{q}</div>\n              <AiThinking stepMs={700} steps={[\"Reading your component…\", \"Comparing spring presets…\", \"Writing the answer…\"]} />\n              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 2.4 } }}>\n                <AiChatStream className=\"p-0\" script={[{ role: \"assistant\", text: \"Use the snappy preset — stiffness 500, damping 35. It settles in ~180ms with no overshoot, which is what an indicator should feel like. On native, pass the same numbers to withSpring.\" }]} />\n              </motion.div>\n            </motion.div>\n          )}\n        </AnimatePresence>\n      </main>\n      <div className=\"border-t border-border p-3\"><AiPromptBox className=\"mx-auto shadow-none\" onSubmit={async (p) => setQ(p)} /></div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "ai",
+      "chat",
+      "assistant",
+      "app shell"
+    ],
+    "pageTypes": [
+      "ai-app"
+    ]
+  }
+}

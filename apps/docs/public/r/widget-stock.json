@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-stock",
+  "type": "registry:component",
+  "title": "Live Stock Ticker",
+  "description": "Ticker card with a streaming sparkline, a price that flashes green/red on each change, and a delta badge.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/widget-stock.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/widget-stock.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** Live ticker card: a streaming sparkline, a price that flashes green/red on change, and an animated delta badge. */\nexport function WidgetStock({ symbol, name, start = 182.4, className }: { symbol: string; name: string; start?: number; className?: string }) {\n  const [series, setSeries] = useState(() => Array.from({ length: 40 }, (_, i) => start + Math.sin(i / 4) * 2 + i * 0.05));\n  const prev = useRef(start);\n  const reduced = useReducedMotion();\n  useEffect(() => {\n    const t = setInterval(() => setSeries((s) => [...s.slice(1), +(s[s.length - 1] + (Math.random() - 0.47) * 1.4).toFixed(2)]), 900);\n    return () => clearInterval(t);\n  }, []);\n  const price = series[series.length - 1];\n  const up = price >= prev.current;\n  useEffect(() => void (prev.current = price), [price]);\n  const delta = ((price - series[0]) / series[0]) * 100;\n  const min = Math.min(...series);\n  const max = Math.max(...series);\n  const pts = series.map((v, i) => `${(i / (series.length - 1)) * 200},${58 - ((v - min) / (max - min || 1)) * 54}`).join(\" \");\n  const pos = delta >= 0;\n  return (\n    <div className={cn(\"w-72 rounded-3xl border border-border bg-card p-4\", className)}>\n      <div className=\"flex items-start justify-between\">\n        <div><p className=\"font-semibold\">{symbol}</p><p className=\"text-xs text-muted-foreground\">{name}</p></div>\n        <div className=\"text-right\">\n          <motion.p key={price} initial={reduced ? false : { backgroundColor: up ? \"rgb(34 197 94 / .3)\" : \"rgb(239 68 68 / .3)\" }} animate={{ backgroundColor: \"rgb(0 0 0 / 0)\" }} transition={{ duration: 0.8 }} className=\"rounded px-1 font-mono text-lg font-semibold tabular-nums\" aria-live=\"off\">${price.toFixed(2)}</motion.p>\n          <AnimatePresence mode=\"popLayout\" initial={false}>\n            <motion.span key={pos ? \"u\" : \"d\"} initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className={cn(\"inline-block rounded-md px-1.5 text-xs font-medium\", pos ? \"bg-emerald-500/15 text-emerald-600 dark:text-emerald-400\" : \"bg-red-500/15 text-red-600 dark:text-red-400\")}>{pos ? \"▲\" : \"▼\"} {Math.abs(delta).toFixed(2)}%</motion.span>\n          </AnimatePresence>\n        </div>\n      </div>\n      <svg viewBox=\"0 0 200 60\" className=\"mt-3 h-16 w-full\" preserveAspectRatio=\"none\" role=\"img\" aria-label={`${symbol} price chart`}>\n        <defs><linearGradient id={`k-stk-${symbol}`} x1=\"0\" x2=\"0\" y1=\"0\" y2=\"1\"><stop offset=\"0\" stopColor={pos ? \"#22c55e\" : \"#ef4444\"} stopOpacity=\".3\" /><stop offset=\"1\" stopColor={pos ? \"#22c55e\" : \"#ef4444\"} stopOpacity=\"0\" /></linearGradient></defs>\n        <polygon points={`0,60 ${pts} 200,60`} fill={`url(#k-stk-${symbol})`} />\n        <polyline points={pts} fill=\"none\" stroke={pos ? \"#22c55e\" : \"#ef4444\"} strokeWidth=\"2\" vectorEffect=\"non-scaling-stroke\" strokeLinejoin=\"round\" />\n      </svg>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "widgets"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "stocks",
+      "finance",
+      "sparkline",
+      "live"
+    ],
+    "pageTypes": [
+      "dashboard"
+    ]
+  }
+}

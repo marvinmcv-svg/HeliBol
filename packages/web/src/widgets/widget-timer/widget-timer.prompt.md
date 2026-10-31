@@ -1,0 +1,1 @@
+Build a countdown timer: SVG ring (pathLength 1) animating to left/total linearly each second, mm:ss in the center, play/pause and reset buttons; at zero the ring turns green, label says Done! and the card pulses scale [1,1.04,1] on repeat.

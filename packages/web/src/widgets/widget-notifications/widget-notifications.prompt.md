@@ -1,0 +1,1 @@
+Create an animated notification list: every interval prepend the next notification (cycling) and cap the list; items enter from y −24 with scale .9, siblings shift via layout springs, exits scale out.

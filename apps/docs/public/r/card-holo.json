@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-holo",
+  "type": "registry:component",
+  "title": "Holographic Foil Card",
+  "description": "Collectible-card foil: rainbow sheen, glare and tilt all track the pointer through CSS variables.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-holo.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-holo.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** Holographic foil card: rainbow sheen, sparkle texture and glare all track the pointer through CSS variables. */\nexport function CardHolo({ children, className }: { children: ReactNode; className?: string }) {\n  const ref = useRef<HTMLDivElement>(null);\n  const off = useReducedMotion() || usePrefersTouch();\n  const move = (e: React.PointerEvent) => {\n    if (off || !ref.current) return;\n    const r = ref.current.getBoundingClientRect();\n    const x = (e.clientX - r.left) / r.width;\n    const y = (e.clientY - r.top) / r.height;\n    const s = ref.current.style;\n    s.setProperty(\"--mx\", `${x * 100}%`);\n    s.setProperty(\"--my\", `${y * 100}%`);\n    s.setProperty(\"--rx\", `${(0.5 - y) * 18}deg`);\n    s.setProperty(\"--ry\", `${(x - 0.5) * 22}deg`);\n    s.setProperty(\"--o\", \"1\");\n  };\n  const leave = () => {\n    const s = ref.current?.style;\n    s?.setProperty(\"--rx\", \"0deg\");\n    s?.setProperty(\"--ry\", \"0deg\");\n    s?.setProperty(\"--o\", \"0\");\n  };\n  return (\n    <div className=\"[perspective:900px]\">\n      <div\n        ref={ref}\n        onPointerMove={move}\n        onPointerLeave={leave}\n        className={cn(\"relative overflow-hidden rounded-2xl transition-transform duration-300 ease-out [transform:rotateX(var(--rx,0))_rotateY(var(--ry,0))] [transform-style:preserve-3d]\", className)}\n      >\n        {children}\n        <div\n          aria-hidden\n          className=\"pointer-events-none absolute inset-0 mix-blend-color-dodge transition-opacity duration-300\"\n          style={{\n            opacity: \"calc(var(--o, 0) * .75)\",\n            background: \"repeating-linear-gradient(115deg, #ff7eb3 0%, #ffd36e 8%, #8bffb0 16%, #6ec8ff 24%, #c58bff 32%, #ff7eb3 40%)\",\n            backgroundSize: \"300% 300%\",\n            backgroundPosition: \"var(--mx, 50%) var(--my, 50%)\",\n            maskImage: \"radial-gradient(circle at var(--mx,50%) var(--my,50%), #000 0%, transparent 70%)\",\n          }}\n        />\n        <div aria-hidden className=\"pointer-events-none absolute inset-0 transition-opacity duration-300\" style={{ opacity: \"var(--o, 0)\", background: \"radial-gradient(circle at var(--mx,50%) var(--my,50%), rgb(255 255 255 / .45), transparent 45%)\", mixBlendMode: \"overlay\" }} />\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "holographic",
+      "foil",
+      "tilt",
+      "collectible",
+      "glare"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "portfolio",
+      "social"
+    ]
+  }
+}

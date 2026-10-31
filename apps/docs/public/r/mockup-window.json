@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mockup-window",
+  "type": "registry:component",
+  "title": "macOS Window",
+  "description": "A macOS app window that zooms open from its dock icon and minimizes back into it.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/mockup-window.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/mockup-window.tsx",
+      "content": "\"use client\";\nimport { useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** macOS app window that zooms open from its dock icon and minimizes back with the genie-ish scale. */\nexport function MockupWindow({ title, icon, children, className }: { title: string; icon: ReactNode; children: ReactNode; className?: string }) {\n  const [open, setOpen] = useState(true);\n  return (\n    <div className={cn(\"relative flex h-full w-full flex-col items-center justify-end\", className)}>\n      <AnimatePresence>\n        {open && (\n          <motion.div\n            role=\"dialog\"\n            aria-label={title}\n            initial={{ opacity: 0, scale: 0.2, y: 160 }}\n            animate={{ opacity: 1, scale: 1, y: 0 }}\n            exit={{ opacity: 0, scale: 0.15, y: 200, transition: { duration: 0.35, ease: [0.4, 0, 1, 1] } }}\n            transition={spring.smooth}\n            className=\"mb-4 w-full max-w-md origin-bottom overflow-hidden rounded-xl border border-border bg-card shadow-2xl\"\n          >\n            <div className=\"flex items-center gap-1.5 border-b border-border bg-muted/50 px-3 py-2\">\n              <button onClick={() => setOpen(false)} aria-label=\"Close window\" className=\"size-3 rounded-full bg-[#ff5f57]\" />\n              <button onClick={() => setOpen(false)} aria-label=\"Minimize window\" className=\"size-3 rounded-full bg-[#febc2e]\" />\n              <span className=\"size-3 rounded-full bg-[#28c840]\" />\n              <span className=\"mx-auto text-xs font-medium text-muted-foreground\">{title}</span>\n            </div>\n            <div className=\"p-4\">{children}</div>\n          </motion.div>\n        )}\n      </AnimatePresence>\n      <button onClick={() => setOpen((o) => !o)} aria-label={`${open ? \"Minimize\" : \"Open\"} ${title}`} className=\"relative grid size-12 place-items-center rounded-xl bg-gradient-to-b from-zinc-100 to-zinc-300 text-xl shadow-md dark:from-zinc-700 dark:to-zinc-800\">\n        {icon}\n        {open && <span className=\"absolute -bottom-1.5 size-1 rounded-full bg-foreground\" />}\n      </button>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "mockups"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "macos",
+      "window",
+      "dock",
+      "minimize"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

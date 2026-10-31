@@ -1,0 +1,1 @@
+Build a file dropzone: dashed card that scales 1.02 and tints on dragover (icon bobs), opens the picker on click; dropped/selected files prepend to a list (layout springs) each with an extension badge and an animated progress bar that turns green at 100%; remove buttons slide items out.

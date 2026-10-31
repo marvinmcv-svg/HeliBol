@@ -1,0 +1,40 @@
+"use client";
+import { motion } from "motion/react";
+import { cn, useReducedMotion } from "@kinetik/core";
+import { easeBezier } from "@kinetik/tokens";
+
+const css = `
+@property --hm1{syntax:"<percentage>";initial-value:15%;inherits:false}
+@property --hm2{syntax:"<percentage>";initial-value:80%;inherits:false}
+.k-hero-mesh{background:radial-gradient(at var(--hm1) 20%,#7c3aed 0,transparent 50%),radial-gradient(at var(--hm2) 30%,#06b6d4 0,transparent 50%),radial-gradient(at 50% 100%,#f472b6 0,transparent 55%),var(--color-background,#0a0a0a);animation:k-hero-mesh 14s ease-in-out infinite alternate}
+@keyframes k-hero-mesh{to{--hm1:60%;--hm2:30%}}
+@media (prefers-reduced-motion:reduce){.k-hero-mesh{animation:none}}
+[data-reduce-motion] .k-hero-mesh{animation:none}`;
+
+/** SaaS hero: drifting mesh gradient, staggered headline + CTAs, and floating UI cards that bob at different rhythms. */
+export function HeroMeshCards({ title = "Payments infrastructure for the internet", subtitle = "Accept payments, send payouts and manage your business online — with motion that makes it feel instant.", className }: { title?: string; subtitle?: string; className?: string }) {
+  const reduced = useReducedMotion();
+  const enter = (d: number) => ({ initial: { opacity: 0, y: 20, filter: "blur(6px)" }, animate: { opacity: 1, y: 0, filter: "blur(0px)" }, transition: { delay: d, duration: 0.8, ease: easeBezier.expoOut } });
+  const bob = (d: number, a = 10) => (reduced ? {} : { animate: { y: [0, -a, 0] }, transition: { duration: 5 + d, repeat: Infinity, ease: "easeInOut" as const, delay: d } });
+  return (
+    <section className={cn("k-hero-mesh relative isolate overflow-hidden", className)}>
+      <style href="k-hero-mesh" precedence="kinetik">{css}</style>
+      <div className="mx-auto grid min-h-full max-w-6xl items-center gap-10 px-6 py-16 lg:grid-cols-2">
+        <div className="text-white">
+          <motion.p {...enter(0)} className="w-fit rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs backdrop-blur">New · Instant payouts in 42 countries</motion.p>
+          <motion.h1 {...enter(0.1)} className="mt-5 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-6xl">{title}</motion.h1>
+          <motion.p {...enter(0.2)} className="mt-4 max-w-md text-white/75">{subtitle}</motion.p>
+          <motion.div {...enter(0.3)} className="mt-7 flex gap-3">
+            <a href="#" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition-transform hover:-translate-y-0.5">Start now →</a>
+            <a href="#" className="rounded-full border border-white/30 px-5 py-2.5 text-sm font-medium text-white backdrop-blur hover:bg-white/10">Contact sales</a>
+          </motion.div>
+        </div>
+        <div aria-hidden className="relative hidden h-80 lg:block">
+          <motion.div {...enter(0.35)} className="absolute top-0 left-6 w-64"><motion.div {...bob(0)} className="rounded-2xl border border-white/20 bg-white/90 p-4 text-zinc-900 shadow-2xl backdrop-blur"><p className="text-xs text-zinc-500">Gross volume</p><p className="text-2xl font-semibold">$248,920.18</p><svg viewBox="0 0 100 30" className="mt-2 h-10 w-full"><path d="M0 25 C15 22 20 10 35 14 S60 4 75 8 S90 2 100 4" fill="none" stroke="#7c3aed" strokeWidth="2" /></svg></motion.div></motion.div>
+          <motion.div {...enter(0.45)} className="absolute top-36 right-0 w-56"><motion.div {...bob(1.2, 14)} className="rounded-2xl border border-white/20 bg-zinc-900/90 p-4 text-white shadow-2xl"><p className="text-xs text-white/60">Payment succeeded</p><p className="mt-1 flex items-center gap-2 font-semibold"><span className="grid size-5 place-items-center rounded-full bg-emerald-500 text-[10px]">✓</span>$1,280.00</p><p className="mt-2 text-xs text-white/50">Visa •••• 4242</p></motion.div></motion.div>
+          <motion.div {...enter(0.55)} className="absolute bottom-0 left-20 w-48"><motion.div {...bob(2.1, 8)} className="rounded-2xl border border-white/20 bg-white/80 p-3 text-zinc-900 shadow-xl backdrop-blur"><p className="text-xs text-zinc-500">Conversion</p><p className="text-xl font-semibold text-emerald-600">+18.4%</p></motion.div></motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}

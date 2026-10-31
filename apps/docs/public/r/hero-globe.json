@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-globe",
+  "type": "registry:component",
+  "title": "Hero — Dotted Globe",
+  "description": "Canvas dotted globe (orthographic projection, no WebGL) that rotates, tilts toward the pointer and draws travelling arcs between cities.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-globe.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/hero-globe.tsx",
+      "content": "\"use client\";\nimport { useMemo, useRef, type ReactNode } from \"react\";\nimport { cn, useCanvas } from \"@/lib/kinetik/core\";\n\nexport interface GlobeArc {\n  from: [number, number];\n  to: [number, number];\n}\n\n/** Dotted rotating globe on canvas (orthographic projection, no WebGL) with animated arcs between cities. Drag-free, pointer tilts it. */\nexport function HeroGlobe({ arcs = [], children, color = \"139 92 246\", className }: { arcs?: GlobeArc[]; children?: ReactNode; color?: string; className?: string }) {\n  const tilt = useRef(0);\n  const pts = useMemo(() => {\n    const out: [number, number][] = [];\n    const N = 1600;\n    for (let i = 0; i < N; i++) {\n      const y = 1 - (i / (N - 1)) * 2;\n      const r = Math.sqrt(1 - y * y);\n      const th = i * 2.399963;\n      // crude \"land\" mask so it reads as a planet, not a ball\n      const lat = Math.asin(y);\n      const lon = th % (Math.PI * 2);\n      const land = Math.sin(lon * 3 + lat * 2) + Math.cos(lat * 4 - lon) > 0.35;\n      if (land) out.push([Math.atan2(Math.sin(th) * r, Math.cos(th) * r), lat]);\n    }\n    return out;\n  }, []);\n  const ref = useCanvas(({ ctx, width, height, time, pointer }) => {\n    ctx.clearRect(0, 0, width, height);\n    const R = Math.min(width, height) * 0.42;\n    const cx = width / 2;\n    const cy = height / 2;\n    const rot = time * 0.25;\n    if (pointer) tilt.current += ((pointer.y / height - 0.5) * 0.6 - tilt.current) * 0.05;\n    const tl = tilt.current;\n    const project = (lon: number, lat: number) => {\n      const x = Math.cos(lat) * Math.sin(lon + rot);\n      const y0 = Math.sin(lat);\n      const z0 = Math.cos(lat) * Math.cos(lon + rot);\n      const y = y0 * Math.cos(tl) - z0 * Math.sin(tl);\n      const z = y0 * Math.sin(tl) + z0 * Math.cos(tl);\n      return { x: cx + x * R, y: cy - y * R, z };\n    };\n    const g = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.3, R * 0.1, cx, cy, R);\n    g.addColorStop(0, `rgb(${color} / .18)`);\n    g.addColorStop(1, `rgb(${color} / .02)`);\n    ctx.fillStyle = g;\n    ctx.beginPath();\n    ctx.arc(cx, cy, R, 0, Math.PI * 2);\n    ctx.fill();\n    for (const [lon, lat] of pts) {\n      const p = project(lon, lat);\n      if (p.z < 0) continue;\n      ctx.fillStyle = `rgb(${color} / ${0.25 + p.z * 0.7})`;\n      ctx.fillRect(p.x, p.y, 1.6, 1.6);\n    }\n    const rad = (d: number) => (d * Math.PI) / 180;\n    arcs.forEach((a, i) => {\n      const t = ((time * 0.35 + i * 0.27) % 1.4) / 1;\n      const steps = 40;\n      ctx.strokeStyle = \"rgb(244 114 182 / .9)\";\n      ctx.lineWidth = 1.6;\n      ctx.beginPath();\n      let started = false;\n      for (let s = 0; s <= steps; s++) {\n        const f = s / steps;\n        if (f > Math.min(1, t)) break;\n        if (f < Math.max(0, t - 0.4)) continue;\n        const lon = rad(a.from[1] + (a.to[1] - a.from[1]) * f);\n        const lat = rad(a.from[0] + (a.to[0] - a.from[0]) * f);\n        const lift = 1 + Math.sin(f * Math.PI) * 0.18;\n        const p = project(lon, lat);\n        const x = cx + (p.x - cx) * lift;\n        const y = cy + (p.y - cy) * lift;\n        if (p.z < -0.1) continue;\n        if (!started) ctx.moveTo(x, y), (started = true);\n        else ctx.lineTo(x, y);\n      }\n      ctx.stroke();\n    });\n  });\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)}>\n      <canvas ref={ref} role=\"img\" aria-label=\"Rotating globe with connections between cities\" className=\"absolute inset-0 -z-10 h-full w-full\" />\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "globe",
+      "map",
+      "canvas",
+      "global",
+      "network"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

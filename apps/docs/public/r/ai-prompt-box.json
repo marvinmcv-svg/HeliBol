@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-prompt-box",
+  "type": "registry:component",
+  "title": "AI Prompt Box",
+  "description": "Chat composer: auto-growing textarea, animated attachment chips, model picker and a send button that morphs into Stop while generating.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/ai-prompt-box.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/ai-prompt-box.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ArrowUp, Paperclip, Square, X } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface AiPromptBoxProps {\n  onSubmit?: (prompt: string, files: string[]) => Promise<unknown> | void;\n  placeholder?: string;\n  models?: string[];\n  className?: string;\n}\n\n/** Chat composer: auto-growing textarea, attachment chips, model picker, and a send button that morphs into Stop while generating. */\nexport function AiPromptBox({ onSubmit, placeholder = \"Ask anything…\", models = [\"Opus\", \"Sonnet\", \"Haiku\"], className }: AiPromptBoxProps) {\n  const [value, setValue] = useState(\"\");\n  const [files, setFiles] = useState<string[]>([]);\n  const [busy, setBusy] = useState(false);\n  const [model, setModel] = useState(models[0]);\n  const ta = useRef<HTMLTextAreaElement>(null);\n  useEffect(() => {\n    const el = ta.current;\n    if (!el) return;\n    el.style.height = \"auto\";\n    el.style.height = `${Math.min(el.scrollHeight, 200)}px`;\n  }, [value]);\n  const submit = async () => {\n    if (busy) return setBusy(false);\n    if (!value.trim()) return;\n    setBusy(true);\n    await (onSubmit?.(value, files) ?? new Promise((r) => setTimeout(r, 2500)));\n    setBusy(false);\n    setValue(\"\");\n    setFiles([]);\n  };\n  return (\n    <motion.div layout transition={spring.smooth} className={cn(\"w-full max-w-xl rounded-3xl border border-border bg-card p-2 shadow-lg transition-shadow focus-within:shadow-xl focus-within:ring-2 focus-within:ring-ring/30\", className)}>\n      <AnimatePresence initial={false}>\n        {files.length > 0 && (\n          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: \"auto\", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className=\"flex flex-wrap gap-1.5 overflow-hidden px-2 pt-1\">\n            <AnimatePresence>\n              {files.map((f) => (\n                <motion.span key={f} layout initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.8, opacity: 0 }} className=\"flex items-center gap-1 rounded-lg bg-muted px-2 py-1 text-xs\">\n                  📄 {f}\n                  <button onClick={() => setFiles((x) => x.filter((y) => y !== f))} aria-label={`Remove ${f}`} className=\"text-muted-foreground hover:text-foreground\"><X className=\"size-3\" /></button>\n                </motion.span>\n              ))}\n            </AnimatePresence>\n          </motion.div>\n        )}\n      </AnimatePresence>\n      <textarea\n        ref={ta}\n        rows={1}\n        value={value}\n        onChange={(e) => setValue(e.target.value)}\n        onKeyDown={(e) => e.key === \"Enter\" && !e.shiftKey && (e.preventDefault(), submit())}\n        placeholder={placeholder}\n        aria-label=\"Prompt\"\n        className=\"block w-full resize-none bg-transparent px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground\"\n      />\n      <div className=\"flex items-center gap-1.5 px-1\">\n        <button onClick={() => setFiles((f) => [...f, `brief-${f.length + 1}.pdf`])} aria-label=\"Attach file\" className=\"grid size-8 place-items-center rounded-full text-muted-foreground hover:bg-accent hover:text-foreground\"><Paperclip className=\"size-4\" /></button>\n        <select value={model} onChange={(e) => setModel(e.target.value)} aria-label=\"Model\" className=\"h-8 rounded-full bg-muted px-2.5 text-xs outline-none\">\n          {models.map((m) => <option key={m}>{m}</option>)}\n        </select>\n        <motion.button\n          onClick={submit}\n          disabled={!busy && !value.trim()}\n          aria-label={busy ? \"Stop generating\" : \"Send\"}\n          whileTap={{ scale: 0.9 }}\n          className=\"ml-auto grid size-9 place-items-center rounded-full bg-foreground text-background transition-opacity disabled:opacity-30\"\n        >\n          <AnimatePresence mode=\"popLayout\" initial={false}>\n            <motion.span key={busy ? \"s\" : \"a\"} initial={{ scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0, rotate: 90 }} transition={spring.snappy}>\n              {busy ? <Square className=\"size-3.5 fill-current\" /> : <ArrowUp className=\"size-4\" />}\n            </motion.span>\n          </AnimatePresence>\n        </motion.button>\n      </div>\n    </motion.div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "ai",
+      "chat",
+      "composer",
+      "prompt",
+      "input"
+    ],
+    "pageTypes": [
+      "ai-app",
+      "dashboard"
+    ]
+  }
+}

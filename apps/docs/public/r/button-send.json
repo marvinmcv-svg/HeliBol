@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-send",
+  "type": "registry:component",
+  "title": "Send Button",
+  "description": "Paper-plane send: the plane winds back, takes off along an arc and disappears, then a check draws in.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-send.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-send.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** Send button: the paper plane takes off along an arc, then a check lands. */\nexport function ButtonSend({ onSend, label = \"Send\", sentLabel = \"Sent\", className }: { onSend?: () => void; label?: string; sentLabel?: string; className?: string }) {\n  const [state, setState] = useState<\"idle\" | \"flying\" | \"sent\">(\"idle\");\n  const send = () => {\n    if (state !== \"idle\") return;\n    onSend?.();\n    setState(\"flying\");\n    setTimeout(() => setState(\"sent\"), 700);\n    setTimeout(() => setState(\"idle\"), 2400);\n  };\n  return (\n    <motion.button\n      layout\n      onClick={send}\n      transition={spring.smooth}\n      aria-live=\"polite\"\n      className={cn(\"relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-full px-5 text-sm font-medium text-white outline-none focus-visible:ring-2 focus-visible:ring-ring\", state === \"sent\" ? \"bg-emerald-500\" : \"bg-sky-600\", className)}\n    >\n      <span className=\"relative grid size-5 place-items-center\">\n        <AnimatePresence mode=\"popLayout\" initial={false}>\n          {state === \"sent\" ? (\n            <motion.svg key=\"check\" viewBox=\"0 0 24 24\" className=\"size-5\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"2.6\" strokeLinecap=\"round\" strokeLinejoin=\"round\" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={spring.bouncy}>\n              <motion.path d=\"M5 12.5l4.5 4.5L19 7\" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.3 }} />\n            </motion.svg>\n          ) : (\n            <motion.svg\n              key=\"plane\"\n              viewBox=\"0 0 24 24\"\n              className=\"size-5\"\n              fill=\"none\"\n              stroke=\"currentColor\"\n              strokeWidth=\"2\"\n              strokeLinejoin=\"round\"\n              animate={state === \"flying\" ? { x: [0, -4, 60], y: [0, 3, -30], rotate: [0, -10, 25], opacity: [1, 1, 0] } : { x: 0, y: 0, rotate: 0, opacity: 1 }}\n              transition={{ duration: 0.7, times: [0, 0.25, 1], ease: \"easeIn\" }}\n            >\n              <path d=\"M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z\" />\n            </motion.svg>\n          )}\n        </AnimatePresence>\n      </span>\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        <motion.span key={state === \"sent\" ? \"s\" : \"l\"} initial={{ y: 14, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -14, opacity: 0 }}>\n          {state === \"sent\" ? sentLabel : label}\n        </motion.span>\n      </AnimatePresence>\n    </motion.button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "send",
+      "message",
+      "chat",
+      "feedback",
+      "icon morph"
+    ],
+    "pageTypes": [
+      "social",
+      "ai-app",
+      "dashboard"
+    ]
+  }
+}

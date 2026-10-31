@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-loop-lines",
+  "type": "registry:component",
+  "title": "Line Loop",
+  "description": "Cycles whole lines or nodes vertically through a masked slot — status messages, rotating taglines, mini tickers.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-loop-lines.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-loop-lines.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface TextLoopLinesProps {\n  items: ReactNode[];\n  interval?: number;\n  direction?: \"up\" | \"down\";\n  className?: string;\n}\n\n/** Cycles whole lines (or any nodes) vertically through a masked slot — status lines, testimonials, tickers. */\nexport function TextLoopLines({ items, interval = 2400, direction = \"up\", className }: TextLoopLinesProps) {\n  const [i, setI] = useState(0);\n  const reduced = useReducedMotion();\n  useEffect(() => {\n    const t = setInterval(() => setI((n) => (n + 1) % items.length), interval);\n    return () => clearInterval(t);\n  }, [items.length, interval]);\n  const d = direction === \"up\" ? 1 : -1;\n  return (\n    <div className={cn(\"relative overflow-hidden\", className)} aria-live=\"polite\">\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        <motion.div\n          key={i}\n          initial={reduced ? { opacity: 0 } : { y: `${100 * d}%`, opacity: 0 }}\n          animate={{ y: 0, opacity: 1 }}\n          exit={reduced ? { opacity: 0 } : { y: `${-100 * d}%`, opacity: 0 }}\n          transition={spring.smooth}\n        >\n          {items[i]}\n        </motion.div>\n      </AnimatePresence>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "status",
+      "rotating",
+      "ticker",
+      "loop"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "landing",
+      "ai-app"
+    ]
+  }
+}

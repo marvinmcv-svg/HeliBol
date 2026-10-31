@@ -1,0 +1,1 @@
+Generate topographic contours: for i in 0…N build a closed path of points around a center with radius 30 + 22i plus sin(3θ + .7i) and cos(5θ − i) wobble, stretch x by 1.5; stroke with dashes that march at different speeds.

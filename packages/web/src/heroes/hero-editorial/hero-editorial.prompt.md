@@ -1,0 +1,1 @@
+Build an editorial hero on an off-white paper background: tiny top meta row, a giant (15vw) black name whose letters rise from y 110% staggered 50ms, an image revealed by clip-path inset(100%→0) while scaling 1.4→1, the name blending over it with mix-blend difference, and a bottom marquee of disciplines.

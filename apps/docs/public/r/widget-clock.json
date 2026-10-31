@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-clock",
+  "type": "registry:component",
+  "title": "World Clock",
+  "description": "Analog clocks per time zone with a smooth sweeping second hand and a digital caption.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/widget-clock.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/widget-clock.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** Analog clock with a smooth sweeping second hand (or ticking under reduced motion) and a digital readout. */\nexport function WidgetClock({ timeZone, label, className }: { timeZone?: string; label?: string; className?: string }) {\n  const [now, setNow] = useState<Date | null>(null);\n  const reduced = useReducedMotion();\n  useEffect(() => {\n    let raf = 0;\n    let int = 0;\n    const tick = () => setNow(new Date());\n    if (reduced) {\n      tick();\n      int = window.setInterval(tick, 1000);\n    } else {\n      const loop = () => {\n        tick();\n        raf = requestAnimationFrame(loop);\n      };\n      raf = requestAnimationFrame(loop);\n    }\n    return () => (cancelAnimationFrame(raf), clearInterval(int));\n  }, [reduced]);\n  const parts = now ? Object.fromEntries(new Intl.DateTimeFormat(\"en-GB\", { timeZone, hour: \"numeric\", minute: \"numeric\", second: \"numeric\", hour12: false }).formatToParts(now).map((p) => [p.type, p.value])) : { hour: \"0\", minute: \"0\", second: \"0\" };\n  const ms = now ? now.getMilliseconds() : 0;\n  const s = Number(parts.second) + (reduced ? 0 : ms / 1000);\n  const m = Number(parts.minute) + s / 60;\n  const h = (Number(parts.hour) % 12) + m / 60;\n  const hand = (deg: number, cls: string) => <span className={cn(\"absolute bottom-1/2 left-1/2 origin-bottom -translate-x-1/2 rounded-full\", cls)} style={{ rotate: `${deg}deg` }} />;\n  return (\n    <div className={cn(\"flex flex-col items-center gap-2\", className)}>\n      <div role=\"img\" aria-label={`${label ?? \"Local\"} time ${parts.hour}:${parts.minute}`} className=\"relative size-36 rounded-full border border-border bg-card shadow-[inset_0_2px_10px_rgb(0_0_0/.08),0_10px_30px_-10px_rgb(0_0_0/.3)]\">\n        {Array.from({ length: 12 }, (_, i) => <span key={i} className=\"absolute top-2 left-1/2 h-[calc(100%-1rem)] w-px -translate-x-1/2\" style={{ rotate: `${i * 30}deg` }}><span className={cn(\"block w-px bg-muted-foreground\", i % 3 ? \"h-1.5\" : \"h-3 w-0.5\")} /></span>)}\n        {hand(h * 30, \"h-[26%] w-1 bg-foreground\")}\n        {hand(m * 6, \"h-[36%] w-0.5 bg-foreground\")}\n        {hand(s * 6, \"h-[40%] w-px bg-orange-500\")}\n        <span className=\"absolute top-1/2 left-1/2 size-2 -translate-1/2 rounded-full bg-orange-500\" />\n      </div>\n      <p className=\"text-xs text-muted-foreground\"><span className=\"font-medium text-foreground\">{label ?? \"Local\"}</span> · <span className=\"tabular-nums\">{parts.hour}:{parts.minute}</span></p>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "widgets"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "clock",
+      "time zones",
+      "widget",
+      "analog"
+    ],
+    "pageTypes": [
+      "dashboard"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Create liquid morphing text: two stacked spans (current/next word) whose opacity and blur cross-fade over `morphTime` (blur = 8/f − 8 px, opacity = f^0.4), wrapped in an SVG `feColorMatrix` alpha-threshold filter (`0 0 0 255 -140`) so the blurred overlap fuses into gooey letters. Hold each word `holdTime`. rAF loop; reduced motion swaps words with no morph.

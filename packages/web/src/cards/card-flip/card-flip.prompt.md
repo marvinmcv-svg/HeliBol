@@ -1,0 +1,1 @@
+Create a flip card: a button with perspective 1000px holding a preserve-3d container that springs rotateY 0↔180 (180/20); front and back are absolutely stacked faces with backface-visibility hidden, the back pre-rotated 180°.

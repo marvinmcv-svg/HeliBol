@@ -1,0 +1,1 @@
+Build a vertical text loop: an overflow-hidden slot with AnimatePresence popLayout keyed by index; items enter from y ±100% and exit to ∓100% with a spring (260/30), cycling on an interval. aria-live polite.

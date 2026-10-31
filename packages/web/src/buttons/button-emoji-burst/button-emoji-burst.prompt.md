@@ -1,0 +1,1 @@
+Build an emoji-burst button: on click spawn N fixed-position emoji spans at the cursor with random upward angles (±63°) and speeds 260–580px/s, simulate gravity 900px/s², spin, shrink and fade over 1.3s in one rAF loop, then remove them.

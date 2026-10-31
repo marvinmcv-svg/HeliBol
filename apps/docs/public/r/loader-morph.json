@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loader-morph",
+  "type": "registry:component",
+  "title": "Morphing Shape Loader",
+  "description": "A single shape that morphs circle → rounded square → blob while rotating — a loader with character.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/loader-morph.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/loader-morph.tsx",
+      "content": "\"use client\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** A single shape that morphs circle → rounded square → triangle-ish blob while rotating — a characterful brand loader. */\nexport function LoaderMorph({ size = 56, color = \"currentColor\", label = \"Loading\", className }: { size?: number; color?: string; label?: string; className?: string }) {\n  const reduced = useReducedMotion();\n  return (\n    <span role=\"status\" aria-label={label} className={cn(\"inline-grid place-items-center\", className)} style={{ width: size, height: size }}>\n      <motion.span\n        className=\"block size-full\"\n        style={{ background: color }}\n        animate={reduced ? { opacity: [0.5, 1, 0.5] } : { borderRadius: [\"50%\", \"22%\", \"50% 50% 12% 50%\", \"50%\"], rotate: [0, 90, 225, 360], scale: [1, 0.82, 1, 1] }}\n        transition={{ duration: reduced ? 2 : 2.4, repeat: Infinity, ease: \"easeInOut\" }}\n      />\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "loaders"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "loader",
+      "spinner",
+      "morph",
+      "brand"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "onboarding"
+    ]
+  }
+}

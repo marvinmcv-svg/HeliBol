@@ -1,0 +1,1 @@
+Create a dot matrix on canvas: every `gap` px draw a dot; t = max(ambient sine wave ·.15, 1 − distance-to-pointer/radius); radius 1 + 2.6t, accent color with alpha .25 + .75t when t > .16, otherwise muted gray.

@@ -1,0 +1,1 @@
+Create a rainbow-border button: register `@property --k-rb-a` (<angle>), paint the background as `linear-gradient(fg,fg) padding-box, conic-gradient(from var(--k-rb-a), rose, amber, lime, cyan, violet, rose) border-box` with a 2px transparent border, plus a blurred ::after glow using the same conic gradient under the button; animate the angle to 360deg in 3s linear.

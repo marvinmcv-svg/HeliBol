@@ -1,0 +1,1 @@
+Build following eyes: two white circles with dark pupils; on window pointermove compute the angle from each eye's center to the pointer and translate its pupil by min(size·.22, distance/10) in that direction; blink by animating an eyelid scaleY every 3.8s.

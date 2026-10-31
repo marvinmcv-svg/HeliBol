@@ -1,0 +1,1 @@
+Create falling text with a tiny physics loop: on click give each letter random vy (−200…−500), vx (±130) and spin; integrate gravity each frame, bounce at the container floor with 0.38 restitution and friction, write translate/rotate; stop when settled. A second click springs all letters back.

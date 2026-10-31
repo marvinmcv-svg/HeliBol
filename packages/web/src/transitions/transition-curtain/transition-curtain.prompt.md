@@ -1,0 +1,1 @@
+Build a curtain transition: on navigate, three full-size colored panels slide in from y 100% (staggered 80ms, cubic-bezier(.76,0,.24,1)), the top one shows the destination title; swap the page at ~650ms, then panels exit to y −100% in reverse order.

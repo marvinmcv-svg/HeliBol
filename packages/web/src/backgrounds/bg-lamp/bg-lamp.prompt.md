@@ -1,0 +1,1 @@
+Create a lamp header: two mirrored conic-gradient cones (from 70° and 290° at center top) masked to fade sideways, widening 8rem→26rem on view; a blurred glow blob and a thin glowing bar at the top; heading overlaps upward with a gradient text fill.

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-glitch",
+  "type": "registry:component",
+  "title": "Glitch Text",
+  "description": "Cyan/red channel-split glitch bursts with sliced clip-paths, pure CSS, spaced out to stay epilepsy-safe.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-glitch.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-glitch.tsx",
+      "content": "import type { ElementType } from \"react\";\nimport { cn } from \"@/lib/kinetik/utils\";\n\nexport interface TextGlitchProps {\n  children: string;\n  as?: ElementType;\n  /** Seconds between glitch bursts (≥ 2 keeps it well under WCAG flash limits). */\n  every?: number;\n  className?: string;\n}\n\nconst css = `\n.k-glitch{position:relative;display:inline-block}\n.k-glitch::before,.k-glitch::after{content:attr(data-text);position:absolute;inset:0;pointer-events:none}\n.k-glitch::before{color:#22d3ee;animation:k-glitch-a var(--k-gl-every) steps(1) infinite;clip-path:inset(0 0 0 0)}\n.k-glitch::after{color:#f43f5e;animation:k-glitch-b var(--k-gl-every) steps(1) infinite;clip-path:inset(0 0 0 0)}\n@keyframes k-glitch-a{0%,88%,100%{transform:none;clip-path:inset(0 0 100% 0)}90%{transform:translate(-3px,1px);clip-path:inset(12% 0 55% 0)}93%{transform:translate(3px,-1px);clip-path:inset(60% 0 8% 0)}96%{transform:translate(-2px,0);clip-path:inset(35% 0 40% 0)}}\n@keyframes k-glitch-b{0%,88%,100%{transform:none;clip-path:inset(0 0 100% 0)}91%{transform:translate(3px,0);clip-path:inset(50% 0 20% 0)}94%{transform:translate(-3px,1px);clip-path:inset(5% 0 70% 0)}97%{transform:translate(2px,-1px);clip-path:inset(75% 0 2% 0)}}\n.k-glitch:hover::before,.k-glitch:hover::after{animation-duration:1.2s}\n@media (prefers-reduced-motion:reduce){.k-glitch::before,.k-glitch::after{display:none}}\n[data-reduce-motion] .k-glitch::before,[data-reduce-motion] .k-glitch::after{display:none}`;\n\n/** RGB-split glitch in short, infrequent bursts (pure CSS). */\nexport function TextGlitch({ children, as: Tag = \"span\", every = 3, className }: TextGlitchProps) {\n  return (\n    <>\n      <style href=\"k-glitch\" precedence=\"kinetik\">{css}</style>\n      <Tag data-text={children} className={cn(\"k-glitch\", className)} style={{ \"--k-gl-every\": `${every}s` } as React.CSSProperties}>\n        {children}\n      </Tag>\n    </>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "glitch",
+      "cyberpunk",
+      "error",
+      "css-only"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

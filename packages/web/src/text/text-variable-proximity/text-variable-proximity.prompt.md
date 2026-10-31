@@ -1,0 +1,1 @@
+Build cursor-proximity variable-font text: track the pointer; in a rAF loop, for each letter compute distance to its center, t = max(0, 1 − d/radius), set `font-variation-settings: "wght" min + (max−min)·t²` and translate −4t px. Requires a variable font (e.g. Geist, Inter var).

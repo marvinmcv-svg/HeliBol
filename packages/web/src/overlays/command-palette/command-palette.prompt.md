@@ -1,0 +1,1 @@
+Create a ⌘K command palette: blurred backdrop, dialog that springs from scale .95/y −10, search input acting as a combobox, results grouped under small headings, a layoutId highlight following the selected index (mouse or arrows), Enter runs the command and closes.

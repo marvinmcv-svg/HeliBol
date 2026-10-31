@@ -1,0 +1,1 @@
+Create a scroll-tilt hero: a 180vh section with a sticky 100vh stage (perspective 1000px); map scroll progress 0→.6 to rotateX 24°→0°, scale .9→1 on a bezel-framed screenshot (origin top) and to headline y 0→−80px.

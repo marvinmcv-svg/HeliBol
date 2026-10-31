@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-elastic",
+  "type": "registry:component",
+  "title": "Elastic Slider",
+  "description": "Range slider that stretches like rubber when dragged past its ends and springs back on release.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/slider-elastic.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/slider-elastic.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { animate, motion, useMotionValue, useMotionValueEvent, useTransform } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\n/** Range slider that stretches like rubber when dragged past its ends and springs back; arrow keys and Home/End supported. */\nexport function SliderElastic({ min = 0, max = 100, defaultValue = 40, label = \"Volume\", onChange, className }: { min?: number; max?: number; defaultValue?: number; label?: string; onChange?: (v: number) => void; className?: string }) {\n  const track = useRef<HTMLDivElement>(null);\n  const [value, setValue] = useState(defaultValue);\n  const overflow = useMotionValue(0);\n  const scaleX = useTransform(overflow, (o) => 1 + Math.abs(o) / 400);\n  const originX = useTransform(overflow, (o) => (o < 0 ? 1 : 0));\n  useMotionValueEvent(overflow, \"change\", () => {});\n  const set = (v: number) => {\n    const c = Math.round(Math.max(min, Math.min(max, v)));\n    setValue(c);\n    onChange?.(c);\n  };\n  const fromX = (x: number) => {\n    const r = track.current!.getBoundingClientRect();\n    const raw = x - r.left;\n    overflow.set(raw < 0 ? Math.max(-60, raw) * 0.5 : raw > r.width ? Math.min(60, raw - r.width) * 0.5 : 0);\n    set(min + (Math.max(0, Math.min(r.width, raw)) / r.width) * (max - min));\n  };\n  const pct = ((value - min) / (max - min)) * 100;\n  return (\n    <div className={cn(\"w-72\", className)}>\n      <div className=\"mb-2 flex justify-between text-sm\"><span>{label}</span><span className=\"text-muted-foreground tabular-nums\">{value}</span></div>\n      <motion.div\n        ref={track}\n        style={{ scaleX, originX }}\n        className=\"relative h-3 touch-none rounded-full bg-muted\"\n        onPointerDown={(e) => (e.currentTarget.setPointerCapture(e.pointerId), fromX(e.clientX))}\n        onPointerMove={(e) => e.buttons && fromX(e.clientX)}\n        onPointerUp={() => animate(overflow, 0, { type: \"spring\", stiffness: 500, damping: 18 })}\n      >\n        <div className=\"absolute inset-y-0 left-0 rounded-full bg-foreground\" style={{ width: `${pct}%` }} />\n        <div\n          role=\"slider\"\n          tabIndex={0}\n          aria-label={label}\n          aria-valuemin={min}\n          aria-valuemax={max}\n          aria-valuenow={value}\n          onKeyDown={(e) => {\n            const step = e.shiftKey ? 10 : 1;\n            if (e.key === \"ArrowRight\" || e.key === \"ArrowUp\") (e.preventDefault(), set(value + step));\n            if (e.key === \"ArrowLeft\" || e.key === \"ArrowDown\") (e.preventDefault(), set(value - step));\n            if (e.key === \"Home\") set(min);\n            if (e.key === \"End\") set(max);\n          }}\n          className=\"absolute top-1/2 size-6 -translate-1/2 rounded-full border-2 border-foreground bg-background shadow-md outline-none transition-transform active:scale-110 focus-visible:ring-4 focus-visible:ring-ring/40\"\n          style={{ left: `${pct}%` }}\n        />\n      </motion.div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "slider",
+      "range",
+      "elastic",
+      "input"
+    ],
+    "pageTypes": [
+      "settings",
+      "media"
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-gooey",
+  "type": "registry:component",
+  "title": "Gooey Liquid Button",
+  "description": "Blobs bubble out from the pill on hover and fuse with it through an SVG goo filter — a liquid, organic hover.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-gooey.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-gooey.tsx",
+      "content": "\"use client\";\nimport { useId, type ButtonHTMLAttributes } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\n/** Liquid button: blobs bubble out of the edges on hover and merge with the body through an SVG goo filter. */\nexport function ButtonGooey({ className, children, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {\n  const id = `k-goo-${useId().replace(/[^a-zA-Z0-9-]/g, \"\")}`;\n  const blobs = [\n    [10, 0.0], [28, 0.05], [50, 0.1], [72, 0.05], [90, 0.0],\n  ];\n  return (\n    <button className={cn(\"group relative inline-flex h-12 items-center px-8 text-sm font-semibold text-white outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-full\", className)} {...props}>\n      <svg className=\"absolute h-0 w-0\" aria-hidden>\n        <filter id={id}>\n          <feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"6\" result=\"b\" />\n          <feColorMatrix in=\"b\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9\" result=\"g\" />\n          <feComposite in=\"SourceGraphic\" in2=\"g\" operator=\"atop\" />\n        </filter>\n      </svg>\n      <span aria-hidden data-goo={id} className=\"absolute inset-0\" style={{ filter: `url(#${id})` }}>\n        <span className=\"absolute inset-0 rounded-full bg-violet-600\" />\n        {blobs.map(([left, delay], i) => (\n          <span\n            key={i}\n            className=\"absolute size-7 rounded-full bg-violet-600 transition-transform duration-700 ease-[cubic-bezier(.34,1.56,.64,1)] motion-reduce:hidden\"\n            style={{ left: `calc(${left}% - 14px)`, top: \"calc(50% - 14px)\", transitionDelay: `${delay}s` }}\n            data-i={i}\n          />\n        ))}\n      </span>\n      <style>{[[-14, -18], [0, 22], [0, -24], [0, 20], [14, -16]].map(([x, y], i) => `.group:hover [data-goo=\"${id}\"] [data-i=\"${i}\"],.group:focus-visible [data-goo=\"${id}\"] [data-i=\"${i}\"]{transform:translate(${x}px,${y}px)}`).join(\"\")}</style>\n      <span className=\"relative\">{children}</span>\n    </button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "gooey",
+      "liquid",
+      "svg filter",
+      "playful"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

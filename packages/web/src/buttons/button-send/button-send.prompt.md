@@ -1,0 +1,1 @@
+Build a send button: on click the plane icon animates x [0,−4,60], y [0,3,−30], rotate [0,−10,25], opacity [1,1,0] over 700ms (anticipation then launch), then a check pops in with a bouncy spring and draws its path; the button turns green and the label rolls to 'Sent', resetting after 2.4s.

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-topography",
+  "type": "registry:component",
+  "title": "Topographic Lines",
+  "description": "Procedural contour-map lines with slowly marching dashes — outdoors, maps and data brands.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-topography.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-topography.tsx",
+      "content": "\"use client\";\nimport { useMemo, type ReactNode } from \"react\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nconst css = `\n.k-topo path{stroke-dasharray:6 10;animation:k-topo 30s linear infinite}\n@keyframes k-topo{to{stroke-dashoffset:-320}}\n@media (prefers-reduced-motion:reduce){.k-topo path{animation:none}}\n[data-reduce-motion] .k-topo path{animation:none}`;\n\n/** Contour-map lines (procedurally generated) with slowly marching dashes — for outdoor, maps and data brands. */\nexport function BgTopography({ children, lines = 14, className }: { children?: ReactNode; lines?: number; className?: string }) {\n  const paths = useMemo(\n    () =>\n      Array.from({ length: lines }, (_, i) => {\n        const pts: string[] = [];\n        const r = 30 + i * 22;\n        for (let a = 0; a <= 360; a += 10) {\n          const rad = (a * Math.PI) / 180;\n          const wob = Math.sin(rad * 3 + i * 0.7) * (8 + i * 1.2) + Math.cos(rad * 5 - i) * 6;\n          pts.push(`${(400 + Math.cos(rad) * (r + wob) * 1.5).toFixed(1)},${(260 + Math.sin(rad) * (r + wob)).toFixed(1)}`);\n        }\n        return `M${pts.join(\"L\")}Z`;\n      }),\n    [lines],\n  );\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)}>\n      <style href=\"k-topo\" precedence=\"kinetik\">{css}</style>\n      <svg aria-hidden viewBox=\"0 0 800 520\" preserveAspectRatio=\"xMidYMid slice\" className=\"k-topo absolute inset-0 -z-10 h-full w-full text-emerald-500/40\">\n        {paths.map((d, i) => <path key={i} d={d} fill=\"none\" stroke=\"currentColor\" strokeWidth={i % 4 === 0 ? 1.4 : 0.8} style={{ animationDuration: `${24 + i * 3}s` }} />)}\n      </svg>\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "topography",
+      "contour",
+      "svg",
+      "map"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

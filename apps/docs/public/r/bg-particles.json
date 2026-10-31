@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-particles",
+  "type": "registry:component",
+  "title": "Particle Network",
+  "description": "Drifting particles that link with lines when close and gently flee the cursor — the classic network hero.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-particles.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-particles.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { cn, useCanvas } from \"@/lib/kinetik/core\";\n\ninterface P { x: number; y: number; vx: number; vy: number; r: number }\n\n/** Drifting particles that link with lines when close and gently flee the cursor — the \"network\" hero background. */\nexport function BgParticles({ children, density = 0.00012, color = \"148 163 184\", link = 110, className }: { children?: ReactNode; density?: number; color?: string; link?: number; className?: string }) {\n  const ps = useRef<P[]>([]);\n  const ref = useCanvas(({ ctx, width, height, dt, pointer }) => {\n    const want = Math.round(width * height * density);\n    while (ps.current.length < want) ps.current.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 18, vy: (Math.random() - 0.5) * 18, r: 1 + Math.random() * 1.6 });\n    ps.current.length = want;\n    ctx.clearRect(0, 0, width, height);\n    for (const p of ps.current) {\n      if (pointer) {\n        const dx = p.x - pointer.x;\n        const dy = p.y - pointer.y;\n        const d = Math.hypot(dx, dy);\n        if (d < 120 && d > 0.1) {\n          p.vx += (dx / d) * 60 * dt;\n          p.vy += (dy / d) * 60 * dt;\n        }\n      }\n      p.vx *= 0.995;\n      p.vy *= 0.995;\n      p.x = (p.x + p.vx * dt + width) % width;\n      p.y = (p.y + p.vy * dt + height) % height;\n    }\n    for (let i = 0; i < ps.current.length; i++) {\n      const a = ps.current[i];\n      for (let j = i + 1; j < ps.current.length; j++) {\n        const b = ps.current[j];\n        const d = Math.hypot(a.x - b.x, a.y - b.y);\n        if (d < link) {\n          ctx.strokeStyle = `rgb(${color} / ${(1 - d / link) * 0.35})`;\n          ctx.beginPath();\n          ctx.moveTo(a.x, a.y);\n          ctx.lineTo(b.x, b.y);\n          ctx.stroke();\n        }\n      }\n      ctx.fillStyle = `rgb(${color} / .8)`;\n      ctx.beginPath();\n      ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);\n      ctx.fill();\n    }\n  });\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)}>\n      <canvas ref={ref} aria-hidden className=\"absolute inset-0 -z-10 h-full w-full\" />\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "particles",
+      "network",
+      "canvas",
+      "interactive",
+      "ai"
+    ],
+    "pageTypes": [
+      "landing",
+      "ai-app"
+    ]
+  }
+}

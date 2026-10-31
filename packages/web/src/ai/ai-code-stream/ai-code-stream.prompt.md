@@ -1,0 +1,1 @@
+Build a streaming code window: dark card with traffic-light dots and file name; an interval increments a character count and renders pre-tokenized [text, kind] spans truncated to that count with kind→color classes, plus a pulsing block caret and '● writing' until complete.

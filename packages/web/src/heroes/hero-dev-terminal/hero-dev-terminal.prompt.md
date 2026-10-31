@@ -1,0 +1,1 @@
+Create a dev-tool hero: left — version link, H1, subtitle, a mono command chip that copies to clipboard and flips its icon to a check; right — a terminal window typing the command at 45ms/char then printing ✔ lines every 380ms.

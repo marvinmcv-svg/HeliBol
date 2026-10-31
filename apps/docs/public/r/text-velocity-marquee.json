@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-velocity-marquee",
+  "type": "registry:component",
+  "title": "Scroll Velocity Marquee",
+  "description": "Giant looping text lines that speed up, reverse direction and skew with your scroll velocity.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-velocity-marquee.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-velocity-marquee.tsx",
+      "content": "\"use client\";\nimport { useRef, type RefObject } from \"react\";\nimport { motion, useAnimationFrame, useMotionValue, useScroll, useSpring, useTransform, useVelocity, wrap } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextVelocityMarqueeProps {\n  text: string;\n  /** base speed in % per second */\n  baseVelocity?: number;\n  container?: RefObject<HTMLElement | null>;\n  className?: string;\n}\n\n/** A huge looping line of text whose speed, direction and skew respond to scroll velocity. */\nexport function TextVelocityMarquee({ text, baseVelocity = 4, container, className }: TextVelocityMarqueeProps) {\n  const reduced = useReducedMotion();\n  const base = useMotionValue(0);\n  const { scrollY } = useScroll({ container });\n  const velocity = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 });\n  const factor = useTransform(velocity, [0, 1000], [0, 5], { clamp: false });\n  const skew = useTransform(velocity, [-2000, 2000], [12, -12]);\n  const x = useTransform(base, (v) => `${wrap(-25, -50, v)}%`);\n  const dir = useRef(1);\n\n  useAnimationFrame((_, delta) => {\n    if (reduced) return;\n    let move = dir.current * baseVelocity * (delta / 1000);\n    if (factor.get() < 0) dir.current = -1;\n    else if (factor.get() > 0) dir.current = 1;\n    move += dir.current * move * factor.get();\n    base.set(base.get() + move);\n  });\n\n  return (\n    <div className={cn(\"overflow-hidden whitespace-nowrap\", className)} aria-label={text}>\n      <motion.div aria-hidden className=\"flex w-max gap-10\" style={{ x, skewX: reduced ? 0 : skew }}>\n        {Array.from({ length: 4 }, (_, i) => <span key={i}>{text}</span>)}\n      </motion.div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "marquee",
+      "scroll",
+      "velocity",
+      "skew",
+      "editorial"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

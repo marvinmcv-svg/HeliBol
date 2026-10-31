@@ -1,0 +1,1 @@
+Make click sparks: on pointerdown push N sparks at evenly spaced angles; a rAF loop draws each as a short line moving outward (distance eased cubic-out to 34px, length shrinking from 12px) for 450ms on an overlay canvas, then stops.

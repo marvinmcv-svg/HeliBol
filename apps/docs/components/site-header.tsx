@@ -20,6 +20,7 @@ const nav = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  if (pathname.startsWith("/thumb/")) return null;
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/75 backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-[1440px] items-center gap-4 px-4 sm:px-6">

@@ -1,0 +1,1 @@
+Create a 'thinking' disclosure: header shows the current step with a CSS shimmer (background-clip text) and a chevron; the open list shows completed steps with green checks and the current one with a spinner; when done, the header becomes 'Thought for Ns' and auto-collapses.

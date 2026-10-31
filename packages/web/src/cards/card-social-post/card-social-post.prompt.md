@@ -1,0 +1,1 @@
+Build a social post card: header (avatar, name, @handle · time), text, optional image, and an action row (reply, repost, like, save). Active actions pop scale [1,1.3,1], fill with their color, and counters roll vertically in the direction of change.

@@ -1,0 +1,74 @@
+You are given a task to integrate a block from the **kinetik** motion library into this codebase.
+
+# Footer Reveal (`footer-reveal`)
+
+Sticky reveal footer: the page lifts away like a sheet to uncover a fixed footer with a giant wordmark, rolling links and newsletter.
+
+## What it should do
+Create a sticky-reveal footer: the footer wrapper has a fixed height and clip-path polygon (full rect) so its fixed inner panel only shows when the page above scrolls off; inner panel = link columns with letter-roll hovers, a newsletter morph form and a giant wordmark at the bottom. The content above should have a rounded bottom and shadow.
+
+## Project requirements
+- React 19 + TypeScript, Tailwind CSS v4, shadcn/ui-style CSS variables (`background`, `foreground`, `muted`, `muted-foreground`, `border`, `card`, `primary`, `ring`). If the project lacks shadcn, set it up first (`npx shadcn@latest init`).
+- Animation engine: **css**.
+- Install dependencies: `npm i motion`
+- Put the component at `components/kinetik/footer-reveal.tsx`.
+
+## Built from these kinetik components
+Install them first (each also has its own prompt at `https://marvzkineticlibrary.vercel.app/r/<id>.prompt.md`):
+```bash
+npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/text-roll-hover.json https://marvzkineticlibrary.vercel.app/r/button-subscribe.json
+```
+
+## Non-negotiables
+- **Accessibility:** Real footer landmark and links; no motion needed to reach content.
+- **Performance:** Pure CSS clip-path + fixed positioning trick.
+- Respect `prefers-reduced-motion` (replace movement with opacity or an instant change).
+- Animate only transform / opacity / filter / clip-path. No hard-coded theme colors — use CSS variables so it works in light and dark.
+
+## Source — components/kinetik/footer-reveal.tsx
+```tsx
+"use client";
+import { TextRollHover } from "@/components/kinetik/text-roll-hover";
+import { ButtonSubscribe } from "@/components/kinetik/button-subscribe";
+
+/** The page scrolls away to reveal a fixed footer underneath (sticky reveal), with a giant wordmark and rolling links. */
+export function FooterReveal() {
+  const cols = { Product: ["Components", "Blocks", "Flows", "Pricing"], Company: ["About", "Careers", "Blog", "Contact"], Social: ["X / Twitter", "GitHub", "YouTube", "Dribbble"] };
+  return (
+    <footer className="relative h-[460px] [clip-path:polygon(0_0,100%_0,100%_100%,0_100%)]">
+      <div className="fixed bottom-0 h-[460px] w-full">
+        <div className="flex h-full flex-col justify-between bg-zinc-950 p-8 text-white">
+          <div className="grid gap-8 sm:grid-cols-4">
+            {Object.entries(cols).map(([h, ls]) => (
+              <div key={h}><p className="mb-3 text-xs tracking-widest text-white/40 uppercase">{h}</p><ul className="space-y-1.5">{ls.map((l) => <li key={l}><a href="#" className="text-sm"><TextRollHover>{l}</TextRollHover></a></li>)}</ul></div>
+            ))}
+            <div><p className="mb-3 text-xs tracking-widest text-white/40 uppercase">Newsletter</p><ButtonSubscribe className="[&]:border-white/20 [&]:bg-white/5" /></div>
+          </div>
+          <div className="flex items-end justify-between gap-4"><p className="text-[16vw] leading-[0.8] font-black tracking-tighter sm:text-[12vw]">kinetik</p><p className="mb-2 text-xs text-white/40">© 2026</p></div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+```
+
+## Usage example
+```tsx
+"use client";
+import { DemoScroller } from "@web/_demo";
+import { FooterReveal } from "@/components/kinetik/footer-reveal";
+export default function Demo() {
+  return (
+    <DemoScroller className="[transform:translateZ(0)]">
+      <div className="relative z-10 grid h-[110cqh] place-items-center rounded-b-[2rem] bg-background shadow-2xl"><p className="text-muted-foreground">Scroll to the end of the page ↓</p></div>
+      <FooterReveal />
+    </DemoScroller>
+  );
+}
+```
+
+## Steps
+1. Install the dependencies above.
+2. Create the files exactly as given, fixing import aliases if the project doesn't use `@/`.
+3. Drop the usage example into a page and adapt copy/colors to the project's design system.
+4. Verify: toggle "Reduce motion" in OS settings — the component must still be fully usable.

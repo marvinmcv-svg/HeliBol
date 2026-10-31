@@ -1,0 +1,1 @@
+Create an expanding search: a pill form whose width springs 44↔300px; the icon button opens it (or '/' globally), input autofocuses, a clear button appears with text, blur on empty collapses, Esc clears and closes.

@@ -1,0 +1,1 @@
+Create a newsletter pill (input + Subscribe button) as a Motion `layout` form; on valid submit show a busy state, then morph the pill width 360→230px into a green confirmation with a check that spins in; role=status.

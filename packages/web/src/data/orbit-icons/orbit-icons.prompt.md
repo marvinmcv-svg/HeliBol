@@ -1,0 +1,1 @@
+Build orbiting icons: each orbit is a dashed circle rotating 360° linearly (optionally reversed); icons are placed around its circumference by angle and counter-rotate at the same speed so they stay upright; a solid logo tile in the middle.

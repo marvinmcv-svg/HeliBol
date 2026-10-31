@@ -1,0 +1,1 @@
+Build an image comparison: stack two images; clip the top one with inset(0 (100−pos)% 0 0); pointer down/move (with pointer capture) sets pos from the x position; a vertical line + round handle (role=slider, ←/→ by 5%) sits at pos.

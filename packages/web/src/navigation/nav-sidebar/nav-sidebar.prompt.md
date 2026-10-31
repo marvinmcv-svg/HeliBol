@@ -1,0 +1,1 @@
+Build a collapsible sidebar: width springs 232↔68px; labels fade/slide (delayed on expand, instant on collapse); active item highlighted by a layoutId pill; badges move to the icon corner when collapsed; toggle button rotates its icon 180°.

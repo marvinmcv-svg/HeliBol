@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-flip-words",
+  "type": "registry:component",
+  "title": "3D Flip Words",
+  "description": "The next word's letters flip down into place in 3D, staggered left-to-right, while the old word blurs away.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-flip-words.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-flip-words.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextFlipWordsProps {\n  words: string[];\n  interval?: number;\n  className?: string;\n}\n\n/** Each letter of the next word flips down into place in 3D, staggered left-to-right. */\nexport function TextFlipWords({ words, interval = 2600, className }: TextFlipWordsProps) {\n  const [i, setI] = useState(0);\n  const reduced = useReducedMotion();\n  useEffect(() => {\n    const t = setInterval(() => setI((n) => (n + 1) % words.length), interval);\n    return () => clearInterval(t);\n  }, [words.length, interval]);\n  const word = words[i];\n  return (\n    <span className={cn(\"relative inline-block [perspective:600px]\", className)}>\n      <span className=\"sr-only\">{words.join(\", \")}</span>\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        <motion.span key={word} aria-hidden className=\"inline-block whitespace-nowrap\" exit={{ opacity: 0, y: -16, filter: \"blur(6px)\", transition: { duration: 0.25 } }}>\n          {Array.from(word).map((ch, n) => (\n            <motion.span\n              key={n}\n              className=\"inline-block origin-top whitespace-pre [backface-visibility:hidden]\"\n              initial={reduced ? { opacity: 0 } : { rotateX: -100, opacity: 0, y: -6 }}\n              animate={{ rotateX: 0, opacity: 1, y: 0 }}\n              transition={{ delay: n * 0.04, type: \"spring\", stiffness: 300, damping: 22 }}\n            >\n              {ch}\n            </motion.span>\n          ))}\n        </motion.span>\n      </AnimatePresence>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "rotating",
+      "3d",
+      "headline",
+      "hero"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

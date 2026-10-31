@@ -1,0 +1,1 @@
+Build a CSS iPhone mockup: 9:19.5 aspect, titanium gradient outer bezel with drop shadow, side buttons as small bars, black inner bezel, rounded screen that clips children, and a pill-shaped Dynamic Island overlay.

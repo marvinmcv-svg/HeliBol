@@ -1,0 +1,1 @@
+Build a live ticker card: keep a rolling 40-point series updated every 900ms; draw an area + polyline sparkline green or red by overall delta; the price text flashes a tinted background that fades out on each change; ▲/▼ percentage badge.

@@ -1,0 +1,1 @@
+Create a now-playing card: cover art inside a vinyl disc rotating while playing, 4 equalizer bars with looping heights, progress bar and elapsed/remaining time ticking each second, previous/next buttons and a play button whose icon morphs triangle↔bars by animating path `d`.

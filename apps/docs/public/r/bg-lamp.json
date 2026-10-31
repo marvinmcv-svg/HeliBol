@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-lamp",
+  "type": "registry:component",
+  "title": "Lamp Header",
+  "description": "Two conic light cones switch on from a glowing bar and illuminate the section heading — the Linear-style lamp.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-lamp.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-lamp.tsx",
+      "content": "\"use client\";\nimport type { ReactNode } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/** A cone of light switches on from a glowing bar at the top and illuminates the heading below (Linear-style section header). */\nexport function BgLamp({ children, color = \"#22d3ee\", className }: { children?: ReactNode; color?: string; className?: string }) {\n  const reduced = useReducedMotion();\n  const t = { duration: reduced ? 0 : 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const };\n  return (\n    <div className={cn(\"relative isolate flex flex-col items-center overflow-hidden bg-[#06080d]\", className)}>\n      <div aria-hidden className=\"relative h-56 w-full\">\n        <motion.div initial={{ opacity: 0.4, width: \"8rem\" }} whileInView={{ opacity: 1, width: \"26rem\" }} viewport={{ once: true }} transition={t} className=\"absolute top-0 right-1/2 h-56 [mask-image:linear-gradient(to_left,#000,transparent)]\" style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${color}, transparent, transparent)` }} />\n        <motion.div initial={{ opacity: 0.4, width: \"8rem\" }} whileInView={{ opacity: 1, width: \"26rem\" }} viewport={{ once: true }} transition={t} className=\"absolute top-0 left-1/2 h-56 [mask-image:linear-gradient(to_right,#000,transparent)]\" style={{ backgroundImage: `conic-gradient(from 290deg at center top, transparent, transparent, ${color})` }} />\n        <div className=\"absolute inset-x-0 top-24 h-40 bg-[#06080d] blur-2xl\" />\n        <motion.div initial={{ width: \"6rem\" }} whileInView={{ width: \"18rem\" }} viewport={{ once: true }} transition={t} className=\"absolute top-0 left-1/2 h-36 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-3xl\" style={{ background: color }} />\n        <motion.div initial={{ width: \"8rem\" }} whileInView={{ width: \"26rem\" }} viewport={{ once: true }} transition={t} className=\"absolute top-0 left-1/2 h-0.5 -translate-x-1/2\" style={{ background: color, boxShadow: `0 0 18px ${color}` }} />\n      </div>\n      <div className=\"relative -mt-24 px-6 pb-12 text-center\">{children}</div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "lamp",
+      "light",
+      "section header",
+      "dark"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

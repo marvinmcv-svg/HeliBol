@@ -1,0 +1,1 @@
+Build an animated select: trigger shows the value with a chevron that flips; the listbox scales Y from .85 (origin top) with a snappy spring, options stagger 25ms, a layoutId highlight follows hover/arrow keys, and the selected option shows a check.

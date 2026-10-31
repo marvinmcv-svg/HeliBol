@@ -1,0 +1,1 @@
+Create an animated terminal window (traffic lights, title): a step machine types each `cmd` line at 40ms/char with a block caret, pauses 350ms, then reveals each output line after 220ms (slide-in), with tone colors (ok/muted/warn).

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-stroke-draw",
+  "type": "registry:component",
+  "title": "Stroke Draw Text",
+  "description": "The outline of a word draws itself on view, then the fill floods in — a signature/logo reveal.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-stroke-draw.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-stroke-draw.tsx",
+      "content": "\"use client\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextStrokeDrawProps {\n  children: string;\n  /** SVG font size in user units */\n  fontSize?: number;\n  duration?: number;\n  className?: string;\n}\n\n/** The outline of the word draws itself, then the fill floods in. */\nexport function TextStrokeDraw({ children, fontSize = 96, duration = 2.2, className }: TextStrokeDrawProps) {\n  const reduced = useReducedMotion();\n  const width = children.length * fontSize * 0.62;\n  return (\n    <svg viewBox={`0 0 ${width} ${fontSize * 1.25}`} className={cn(\"h-auto w-full max-w-full overflow-visible\", className)} role=\"img\" aria-label={children}>\n      <motion.text\n        x=\"50%\"\n        y=\"52%\"\n        dominantBaseline=\"middle\"\n        textAnchor=\"middle\"\n        fontSize={fontSize}\n        fontWeight={800}\n        className=\"fill-current stroke-current\"\n        strokeWidth={1.4}\n        initial={reduced ? false : { strokeDasharray: 600, strokeDashoffset: 600, fillOpacity: 0 }}\n        whileInView={{ strokeDashoffset: 0, fillOpacity: 1 }}\n        viewport={{ once: true }}\n        transition={{ strokeDashoffset: { duration, ease: [0.65, 0, 0.35, 1] }, fillOpacity: { delay: duration * 0.75, duration: 0.8 } }}\n        style={{ letterSpacing: \"-0.02em\" }}\n      >\n        {children}\n      </motion.text>\n    </svg>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "svg",
+      "draw",
+      "logo",
+      "reveal",
+      "outline"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

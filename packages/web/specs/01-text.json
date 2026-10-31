@@ -1,0 +1,611 @@
+[
+ {
+  "id": "text-morph",
+  "name": "Morphing Text",
+  "category": "text",
+  "engine": "svg",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 280,
+  "description": "Words melt into each other: two layers cross-blur while an SVG threshold filter fuses their edges into liquid letterforms.",
+  "tags": [
+   "morph",
+   "liquid",
+   "hero",
+   "rotating",
+   "svg filter"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "Magic UI Morphing Text",
+   "CodePen gooey text"
+  ],
+  "a11y": "All words exposed once via aria-label; visual layers are aria-hidden. Reduced motion: words swap instantly.",
+  "perf": "One rAF loop updating two filters; pauses with the tab (rAF).",
+  "props": [
+   [
+    "words",
+    "string[]",
+    "",
+    "Words to cycle."
+   ],
+   [
+    "morphTime",
+    "number",
+    "1",
+    "Seconds per morph."
+   ],
+   [
+    "holdTime",
+    "number",
+    "1.6",
+    "Seconds each word holds."
+   ]
+  ],
+  "prompt": "Create liquid morphing text: two stacked spans (current/next word) whose opacity and blur cross-fade over `morphTime` (blur = 8/f \u2212 8 px, opacity = f^0.4), wrapped in an SVG `feColorMatrix` alpha-threshold filter (`0 0 0 255 -140`) so the blurred overlap fuses into gooey letters. Hold each word `holdTime`. rAF loop; reduced motion swaps words with no morph."
+ },
+ {
+  "id": "text-circular",
+  "name": "Circular Text Badge",
+  "category": "text",
+  "engine": "svg",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 260,
+  "description": "Text set on a circle with an SVG textPath slowly spins around a center icon; the center pops on hover.",
+  "tags": [
+   "badge",
+   "circular",
+   "spinning",
+   "portfolio",
+   "cta"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "React Bits Circular Text",
+   "agency 'available for work' badges"
+  ],
+  "a11y": "Wrapper has aria-label with the text; the spinning SVG is aria-hidden. Reduced motion: static ring.",
+  "perf": "Single rotating SVG (transform only).",
+  "props": [
+   [
+    "text",
+    "string",
+    "",
+    "Text around the circle (end with a separator)."
+   ],
+   [
+    "duration",
+    "number",
+    "14",
+    "Seconds per revolution."
+   ],
+   [
+    "size",
+    "number",
+    "160",
+    "Diameter in px."
+   ],
+   [
+    "reverse",
+    "boolean",
+    "false",
+    "Spin counter-clockwise."
+   ]
+  ],
+  "prompt": "Build a circular text badge: an SVG circle path (`M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0`) with uppercase tracked text on a `<textPath>` (textLength fitted), the SVG rotating 360\u00b0 linearly forever with Motion; a center slot for an icon that scales 1.1 and rotates \u221212\u00b0 with a back-out ease on hover."
+ },
+ {
+  "id": "text-flip-words",
+  "name": "3D Flip Words",
+  "category": "text",
+  "engine": "motion",
+  "priority": "P2",
+  "previewHeight": 260,
+  "description": "The next word's letters flip down into place in 3D, staggered left-to-right, while the old word blurs away.",
+  "tags": [
+   "rotating",
+   "3d",
+   "headline",
+   "hero"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "Aceternity Flip Words"
+  ],
+  "a11y": "sr-only list of all words; animated letters aria-hidden. Reduced motion: fade.",
+  "perf": "Per-letter transforms, one word mounted at a time.",
+  "props": [
+   [
+    "words",
+    "string[]",
+    "",
+    "Words to cycle."
+   ],
+   [
+    "interval",
+    "number",
+    "2600",
+    "ms per word."
+   ]
+  ],
+  "prompt": "Create flip words: AnimatePresence popLayout keyed by word; each letter is an inline-block with `transform-origin: top` animating rotateX \u2212100\u00b0\u21920, y \u22126\u21920, opacity 0\u21921 with a spring (300/22) staggered 40ms; exit the old word with y \u221216 and blur 6px. Parent has perspective 600px."
+ },
+ {
+  "id": "text-velocity-marquee",
+  "name": "Scroll Velocity Marquee",
+  "category": "text",
+  "engine": "motion",
+  "priority": "P2",
+  "previewHeight": 380,
+  "description": "Giant looping text lines that speed up, reverse direction and skew with your scroll velocity.",
+  "tags": [
+   "marquee",
+   "scroll",
+   "velocity",
+   "skew",
+   "editorial"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "Magic UI Scroll Based Velocity",
+   "Motion docs velocity example"
+  ],
+  "a11y": "aria-label holds the text once; repeated copies are aria-hidden. Reduced motion: static line.",
+  "perf": "useAnimationFrame + springs; transforms only.",
+  "props": [
+   [
+    "text",
+    "string",
+    "",
+    "Text to repeat."
+   ],
+   [
+    "baseVelocity",
+    "number",
+    "4",
+    "Base speed (% per second, negative reverses)."
+   ],
+   [
+    "container",
+    "RefObject<HTMLElement>",
+    "",
+    "Custom scroll container."
+   ]
+  ],
+  "prompt": "Build a scroll-velocity marquee with Motion: `useScroll` \u2192 `useVelocity` \u2192 `useSpring(damping 50, stiffness 400)` \u2192 factor via useTransform [0,1000]\u2192[0,5]. In `useAnimationFrame` advance a base value by baseVelocity\u00b7dt, flip direction with the velocity sign and multiply by the factor; x = wrap(\u221225%, \u221250%, base) over 4 repeated copies. Skew X \u00b112\u00b0 from velocity."
+ },
+ {
+  "id": "text-wave",
+  "name": "Wave Letters",
+  "category": "text",
+  "engine": "motion",
+  "priority": "P2",
+  "previewHeight": 260,
+  "description": "Letters ripple upward one after another like a stadium wave \u2014 on hover/focus or continuously.",
+  "tags": [
+   "hover",
+   "nav",
+   "playful",
+   "letters"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "Animata jumping text"
+  ],
+  "a11y": "aria-label with the full word; hover variant also triggers on keyboard focus. Reduced motion: still.",
+  "perf": "Per-letter transform keyframes; remount-by-key to replay.",
+  "props": [
+   [
+    "children",
+    "string",
+    "",
+    "Text."
+   ],
+   [
+    "trigger",
+    "\"hover\" | \"loop\"",
+    "\"hover\"",
+    "When to wave."
+   ],
+   [
+    "height",
+    "number",
+    "10",
+    "Jump height (px)."
+   ]
+  ],
+  "prompt": "Create wave text: split into inline-block letters; on pointerenter/focus increment a key so each letter replays `y: [0, \u2212height, 0]` (500ms back-out) delayed 35ms \u00d7 index; loop mode repeats with a 1.2s pause."
+ },
+ {
+  "id": "text-glitch",
+  "name": "Glitch Text",
+  "category": "text",
+  "engine": "css",
+  "deps": [],
+  "priority": "P3",
+  "previewHeight": 240,
+  "description": "Cyan/red channel-split glitch bursts with sliced clip-paths, pure CSS, spaced out to stay epilepsy-safe.",
+  "tags": [
+   "glitch",
+   "cyberpunk",
+   "error",
+   "css-only"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "React Bits Glitch Text",
+   "Codrops glitch effects"
+  ],
+  "a11y": "Bursts occupy ~10% of a \u22652s cycle \u2014 well under WCAG 2.3.1's 3 flashes/s. Pseudo layers hidden under reduced motion.",
+  "perf": "Two pseudo-elements, stepped keyframes; 0 KB JS.",
+  "props": [
+   [
+    "every",
+    "number",
+    "3",
+    "Seconds between bursts."
+   ]
+  ],
+  "prompt": "Create a CSS glitch: `::before`/`::after` duplicate the text via `content: attr(data-text)`, colored cyan and red, idle with `clip-path: inset(0 0 100% 0)`; in the last 12% of a cycle (steps(1)) jump through 3 random slices with \u00b13px translations. Faster on hover. Hidden under reduced motion."
+ },
+ {
+  "id": "text-roll-hover",
+  "name": "Letter Roll Hover",
+  "category": "text",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 300,
+  "description": "Every letter rolls up to reveal a duplicate of itself, staggered from start, center or end \u2014 the agency nav link hover.",
+  "tags": [
+   "hover",
+   "nav",
+   "links",
+   "css-only",
+   "agency"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "Fancy Components letter swap",
+   "Awwwards nav links"
+  ],
+  "a11y": "aria-label keeps the word; works on :focus-visible and when the parent link/button is hovered.",
+  "perf": "CSS translate transitions only.",
+  "props": [
+   [
+    "children",
+    "string",
+    "",
+    "Text."
+   ],
+   [
+    "from",
+    "\"start\" | \"center\" | \"end\"",
+    "\"start\"",
+    "Stagger origin."
+   ],
+   [
+    "stagger",
+    "number",
+    "0.025",
+    "Seconds between letters."
+   ]
+  ],
+  "prompt": "Build a CSS letter-roll hover: each letter is a 2-row inline-flex column (letter + duplicate) inside an overflow-hidden line; on hover/focus-visible (or parent a/button hover) translate each column \u221250% with `cubic-bezier(.76,0,.24,1)` 450ms, delayed by a per-letter CSS var computed from start/center/end distance."
+ },
+ {
+  "id": "text-split-flap",
+  "name": "Split-Flap Board",
+  "category": "text",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 300,
+  "description": "Airport departure board: every cell flaps through the character set until it lands on its target text.",
+  "tags": [
+   "split flap",
+   "airport",
+   "retro",
+   "ticker",
+   "board"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard"
+  ],
+  "inspiration": [
+   "Solari boards",
+   "React Bits Split Flap Text"
+  ],
+  "a11y": "Exposes the final value via aria-label; cells aria-hidden. Reduced motion: shows the value immediately.",
+  "perf": "One interval per board; text-only updates.",
+  "props": [
+   [
+    "value",
+    "string",
+    "",
+    "Target text."
+   ],
+   [
+    "speed",
+    "number",
+    "45",
+    "ms per flap step."
+   ]
+  ],
+  "prompt": "Create a split-flap display: each character is a dark rounded cell with a horizontal seam line; an interval advances every unsettled cell to the next char in ` ABC\u2026Z0-9:-.` until it equals its target, then stops. Monospace amber text."
+ },
+ {
+  "id": "text-sparkles",
+  "name": "Sparkle Text",
+  "category": "text",
+  "engine": "motion",
+  "priority": "P2",
+  "previewHeight": 240,
+  "description": "Four-point stars twinkle in and out around a word \u2014 for 'magic' moments, upgrades and AI features.",
+  "tags": [
+   "sparkles",
+   "magic",
+   "ai",
+   "highlight"
+  ],
+  "pageTypes": [
+   "landing",
+   "pricing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "Josh Comeau sparkles",
+   "Magic UI Sparkles Text"
+  ],
+  "a11y": "Sparkles are aria-hidden SVGs; none rendered under reduced motion.",
+  "perf": "~8 small SVGs; one replaced every 420ms.",
+  "props": [
+   [
+    "colors",
+    "string[]",
+    "",
+    "Sparkle colors."
+   ],
+   [
+    "count",
+    "number",
+    "8",
+    "Sparkles alive at once."
+   ]
+  ],
+  "prompt": "Create sparkle text: keep a rolling array of N sparkles (random x/y %, size 8\u201320px, color); every 420ms drop the oldest and add one. Each is an SVG four-point star that scales 0\u21921 rotating 0\u219290\u00b0, then exits scaling to 0 rotating to 180\u00b0 (AnimatePresence)."
+ },
+ {
+  "id": "text-variable-proximity",
+  "name": "Variable Weight Proximity",
+  "category": "text",
+  "engine": "js",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 260,
+  "description": "Letters thicken through a variable font's weight axis and lift slightly as the cursor approaches them.",
+  "tags": [
+   "variable font",
+   "cursor",
+   "typography",
+   "proximity"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "React Bits Variable Proximity",
+   "Fancy variable-font cursor proximity"
+  ],
+  "a11y": "Text stays real (aria-label); effect off on touch and reduced motion.",
+  "perf": "One rAF loop reading rects of letters; keep to headlines.",
+  "props": [
+   [
+    "radius",
+    "number",
+    "140",
+    "Influence radius (px)."
+   ],
+   [
+    "minWeight / maxWeight",
+    "number",
+    "200 / 900",
+    "Weight range."
+   ]
+  ],
+  "prompt": "Build cursor-proximity variable-font text: track the pointer; in a rAF loop, for each letter compute distance to its center, t = max(0, 1 \u2212 d/radius), set `font-variation-settings: \"wght\" min + (max\u2212min)\u00b7t\u00b2` and translate \u22124t px. Requires a variable font (e.g. Geist, Inter var)."
+ },
+ {
+  "id": "text-falling",
+  "name": "Falling Letters",
+  "category": "text",
+  "engine": "js",
+  "deps": [],
+  "priority": "P3",
+  "previewHeight": 320,
+  "description": "Click the headline and its letters drop with gravity, bounce off the floor and tumble; click again to spring them back.",
+  "tags": [
+   "physics",
+   "gravity",
+   "playful",
+   "easter egg"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "React Bits Falling Text",
+   "Fancy gravity"
+  ],
+  "a11y": "It's a real button with a descriptive label; reduced motion just toggles positions.",
+  "perf": "Tiny custom integrator; stops when settled.",
+  "props": [
+   [
+    "gravity",
+    "number",
+    "2400",
+    "px/s\u00b2."
+   ]
+  ],
+  "prompt": "Create falling text with a tiny physics loop: on click give each letter random vy (\u2212200\u2026\u2212500), vx (\u00b1130) and spin; integrate gravity each frame, bounce at the container floor with 0.38 restitution and friction, write translate/rotate; stop when settled. A second click springs all letters back."
+ },
+ {
+  "id": "text-loop-lines",
+  "name": "Line Loop",
+  "category": "text",
+  "engine": "motion",
+  "priority": "P2",
+  "previewHeight": 260,
+  "description": "Cycles whole lines or nodes vertically through a masked slot \u2014 status messages, rotating taglines, mini tickers.",
+  "tags": [
+   "status",
+   "rotating",
+   "ticker",
+   "loop"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "landing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "Motion Primitives Text Loop"
+  ],
+  "a11y": "aria-live=polite so updates are announced; reduced motion crossfades.",
+  "perf": "One item mounted at a time plus the exiting one.",
+  "props": [
+   [
+    "items",
+    "ReactNode[]",
+    "",
+    "Lines to cycle."
+   ],
+   [
+    "interval",
+    "number",
+    "2400",
+    "ms per line."
+   ],
+   [
+    "direction",
+    "\"up\" | \"down\"",
+    "\"up\"",
+    "Travel direction."
+   ]
+  ],
+  "prompt": "Build a vertical text loop: an overflow-hidden slot with AnimatePresence popLayout keyed by index; items enter from y \u00b1100% and exit to \u2213100% with a spring (260/30), cycling on an interval. aria-live polite."
+ },
+ {
+  "id": "text-stroke-draw",
+  "name": "Stroke Draw Text",
+  "category": "text",
+  "engine": "svg",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 300,
+  "description": "The outline of a word draws itself on view, then the fill floods in \u2014 a signature/logo reveal.",
+  "tags": [
+   "svg",
+   "draw",
+   "logo",
+   "reveal",
+   "outline"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "Animata text border animation",
+   "Apple 'hello'"
+  ],
+  "a11y": "SVG has role=img and aria-label; reduced motion renders filled text.",
+  "perf": "stroke-dashoffset + fill-opacity on one SVG text.",
+  "props": [
+   [
+    "fontSize",
+    "number",
+    "96",
+    "SVG font size."
+   ],
+   [
+    "duration",
+    "number",
+    "2.2",
+    "Draw seconds."
+   ]
+  ],
+  "prompt": "Create stroke-draw text: SVG <text> with stroke = fill = currentColor, strokeDasharray 600 \u2192 strokeDashoffset 600\u21920 over `duration` (ease-in-out) when in view, then fill-opacity 0\u21921 starting at 75% of the draw."
+ },
+ {
+  "id": "text-odometer",
+  "name": "Odometer Number",
+  "category": "text",
+  "engine": "motion",
+  "priority": "P1",
+  "previewHeight": 280,
+  "description": "Each digit is a vertical reel that springs to its new number \u2014 the slot-machine counter for live stats and prices.",
+  "tags": [
+   "number",
+   "counter",
+   "odometer",
+   "live",
+   "stats",
+   "pricing"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "landing",
+   "pricing"
+  ],
+  "inspiration": [
+   "Motion Primitives Sliding Number",
+   "NumberFlow"
+  ],
+  "a11y": "aria-label holds the formatted value; reels aria-hidden. Reduced motion: instant.",
+  "perf": "One transform per digit; keyed by place value so unchanged digits don't move.",
+  "props": [
+   [
+    "value",
+    "number",
+    "",
+    "Number to show."
+   ],
+   [
+    "format",
+    "Intl.NumberFormatOptions",
+    "",
+    "Formatting (currency, compact\u2026)."
+   ]
+  ],
+  "prompt": "Build an odometer: format the value with Intl.NumberFormat; render separators as text and each digit as a 1em-tall overflow-hidden window containing a 0\u20139 column translated to \u2212d\u00d710% with a spring (180/22). Key digits by place from the right so only changed reels move."
+ }
+]

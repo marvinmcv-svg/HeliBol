@@ -1,0 +1,1 @@
+Create a folder: back panel with a tab, up to 3 papers inside, and a front flap with transform-origin bottom. Open → flap rotateX −32°, papers rise (−48px − i·6) and fan (x (i−1)·36, rotate (i−1)·10°) with staggered springs.

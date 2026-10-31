@@ -1,0 +1,1 @@
+Build a spotlight grid hero: 56px line grid masked with a radial fade, a 500px brand-colored radial spotlight positioned by --x/--y CSS vars from pointermove, avatar stack + '12,000+' proof, gradient-clipped H1 and two CTAs that enter with staggered y.

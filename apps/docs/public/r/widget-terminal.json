@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-terminal",
+  "type": "registry:component",
+  "title": "Animated Terminal",
+  "description": "Terminal that types its commands character by character and reveals output lines with a beat in between.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/widget-terminal.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/widget-terminal.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport type TermLine = { cmd: string } | { out: string; tone?: \"ok\" | \"muted\" | \"warn\" };\n\n/** Terminal that types its commands character by character and reveals output lines with a little delay. */\nexport function WidgetTerminal({ lines, title = \"zsh — kinetik\", className }: { lines: TermLine[]; title?: string; className?: string }) {\n  const reduced = useReducedMotion();\n  const [step, setStep] = useState(reduced ? lines.length : 0);\n  const [chars, setChars] = useState(0);\n  useEffect(() => {\n    if (reduced) return setStep(lines.length);\n    if (step >= lines.length) return;\n    const line = lines[step];\n    if (\"cmd\" in line) {\n      if (chars < line.cmd.length) {\n        const t = setTimeout(() => setChars((c) => c + 1), 40);\n        return () => clearTimeout(t);\n      }\n      const t = setTimeout(() => (setStep((s) => s + 1), setChars(0)), 350);\n      return () => clearTimeout(t);\n    }\n    const t = setTimeout(() => setStep((s) => s + 1), 220);\n    return () => clearTimeout(t);\n  }, [step, chars, lines, reduced]);\n  const tone = { ok: \"text-emerald-400\", muted: \"text-zinc-500\", warn: \"text-amber-400\" };\n  return (\n    <div className={cn(\"overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 font-mono text-[13px] text-zinc-200 shadow-2xl\", className)}>\n      <div className=\"flex items-center gap-1.5 border-b border-white/10 px-4 py-2.5\">\n        <span className=\"size-3 rounded-full bg-rose-500\" /><span className=\"size-3 rounded-full bg-amber-400\" /><span className=\"size-3 rounded-full bg-emerald-500\" />\n        <span className=\"ml-3 text-xs text-zinc-500\">{title}</span>\n      </div>\n      <div className=\"space-y-1 p-4\" role=\"log\" aria-label=\"Terminal output\">\n        {lines.slice(0, step + 1).map((l, i) =>\n          \"cmd\" in l ? (\n            <p key={i}><span className=\"text-violet-400\">❯</span> {i === step ? l.cmd.slice(0, chars) : l.cmd}{i === step && <span className=\"ml-px inline-block h-4 w-2 translate-y-0.5 animate-pulse bg-zinc-300\" />}</p>\n          ) : i < step || (i === step && reduced) ? (\n            <motion.p key={i} initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }} className={l.tone ? tone[l.tone] : undefined}>{l.out}</motion.p>\n          ) : null,\n        )}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "widgets"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "terminal",
+      "cli",
+      "install",
+      "dev tools",
+      "typing"
+    ],
+    "pageTypes": [
+      "landing",
+      "docs"
+    ]
+  }
+}

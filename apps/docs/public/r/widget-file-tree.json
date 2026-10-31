@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-file-tree",
+  "type": "registry:component",
+  "title": "File Tree",
+  "description": "Collapsible file tree with smooth height animation, rotating chevrons and open/closed folder icons.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/widget-file-tree.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/widget-file-tree.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ChevronRight, FileCode2, Folder, FolderOpen } from \"lucide-react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface TreeNode {\n  name: string;\n  children?: TreeNode[];\n}\n\nfunction Node({ node, depth, selected, onSelect }: { node: TreeNode; depth: number; selected: string; onSelect: (p: string) => void }) {\n  const [open, setOpen] = useState(depth < 1);\n  const isDir = !!node.children;\n  return (\n    <li role=\"treeitem\" aria-expanded={isDir ? open : undefined} aria-selected={selected === node.name}>\n      <button\n        onClick={() => (isDir ? setOpen((o) => !o) : onSelect(node.name))}\n        className={cn(\"relative flex w-full items-center gap-1.5 rounded-md py-1 pr-2 text-left text-sm hover:bg-accent\", selected === node.name && \"bg-accent font-medium\")}\n        style={{ paddingLeft: depth * 14 + 6 }}\n      >\n        {isDir ? <motion.span animate={{ rotate: open ? 90 : 0 }} transition={spring.snappy}><ChevronRight className=\"size-3.5 text-muted-foreground\" /></motion.span> : <span className=\"w-3.5\" />}\n        {isDir ? (open ? <FolderOpen className=\"size-4 text-sky-500\" /> : <Folder className=\"size-4 text-sky-500\" />) : <FileCode2 className=\"size-4 text-muted-foreground\" />}\n        {node.name}\n      </button>\n      <AnimatePresence initial={false}>\n        {isDir && open && (\n          <motion.ul role=\"group\" initial={{ height: 0, opacity: 0 }} animate={{ height: \"auto\", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: [0.2, 0, 0, 1] }} className=\"overflow-hidden\">\n            {node.children!.map((c) => <Node key={c.name} node={c} depth={depth + 1} selected={selected} onSelect={onSelect} />)}\n          </motion.ul>\n        )}\n      </AnimatePresence>\n    </li>\n  );\n}\n\n/** Collapsible file tree with smooth height animation, rotating chevrons and open/closed folder icons. */\nexport function WidgetFileTree({ tree, className }: { tree: TreeNode[]; className?: string }) {\n  const [selected, setSelected] = useState(\"\");\n  return (\n    <ul role=\"tree\" aria-label=\"Files\" className={cn(\"w-64 rounded-2xl border border-border bg-card p-2\", className)}>\n      {tree.map((n) => <Node key={n.name} node={n} depth={0} selected={selected} onSelect={setSelected} />)}\n    </ul>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "widgets"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "file tree",
+      "explorer",
+      "docs",
+      "ide"
+    ],
+    "pageTypes": [
+      "docs",
+      "dashboard"
+    ]
+  }
+}

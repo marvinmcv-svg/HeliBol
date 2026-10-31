@@ -1,0 +1,1 @@
+Write a minimal WebGL background: one full-screen triangle, a fragment shader that domain-warps uv·3 with 4 iterations of sin/cos offsets over time, mixes three uniform colors by sin/cos of the warped coords and adds hash-noise grain. Pause when off-screen; DPR ≤ 1.5.

@@ -1,0 +1,1 @@
+Build an AI composer card: textarea that auto-grows to 200px, attachment chips that pop in/out (AnimatePresence + layout), a model select, and a circular send button that swaps (rotate+scale) to a filled-square Stop icon while a promise is pending. Enter sends, Shift+Enter inserts a newline. Focus-within ring.

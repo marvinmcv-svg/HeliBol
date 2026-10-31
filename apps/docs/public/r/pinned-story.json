@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pinned-story",
+  "type": "registry:component",
+  "title": "Pinned Scroll Story",
+  "description": "Apple/Stripe-style story: text steps scroll by on the left while the sticky visual on the right swaps for the active step.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/pinned-story.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/pinned-story.tsx",
+      "content": "\"use client\";\nimport { useRef, useState, type ReactNode, type RefObject } from \"react\";\nimport { AnimatePresence, motion, useMotionValueEvent, useScroll } from \"motion/react\";\nimport { cn } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\nexport interface StoryStep {\n  title: string;\n  body: string;\n  visual: ReactNode;\n}\n\n/** Apple/Stripe pinned story: text steps scroll by on the left while the sticky visual on the right swaps per active step. */\nexport function PinnedStory({ steps, container, className }: { steps: StoryStep[]; container?: RefObject<HTMLElement | null>; className?: string }) {\n  const ref = useRef<HTMLDivElement>(null);\n  const [active, setActive] = useState(0);\n  const { scrollYProgress } = useScroll({ target: ref, container, offset: [\"start center\", \"end center\"] });\n  useMotionValueEvent(scrollYProgress, \"change\", (p) => setActive(Math.min(steps.length - 1, Math.max(0, Math.floor(p * steps.length)))));\n  return (\n    <div ref={ref} className={cn(\"relative grid grid-cols-2 gap-8 px-6\", className)}>\n      <div>\n        {steps.map((s, i) => (\n          <div key={s.title} className=\"flex h-[70cqh] items-center\">\n            <motion.div animate={{ opacity: active === i ? 1 : 0.25, x: active === i ? 0 : -6 }} transition={spring.smooth}>\n              <p className=\"font-mono text-xs text-brand\">0{i + 1}</p>\n              <h3 className=\"mt-1 text-2xl font-semibold tracking-tight\">{s.title}</h3>\n              <p className=\"mt-2 text-sm text-muted-foreground\">{s.body}</p>\n            </motion.div>\n          </div>\n        ))}\n      </div>\n      <div className=\"relative\">\n        <div className=\"sticky top-[15cqh] h-[70cqh]\">\n          <AnimatePresence mode=\"popLayout\" initial={false}>\n            <motion.div key={active} initial={{ opacity: 0, scale: 0.94, filter: \"blur(6px)\" }} animate={{ opacity: 1, scale: 1, filter: \"blur(0px)\" }} exit={{ opacity: 0, scale: 1.04, filter: \"blur(6px)\" }} transition={spring.smooth} className=\"h-full overflow-hidden rounded-3xl\">\n              {steps[active].visual}\n            </motion.div>\n          </AnimatePresence>\n          <div className=\"absolute top-1/2 -right-4 flex -translate-y-1/2 flex-col gap-1.5\" aria-hidden>\n            {steps.map((_, i) => <motion.span key={i} className=\"w-1 rounded-full bg-foreground\" animate={{ height: active === i ? 20 : 6, opacity: active === i ? 1 : 0.3 }} />)}\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "scroll",
+      "sticky",
+      "story",
+      "features",
+      "steps"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

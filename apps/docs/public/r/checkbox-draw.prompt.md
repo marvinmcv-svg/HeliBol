@@ -223,6 +223,100 @@ export function useReplayKey() {
   const [key, setKey] = useState(0);
   return [key, () => setKey((k) => k + 1)] as const;
 }
+
+export interface CanvasFrame {
+  ctx: CanvasRenderingContext2D;
+  width: number;
+  height: number;
+  /** seconds since start */
+  time: number;
+  /** seconds since last frame */
+  dt: number;
+  /** pointer position in CSS px relative to the canvas, or null when outside */
+  pointer: { x: number; y: number } | null;
+}
+
+/**
+ * Canvas animation loop with the boring parts done: DPR-aware sizing (ResizeObserver), pausing while
+ * off-screen or in a background tab, pointer tracking, and a single static frame under reduced motion.
+ */
+export function useCanvas(draw: (f: CanvasFrame) => void, { maxDpr = 2, interactive = true }: { maxDpr?: number; interactive?: boolean } = {}) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  const saved = useRef(draw);
+  saved.current = draw;
+  const reduced = useReducedMotion();
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    let w = 0;
+    let h = 0;
+    let visible = true;
+    let raf = 0;
+    let start = performance.now();
+    let last = start;
+    let pointer: CanvasFrame["pointer"] = null;
+    const frame = (now: number) => {
+      saved.current({ ctx, width: w, height: h, time: (now - start) / 1000, dt: Math.min(0.05, (now - last) / 1000), pointer });
+      last = now;
+    };
+    const loop = (now: number) => {
+      frame(now);
+      raf = requestAnimationFrame(loop);
+    };
+    const play = () => {
+      cancelAnimationFrame(raf);
+      if (reduced) {
+        frame(performance.now());
+        return;
+      }
+      if (visible && !document.hidden) {
+        last = performance.now();
+        raf = requestAnimationFrame(loop);
+      }
+    };
+    const ro = new ResizeObserver(() => {
+      const dpr = Math.min(maxDpr, window.devicePixelRatio || 1);
+      const r = canvas.getBoundingClientRect();
+      w = r.width;
+      h = r.height;
+      canvas.width = Math.max(1, Math.round(w * dpr));
+      canvas.height = Math.max(1, Math.round(h * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (reduced) frame(performance.now());
+    });
+    ro.observe(canvas);
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      play();
+    });
+    io.observe(canvas);
+    const onVis = () => play();
+    document.addEventListener("visibilitychange", onVis);
+    const host = canvas.parentElement ?? canvas;
+    const move = (e: PointerEvent) => {
+      const r = canvas.getBoundingClientRect();
+      pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
+    };
+    const leave = () => (pointer = null);
+    if (interactive) {
+      host.addEventListener("pointermove", move);
+      host.addEventListener("pointerleave", leave);
+    }
+    start = performance.now();
+    play();
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+      host.removeEventListener("pointermove", move);
+      host.removeEventListener("pointerleave", leave);
+    };
+  }, [reduced, maxDpr, interactive]);
+  return ref;
+}
 ```
 
 ## Steps

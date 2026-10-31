@@ -71,6 +71,77 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-flip-words",
+      "type": "registry:component",
+      "title": "3D Flip Words",
+      "description": "The next word's letters flip down into place in 3D, staggered left-to-right, while the old word blurs away.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "rotating",
+          "3d",
+          "headline",
+          "hero"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-flip-words.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-flip-words.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-3d-layers",
+      "type": "registry:component",
+      "title": "3D Layered Card",
+      "description": "The card tilts toward the pointer and its child layers lift out to different depths with translateZ.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "3d",
+          "parallax",
+          "tilt",
+          "depth"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-3d-layers.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-3d-layers.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "tilt-card",
       "type": "registry:component",
       "title": "3D Tilt Card",
@@ -109,6 +180,118 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "activity-rings",
+      "type": "registry:component",
+      "title": "Activity Rings",
+      "description": "Apple-Watch-style concentric rings that sweep to their goals on view, with an overlapping second lap past 100%.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "rings",
+          "fitness",
+          "goals",
+          "progress"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/activity-rings.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/activity-rings.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ai-agent-steps",
+      "type": "registry:component",
+      "title": "Agent Run Timeline",
+      "description": "Agent tool calls appear one by one with a pulsing running state, then resolve to a check with their result.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "ai"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "ai",
+          "agent",
+          "tool calls",
+          "timeline",
+          "status"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/ai-agent-steps.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/ai-agent-steps.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ai-prompt-box",
+      "type": "registry:component",
+      "title": "AI Prompt Box",
+      "description": "Chat composer: auto-growing textarea, animated attachment chips, model picker and a send button that morphs into Stop while generating.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "ai"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "ai",
+          "chat",
+          "composer",
+          "prompt",
+          "input"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/ai-prompt-box.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/ai-prompt-box.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "animated-beam",
       "type": "registry:component",
       "title": "Animated Beam",
@@ -140,6 +323,43 @@
           "path": "components/kinetik/animated-beam.tsx",
           "type": "registry:component",
           "target": "components/kinetik/animated-beam.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "nav-breadcrumb",
+      "type": "registry:component",
+      "title": "Animated Breadcrumb",
+      "description": "Breadcrumb where new segments slide in, removed ones collapse, and long paths fold the middle into an ellipsis.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "breadcrumb",
+          "path",
+          "navigation",
+          "files"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/nav-breadcrumb.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/nav-breadcrumb.tsx"
         }
       ]
     },
@@ -214,6 +434,44 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "select-animated",
+      "type": "registry:component",
+      "title": "Animated Select",
+      "description": "Custom listbox select: the menu unfolds from the trigger, options stagger in and a highlight follows the active option.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "select",
+          "dropdown",
+          "listbox",
+          "form"
+        ],
+        "pageTypes": [
+          "settings",
+          "dashboard",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/select-animated.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/select-animated.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "animated-tabs",
       "type": "registry:component",
       "title": "Animated Tabs",
@@ -247,6 +505,78 @@
           "path": "components/kinetik/animated-tabs.tsx",
           "type": "registry:component",
           "target": "components/kinetik/animated-tabs.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-terminal",
+      "type": "registry:component",
+      "title": "Animated Terminal",
+      "description": "Terminal that types its commands character by character and reveals output lines with a beat in between.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "terminal",
+          "cli",
+          "install",
+          "dev tools",
+          "typing"
+        ],
+        "pageTypes": [
+          "landing",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-terminal.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-terminal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-arrow-slide",
+      "type": "registry:component",
+      "title": "Arrow Slide Button",
+      "description": "Hover sweeps a fill in from the left, nudges the label and swaps the arrow out to the right as a new one slides in.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "cta",
+          "arrow",
+          "hover",
+          "agency",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-arrow-slide.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-arrow-slide.tsx"
         }
       ]
     },
@@ -363,6 +693,77 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-battery",
+      "type": "registry:component",
+      "title": "Battery Level",
+      "description": "Battery with a sloshing liquid fill that springs to the level, colors by charge, and a pulsing bolt while charging.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "battery",
+          "meter",
+          "widget",
+          "device"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-battery.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-battery.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "before-after",
+      "type": "registry:component",
+      "title": "Before / After Slider",
+      "description": "Drag the handle — or use the arrow keys, it's a real slider — to wipe between two images.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "comparison",
+          "slider",
+          "before after",
+          "images"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/before-after.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/before-after.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "bento-grid",
       "type": "registry:component",
       "title": "Bento Grid",
@@ -470,6 +871,369 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "nav-bottom-bar",
+      "type": "registry:component",
+      "title": "Bottom Tab Bar",
+      "description": "Mobile bottom tab bar where a pill slides to the active tab, its icon bounces and its label expands inline.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "tab bar",
+          "mobile",
+          "bottom nav",
+          "pill"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "social",
+          "media"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/nav-bottom-bar.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/nav-bottom-bar.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "mockup-browser",
+      "type": "registry:component",
+      "title": "Browser Mockup",
+      "description": "Safari-style window chrome — traffic lights and a centered URL bar with lock — around any content.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "mockups"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "mockup",
+          "browser",
+          "safari",
+          "frame",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/mockup-browser.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/mockup-browser.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-fan",
+      "type": "registry:component",
+      "title": "Card Fan",
+      "description": "A tidy stack that fans out like a hand of cards on hover/focus; the card under the pointer lifts and comes forward.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "fan",
+          "stack",
+          "spread",
+          "photos"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing",
+          "social"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-fan.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-fan.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-circular",
+      "type": "registry:component",
+      "title": "Circular Text Badge",
+      "description": "Text set on a circle with an SVG textPath slowly spins around a center icon; the center pops on hover.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "badge",
+          "circular",
+          "spinning",
+          "portfolio",
+          "cta"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-circular.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-circular.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "cursor-click-spark",
+      "type": "registry:component",
+      "title": "Click Spark",
+      "description": "Clicking anywhere in the area emits a tiny starburst of sparks from the click point.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "canvas",
+        "tags": [
+          "click",
+          "spark",
+          "feedback",
+          "canvas"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/cursor-click-spark.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/cursor-click-spark.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ai-code-stream",
+      "type": "registry:component",
+      "title": "Code Stream",
+      "description": "A code window that streams in token by token like an AI writing it, with syntax colors, a block caret and a 'writing' status.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "ai"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "code",
+          "ai",
+          "typing",
+          "terminal",
+          "dev tools"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "landing",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/ai-code-stream.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/ai-code-stream.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "nav-sidebar",
+      "type": "registry:component",
+      "title": "Collapsible Sidebar",
+      "description": "App sidebar that springs between full width and an icon rail, with a gliding active indicator, badges and native tooltips.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "sidebar",
+          "app shell",
+          "collapse",
+          "dashboard"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/nav-sidebar.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/nav-sidebar.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "command-palette",
+      "type": "registry:component",
+      "title": "Command Palette",
+      "description": "⌘K palette that springs open, filters and groups commands, with a highlight gliding between results.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "command palette",
+          "cmdk",
+          "search",
+          "keyboard"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "docs",
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/command-palette.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/command-palette.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "context-menu",
+      "type": "registry:component",
+      "title": "Context Menu",
+      "description": "Right-click menu that scales from the click point with staggered items, shortcuts and full arrow-key navigation.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "context menu",
+          "right click",
+          "menu",
+          "shortcuts"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/context-menu.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/context-menu.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "heatmap-grid",
+      "type": "registry:component",
+      "title": "Contribution Heatmap",
+      "description": "GitHub-style contribution grid whose cells fill in a diagonal wave on view, with a hover readout.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "heatmap",
+          "contributions",
+          "calendar",
+          "github"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/heatmap-grid.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/heatmap-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "copy-button",
       "type": "registry:component",
       "title": "Copy Button",
@@ -506,6 +1270,182 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-timer",
+      "type": "registry:component",
+      "title": "Countdown Timer",
+      "description": "Countdown ring that drains smoothly, with start/pause/reset and a celebratory pulse when time is up.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "timer",
+          "countdown",
+          "pomodoro",
+          "ring"
+        ],
+        "pageTypes": [
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-timer.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-timer.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "preloader-counter",
+      "type": "registry:component",
+      "title": "Counter Preloader",
+      "description": "Brand intro: a huge counter races to 100 on an ease-out curve, then the panel wipes up to reveal the page. Skippable.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "loaders"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "preloader",
+          "intro",
+          "counter",
+          "agency"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/preloader-counter.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/preloader-counter.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "coverflow",
+      "type": "registry:component",
+      "title": "Cover Flow",
+      "description": "Classic 3D cover flow: the centered item faces you while neighbours rotate away in perspective.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "coverflow",
+          "3d",
+          "carousel",
+          "albums"
+        ],
+        "pageTypes": [
+          "media",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/coverflow.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/coverflow.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "cursor-crosshair",
+      "type": "registry:component",
+      "title": "Crosshair Cursor",
+      "description": "Full-bleed crosshair lines track the pointer with a live x/y readout — design tools and technical brands.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "crosshair",
+          "coordinates",
+          "design tool",
+          "technical"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/cursor-crosshair.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/cursor-crosshair.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "svg-motion-path",
+      "type": "registry:component",
+      "title": "CSS Motion Path",
+      "description": "Objects travel along an SVG path using CSS offset-path, auto-rotating to the curve — zero JavaScript.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "svg"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "motion path",
+          "offset-path",
+          "svg",
+          "css-only",
+          "logistics"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/svg-motion-path.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/svg-motion-path.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "spotlight",
       "type": "registry:component",
       "title": "Cursor Spotlight",
@@ -536,6 +1476,150 @@
           "path": "components/kinetik/spotlight.tsx",
           "type": "registry:component",
           "target": "components/kinetik/spotlight.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "transition-curtain",
+      "type": "registry:component",
+      "title": "Curtain Page Transition",
+      "description": "Layered colored panels sweep up to cover the screen, the route swaps underneath with its title shown, then they sweep away.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "transitions"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "page transition",
+          "curtain",
+          "wipe",
+          "agency"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/transition-curtain.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/transition-curtain.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "cursor-custom",
+      "type": "registry:component",
+      "title": "Custom Cursor",
+      "description": "Dot + lagging ring cursor with states: grows over links, becomes a 'View'/'Drag' bubble over tagged media.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "cursor",
+          "custom cursor",
+          "portfolio",
+          "agency"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/cursor-custom.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/cursor-custom.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "chart-donut",
+      "type": "registry:component",
+      "title": "Donut Chart",
+      "description": "Donut chart whose segments sweep in sequence on view; hovering a segment or legend item thickens it and updates the center.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "chart",
+          "donut",
+          "pie",
+          "analytics"
+        ],
+        "pageTypes": [
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/chart-donut.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/chart-donut.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-download",
+      "type": "registry:component",
+      "title": "Download Progress Button",
+      "description": "Download pill shrinks into a circular progress ring, fills, then pops a checkmark.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "download",
+          "progress",
+          "async",
+          "feedback"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "docs",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-download.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-download.tsx"
         }
       ]
     },
@@ -692,6 +1776,78 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "slider-elastic",
+      "type": "registry:component",
+      "title": "Elastic Slider",
+      "description": "Range slider that stretches like rubber when dragged past its ends and springs back on release.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "slider",
+          "range",
+          "elastic",
+          "input"
+        ],
+        "pageTypes": [
+          "settings",
+          "media"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/slider-elastic.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/slider-elastic.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-emoji-burst",
+      "type": "registry:component",
+      "title": "Emoji Burst Button",
+      "description": "Every click sprays emoji particles from the cursor that arc up, spin and fall away — instant celebration.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "confetti",
+          "emoji",
+          "celebrate",
+          "particles",
+          "delight"
+        ],
+        "pageTypes": [
+          "social",
+          "onboarding",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-emoji-burst.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-emoji-burst.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "error-shake",
       "type": "registry:component",
       "title": "Error Shake",
@@ -767,6 +1923,260 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-expand-gallery",
+      "type": "registry:component",
+      "title": "Expanding Gallery",
+      "description": "Accordion gallery: hovering or focusing a panel grows it with a spring while siblings compress, captions fade in.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "gallery",
+          "accordion",
+          "expand",
+          "images"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-expand-gallery.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-expand-gallery.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-expand-icon",
+      "type": "registry:component",
+      "title": "Expanding Icon Button",
+      "description": "Icon-only circles that widen to reveal a label on hover or focus — compact toolbars that still explain themselves.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "icon button",
+          "toolbar",
+          "expand",
+          "hover",
+          "css-only"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "ecommerce",
+          "social"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-expand-icon.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-expand-icon.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "search-expand",
+      "type": "registry:component",
+      "title": "Expanding Search",
+      "description": "Search icon that springs open into a full field and collapses when empty and blurred; '/' focuses it from anywhere.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "search",
+          "input",
+          "expand",
+          "toolbar"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "docs",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/search-expand.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/search-expand.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-beams",
+      "type": "registry:component",
+      "title": "Falling Beams",
+      "description": "Thin light beams fall down a grid of vertical rails at different speeds — data rain for dev-tool heroes.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "beams",
+          "lines",
+          "dev tools",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-beams.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-beams.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-falling",
+      "type": "registry:component",
+      "title": "Falling Letters",
+      "description": "Click the headline and its letters drop with gravity, bounce off the floor and tumble; click again to spring them back.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "physics",
+          "gravity",
+          "playful",
+          "easter egg"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-falling.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-falling.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "file-dropzone",
+      "type": "registry:component",
+      "title": "File Dropzone",
+      "description": "Drop zone that lifts and glows on drag-over; dropped files fly into a list with per-file animated upload progress.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "upload",
+          "dropzone",
+          "files",
+          "progress",
+          "drag and drop"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/file-dropzone.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/file-dropzone.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-file-tree",
+      "type": "registry:component",
+      "title": "File Tree",
+      "description": "Collapsible file tree with smooth height animation, rotating chevrons and open/closed folder icons.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "file tree",
+          "explorer",
+          "docs",
+          "ide"
+        ],
+        "pageTypes": [
+          "docs",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-file-tree.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-file-tree.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "bg-noise",
       "type": "registry:component",
       "title": "Film Grain",
@@ -802,6 +2212,78 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-flicker-grid",
+      "type": "registry:component",
+      "title": "Flickering Grid",
+      "description": "Canvas grid of tiny squares that randomly flicker in brightness under a radial vignette — a quiet data texture.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "canvas",
+        "tags": [
+          "grid",
+          "canvas",
+          "flicker",
+          "texture",
+          "hero"
+        ],
+        "pageTypes": [
+          "landing",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-flicker-grid.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-flicker-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-flip",
+      "type": "registry:component",
+      "title": "Flip Card",
+      "description": "Two-sided card that flips in 3D on click, Enter or Space — keyboard and touch friendly, not hover-only.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "flip",
+          "3d",
+          "cards",
+          "reveal"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-flip.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-flip.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "input-floating-label",
       "type": "registry:component",
       "title": "Floating Label Input",
@@ -832,6 +2314,76 @@
           "path": "components/kinetik/input-floating-label.tsx",
           "type": "registry:component",
           "target": "components/kinetik/input-floating-label.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-folder",
+      "type": "registry:component",
+      "title": "Folder Card",
+      "description": "A folder whose flap tilts open on hover/click while the papers inside slide up and fan out.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "folder",
+          "files",
+          "playful",
+          "3d"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-folder.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-folder.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "cursor-eyes",
+      "type": "registry:component",
+      "title": "Following Eyes",
+      "description": "A pair of googly eyes whose pupils track the cursor anywhere on the page, blinking every few seconds.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "eyes",
+          "playful",
+          "404",
+          "mascot"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/cursor-eyes.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/cursor-eyes.tsx"
         }
       ]
     },
@@ -876,6 +2428,144 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-glass",
+      "type": "registry:component",
+      "title": "Glass Parallax Card",
+      "description": "Frosted glass card over a colorful backdrop; the backdrop and the card drift in opposite directions with the pointer.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "glassmorphism",
+          "parallax",
+          "fintech",
+          "card"
+        ],
+        "pageTypes": [
+          "landing",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-glass.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-glass.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-glitch",
+      "type": "registry:component",
+      "title": "Glitch Text",
+      "description": "Cyan/red channel-split glitch bursts with sliced clip-paths, pure CSS, spaced out to stay epilepsy-safe.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "glitch",
+          "cyberpunk",
+          "error",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-glitch.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-glitch.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-dot-glow",
+      "type": "registry:component",
+      "title": "Glowing Dot Matrix",
+      "description": "Dots near the cursor swell and glow in the accent color while an ambient wave ripples across the matrix.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "canvas",
+        "tags": [
+          "dots",
+          "glow",
+          "interactive",
+          "canvas"
+        ],
+        "pageTypes": [
+          "landing",
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-dot-glow.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-dot-glow.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-gooey",
+      "type": "registry:component",
+      "title": "Gooey Liquid Button",
+      "description": "Blobs bubble out from the pill on hover and fuse with it through an SVG goo filter — a liquid, organic hover.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "gooey",
+          "liquid",
+          "svg filter",
+          "playful"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-gooey.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-gooey.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "bg-grid-dots",
       "type": "registry:component",
       "title": "Grid & Dot Pattern",
@@ -907,6 +2597,296 @@
           "path": "components/kinetik/bg-grid-dots.tsx",
           "type": "registry:component",
           "target": "components/kinetik/bg-grid-dots.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-dev-terminal",
+      "type": "registry:component",
+      "title": "Hero — Dev Tool Terminal",
+      "description": "Developer-tool hero: headline, a copyable install command, and a terminal that types the session and its output.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "cli",
+          "developer",
+          "terminal",
+          "install"
+        ],
+        "pageTypes": [
+          "landing",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-dev-terminal.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-dev-terminal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-globe",
+      "type": "registry:component",
+      "title": "Hero — Dotted Globe",
+      "description": "Canvas dotted globe (orthographic projection, no WebGL) that rotates, tilts toward the pointer and draws travelling arcs between cities.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "canvas",
+        "tags": [
+          "globe",
+          "map",
+          "canvas",
+          "global",
+          "network"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-globe.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-globe.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-editorial",
+      "type": "registry:component",
+      "title": "Hero — Editorial Studio",
+      "description": "Agency portfolio opener: an oversized name rising letter by letter, a clip-path image reveal and a slow marquee of disciplines.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "editorial",
+          "agency",
+          "portfolio",
+          "typography"
+        ],
+        "pageTypes": [
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-editorial.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-editorial.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-floating-images",
+      "type": "registry:component",
+      "title": "Hero — Floating Gallery",
+      "description": "Headline surrounded by photos floating at different depths that parallax against the pointer.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "parallax",
+          "gallery",
+          "floating",
+          "portfolio"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-floating-images.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-floating-images.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-mesh-cards",
+      "type": "registry:component",
+      "title": "Hero — Mesh + Floating Cards",
+      "description": "Fintech/SaaS hero: drifting mesh gradient, blur-in headline and CTAs, and floating product cards bobbing at different rhythms.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "saas",
+          "fintech",
+          "mesh gradient",
+          "floating cards"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-mesh-cards.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-mesh-cards.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-scroll-tilt",
+      "type": "registry:component",
+      "title": "Hero — Scroll Tilt Screenshot",
+      "description": "Product screenshot starts tilted back in 3D under the headline and rotates flat while scaling up as you scroll.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "scroll",
+          "3d",
+          "screenshot",
+          "product"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-scroll-tilt.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-scroll-tilt.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-spotlight-grid",
+      "type": "registry:component",
+      "title": "Hero — Spotlight Grid",
+      "description": "Grid-lined hero lit by a cursor spotlight, with avatar social proof, a gradient headline and dual CTAs.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "grid",
+          "spotlight",
+          "saas",
+          "social proof"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-spotlight-grid.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-spotlight-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-video-dialog",
+      "type": "registry:component",
+      "title": "Hero — Video Dialog",
+      "description": "Product thumbnail with a pulsing play button that expands (shared layout) into a full-screen video dialog.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "video",
+          "dialog",
+          "demo",
+          "layoutId"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-video-dialog.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-video-dialog.tsx"
         }
       ]
     },
@@ -944,6 +2924,42 @@
           "path": "components/kinetik/button-hold-confirm.tsx",
           "type": "registry:component",
           "target": "components/kinetik/button-hold-confirm.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-holo",
+      "type": "registry:component",
+      "title": "Holographic Foil Card",
+      "description": "Collectible-card foil: rainbow sheen, glare and tilt all track the pointer through CSS variables.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "holographic",
+          "foil",
+          "tilt",
+          "collectible",
+          "glare"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "portfolio",
+          "social"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-holo.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-holo.tsx"
         }
       ]
     },
@@ -987,6 +3003,116 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hover-card",
+      "type": "registry:component",
+      "title": "Hover Card",
+      "description": "Rich preview card that springs up from a link after a short hover-intent delay — profiles and link previews.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hover card",
+          "preview",
+          "profile",
+          "popover"
+        ],
+        "pageTypes": [
+          "social",
+          "blog",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hover-card.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hover-card.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "nav-hover-highlight",
+      "type": "registry:component",
+      "title": "Hover Highlight Nav",
+      "description": "A soft background highlight glides between nav items under the pointer or keyboard focus and fades out when you leave.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "nav",
+          "hover",
+          "highlight",
+          "layoutId"
+        ],
+        "pageTypes": [
+          "landing",
+          "docs",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/nav-hover-highlight.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/nav-hover-highlight.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-hover-reveal",
+      "type": "registry:component",
+      "title": "Hover Reveal Card",
+      "description": "Image card: on hover or focus the photo zooms and dims while a details panel slides up from the bottom.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "image",
+          "reveal",
+          "blog",
+          "hover",
+          "css-only"
+        ],
+        "pageTypes": [
+          "blog",
+          "portfolio",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-hover-reveal.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-hover-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "image-reveal-mask",
       "type": "registry:component",
       "title": "Image Reveal Mask",
@@ -1018,6 +3144,109 @@
           "path": "components/kinetik/image-reveal-mask.tsx",
           "type": "registry:component",
           "target": "components/kinetik/image-reveal-mask.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "cursor-image-trail",
+      "type": "registry:component",
+      "title": "Image Trail",
+      "description": "Moving across the area drops a trail of images that pop in, drift in your direction and fade away.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "image trail",
+          "cursor",
+          "portfolio",
+          "editorial"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/cursor-image-trail.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/cursor-image-trail.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-boxes",
+      "type": "registry:component",
+      "title": "Interactive Boxes",
+      "description": "A skewed isometric grid of cells that flash random colors under the cursor and fade back slowly.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "grid",
+          "interactive",
+          "isometric",
+          "hover"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-boxes.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-boxes.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "mockup-iphone",
+      "type": "registry:component",
+      "title": "iPhone Mockup",
+      "description": "Pure-CSS iPhone frame — titanium bezel, Dynamic Island and side buttons — that wraps any screen or screenshot.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "mockups"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "mockup",
+          "iphone",
+          "device",
+          "frame",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/mockup-iphone.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/mockup-iphone.tsx"
         }
       ]
     },
@@ -1055,6 +3284,145 @@
           "path": "components/kinetik/stat-counter-grid.tsx",
           "type": "registry:component",
           "target": "components/kinetik/stat-counter-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-lamp",
+      "type": "registry:component",
+      "title": "Lamp Header",
+      "description": "Two conic light cones switch on from a glowing bar and illuminate the section heading — the Linear-style lamp.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "lamp",
+          "light",
+          "section header",
+          "dark"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-lamp.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-lamp.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "mockup-laptop",
+      "type": "registry:component",
+      "title": "Laptop Mockup",
+      "description": "CSS laptop — lid with notch, 16:10 screen, hinge and base — for hero shots of web apps.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "mockups"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "mockup",
+          "laptop",
+          "macbook",
+          "frame",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/mockup-laptop.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/mockup-laptop.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-roll-hover",
+      "type": "registry:component",
+      "title": "Letter Roll Hover",
+      "description": "Every letter rolls up to reveal a duplicate of itself, staggered from start, center or end — the agency nav link hover.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hover",
+          "nav",
+          "links",
+          "css-only",
+          "agency"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-roll-hover.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-roll-hover.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-blinds",
+      "type": "registry:component",
+      "title": "Light Through Blinds",
+      "description": "A shifting warm gradient seen through diagonal glass slats — golden-hour editorial backgrounds.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "gradient",
+          "blinds",
+          "stripes",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-blinds.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-blinds.tsx"
         }
       ]
     },
@@ -1130,6 +3498,218 @@
           "path": "components/kinetik/chart-line-draw.tsx",
           "type": "registry:component",
           "target": "components/kinetik/chart-line-draw.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-loop-lines",
+      "type": "registry:component",
+      "title": "Line Loop",
+      "description": "Cycles whole lines or nodes vertically through a masked slot — status messages, rotating taglines, mini tickers.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "status",
+          "rotating",
+          "ticker",
+          "loop"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "landing",
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-loop-lines.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-loop-lines.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "cursor-blob",
+      "type": "registry:component",
+      "title": "Liquid Cursor Blob",
+      "description": "Three blobs chase the cursor at different lags and fuse into one liquid shape through an SVG goo filter.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "blob",
+          "gooey",
+          "cursor",
+          "liquid"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/cursor-blob.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/cursor-blob.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-shader",
+      "type": "registry:component",
+      "title": "Liquid Shader Gradient",
+      "description": "A raw WebGL fragment shader paints a slow, liquid, grain-dithered gradient — no three.js, ~1 KB.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "canvas",
+        "tags": [
+          "shader",
+          "webgl",
+          "gradient",
+          "glsl"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-shader.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-shader.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-waves",
+      "type": "registry:component",
+      "title": "Liquid Waves",
+      "description": "Layered translucent sine waves undulate at different speeds and lean toward the pointer.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "canvas",
+        "tags": [
+          "waves",
+          "liquid",
+          "calm",
+          "canvas"
+        ],
+        "pageTypes": [
+          "landing",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-waves.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-waves.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-stock",
+      "type": "registry:component",
+      "title": "Live Stock Ticker",
+      "description": "Ticker card with a streaming sparkline, a price that flashes green/red on each change, and a delta badge.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "stocks",
+          "finance",
+          "sparkline",
+          "live"
+        ],
+        "pageTypes": [
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-stock.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-stock.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "mockup-window",
+      "type": "registry:component",
+      "title": "macOS Window",
+      "description": "A macOS app window that zooms open from its dock icon and minimizes back into it.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "mockups"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "macos",
+          "window",
+          "dock",
+          "minimize"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/mockup-window.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/mockup-window.tsx"
         }
       ]
     },
@@ -1281,6 +3861,43 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "masonry-reveal",
+      "type": "registry:component",
+      "title": "Masonry Reveal",
+      "description": "Pinterest-style masonry whose tiles rise and unblur in a staggered wave as they scroll into view.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "masonry",
+          "gallery",
+          "pinterest",
+          "scroll reveal"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "social",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/masonry-reveal.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/masonry-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "bg-meteors",
       "type": "registry:component",
       "title": "Meteor Shower",
@@ -1310,6 +3927,116 @@
           "path": "components/kinetik/bg-meteors.tsx",
           "type": "registry:component",
           "target": "components/kinetik/bg-meteors.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-calendar",
+      "type": "registry:component",
+      "title": "Mini Calendar",
+      "description": "Month calendar where the selected-day pill glides between dates, months slide in their travel direction, and event dots mark days.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "calendar",
+          "date",
+          "widget",
+          "events"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-calendar.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-calendar.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "icon-morph",
+      "type": "registry:component",
+      "title": "Morphing Icons",
+      "description": "Icon strokes that morph between states — menu↔close, play↔pause, plus↔minus, arrow↔check — instead of crossfading.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "icons",
+          "morph",
+          "svg",
+          "toggle"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "media",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/icon-morph.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/icon-morph.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "nav-mega-menu",
+      "type": "registry:component",
+      "title": "Morphing Mega Menu",
+      "description": "Stripe-style dropdown: one shared panel morphs its size between menus and slides content in the direction you move.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "mega menu",
+          "dropdown",
+          "stripe",
+          "navigation"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/nav-mega-menu.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/nav-mega-menu.tsx"
         }
       ]
     },
@@ -1347,6 +4074,115 @@
           "path": "components/kinetik/menu-toggle-morph.tsx",
           "type": "registry:component",
           "target": "components/kinetik/menu-toggle-morph.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "popover-morph",
+      "type": "registry:component",
+      "title": "Morphing Popover",
+      "description": "A button that morphs (shared layout) into a panel — feedback forms, quick-add, share sheets.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "popover",
+          "morph",
+          "layoutId",
+          "form",
+          "feedback"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "landing",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/popover-morph.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/popover-morph.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "loader-morph",
+      "type": "registry:component",
+      "title": "Morphing Shape Loader",
+      "description": "A single shape that morphs circle → rounded square → blob while rotating — a loader with character.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "loaders"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "loader",
+          "spinner",
+          "morph",
+          "brand"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/loader-morph.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/loader-morph.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-morph",
+      "type": "registry:component",
+      "title": "Morphing Text",
+      "description": "Words melt into each other: two layers cross-blur while an SVG threshold filter fuses their edges into liquid letterforms.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "morph",
+          "liquid",
+          "hero",
+          "rotating",
+          "svg filter"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-morph.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-morph.tsx"
         }
       ]
     },
@@ -1427,6 +4263,147 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-neon",
+      "type": "registry:component",
+      "title": "Neon Gradient Card",
+      "description": "A two-tone neon gradient border that slowly rotates, with a matching bloom glowing behind the card.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "neon",
+          "glow",
+          "border",
+          "dark"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-neon.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-neon.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-neumorph",
+      "type": "registry:component",
+      "title": "Neumorphic Toggle",
+      "description": "Soft-UI toggle that sits raised when off and presses into the surface when on, with an eased shadow swap.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "neumorphism",
+          "soft ui",
+          "toggle",
+          "control center"
+        ],
+        "pageTypes": [
+          "settings",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-neumorph.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-neumorph.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-notifications",
+      "type": "registry:component",
+      "title": "Notification Feed",
+      "description": "New notifications drop in at the top on a loop, pushing older ones down — the animated list for social proof and dashboards.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "notifications",
+          "feed",
+          "animated list",
+          "social proof"
+        ],
+        "pageTypes": [
+          "landing",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-notifications.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-notifications.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-music",
+      "type": "registry:component",
+      "title": "Now Playing",
+      "description": "Music widget: spinning vinyl art, bouncing equalizer, live progress and a play↔pause morphing icon.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "music",
+          "player",
+          "widget",
+          "media"
+        ],
+        "pageTypes": [
+          "media",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-music.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-music.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "number-ticker",
       "type": "registry:component",
       "title": "Number Ticker",
@@ -1459,6 +4436,80 @@
           "path": "components/kinetik/number-ticker.tsx",
           "type": "registry:component",
           "target": "components/kinetik/number-ticker.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-odometer",
+      "type": "registry:component",
+      "title": "Odometer Number",
+      "description": "Each digit is a vertical reel that springs to its new number — the slot-machine counter for live stats and prices.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "number",
+          "counter",
+          "odometer",
+          "live",
+          "stats",
+          "pricing"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-odometer.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-odometer.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "orbit-icons",
+      "type": "registry:component",
+      "title": "Orbiting Integrations",
+      "description": "Integration icons circle a center logo on concentric dashed orbits at different speeds, staying upright as they travel.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "integrations",
+          "orbit",
+          "logos",
+          "ecosystem"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/orbit-icons.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/orbit-icons.tsx"
         }
       ]
     },
@@ -1538,6 +4589,41 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-particles",
+      "type": "registry:component",
+      "title": "Particle Network",
+      "description": "Drifting particles that link with lines when close and gently flee the cursor — the classic network hero.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "canvas",
+        "tags": [
+          "particles",
+          "network",
+          "canvas",
+          "interactive",
+          "ai"
+        ],
+        "pageTypes": [
+          "landing",
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-particles.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-particles.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "password-strength",
       "type": "registry:component",
       "title": "Password Strength",
@@ -1576,6 +4662,76 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "pinned-story",
+      "type": "registry:component",
+      "title": "Pinned Scroll Story",
+      "description": "Apple/Stripe-style story: text steps scroll by on the left while the sticky visual on the right swaps for the active step.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "scroll",
+          "sticky",
+          "story",
+          "features",
+          "steps"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/pinned-story.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/pinned-story.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-pixel-reveal",
+      "type": "registry:component",
+      "title": "Pixel Dissolve Card",
+      "description": "A pixel mosaic covers the image and dissolves square by square in pseudo-random order on hover or focus.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "pixel",
+          "dissolve",
+          "reveal",
+          "retro"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-pixel-reveal.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-pixel-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "button-press",
       "type": "registry:component",
       "title": "Press Button",
@@ -1609,6 +4765,42 @@
           "path": "components/kinetik/button-press.tsx",
           "type": "registry:component",
           "target": "components/kinetik/button-press.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-profile",
+      "type": "registry:component",
+      "title": "Profile Card",
+      "description": "Profile card with a zooming cover, a Follow button that morphs to Following, and follower counts that roll.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "profile",
+          "social",
+          "follow",
+          "stats"
+        ],
+        "pageTypes": [
+          "social",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-profile.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-profile.tsx"
         }
       ]
     },
@@ -1686,6 +4878,76 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ai-suggestions",
+      "type": "registry:component",
+      "title": "Prompt Suggestions",
+      "description": "Suggested-prompt chips cascade in with blur and lift on hover; picking one hands its text to your composer.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "ai"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "ai",
+          "suggestions",
+          "chips",
+          "empty state"
+        ],
+        "pageTypes": [
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/ai-suggestions.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/ai-suggestions.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-pulse",
+      "type": "registry:component",
+      "title": "Pulse CTA",
+      "description": "Primary action that emits two staggered sonar rings — 'go live', 'join call', unread attention.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "pulse",
+          "attention",
+          "live",
+          "cta",
+          "css-only"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "social"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-pulse.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-pulse.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "transition-slide-stack",
       "type": "registry:component",
       "title": "Push / Pop Stack",
@@ -1724,6 +4986,78 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-rainbow",
+      "type": "registry:component",
+      "title": "Rainbow Border Button",
+      "description": "Dark pill with a rotating rainbow conic border and a blurred rainbow glow pooling underneath.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "cta",
+          "rainbow",
+          "glow",
+          "border",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-rainbow.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-rainbow.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "rating-stars",
+      "type": "registry:component",
+      "title": "Rating Stars",
+      "description": "Star rating built as a real radio group: hovering previews, choosing pops the stars in sequence.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "rating",
+          "stars",
+          "review",
+          "form",
+          "feedback"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "social"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/rating-stars.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/rating-stars.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "reorder-list",
       "type": "registry:component",
       "title": "Reorder List",
@@ -1757,6 +5091,144 @@
           "path": "components/kinetik/reorder-list.tsx",
           "type": "registry:component",
           "target": "components/kinetik/reorder-list.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-retro-grid",
+      "type": "registry:component",
+      "title": "Retro Perspective Grid",
+      "description": "Synthwave floor grid in 3D perspective scrolling endlessly toward the horizon.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "retro",
+          "synthwave",
+          "grid",
+          "perspective",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-retro-grid.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-retro-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-ripple",
+      "type": "registry:component",
+      "title": "Ripple Button",
+      "description": "Material ink ripple that grows from the exact press point and fades, sized to cover the whole button.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "ripple",
+          "material",
+          "press",
+          "feedback"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings",
+          "auth"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-ripple.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-ripple.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-ripple-rings",
+      "type": "registry:component",
+      "title": "Ripple Rings",
+      "description": "Concentric rings that breathe around a centerpiece — behind avatars, logos, product icons or a CTA.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "rings",
+          "ripple",
+          "logo",
+          "css-only"
+        ],
+        "pageTypes": [
+          "landing",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-ripple-rings.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-ripple-rings.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-light-rays",
+      "type": "registry:component",
+      "title": "Rotating Light Rays",
+      "description": "Slowly rotating god-rays fan out from above — celebratory 'achievement unlocked' energy.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "rays",
+          "celebration",
+          "conic",
+          "css-only"
+        ],
+        "pageTypes": [
+          "onboarding",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-light-rays.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-light-rays.tsx"
         }
       ]
     },
@@ -1942,6 +5414,117 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-velocity-marquee",
+      "type": "registry:component",
+      "title": "Scroll Velocity Marquee",
+      "description": "Giant looping text lines that speed up, reverse direction and skew with your scroll velocity.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "marquee",
+          "scroll",
+          "velocity",
+          "skew",
+          "editorial"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-velocity-marquee.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-velocity-marquee.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-send",
+      "type": "registry:component",
+      "title": "Send Button",
+      "description": "Paper-plane send: the plane winds back, takes off along an arc and disappears, then a check draws in.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "send",
+          "message",
+          "chat",
+          "feedback",
+          "icon morph"
+        ],
+        "pageTypes": [
+          "social",
+          "ai-app",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-send.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-send.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "svg-morph-shapes",
+      "type": "registry:component",
+      "title": "Shape Morph",
+      "description": "Gradient shape that springs between blob, star, heart and square — paths share 8 cubic segments so they interpolate cleanly.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "svg"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "morph",
+          "svg",
+          "shapes",
+          "blob"
+        ],
+        "pageTypes": [
+          "landing",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/svg-morph-shapes.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/svg-morph-shapes.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "vt-shared-element",
       "type": "registry:component",
       "title": "Shared Element (View Transitions)",
@@ -1973,6 +5556,44 @@
           "path": "components/kinetik/vt-shared-element.tsx",
           "type": "registry:component",
           "target": "components/kinetik/vt-shared-element.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "lightbox",
+      "type": "registry:component",
+      "title": "Shared-Layout Lightbox",
+      "description": "Click a thumbnail and it flies into a fullscreen lightbox; browse with arrows or keys, Esc returns it home.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "lightbox",
+          "gallery",
+          "layoutId",
+          "photos"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "ecommerce",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/lightbox.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/lightbox.tsx"
         }
       ]
     },
@@ -2040,6 +5661,41 @@
           "path": "components/kinetik/text-shimmer.tsx",
           "type": "registry:component",
           "target": "components/kinetik/text-shimmer.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-shine",
+      "type": "registry:component",
+      "title": "Shine Sweep Card",
+      "description": "A specular highlight sweeps diagonally across the card on hover — perfect for premium tiers and product tiles.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "shine",
+          "premium",
+          "pricing",
+          "hover",
+          "css-only"
+        ],
+        "pageTypes": [
+          "pricing",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-shine.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-shine.tsx"
         }
       ]
     },
@@ -2193,6 +5849,118 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-social-post",
+      "type": "registry:component",
+      "title": "Social Post",
+      "description": "Post card with spring-y like, repost and save actions whose counters roll up and down.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "social",
+          "post",
+          "like",
+          "feed"
+        ],
+        "pageTypes": [
+          "social",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-social-post.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-social-post.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-sparkles",
+      "type": "registry:component",
+      "title": "Sparkle Text",
+      "description": "Four-point stars twinkle in and out around a word — for 'magic' moments, upgrades and AI features.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "sparkles",
+          "magic",
+          "ai",
+          "highlight"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing",
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-sparkles.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-sparkles.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "nav-speed-dial",
+      "type": "registry:component",
+      "title": "Speed Dial FAB",
+      "description": "Floating action button that blooms into a radial or vertical set of actions with staggered bouncy springs.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "fab",
+          "speed dial",
+          "radial menu",
+          "actions"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "social",
+          "media"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/nav-speed-dial.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/nav-speed-dial.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "spinner-set",
       "type": "registry:component",
       "title": "Spinner Set",
@@ -2262,6 +6030,41 @@
           "path": "components/kinetik/text-split-reveal.tsx",
           "type": "registry:component",
           "target": "components/kinetik/text-split-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-split-flap",
+      "type": "registry:component",
+      "title": "Split-Flap Board",
+      "description": "Airport departure board: every cell flaps through the character set until it lands on its target text.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "split flap",
+          "airport",
+          "retro",
+          "ticker",
+          "board"
+        ],
+        "pageTypes": [
+          "landing",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-split-flap.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-split-flap.tsx"
         }
       ]
     },
@@ -2455,6 +6258,116 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ai-chat-stream",
+      "type": "registry:component",
+      "title": "Streaming Chat",
+      "description": "Chat thread where messages spring in and assistant replies stream word-by-word after a typing indicator.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "ai"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "ai",
+          "chat",
+          "streaming",
+          "messages",
+          "typing"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "social"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/ai-chat-stream.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/ai-chat-stream.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-stroke-draw",
+      "type": "registry:component",
+      "title": "Stroke Draw Text",
+      "description": "The outline of a word draws itself on view, then the fill floods in — a signature/logo reveal.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "svg",
+          "draw",
+          "logo",
+          "reveal",
+          "outline"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-stroke-draw.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-stroke-draw.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button-subscribe",
+      "type": "registry:component",
+      "title": "Subscribe Morph",
+      "description": "Newsletter input + button pill that morphs into a compact green 'You're on the list' confirmation.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "newsletter",
+          "subscribe",
+          "form",
+          "morph"
+        ],
+        "pageTypes": [
+          "landing",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/button-subscribe.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/button-subscribe.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "success-check",
       "type": "registry:component",
       "title": "Success / Error Mark",
@@ -2532,6 +6445,83 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-swipe-deck",
+      "type": "registry:component",
+      "title": "Swipe Deck",
+      "description": "Tinder-style deck: drag to swipe with rotation and LIKE/NOPE stamps; buttons and arrow keys do the same.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "swipe",
+          "tinder",
+          "drag",
+          "deck",
+          "dating"
+        ],
+        "pageTypes": [
+          "social",
+          "onboarding",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/card-swipe-deck.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/card-swipe-deck.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "tag-input",
+      "type": "registry:component",
+      "title": "Tag Input",
+      "description": "Chip input: Enter or comma pops a tag in, Backspace arms then removes the last tag, duplicates wiggle instead of adding.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "tags",
+          "chips",
+          "input",
+          "multi-select"
+        ],
+        "pageTypes": [
+          "settings",
+          "dashboard",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/tag-input.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/tag-input.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "theme-toggle",
       "type": "registry:component",
       "title": "Theme Toggle + Circle Reveal",
@@ -2565,6 +6555,43 @@
           "path": "components/kinetik/theme-toggle.tsx",
           "type": "registry:component",
           "target": "components/kinetik/theme-toggle.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ai-thinking",
+      "type": "registry:component",
+      "title": "Thinking Steps",
+      "description": "Reasoning disclosure: the current step shimmers, finished steps tick off, then it collapses into 'Thought for Ns'.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "ai"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "ai",
+          "reasoning",
+          "thinking",
+          "status",
+          "shimmer"
+        ],
+        "pageTypes": [
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/ai-thinking.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/ai-thinking.tsx"
         }
       ]
     },
@@ -2608,6 +6635,40 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-topography",
+      "type": "registry:component",
+      "title": "Topographic Lines",
+      "description": "Procedural contour-map lines with slowly marching dashes — outdoors, maps and data brands.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "svg",
+        "tags": [
+          "topography",
+          "contour",
+          "svg",
+          "map"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-topography.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-topography.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "text-typewriter",
       "type": "registry:component",
       "title": "Typewriter",
@@ -2638,6 +6699,398 @@
           "path": "components/kinetik/text-typewriter.tsx",
           "type": "registry:component",
           "target": "components/kinetik/text-typewriter.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-variable-proximity",
+      "type": "registry:component",
+      "title": "Variable Weight Proximity",
+      "description": "Letters thicken through a variable font's weight axis and lift slightly as the cursor approaches them.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "variable font",
+          "cursor",
+          "typography",
+          "proximity"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-variable-proximity.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-variable-proximity.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "video-hover",
+      "type": "registry:component",
+      "title": "Video Hover Preview",
+      "description": "Card that plays a muted preview on hover/focus — or a Ken Burns pan without video — with a progress line.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "video",
+          "preview",
+          "hover",
+          "youtube"
+        ],
+        "pageTypes": [
+          "media",
+          "blog",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/video-hover.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/video-hover.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ai-voice-wave",
+      "type": "registry:component",
+      "title": "Voice Input Wave",
+      "description": "Mic button that expands into live waveform bars and a timer — plug in an AnalyserNode for real levels.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "ai"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "voice",
+          "microphone",
+          "waveform",
+          "recording"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "social"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/ai-voice-wave.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/ai-voice-wave.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ai-orb",
+      "type": "registry:component",
+      "title": "Voice Orb",
+      "description": "Siri-like voice orb: additive blurred color fields that breathe when idle, swell with input level and swirl while thinking.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "ai"
+      ],
+      "meta": {
+        "engine": "canvas",
+        "tags": [
+          "ai",
+          "voice",
+          "orb",
+          "assistant",
+          "canvas"
+        ],
+        "pageTypes": [
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/ai-orb.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/ai-orb.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bg-starfield",
+      "type": "registry:component",
+      "title": "Warp Starfield",
+      "description": "Stars stream out from the center with motion trails; raise `speed` to jump to lightspeed.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "backgrounds"
+      ],
+      "meta": {
+        "engine": "canvas",
+        "tags": [
+          "space",
+          "stars",
+          "warp",
+          "canvas"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/bg-starfield.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/bg-starfield.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-water",
+      "type": "registry:component",
+      "title": "Water Tracker",
+      "description": "Hydration tracker: a glass fills with a wobbling wave as you log cups, with bubbles rising on each change.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "health",
+          "tracker",
+          "habit",
+          "liquid"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-water.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-water.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "text-wave",
+      "type": "registry:component",
+      "title": "Wave Letters",
+      "description": "Letters ripple upward one after another like a stadium wave — on hover/focus or continuously.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hover",
+          "nav",
+          "playful",
+          "letters"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/text-wave.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/text-wave.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-weather",
+      "type": "registry:component",
+      "title": "Weather Widget",
+      "description": "Weather card whose sky gradient and scene (rotating sun rays, drifting clouds, rain, twinkling stars) crossfade per condition.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "weather",
+          "widget",
+          "ios",
+          "scene"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "media"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-weather.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-weather.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-clock",
+      "type": "registry:component",
+      "title": "World Clock",
+      "description": "Analog clocks per time zone with a smooth sweeping second hand and a digital caption.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "clock",
+          "time zones",
+          "widget",
+          "analog"
+        ],
+        "pageTypes": [
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-clock.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-clock.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "zoom-through",
+      "type": "registry:component",
+      "title": "Zoom Through Text",
+      "description": "Scrolling zooms through a giant word until its letterform fills the screen, revealing the image behind it.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "scroll",
+          "zoom",
+          "mask",
+          "hero",
+          "cinematic"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/zoom-through.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/zoom-through.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ai-chat-app",
+      "type": "registry:block",
+      "title": "AI Chat App",
+      "description": "Full AI assistant screen: empty state with suggestion chips → reasoning trace → streaming reply, with a prompt composer pinned below.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/ai-prompt-box.json",
+        "https://marvzkineticlibrary.vercel.app/r/ai-suggestions.json",
+        "https://marvzkineticlibrary.vercel.app/r/ai-thinking.json",
+        "https://marvzkineticlibrary.vercel.app/r/ai-chat-stream.json"
+      ],
+      "categories": [
+        "ai"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "ai",
+          "chat",
+          "assistant",
+          "app shell"
+        ],
+        "pageTypes": [
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/ai-chat-app.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/ai-chat-app.tsx"
         }
       ]
     },
@@ -2847,6 +7300,43 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "testimonials-wall",
+      "type": "registry:block",
+      "title": "Testimonials Wall",
+      "description": "Masonry wall of testimonials with a star-rating header; cards rise and unblur column by column and lift on hover.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/rating-stars.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "testimonials",
+          "social proof",
+          "reviews",
+          "masonry"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/testimonials-wall.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/testimonials-wall.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "pricing-toggle",
       "type": "registry:block",
       "title": "Pricing — Period Toggle",
@@ -2969,6 +7459,242 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "product-page",
+      "type": "registry:block",
+      "title": "Product Detail Page",
+      "description": "E-commerce PDP: crossfading gallery with thumbnails, like burst, star rating, sliding size selector and a stateful Add to bag.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/rating-stars.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-stateful.json",
+        "https://marvzkineticlibrary.vercel.app/r/like-burst.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "product",
+          "pdp",
+          "ecommerce",
+          "gallery"
+        ],
+        "pageTypes": [
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/product-page.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/product-page.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "settings-page",
+      "type": "registry:block",
+      "title": "Settings Page",
+      "description": "Settings screen: collapsible sidebar, spring toggles, animated select, tag input and a hold-to-confirm danger zone.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/nav-sidebar.json",
+        "https://marvzkineticlibrary.vercel.app/r/toggle-switch.json",
+        "https://marvzkineticlibrary.vercel.app/r/select-animated.json",
+        "https://marvzkineticlibrary.vercel.app/r/tag-input.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-hold-confirm.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "settings",
+          "preferences",
+          "account",
+          "app shell"
+        ],
+        "pageTypes": [
+          "settings",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/settings-page.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/settings-page.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "contact-section",
+      "type": "registry:block",
+      "title": "Contact Section",
+      "description": "Contact block over a glowing dot matrix: floating-label fields, an animated select and a paper-plane send button.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/bg-dot-glow.json",
+        "https://marvzkineticlibrary.vercel.app/r/input-floating-label.json",
+        "https://marvzkineticlibrary.vercel.app/r/select-animated.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-send.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "contact",
+          "form",
+          "lead",
+          "agency"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/contact-section.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/contact-section.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "footer-reveal",
+      "type": "registry:block",
+      "title": "Footer Reveal",
+      "description": "Sticky reveal footer: the page lifts away like a sheet to uncover a fixed footer with a giant wordmark, rolling links and newsletter.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/text-roll-hover.json",
+        "https://marvzkineticlibrary.vercel.app/r/button-subscribe.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "footer",
+          "reveal",
+          "sticky",
+          "agency"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/footer-reveal.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/footer-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "integrations-orbit",
+      "type": "registry:block",
+      "title": "Integrations Orbit",
+      "description": "Integrations section: flip-word headline on the left, icons orbiting the product logo on the right.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/orbit-icons.json",
+        "https://marvzkineticlibrary.vercel.app/r/text-flip-words.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "integrations",
+          "ecosystem",
+          "orbit",
+          "landing"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/integrations-orbit.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/integrations-orbit.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "stats-impact",
+      "type": "registry:block",
+      "title": "Stats — Live Impact",
+      "description": "Impact section: a live odometer counter, KPI grid and a bar chart that grows on view.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/text-odometer.json",
+        "https://marvzkineticlibrary.vercel.app/r/chart-bar-grow.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "stats",
+          "kpi",
+          "counter",
+          "chart"
+        ],
+        "pageTypes": [
+          "landing",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/stats-impact.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/stats-impact.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "checkout-steps",
       "type": "registry:block",
       "title": "Checkout — Stepper + Confetti",
@@ -3004,6 +7730,79 @@
           "path": "components/kinetik/checkout-steps.tsx",
           "type": "registry:block",
           "target": "components/kinetik/checkout-steps.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "blog-grid",
+      "type": "registry:block",
+      "title": "Blog Grid — Filterable",
+      "description": "Journal index: category tabs filter the grid with FLIP reshuffling; cards reveal excerpts on hover.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/animated-tabs.json",
+        "https://marvzkineticlibrary.vercel.app/r/card-hover-reveal.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "blog",
+          "filter",
+          "grid",
+          "flip"
+        ],
+        "pageTypes": [
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/blog-grid.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/blog-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "changelog",
+      "type": "registry:block",
+      "title": "Changelog Timeline",
+      "description": "Release timeline whose rail draws down as you arrive and version dots pop onto it with each entry.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "changelog",
+          "timeline",
+          "releases",
+          "docs"
+        ],
+        "pageTypes": [
+          "blog",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/changelog.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/changelog.tsx"
         }
       ]
     },
@@ -3045,6 +7844,115 @@
           "path": "components/kinetik/not-found-playful.tsx",
           "type": "registry:block",
           "target": "components/kinetik/not-found-playful.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-music-player",
+      "type": "registry:block",
+      "title": "Expanding Music Player",
+      "description": "Apple Music-style mini player that expands into a full-screen player: artwork, title and shell morph with shared layout; art shrinks when paused.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "music",
+          "player",
+          "shared element",
+          "mobile"
+        ],
+        "pageTypes": [
+          "media"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-music-player.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-music-player.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-chat",
+      "type": "registry:block",
+      "title": "Messaging",
+      "description": "iMessage-style thread: bubbles spring in from their side, a typing indicator precedes replies, double-tap reacts with a popping heart.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "chat",
+          "messaging",
+          "social",
+          "mobile"
+        ],
+        "pageTypes": [
+          "social"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-chat.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-chat.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-stories",
+      "type": "registry:block",
+      "title": "Stories Viewer",
+      "description": "Instagram-style stories: segmented progress bars fill in real time, tap left/right to navigate, press and hold to pause, slow Ken Burns zoom.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "stories",
+          "instagram",
+          "media",
+          "mobile"
+        ],
+        "pageTypes": [
+          "social",
+          "media"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-stories.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-stories.tsx"
         }
       ]
     },
@@ -3126,6 +8034,42 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-ride",
+      "type": "registry:block",
+      "title": "Ride Booking Sheet",
+      "description": "Uber-style booking: the route draws on the map, a draggable bottom sheet snaps between three detents with velocity, the ride selection ring glides.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "bottom sheet",
+          "snap points",
+          "map",
+          "ride hailing",
+          "mobile"
+        ],
+        "pageTypes": [
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-ride.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-ride.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "flow-onboarding",
       "type": "registry:block",
       "title": "Onboarding Pager",
@@ -3200,6 +8144,42 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-food-order",
+      "type": "registry:block",
+      "title": "Food Order — Fly to Cart",
+      "description": "Delivery menu where tapping + launches the dish thumbnail along an arc into the bag, which bumps and counts up; a 'View bag' bar slides in.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "fly to cart",
+          "ecommerce",
+          "food delivery",
+          "mobile"
+        ],
+        "pageTypes": [
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-food-order.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-food-order.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "flow-checkout",
       "type": "registry:block",
       "title": "Swipe-to-Pay Checkout",
@@ -3232,6 +8212,43 @@
           "path": "components/kinetik/flow-checkout.tsx",
           "type": "registry:block",
           "target": "components/kinetik/flow-checkout.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "flow-breathe",
+      "type": "registry:block",
+      "title": "Guided Breathing",
+      "description": "4-7-8 breathing coach: concentric rings and a glowing orb expand and contract in time with each phase, with haptic cues on every transition.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "wellness",
+          "breathing",
+          "meditation",
+          "haptics",
+          "mobile"
+        ],
+        "pageTypes": [
+          "onboarding",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/flow-breathe.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/flow-breathe.tsx"
         }
       ]
     },

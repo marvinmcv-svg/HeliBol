@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-split-flap",
+  "type": "registry:component",
+  "title": "Split-Flap Board",
+  "description": "Airport departure board: every cell flaps through the character set until it lands on its target text.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-split-flap.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-split-flap.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nconst CHARS = \" ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:-.\";\n\nexport interface TextSplitFlapProps {\n  value: string;\n  /** ms per flap step */\n  speed?: number;\n  className?: string;\n  cellClassName?: string;\n}\n\n/** Airport departure board: every cell flaps through the alphabet until it lands on its target. */\nexport function TextSplitFlap({ value, speed = 45, className, cellClassName }: TextSplitFlapProps) {\n  const target = value.toUpperCase();\n  const reduced = useReducedMotion();\n  const [shown, setShown] = useState(() => target.replace(/./g, \" \"));\n\n  useEffect(() => {\n    if (reduced) {\n      setShown(target);\n      return;\n    }\n    const id = setInterval(() => {\n      setShown((cur) => {\n        const padded = cur.padEnd(target.length, \" \").slice(0, target.length);\n        let done = true;\n        const next = Array.from(padded)\n          .map((c, i) => {\n            const t = target[i];\n            if (c === t) return c;\n            done = false;\n            const ni = (CHARS.indexOf(c) + 1) % CHARS.length;\n            return CHARS[ni] ?? t;\n          })\n          .join(\"\");\n        if (done) clearInterval(id);\n        return next;\n      });\n    }, speed);\n    return () => clearInterval(id);\n  }, [target, speed, reduced]);\n\n  return (\n    <span className={cn(\"inline-flex gap-1 font-mono\", className)} aria-label={value} role=\"text\">\n      {Array.from(shown).map((c, i) => (\n        <span key={i} aria-hidden className={cn(\"relative grid h-[1.6em] w-[1.15em] place-items-center overflow-hidden rounded-[0.18em] bg-zinc-900 text-amber-300 shadow-[inset_0_-1px_0_rgb(255_255_255/.06)]\", cellClassName)}>\n          {c}\n          <span className=\"absolute inset-x-0 top-1/2 h-px bg-black/70\" />\n        </span>\n      ))}\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "split flap",
+      "airport",
+      "retro",
+      "ticker",
+      "board"
+    ],
+    "pageTypes": [
+      "landing",
+      "dashboard"
+    ]
+  }
+}

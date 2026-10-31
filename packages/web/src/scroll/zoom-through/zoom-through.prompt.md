@@ -1,0 +1,1 @@
+Create a zoom-through: 260vh section with a sticky 100vh stage; a full-cover background-colored layer with a giant word uses mix-blend screen (light) / multiply (dark) so the letters become windows onto the image; scroll scales the layer 1→40 from the word's counter and fades it at the end while the image scales 1.4→1.

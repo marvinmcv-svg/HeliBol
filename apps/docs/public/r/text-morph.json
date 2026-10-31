@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-morph",
+  "type": "registry:component",
+  "title": "Morphing Text",
+  "description": "Words melt into each other: two layers cross-blur while an SVG threshold filter fuses their edges into liquid letterforms.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-morph.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-morph.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useRef } from \"react\";\nimport { cn, prefersReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextMorphProps {\n  words: string[];\n  /** seconds to morph between words */\n  morphTime?: number;\n  /** seconds to hold each word */\n  holdTime?: number;\n  className?: string;\n}\n\n/** Words melt into each other: two layers cross-blur and a threshold SVG filter fuses the edges. */\nexport function TextMorph({ words, morphTime = 1, holdTime = 1.6, className }: TextMorphProps) {\n  const a = useRef<HTMLSpanElement>(null);\n  const b = useRef<HTMLSpanElement>(null);\n  const filterId = `k-morph-${useId().replace(/[^a-zA-Z0-9-]/g, \"\")}`;\n\n  useEffect(() => {\n    let i = 0;\n    let morph = 0;\n    let hold = holdTime;\n    let last = performance.now();\n    let raf = 0;\n    const set = (frac: number) => {\n      if (!a.current || !b.current) return;\n      const f = Math.max(frac, 1e-4);\n      b.current.style.filter = `blur(${Math.min(8 / f - 8, 100)}px)`;\n      b.current.style.opacity = `${Math.pow(f, 0.4) * 100}%`;\n      const r = 1 - f;\n      a.current.style.filter = `blur(${Math.min(8 / Math.max(r, 1e-4) - 8, 100)}px)`;\n      a.current.style.opacity = `${Math.pow(r, 0.4) * 100}%`;\n    };\n    const text = () => {\n      if (!a.current || !b.current) return;\n      a.current.textContent = words[i % words.length];\n      b.current.textContent = words[(i + 1) % words.length];\n    };\n    text();\n    const tick = (now: number) => {\n      const dt = (now - last) / 1000;\n      last = now;\n      if (prefersReducedMotion()) {\n        hold -= dt;\n        if (hold <= 0) {\n          i++;\n          text();\n          hold = holdTime;\n        }\n        set(0);\n      } else if (hold > 0) {\n        hold -= dt;\n        morph = 0;\n        set(0);\n      } else {\n        morph += dt;\n        const frac = morph / morphTime;\n        if (frac >= 1) {\n          i++;\n          text();\n          hold = holdTime;\n          set(0);\n        } else set(frac);\n      }\n      raf = requestAnimationFrame(tick);\n    };\n    raf = requestAnimationFrame(tick);\n    return () => cancelAnimationFrame(raf);\n  }, [words, morphTime, holdTime]);\n\n  return (\n    <span className={cn(\"relative inline-grid place-items-center\", className)} aria-label={words.join(\", \")}>\n      <svg className=\"absolute h-0 w-0\" aria-hidden>\n        <filter id={filterId}>\n          <feColorMatrix in=\"SourceGraphic\" type=\"matrix\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 255 -140\" />\n        </filter>\n      </svg>\n      <span aria-hidden className=\"grid place-items-center [grid-template-areas:'s']\" style={{ filter: `url(#${filterId})` }}>\n        <span ref={a} className=\"[grid-area:s] whitespace-nowrap\" />\n        <span ref={b} className=\"[grid-area:s] whitespace-nowrap opacity-0\" />\n      </span>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "morph",
+      "liquid",
+      "hero",
+      "rotating",
+      "svg filter"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

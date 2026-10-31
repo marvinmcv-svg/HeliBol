@@ -1,0 +1,1 @@
+Create a glass card: colorful blobs behind a card with bg-white/15, border-white/30, backdrop-blur-2xl + saturate, inset top highlight. Pointer offset (−.5….5) springs the blob layer by ×−30px and the card by ×10px for parallax.

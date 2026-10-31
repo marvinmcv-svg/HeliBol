@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-floating-images",
+  "type": "registry:component",
+  "title": "Hero — Floating Gallery",
+  "description": "Headline surrounded by photos floating at different depths that parallax against the pointer.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-floating-images.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/hero-floating-images.tsx",
+      "content": "\"use client\";\nimport { useRef } from \"react\";\nimport { motion, useMotionValue, useSpring, useTransform } from \"motion/react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\nconst spots = [\n  { l: \"6%\", t: \"10%\", w: 150, d: 0.6, r: -8 },\n  { l: \"74%\", t: \"6%\", w: 170, d: 1, r: 6 },\n  { l: \"2%\", t: \"62%\", w: 120, d: 1.4, r: 5 },\n  { l: \"80%\", t: \"58%\", w: 140, d: 0.8, r: -6 },\n  { l: \"38%\", t: \"78%\", w: 100, d: 1.8, r: 3 },\n  { l: \"56%\", t: \"2%\", w: 90, d: 2.2, r: -4 },\n];\n\n/** Headline surrounded by photos floating at different depths that parallax against the pointer. */\nexport function HeroFloatingImages({ images, title = \"Collect moments, not things.\", className }: { images: string[]; title?: string; className?: string }) {\n  const ref = useRef<HTMLElement>(null);\n  const off = useReducedMotion() || usePrefersTouch();\n  const mx = useSpring(useMotionValue(0), { stiffness: 60, damping: 18 });\n  const my = useSpring(useMotionValue(0), { stiffness: 60, damping: 18 });\n  return (\n    <section\n      ref={ref}\n      onPointerMove={(e) => {\n        if (off || !ref.current) return;\n        const r = ref.current.getBoundingClientRect();\n        mx.set((e.clientX - r.left) / r.width - 0.5);\n        my.set((e.clientY - r.top) / r.height - 0.5);\n      }}\n      className={cn(\"relative grid place-items-center overflow-hidden px-6\", className)}\n    >\n      {spots.map((s, i) => (\n        <Floating key={i} src={images[i % images.length]} spot={s} mx={mx} my={my} i={i} />\n      ))}\n      <div className=\"relative z-10 text-center\">\n        <h1 className=\"max-w-xl text-5xl font-semibold tracking-tight sm:text-6xl\">{title}</h1>\n        <p className=\"mt-3 text-muted-foreground\">A gallery that breathes with your cursor.</p>\n      </div>\n    </section>\n  );\n}\n\nfunction Floating({ src, spot, mx, my, i }: { src: string; spot: (typeof spots)[number]; mx: ReturnType<typeof useSpring>; my: ReturnType<typeof useSpring>; i: number }) {\n  const x = useTransform(mx, (v) => v * -60 * spot.d);\n  const y = useTransform(my, (v) => v * -60 * spot.d);\n  return (\n    <motion.img\n      src={src}\n      alt=\"\"\n      aria-hidden\n      initial={{ opacity: 0, scale: 0.8 }}\n      animate={{ opacity: 1, scale: 1 }}\n      transition={{ delay: 0.1 + i * 0.08, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}\n      style={{ left: spot.l, top: spot.t, width: spot.w, x, y, rotate: spot.r }}\n      className=\"absolute aspect-[4/5] rounded-2xl object-cover shadow-2xl\"\n    />\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "hero",
+      "parallax",
+      "gallery",
+      "floating",
+      "portfolio"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

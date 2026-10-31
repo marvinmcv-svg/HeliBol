@@ -1,0 +1,1 @@
+Create sparkle text: keep a rolling array of N sparkles (random x/y %, size 8–20px, color); every 420ms drop the oldest and add one. Each is an SVG four-point star that scales 0→1 rotating 0→90°, then exits scaling to 0 rotating to 180° (AnimatePresence).
