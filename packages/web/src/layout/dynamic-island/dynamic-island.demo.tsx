@@ -46,7 +46,7 @@ const states: Record<string, IslandState> = {
 };
 
 export default function Demo() {
-  const [s, setS] = useState("idle");
+  const [s, setS] = useState("music");
   return (
     <div className="flex h-full flex-col items-center justify-between p-6">
       <div className="h-[160px] pt-2"><DynamicIsland state={states[s]} /></div>

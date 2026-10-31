@@ -1,11 +1,14 @@
 # kinetik — the motion library for web & mobile
 
-**71 animated components · 10 page blocks · 6 mobile flows.** Copy-paste source (shadcn registry), live previews, and an **AI prompt** for every piece — organized like Refero and Mobbin, distributed like 21st.dev.
+**194 animated components · 20 page blocks · 12 mobile flows — 226 items, every one with a REA-captured thumbnail.** Copy-paste source (shadcn registry), live previews, and an **AI prompt** for every piece — organized like Refero and Mobbin, distributed like 21st.dev.
 
 ![kinetik home](docs/media/home.jpg)
 
+> **New in 2.0:** 139 new items — heroes, AI interfaces, widgets, device mockups, canvas/WebGL backgrounds and more — chosen from a gap analysis of 21st.dev, Mobbin, Refero, Awwwards and six open-source motion libraries, done with [REA](https://github.com/morluto/rea). Read the research: [`docs/research/README.md`](docs/research/README.md).
+
 Every item ships with:
 
+- a **thumbnail** captured with REA (`scripts/capture-thumbs.mjs`) that turns into the live demo on hover, the same pattern as 21st.dev's gallery cards
 - a **live, interactive preview** (replay, desktop/tablet/mobile viewports, light/dark, and a **Reduce motion** toggle that shows the accessible fallback)
 - **source + usage** with syntax highlighting
 - a one-line **install**: `npx shadcn@latest add https://marvzkineticlibrary.vercel.app/r/<id>.json`
@@ -26,9 +29,9 @@ These GIFs are real recordings of the live previews (`scripts/record-gifs.mjs`).
 
 | Section | What you get |
 |---|---|
-| **[Components](apps/docs/app/components)** (71) | Text (split reveal, scramble, typewriter, rotate, ticker, shimmer, gradient, scroll highlight, marker) · Buttons & micro-interactions (press, shimmer, magnetic, border beam, stateful, hold-to-confirm, like burst, copy, switch, checkbox, theme toggle with View-Transition circle reveal) · Scroll (CSS scroll-driven reveal & progress, parallax, sticky stacking cards, horizontal pinned gallery) · Layout/FLIP (tabs, accordion, expandable card, reorder, auto-animate list, Dynamic Island) · Backgrounds (aurora, mesh gradient, grid/dots, film grain, meteors) · Cards (spotlight borders, bento, animated beams) · Cursor (spotlight, 3D tilt) · Navigation (smart navbar, morphing menu, macOS dock) · Overlays (native `<dialog>` + `@starting-style`, draggable drawer, toasts, tooltips) · Loaders (skeleton, 8 spinners, progress bar/ring, success mark) · Data viz (KPI grid, line draw, bar grow) · Forms (floating label, OTP, stepper, error shake, password strength) · Media (marquee, drag carousel, image reveal) · Transitions (View Transitions shared element, push/pop stack) · SVG path draw · 3D canvas shell (R3F) · Foundations (Lenis smooth scroll, Motion provider) |
-| **[Blocks](apps/docs/blocks)** (10) | Hero, animated bento features, logo cloud + testimonial wall, spotlight CTA, FAQ, pricing toggle, magic-code auth, dashboard shell, checkout with confetti, playful 404 — filterable by Refero page type |
-| **[Mobile flows](apps/docs/flows)** (6) | Mobbin-style onboarding pager, paywall, phone sign-in, habit check-in, swipe-to-pay checkout, profile & settings — interactive phone prototypes with a screen strip, and prompts that rebuild them in **Expo + Reanimated 4 + Gesture Handler + expo-haptics** |
+| **[Components](apps/docs/app/components)** (194) | **New:** Heroes (8) · AI interfaces (8: prompt box, thinking steps, streaming chat, voice orb, voice wave, suggestions, code stream, agent timeline) · Widgets (11) · Device mockups (4) · +14 text effects · +14 backgrounds incl. raw WebGL shader & particle network · +14 cards · +6 cursor effects · product UI (select, tag input, dropzone, command palette, mega menu, sidebar, context menu…). **From 1.0:** Text (split reveal, scramble, typewriter, rotate, ticker, shimmer, gradient, scroll highlight, marker) · Buttons & micro-interactions (press, shimmer, magnetic, border beam, stateful, hold-to-confirm, like burst, copy, switch, checkbox, theme toggle with View-Transition circle reveal) · Scroll (CSS scroll-driven reveal & progress, parallax, sticky stacking cards, horizontal pinned gallery) · Layout/FLIP (tabs, accordion, expandable card, reorder, auto-animate list, Dynamic Island) · Backgrounds (aurora, mesh gradient, grid/dots, film grain, meteors) · Cards (spotlight borders, bento, animated beams) · Cursor (spotlight, 3D tilt) · Navigation (smart navbar, morphing menu, macOS dock) · Overlays (native `<dialog>` + `@starting-style`, draggable drawer, toasts, tooltips) · Loaders (skeleton, 8 spinners, progress bar/ring, success mark) · Data viz (KPI grid, line draw, bar grow) · Forms (floating label, OTP, stepper, error shake, password strength) · Media (marquee, drag carousel, image reveal) · Transitions (View Transitions shared element, push/pop stack) · SVG path draw · 3D canvas shell (R3F) · Foundations (Lenis smooth scroll, Motion provider) |
+| **[Blocks](apps/docs/blocks)** (20) | AI chat app, settings page, product page, blog grid, changelog, testimonials wall, integrations orbit, footer reveal, stats, contact, plus Hero, animated bento features, logo cloud + testimonial wall, spotlight CTA, FAQ, pricing toggle, magic-code auth, dashboard shell, checkout with confetti, playful 404 — filterable by Refero page type |
+| **[Mobile flows](apps/docs/flows)** (12) | Mobbin-style onboarding, paywall, phone sign-in, habit check-in, swipe-to-pay, settings, **messaging, stories, expanding music player, ride-booking sheet, fly-to-cart food order, guided breathing** — interactive phone prototypes with a screen strip, and prompts that rebuild them in **Expo + Reanimated 4 + Gesture Handler + expo-haptics** |
 | **[Playground](apps/docs/components/playground.tsx)** | Easing & spring visualizer; copy values as CSS, Motion, GSAP or Reanimated |
 | **⌘K search** | Fuzzy search over names, tags, engines and page types |
 
@@ -66,19 +69,22 @@ packages/web/src/<category>/<slug>/
 scripts/gen-registry.mjs   gallery index, registry JSON, AI prompts
 scripts/gen-demo-images.mjs  procedural, license-free demo art
 scripts/record-gifs.mjs    README GIFs from live previews
+scripts/capture-thumbs.mjs gallery thumbnails via REA (rea capture-web-screenshot over CDP)
+scripts/gen-meta.mjs       specs → meta.ts + prompt.md
+docs/research/             REA analysis, catalogs of 7 libraries, gap analysis
 ```
 
 ## Develop
 
 ```bash
 pnpm install
-pnpm dev          # regenerates the registry, then runs the docs at http://localhost:3000
+pnpm dev          # regenerates meta (from specs) + the registry, then runs the docs at http://localhost:3000
 pnpm test         # contract + render tests for every component (normal & reduced motion)
 pnpm typecheck
 pnpm build
 ```
 
-Add a component: create the four files in `packages/web/src/<category>/<slug>/`, run `pnpm registry`, and it appears in the gallery, ⌘K search, the registry and the prompt endpoints.
+Add a component: write `<slug>.tsx` + `<slug>.demo.tsx` in `packages/web/src/<category>/<slug>/` and a spec entry in `packages/web/specs/*.json` (meta + prompt are generated), or create the four files in `packages/web/src/<category>/<slug>/`, run `pnpm registry`, and it appears in the gallery, ⌘K search, the registry and the prompt endpoints.
 
 ## Status
 

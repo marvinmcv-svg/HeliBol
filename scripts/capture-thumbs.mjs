@@ -3,7 +3,7 @@
  * Gallery thumbnails captured with REA (https://github.com/morluto/rea).
  *
  * 1. Launches headless Chromium with a CDP endpoint.
- * 2. For every registry item, opens /thumb/<id> (chrome-less demo) at 1200×750, dark theme.
+ * 2. For every registry item, opens /thumb/<id> (chrome-less demo) at 800×500, dark theme.
  * 3. Calls `rea capture-web-screenshot <cdp> <target> --allowed-origins <origin>` and decodes the
  *    PNG artifact from REA's Evidence, then converts it to an 800×500 WebP with ffmpeg.
  * 4. Writes apps/docs/public/thumbs/<id>.webp and a manifest with each REA evidence_id + sha256.
@@ -31,8 +31,8 @@ const REA = (process.env.REA_BIN ?? "npx -y rea-agents@latest").split(" ");
 const CHROME = process.env.CHROME ?? "/opt/pw-browsers/chromium-1243/chrome-linux64/chrome";
 const PORT = 9333;
 const CDP = `http://127.0.0.1:${PORT}`;
-const W = 1200;
-const H = 750;
+const W = 800;
+const H = 500;
 
 const registry = JSON.parse(fs.readFileSync(path.join(root, "apps/docs/registry.json"), "utf8"));
 let ids = registry.items.filter((i) => i.name !== "kinetik-core").map((i) => i.name);

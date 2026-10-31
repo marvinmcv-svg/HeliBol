@@ -20,3 +20,15 @@ Decisions made while executing `motion-library-master-plan.md`. Per Section 0.9,
 | 14 | **Toggle switch, tabs and indicators use Motion `layout`/`layoutId`** scoped with `useId`/`LayoutGroup`. | Multiple instances on one page (galleries, flow strips) must not share layout IDs. |
 | 15 | **Tests:** one Vitest contract suite renders every demo in normal and reduced-motion modes and validates every meta (426 tests). | Catches contract drift and reduced-motion crashes (it found one in `text-scroll-highlight`). WebGL is excluded from jsdom. |
 | 16 | **Lucide brand icons replaced** (GitHub/Slack removed upstream). | Use neutral icons in demos. |
+
+## kinetik 2.0 (expansion)
+
+| # | Decision | Why |
+|---|---|---|
+| 17 | **Research via REA on open-source code** (`rea analyze-javascript-application` on 21st.dev's own repo + Magic UI, React Bits, Motion Primitives, Cult UI, Animata, Fancy). Closed sites covered with web search only. | The environment's network policy blocks 21st.dev, Mobbin, Awwwards, Refero, Aceternity and the library sites; GitHub is reachable. See `docs/research/README.md`. |
+| 18 | **Thumbnails captured with REA** (`rea capture-web-screenshot` over CDP), stored as 800×500 WebP with an evidence manifest. Cards show the thumbnail and mount the live demo on hover. | Matches 21st.dev's card model (REA found `card-image` + `card-video`). It fixes the "empty spinner" gallery and saves CPU on a page with 200+ demos. |
+| 19 | **Spec-driven metadata** (`packages/web/specs/*.json` → `scripts/gen-meta.mjs`). | 139 new items. Only the `.tsx` and demo are hand-written; meta and prompt come from one reviewed spec. |
+| 20 | **New categories: heroes, ai, widgets, mockups**; new engine label `js` (vanilla rAF); new page types `ai-app`, `social`, `media`. | Gaps in our taxonomy versus 21st.dev's sections and Refero's page types. |
+| 21 | **`useCanvas` in core** (DPR sizing, off-screen and hidden-tab pausing, pointer tracking, a static frame under reduced motion). | 9 canvas pieces share it, so none re-implement lifecycle or a11y. Raw WebGL (`bg-shader`) instead of three.js for backgrounds: ~1 KB. |
+| 22 | **Vitest `fsModuleCache: false`.** | Vitest 5 reused the cached transform of the contract test, so its `import.meta.glob` never saw new components (588 tests ran instead of 1,164). |
+| 23 | Default array props are hoisted to module constants before use in effect deps. | `TextSparkles` with an inline default array caused an infinite render loop; the test suite caught it. |

@@ -13,3 +13,8 @@ All code in this repository is original. The following were studied as **inspira
 - Apple (Dynamic Island, Dock, Activity rings), macOS login shake, Telegram theme switch — interaction references.
 
 Libraries: Motion, GSAP (+ ScrollTrigger, SplitText, ScrambleText, DrawSVG), Lenis, three.js, React Three Fiber, drei, lucide-react, shiki, Next.js, Tailwind CSS, Geist font.
+
+## Research tooling
+
+- **REA — Reverse Engineer Anything** ([morluto/rea](https://github.com/morluto/rea), MIT): static JavaScript analysis of the libraries above and thumbnail capture for the gallery. See `docs/research/`.
+- Catalog and taxonomy data come from the public MIT repositories of 21st.dev (`serafimcloud/21st`), Magic UI, Motion Primitives, Cult UI, Animata and Fancy Components, and from React Bits (MIT + Commons Clause, studied only, nothing reused).

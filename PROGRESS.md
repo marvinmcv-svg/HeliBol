@@ -1,22 +1,19 @@
 # PROGRESS
 
-Status of every component ID in `motion-library-master-plan.md` (Sections 7 & 8).
+Status of every component ID in `motion-library-master-plan.md` (Sections 7 & 8), plus everything built beyond it.
 
-**Summary:** 78 plan items done · 14 partial/covered · 106 todo (mostly P2/P3 web items and native Expo source) · 87 registry items live (71 components, 10 blocks, 6 flows).
+**Summary (kinetik 2.0):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **226 registry items live** (194 components + blocks/flows). Research and gap analysis: `docs/research/README.md`.
 
-Legend: ✅ done · 🟡 partial / covered by another item · ⬜ todo
-
-> Generated from the plan + `apps/docs/registry.json`. Mobile (Section 8) items are delivered as interactive web prototypes in **/flows** whose AI prompts target Expo + Reanimated 4; native Expo source is the next phase.
-
+Legend: ✅ done · 🟡 partial · ⬜ todo
 
 ## 7.1 Foundations & providers
 
 | ID | Status | Notes |
 |---|---|---|
-| `motion-provider` | ✅ | Live in docs |
-| `smooth-scroll` | ✅ | Live in docs |
-| `in-view` | 🟡 | Covered by `@kinetik/core useInView` |
-| `animate-presence-route` | 🟡 | Covered by `transition-slide-stack` |
+| `motion-provider` | ✅ | Live |
+| `smooth-scroll` | ✅ | Live |
+| `in-view` | ✅ | Built as `@kinetik/core useInView` |
+| `animate-presence-route` | ✅ | Built as `transition-slide-stack` |
 | `view-transition-link` | ⬜ |  |
 | `easing-playground` | ⬜ |  |
 
@@ -24,36 +21,36 @@ Legend: ✅ done · 🟡 partial / covered by another item · ⬜ todo
 
 | ID | Status | Notes |
 |---|---|---|
-| `text-split-reveal` | ✅ | Live in docs |
-| `text-blur-in` | ✅ | Live in docs |
-| `text-scramble` | ✅ | Live in docs |
-| `text-typewriter` | ✅ | Live in docs |
-| `text-rotate` | ✅ | Live in docs |
-| `number-ticker` | ✅ | Live in docs |
-| `text-gradient-animated` | ✅ | Live in docs |
-| `text-shimmer` | ✅ | Live in docs |
-| `text-scroll-highlight` | ✅ | Live in docs |
-| `text-highlighter` | ✅ | Live in docs |
+| `text-split-reveal` | ✅ | Live |
+| `text-blur-in` | ✅ | Live |
+| `text-scramble` | ✅ | Live |
+| `text-typewriter` | ✅ | Live |
+| `text-rotate` | ✅ | Live |
+| `number-ticker` | ✅ | Live |
+| `text-gradient-animated` | ✅ | Live |
+| `text-shimmer` | ✅ | Live |
+| `text-scroll-highlight` | ✅ | Live |
+| `text-highlighter` | ✅ | Live |
 | `text-variable-weight` | ⬜ |  |
-| `text-velocity-marquee` | ⬜ |  |
+| `text-velocity-marquee` | ✅ | Live |
 | `text-on-path` | ⬜ |  |
-| `text-3d-flip` | ⬜ |  |
-| `text-glitch` | ⬜ |  |
+| `text-3d-flip` | ✅ | Built as `text-flip-words` |
+| `text-glitch` | ✅ | Live |
 
 ## 7.3 Scroll & storytelling
 
 | ID | Status | Notes |
 |---|---|---|
-| `scroll-reveal` | ✅ | Live in docs |
-| `scroll-progress` | ✅ | Live in docs |
-| `parallax-layer` | ✅ | Live in docs |
-| `sticky-stack-cards` | ✅ | Live in docs |
-| `horizontal-scroll-section` | ✅ | Live in docs |
-| `pinned-story` | ⬜ |  |
+| `scroll-reveal` | ✅ | Live |
+| `scroll-progress` | ✅ | Live |
+| `parallax-layer` | ✅ | Live |
+| `sticky-stack-cards` | ✅ | Live |
+| `horizontal-scroll-section` | ✅ | Live |
+| `pinned-story` | ✅ | Live |
 | `image-sequence-scrub` | ⬜ |  |
-| `zoom-through-hero` | ⬜ |  |
-| `scroll-velocity-skew` | ⬜ |  |
-| `scroll-collapse-header` | ⬜ |  |
+| `zoom-through-hero` | ✅ | Built as `zoom-through` |
+| `scroll-velocity-skew` | ✅ | Built as `text-velocity-marquee` |
+| `scroll-collapse-header` | ✅ | Built as `navbar-hide-on-scroll` |
 | `scroll-video-scrub` | ⬜ |  |
 | `scroll-snap-sections` | ⬜ |  |
 
@@ -62,137 +59,137 @@ Legend: ✅ done · 🟡 partial / covered by another item · ⬜ todo
 | ID | Status | Notes |
 |---|---|---|
 | `vt-crossfade` | ⬜ |  |
-| `vt-shared-element` | ✅ | Live in docs |
-| `transition-curtain` | ⬜ |  |
-| `transition-slide-stack` | ✅ | Live in docs |
-| `transition-circle-reveal` | 🟡 | Covered by `theme-toggle` |
-| `preloader-intro` | ⬜ |  |
+| `vt-shared-element` | ✅ | Live |
+| `transition-curtain` | ✅ | Live |
+| `transition-slide-stack` | ✅ | Live |
+| `transition-circle-reveal` | ✅ | Built as `theme-toggle` |
+| `preloader-intro` | ✅ | Built as `preloader-counter` |
 
 ## 7.5 Layout & FLIP
 
 | ID | Status | Notes |
 |---|---|---|
-| `animated-tabs` | ✅ | Live in docs |
-| `accordion-smooth` | ✅ | Live in docs |
-| `expandable-card` | ✅ | Live in docs |
-| `reorder-list` | ✅ | Live in docs |
-| `auto-animate-list` | ✅ | Live in docs |
-| `filter-grid-flip` | ⬜ |  |
-| `layout-grid-toggle` | ⬜ |  |
-| `dynamic-island` | ✅ | Live in docs |
-| `morphing-popover` | ⬜ |  |
+| `animated-tabs` | ✅ | Live |
+| `accordion-smooth` | ✅ | Live |
+| `expandable-card` | ✅ | Live |
+| `reorder-list` | ✅ | Live |
+| `auto-animate-list` | ✅ | Live |
+| `filter-grid-flip` | ✅ | Built as `blog-grid` |
+| `layout-grid-toggle` | ✅ | Built as `auto-animate-list` |
+| `dynamic-island` | ✅ | Live |
+| `morphing-popover` | ✅ | Built as `popover-morph` |
 
 ## 7.6 Buttons & micro-interactions
 
 | ID | Status | Notes |
 |---|---|---|
-| `button-press` | ✅ | Live in docs |
-| `button-shimmer` | ✅ | Live in docs |
-| `button-magnetic` | ✅ | Live in docs |
-| `button-border-beam` | ✅ | Live in docs |
-| `button-stateful` | ✅ | Live in docs |
-| `button-hold-confirm` | ✅ | Live in docs |
-| `button-ripple` | ⬜ |  |
-| `button-liquid` | ⬜ |  |
-| `like-burst` | ✅ | Live in docs |
-| `copy-button` | ✅ | Live in docs |
-| `toggle-switch` | ✅ | Live in docs |
-| `checkbox-draw` | ✅ | Live in docs |
-| `theme-toggle` | ✅ | Live in docs |
-| `animated-icon-set` | ⬜ |  |
-| `rating-stars` | ⬜ |  |
-| `confetti-trigger` | ⬜ |  |
+| `button-press` | ✅ | Live |
+| `button-shimmer` | ✅ | Live |
+| `button-magnetic` | ✅ | Live |
+| `button-border-beam` | ✅ | Live |
+| `button-stateful` | ✅ | Live |
+| `button-hold-confirm` | ✅ | Live |
+| `button-ripple` | ✅ | Live |
+| `button-liquid` | ✅ | Built as `button-gooey` |
+| `like-burst` | ✅ | Live |
+| `copy-button` | ✅ | Live |
+| `toggle-switch` | ✅ | Live |
+| `checkbox-draw` | ✅ | Live |
+| `theme-toggle` | ✅ | Live |
+| `animated-icon-set` | ✅ | Built as `icon-morph` |
+| `rating-stars` | ✅ | Live |
+| `confetti-trigger` | ✅ | Built as `button-emoji-burst` |
 
 ## 7.7 Cursor & pointer effects
 
 | ID | Status | Notes |
 |---|---|---|
-| `custom-cursor` | ⬜ |  |
-| `spotlight` | ✅ | Live in docs |
-| `tilt-card` | ✅ | Live in docs |
-| `cursor-trail` | ⬜ |  |
-| `follow-eyes` | ⬜ |  |
+| `custom-cursor` | ✅ | Built as `cursor-custom` |
+| `spotlight` | ✅ | Live |
+| `tilt-card` | ✅ | Live |
+| `cursor-trail` | ✅ | Built as `cursor-image-trail` |
+| `follow-eyes` | ✅ | Built as `cursor-eyes` |
 
 ## 7.8 Backgrounds & ambient
 
 | ID | Status | Notes |
 |---|---|---|
-| `bg-aurora` | ✅ | Live in docs |
-| `bg-grid-dots` | ✅ | Live in docs |
-| `bg-gradient-mesh` | ✅ | Live in docs |
-| `bg-noise` | ✅ | Live in docs |
-| `bg-beams` | ⬜ |  |
-| `bg-meteors` | ✅ | Live in docs |
-| `bg-particles` | ⬜ |  |
-| `bg-shader-gradient` | ⬜ |  |
-| `bg-ripple-grid` | ⬜ |  |
-| `bg-starfield` | ⬜ |  |
+| `bg-aurora` | ✅ | Live |
+| `bg-grid-dots` | ✅ | Live |
+| `bg-gradient-mesh` | ✅ | Live |
+| `bg-noise` | ✅ | Live |
+| `bg-beams` | ✅ | Live |
+| `bg-meteors` | ✅ | Live |
+| `bg-particles` | ✅ | Live |
+| `bg-shader-gradient` | ✅ | Built as `bg-shader` |
+| `bg-ripple-grid` | ✅ | Built as `bg-boxes` |
+| `bg-starfield` | ✅ | Live |
 
 ## 7.9 Cards & surfaces
 
 | ID | Status | Notes |
 |---|---|---|
-| `card-spotlight-border` | ✅ | Live in docs |
-| `bento-grid` | ✅ | Live in docs |
-| `card-glass` | ⬜ |  |
-| `card-flip` | ⬜ |  |
-| `card-stack-swipe` | ⬜ |  |
-| `card-hover-reveal` | ⬜ |  |
-| `animated-beam` | ✅ | Live in docs |
+| `card-spotlight-border` | ✅ | Live |
+| `bento-grid` | ✅ | Live |
+| `card-glass` | ✅ | Live |
+| `card-flip` | ✅ | Live |
+| `card-stack-swipe` | ✅ | Built as `card-swipe-deck` |
+| `card-hover-reveal` | ✅ | Live |
+| `animated-beam` | ✅ | Live |
 
 ## 7.10 Navigation
 
 | ID | Status | Notes |
 |---|---|---|
-| `navbar-hide-on-scroll` | ✅ | Live in docs |
-| `menu-toggle-morph` | ✅ | Live in docs |
-| `dock-magnify` | ✅ | Live in docs |
-| `mega-menu` | ⬜ |  |
-| `command-palette` | ⬜ |  |
-| `breadcrumb-animated` | ⬜ |  |
-| `sidebar-collapse` | ⬜ |  |
+| `navbar-hide-on-scroll` | ✅ | Live |
+| `menu-toggle-morph` | ✅ | Live |
+| `dock-magnify` | ✅ | Live |
+| `mega-menu` | ✅ | Built as `nav-mega-menu` |
+| `command-palette` | ✅ | Live |
+| `breadcrumb-animated` | ✅ | Built as `nav-breadcrumb` |
+| `sidebar-collapse` | ✅ | Built as `nav-sidebar` |
 
 ## 7.11 Overlays
 
 | ID | Status | Notes |
 |---|---|---|
-| `dialog-animated` | ✅ | Live in docs |
-| `drawer-draggable` | ✅ | Live in docs |
-| `toast-stack` | ✅ | Live in docs |
-| `tooltip-animated` | ✅ | Live in docs |
-| `popover-morph` | ⬜ |  |
-| `context-menu-animated` | ⬜ |  |
+| `dialog-animated` | ✅ | Live |
+| `drawer-draggable` | ✅ | Live |
+| `toast-stack` | ✅ | Live |
+| `tooltip-animated` | ✅ | Live |
+| `popover-morph` | ✅ | Live |
+| `context-menu-animated` | ✅ | Built as `context-menu` |
 
 ## 7.12 Loaders, progress & feedback
 
 | ID | Status | Notes |
 |---|---|---|
-| `skeleton-shimmer` | ✅ | Live in docs |
-| `spinner-set` | ✅ | Live in docs |
-| `progress-bar-animated` | ✅ | Live in docs |
-| `progress-ring` | ✅ | Live in docs |
-| `success-check` | ✅ | Live in docs |
+| `skeleton-shimmer` | ✅ | Live |
+| `spinner-set` | ✅ | Live |
+| `progress-bar-animated` | ✅ | Live |
+| `progress-ring` | ✅ | Live |
+| `success-check` | ✅ | Live |
 | `empty-state-animated` | ⬜ |  |
-| `page-loader-bar` | ⬜ |  |
+| `page-loader-bar` | ✅ | Built as `progress-bar-animated` |
 
 ## 7.13 Data visualization motion
 
 | ID | Status | Notes |
 |---|---|---|
-| `stat-counter-grid` | ✅ | Live in docs |
-| `chart-bar-grow` | ✅ | Live in docs |
-| `chart-line-draw` | ✅ | Live in docs |
-| `chart-donut` | ⬜ |  |
-| `globe-interactive` | ⬜ |  |
-| `live-ticker` | ⬜ |  |
+| `stat-counter-grid` | ✅ | Live |
+| `chart-bar-grow` | ✅ | Live |
+| `chart-line-draw` | ✅ | Live |
+| `chart-donut` | ✅ | Live |
+| `globe-interactive` | ✅ | Built as `hero-globe` |
+| `live-ticker` | ✅ | Built as `text-odometer` |
 
 ## 7.14 SVG & illustration
 
 | ID | Status | Notes |
 |---|---|---|
-| `svg-path-draw` | ✅ | Live in docs |
-| `svg-morph` | ⬜ |  |
-| `svg-motion-path` | ⬜ |  |
+| `svg-path-draw` | ✅ | Live |
+| `svg-morph` | ✅ | Built as `svg-morph-shapes` |
+| `svg-motion-path` | ✅ | Live |
 | `rive-player` | ⬜ |  |
 | `lottie-player` | ⬜ |  |
 
@@ -200,7 +197,7 @@ Legend: ✅ done · 🟡 partial / covered by another item · ⬜ todo
 
 | ID | Status | Notes |
 |---|---|---|
-| `canvas-3d-shell` | ✅ | Live in docs |
+| `canvas-3d-shell` | ✅ | Live |
 | `hero-3d-model` | ⬜ |  |
 | `image-distortion-hover` | ⬜ |  |
 | `particles-morph` | ⬜ |  |
@@ -211,47 +208,47 @@ Legend: ✅ done · 🟡 partial / covered by another item · ⬜ todo
 
 | ID | Status | Notes |
 |---|---|---|
-| `marquee` | ✅ | Live in docs |
-| `carousel-drag` | ✅ | Live in docs |
-| `image-reveal-mask` | ✅ | Live in docs |
-| `lightbox-shared` | ⬜ |  |
-| `video-hover-preview` | ⬜ |  |
-| `before-after-slider` | ⬜ |  |
-| `cover-flow` | ⬜ |  |
+| `marquee` | ✅ | Live |
+| `carousel-drag` | ✅ | Live |
+| `image-reveal-mask` | ✅ | Live |
+| `lightbox-shared` | ✅ | Built as `lightbox` |
+| `video-hover-preview` | ✅ | Built as `video-hover` |
+| `before-after-slider` | ✅ | Built as `before-after` |
+| `cover-flow` | ✅ | Built as `coverflow` |
 
 ## 7.17 Forms & inputs
 
 | ID | Status | Notes |
 |---|---|---|
-| `input-floating-label` | ✅ | Live in docs |
-| `otp-input` | ✅ | Live in docs |
-| `form-stepper` | ✅ | Live in docs |
-| `password-strength` | ✅ | Live in docs |
-| `search-expand` | ⬜ |  |
-| `file-dropzone` | ⬜ |  |
-| `error-shake` | ✅ | Live in docs |
+| `input-floating-label` | ✅ | Live |
+| `otp-input` | ✅ | Live |
+| `form-stepper` | ✅ | Live |
+| `password-strength` | ✅ | Live |
+| `search-expand` | ✅ | Live |
+| `file-dropzone` | ✅ | Live |
+| `error-shake` | ✅ | Live |
 
 ## 7.18 Blocks (full sections built from components)
 
 | ID | Status | Notes |
 |---|---|---|
-| `hero-split-text` | ✅ | Live in docs |
-| `hero-3d` | ⬜ |  |
+| `hero-split-text` | ✅ | Live |
+| `hero-3d` | ✅ | Built as `canvas-3d-shell` |
 | `hero-video-zoom` | ⬜ |  |
-| `features-bento` | ✅ | Live in docs |
-| `features-sticky-story` | ⬜ |  |
-| `logo-cloud-marquee` | 🟡 | Covered by `social-proof-marquee` |
-| `testimonials-wall` | 🟡 | Covered by `social-proof-marquee` |
-| `pricing-toggle` | ✅ | Live in docs |
-| `stats-section` | 🟡 | Covered by `stat-counter-grid` |
-| `faq-accordion` | 🟡 | Covered by `faq-section` |
-| `cta-spotlight` | ✅ | Live in docs |
-| `footer-reveal` | ⬜ |  |
-| `auth-card` | ✅ | Live in docs |
-| `dashboard-shell` | ✅ | Live in docs |
-| `portfolio-gallery` | ⬜ |  |
-| `404-playful` | 🟡 | Covered by `not-found-playful` |
-| `checkout-steps` | ✅ | Live in docs |
+| `features-bento` | ✅ | Live |
+| `features-sticky-story` | ✅ | Built as `pinned-story` |
+| `logo-cloud-marquee` | ✅ | Built as `social-proof-marquee` |
+| `testimonials-wall` | ✅ | Live |
+| `pricing-toggle` | ✅ | Live |
+| `stats-section` | ✅ | Built as `stats-impact` |
+| `faq-accordion` | ✅ | Built as `faq-section` |
+| `cta-spotlight` | ✅ | Live |
+| `footer-reveal` | ✅ | Live |
+| `auth-card` | ✅ | Live |
+| `dashboard-shell` | ✅ | Live |
+| `portfolio-gallery` | ✅ | Built as `horizontal-scroll-section` |
+| `404-playful` | ✅ | Built as `not-found-playful` |
+| `checkout-steps` | ✅ | Live |
 
 ## 8.1 Foundations
 
@@ -337,6 +334,6 @@ Legend: ✅ done · 🟡 partial / covered by another item · ⬜ todo
 | `flow-empty-error-states` | ⬜ |  |
 | `flow-habit-check-in` | 🟡 | Web prototype in /flows + Expo/Reanimated prompt; native source todo |
 
-## Built beyond the plan
+## Built beyond the plan (94)
 
-`faq-section`, `not-found-playful`, `social-proof-marquee`
+`activity-rings`, `ai-agent-steps`, `ai-chat-app`, `ai-chat-stream`, `ai-code-stream`, `ai-orb`, `ai-prompt-box`, `ai-suggestions`, `ai-thinking`, `ai-voice-wave`, `bg-blinds`, `bg-dot-glow`, `bg-flicker-grid`, `bg-lamp`, `bg-light-rays`, `bg-retro-grid`, `bg-ripple-rings`, `bg-topography`, `bg-waves`, `button-arrow-slide`, `button-download`, `button-expand-icon`, `button-neumorph`, `button-pulse`, `button-rainbow`, `button-send`, `button-subscribe`, `card-3d-layers`, `card-expand-gallery`, `card-fan`, `card-folder`, `card-holo`, `card-neon`, `card-pixel-reveal`, `card-profile`, `card-shine`, `card-social-post`, `changelog`, `contact-section`, `cursor-blob`, `cursor-click-spark`, `cursor-crosshair`, `flow-breathe`, `flow-chat`, `flow-food-order`, `flow-music-player`, `flow-ride`, `flow-stories`, `heatmap-grid`, `hero-dev-terminal`, `hero-editorial`, `hero-floating-images`, `hero-mesh-cards`, `hero-scroll-tilt`, `hero-spotlight-grid`, `hero-video-dialog`, `hover-card`, `integrations-orbit`, `loader-morph`, `masonry-reveal`, `mockup-browser`, `mockup-iphone`, `mockup-laptop`, `mockup-window`, `nav-bottom-bar`, `nav-hover-highlight`, `nav-speed-dial`, `orbit-icons`, `product-page`, `select-animated`, `settings-page`, `slider-elastic`, `tag-input`, `text-circular`, `text-falling`, `text-loop-lines`, `text-morph`, `text-roll-hover`, `text-sparkles`, `text-split-flap`, `text-stroke-draw`, `text-variable-proximity`, `text-wave`, `widget-battery`, `widget-calendar`, `widget-clock`, `widget-file-tree`, `widget-music`, `widget-notifications`, `widget-stock`, `widget-terminal`, `widget-timer`, `widget-water`, `widget-weather`

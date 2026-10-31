@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { blocks, components, flows } from "@/lib/registry.generated";
 import { ThumbStage } from "@/components/thumb-stage";
 
-/** Chrome-less render of one demo at 1200×750, used by scripts/capture-thumbs.mjs (REA) to make gallery thumbnails. */
+/** Chrome-less render of one demo at 800×500, used by scripts/capture-thumbs.mjs (REA) to make gallery thumbnails. */
 const all = [...components, ...blocks, ...flows];
 
 export function generateStaticParams() {

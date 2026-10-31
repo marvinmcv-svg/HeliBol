@@ -19,9 +19,9 @@ import { EngineBadge } from "@/components/engine-badge";
 import { blocks, components, flows } from "@/lib/registry.generated";
 import { categories, engines } from "@/lib/taxonomy";
 
-const featured = ["text-split-reveal", "like-burst", "dynamic-island", "card-spotlight-border", "toast-stack", "tilt-card"];
-const featuredBlocks = ["pricing-toggle", "auth-card"];
-const featuredFlows = ["flow-onboarding", "flow-paywall", "flow-habit-check-in"];
+const featured = ["hero-mesh-cards", "ai-prompt-box", "card-holo", "text-morph", "bg-particles", "dynamic-island", "widget-music", "card-swipe-deck", "hero-globe"];
+const featuredBlocks = ["ai-chat-app", "product-page", "pricing-toggle", "settings-page"];
+const featuredFlows = ["flow-stories", "flow-music-player", "flow-ride"];
 
 export default function Home() {
   const pick = <T extends { id: string }>(list: T[], ids: string[]) => ids.map((id) => list.find((m) => m.id === id)!).filter(Boolean);
