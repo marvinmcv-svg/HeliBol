@@ -77,6 +77,9 @@ async function captureOne(id) {
   try {
     await s.send("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: 1, mobile: false });
     await s.send("Page.enable");
+    // background tabs get throttled rAF — keep every capture tab "focused" so tickers run
+    await s.send("Emulation.setFocusEmulationEnabled", { enabled: true });
+    await s.send("Page.bringToFront");
     await s.send("Page.addScriptToEvaluateOnNewDocument", { source: "try{localStorage.setItem('theme','dark')}catch(e){}" });
     await s.send("Page.navigate", { url: `${base}/thumb/${id}` });
     for (let t = 0; t < 40; t++) {
@@ -101,7 +104,7 @@ async function captureOne(id) {
   }
 }
 
-const chrome = spawn(CHROME, ["--headless=new", "--no-sandbox", `--remote-debugging-port=${PORT}`, "--hide-scrollbars", "--use-gl=swiftshader", "--enable-unsafe-swiftshader", "--mute-audio", "about:blank"], { stdio: "ignore" });
+const chrome = spawn(CHROME, ["--headless=new", "--no-sandbox", `--remote-debugging-port=${PORT}`, "--hide-scrollbars", "--use-gl=swiftshader", "--enable-unsafe-swiftshader", "--mute-audio", "--disable-background-timer-throttling", "--disable-renderer-backgrounding", "--disable-backgrounding-occluded-windows", "about:blank"], { stdio: "ignore" });
 for (let i = 0; i < 50; i++) {
   try {
     await fetch(`${CDP}/json/version`);
