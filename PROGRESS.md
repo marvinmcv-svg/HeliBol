@@ -360,4 +360,4 @@ Sources and reasoning: `docs/research/sources-2.2.md`.
 
 **Flows (2):** `flow-empty-state` · `flow-search-filter`
 
-Still open: thumbnails for the 49 new items (REA capture needs Chrome + the dev server; until then cards mount the live demo), native Expo source for the new flows, Rive/Lottie players, MCP server.
+All 49 have gallery thumbnails (captured with Chrome's own screenshot via `THUMB_ENGINE=cdp`, see DECISIONS #34). Still open: native Expo source for the new flows, Rive/Lottie players, MCP server.

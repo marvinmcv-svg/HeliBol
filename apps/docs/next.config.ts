@@ -7,6 +7,8 @@ const config: NextConfig = {
   transpilePackages: ["@kinetik/web", "@kinetik/core", "@kinetik/tokens"],
   outputFileTracingRoot: root,
   turbopack: { root },
+  // keep the dev badge out of thumbnails captured against `next dev`
+  devIndicators: false,
   outputFileTracingIncludes: { "/**": ["../../packages/web/src/**/*"] },
 };
 

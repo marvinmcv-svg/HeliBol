@@ -2,7 +2,7 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Environment, Float, Lightformer, MeshTransmissionMaterial } from "@react-three/drei";
-import type { Mesh } from "three";
+import { Color, type Mesh } from "three";
 import { useReducedMotion } from "@kinetik/core";
 import { Canvas3DShell } from "../canvas-3d-shell/canvas-3d-shell";
 
@@ -40,9 +40,11 @@ function Shape({ geometry, faceted, tint, dispersion }: Required<Omit<ThreeGlass
         <MeshTransmissionMaterial
           flatShading={faceted}
           color={tint}
-          thickness={1.4}
-          roughness={0.02}
-          ior={1.35}
+          background={GLASS_BG}
+          thickness={0.55}
+          backsideThickness={0.3}
+          roughness={0.04}
+          ior={1.22}
           chromaticAberration={dispersion}
           anisotropicBlur={0.2}
           distortion={0.15}
@@ -57,10 +59,18 @@ function Shape({ geometry, faceted, tint, dispersion }: Required<Omit<ThreeGlass
   );
 }
 
+// What the glass "sees" where no geometry is behind it — a lifted violet instead of black.
+const GLASS_BG = new Color("#2a2140");
+
 /** Colourful shapes stay behind the glass so the refraction has something to bend. */
 function Backdrop() {
   return (
     <group position={[0, 0, -2.4]}>
+      {/* soft gradient wall so every refracted ray lands on colour */}
+      <mesh position={[0, 0, -1.2]}>
+        <planeGeometry args={[14, 9, 1, 1]} />
+        <meshBasicMaterial color="#3b2a63" />
+      </mesh>
       <mesh position={[-1.6, 0.6, 0]}><sphereGeometry args={[0.7, 32, 32]} /><meshBasicMaterial color="#f472b6" /></mesh>
       <mesh position={[1.7, -0.5, 0]}><boxGeometry args={[1, 1, 1]} /><meshBasicMaterial color="#22d3ee" /></mesh>
       <mesh position={[0.2, 1.4, -0.5]} rotation={[0.4, 0.2, 0]}><torusGeometry args={[0.5, 0.18, 16, 48]} /><meshBasicMaterial color="#facc15" /></mesh>

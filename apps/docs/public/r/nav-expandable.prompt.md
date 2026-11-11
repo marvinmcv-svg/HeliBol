@@ -70,7 +70,7 @@ export function NavExpandable({ brand, links, cta, className }: NavExpandablePro
       layout
       transition={t}
       style={{ borderRadius: open ? 24 : 999 }}
-      className={cn("w-fit overflow-hidden border border-border bg-background/80 shadow-lg backdrop-blur-xl", open && "w-[min(92vw,26rem)]", className)}
+      className={cn("h-fit w-fit self-start overflow-hidden border border-border bg-background/80 shadow-lg backdrop-blur-xl", open && "w-[min(92vw,26rem)]", className)}
     >
       <motion.div layout="position" transition={t} className="flex items-center gap-6 py-2 pl-4 pr-2">
         <span className="text-sm font-semibold">{brand}</span>
