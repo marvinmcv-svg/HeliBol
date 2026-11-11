@@ -35,6 +35,8 @@ gsap.registerPlugin(SplitText, useGSAP);
 export interface GsapMenuOverlayProps {
   links: { label: string; href?: string; meta?: string }[];
   brand?: string;
+  /** Start open (e.g. for previews). */
+  defaultOpen?: boolean;
   className?: string;
 }
 
@@ -43,10 +45,10 @@ export interface GsapMenuOverlayProps {
  * footer fades. Open = play(), close = reverse() with timeScale(1.8) — so it is fully
  * interruptible: click mid-animation and it turns around from exactly where it is.
  */
-export function GsapMenuOverlay({ links, brand = "studio®", className }: GsapMenuOverlayProps) {
+export function GsapMenuOverlay({ links, brand = "studio®", defaultOpen = false, className }: GsapMenuOverlayProps) {
   const root = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline | null>(null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const reduced = useReducedMotion();
 
   useGSAP(
@@ -121,6 +123,7 @@ export default function Demo() {
       </div>
       <GsapMenuOverlay
         className="absolute inset-0"
+        defaultOpen
         links={[{ label: "Work", meta: "(24)" }, { label: "Studio" }, { label: "Journal", meta: "(8)" }, { label: "Contact" }]}
       />
     </div>

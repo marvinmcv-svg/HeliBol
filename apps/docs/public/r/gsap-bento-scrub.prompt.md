@@ -71,7 +71,6 @@ export function GsapBentoScrub({ images, scroller, title = "Every frame, in its 
         end: "bottom bottom",
         scrub: 0.6,
         animation: tl,
-        invalidateOnRefresh: true,
       });
     },
     { scope: section, dependencies: [reduced] },

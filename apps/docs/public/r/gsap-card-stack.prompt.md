@@ -53,9 +53,9 @@ export function GsapCardStack({ cards, className }: GsapCardStackProps) {
     order.current.forEach((cardIdx, pos) => {
       gsap.to(els[cardIdx], {
         x: 0,
-        y: pos * -14,
+        y: pos * -18,
         scale: 1 - pos * 0.06,
-        rotation: pos === 0 ? 0 : (pos % 2 ? 1 : -1) * pos * 2.5,
+        rotation: pos === 0 ? 0 : (pos % 2 ? 1 : -1) * pos * 3.5,
         zIndex: cards.length - pos,
         opacity: pos > 3 ? 0 : 1,
         duration: dur,
@@ -99,7 +99,7 @@ export function GsapCardStack({ cards, className }: GsapCardStackProps) {
       .to(top, { x: dir * 260, y: -40, rotation: dir * 18, duration: 0.35, ease: "power2.out" })
       .add(() => place(0.6))
       .set(top, { zIndex: 0 })
-      .to(top, { x: 0, y: (cards.length - 1) * -14, rotation: 0, scale: 1 - (cards.length - 1) * 0.06, opacity: cards.length > 4 ? 0 : 1, duration: 0.6, ease: "power3.inOut" });
+      .to(top, { x: 0, y: (cards.length - 1) * -18, rotation: 0, scale: 1 - (cards.length - 1) * 0.06, opacity: cards.length > 4 ? 0 : 1, duration: 0.6, ease: "power3.inOut" });
   });
 
   return (

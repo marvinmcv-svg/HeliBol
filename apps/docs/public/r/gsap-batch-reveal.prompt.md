@@ -106,7 +106,7 @@ function Inner() {
 
 export default function Demo() {
   return (
-    <DemoScroller>
+    <DemoScroller thumbAt={0.06}>
       <Inner />
     </DemoScroller>
   );
