@@ -1,0 +1,1 @@
+Build an avatar stack with Motion: avatars overlap with negative margin and alternate ±4° tilt. On group hover/focus animate margins to a small positive gap (bouncy spring) and untilt; the hovered/focused avatar lifts (y −8, scale 1.12) and shows a small name/role card below via AnimatePresence. Each avatar is a labelled button.

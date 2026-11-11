@@ -1,0 +1,1 @@
+Build an orbital image wheel with Motion: one angle motion value; each item's rotation = base + angle, position = (sin, −cos)·R, and scale/opacity mapped from its angular distance to the top. Hub placed below the container. Pan adds delta/R in degrees; wheel adds deltaY; on end, spring to the nearest step (shortest way round). Arrow keys step. Show the active title below.

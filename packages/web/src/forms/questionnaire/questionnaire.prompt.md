@@ -1,0 +1,1 @@
+Build a one-question-at-a-time questionnaire with Motion: AnimatePresence mode=wait with direction-aware variants (enter from y=40·dir with blur, exit to y=−40·dir). Single-choice answers auto-advance after 260 ms; multi-choice shows Continue. Spring a progress bar width. Number keys pick options, Enter continues, a back button returns. Finish with a success state.

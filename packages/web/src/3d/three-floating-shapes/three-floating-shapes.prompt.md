@@ -1,0 +1,1 @@
+Build a playful 3D hero: ~14 primitives (sphere, torus, capsule, box, cone, knot) placed on a golden-angle spiral, each wrapped in drei Float with clearcoat physical materials from a candy palette. Hovering a shape eases its scale up 18%. A Rig group eases its rotation toward the pointer. drei ContactShadows under the scene, Environment Lightformers for soft light.

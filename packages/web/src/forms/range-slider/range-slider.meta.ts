@@ -1,0 +1,30 @@
+import type { ComponentMeta } from "../../types";
+
+export const meta: ComponentMeta = {
+  id: "range-slider",
+  name: "Range Slider with Histogram",
+  description: "Dual-thumb range slider over a live histogram: bars inside the range light up, the active thumb grows with a value bubble, and thumbs can't cross.",
+  category: "forms",
+  platforms: ["web"],
+  engine: "motion",
+  dependencies: ["motion"],
+  registryDependencies: ["kinetik-core"],
+  tags: ["slider","range","filter","histogram","price"],
+  pageTypes: ["ecommerce","dashboard"],
+  inspiration: ["21st.dev — Sliders"],
+  a11y: "Each thumb is a full ARIA slider (arrows, PageUp/Down, Home/End) with value text; pointer capture for dragging; histogram aria-hidden. Reduced motion: no scale or colour tweens.",
+  perf: "Bars tween colour/scale only when their in-range state flips.",
+  status: "stable",
+  priority: "P1",
+  previewHeight: 320,
+  props: [
+    { name: "value", type: "[number, number]", description: "Range." },
+    { name: "onChange", type: "(v) => void", description: "Change handler." },
+    { name: "min", type: "number", default: "0", description: "Minimum." },
+    { name: "max", type: "number", default: "100", description: "Maximum." },
+    { name: "step", type: "number", default: "1", description: "Step." },
+    { name: "histogram", type: "number[]", description: "Optional distribution." },
+    { name: "label", type: "string", description: "Label." },
+    { name: "format", type: "(v) => string", default: "String", description: "Value format." },
+  ],
+};

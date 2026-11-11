@@ -1,0 +1,1 @@
+Build a gooey tab bar: an inline SVG filter (feGaussianBlur stdDeviation 7 → feColorMatrix alpha 22 −9 → feComposite atop) applied to a layer with two circles — a big blob (stiff spring) and a smaller droplet (soft spring) both animating left to the active tab centre — so they merge and stretch. Icon buttons sit above the layer.

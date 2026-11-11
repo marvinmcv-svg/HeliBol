@@ -1,0 +1,1 @@
+Build a GSAP keyframes loader: four absolutely positioned blocks; one gsap.to(blocks, { keyframes: { '0%':…, '15%': hop with stretch, '30%': land with squash, '55%', '70%', '85%': travel around a square with rotation, easeEach: 'power2.inOut' }, duration 2.4, stagger: { each .6, repeat: -1 } }). Reduced motion: yoyo opacity.

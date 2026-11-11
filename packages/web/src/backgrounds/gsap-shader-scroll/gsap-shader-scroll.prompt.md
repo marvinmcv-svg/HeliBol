@@ -1,0 +1,1 @@
+Build a scroll-driven shader section: a sticky canvas with a raw WebGL fullscreen triangle running an fbm domain-warp fragment shader (uniforms uTime, uProgress, uA, uB). A ScrollTrigger (scrub) tweens a progress object; progress rotates/zooms the noise domain and picks/lerps palette pairs per panel. Render with rAF only while visible.

@@ -36,6 +36,8 @@ function loadMeta(file) {
 const rewriteImports = (s) =>
   s
     .replace(/from "@web\/[\w-]+\/([\w-]+)\/\1"/g, 'from "@/components/kinetik/$1"')
+    // sibling component in the same or another category: "../<slug>/<slug>" or "../../<cat>/<slug>/<slug>"
+    .replace(/from "(?:\.\.\/\.\.\/[\w-]+|\.\.)\/([\w-]+)\/\1"/g, 'from "@/components/kinetik/$1"')
     .replace(/from "\.\.\/\.\.\/_shared\/phone"/g, 'from "@/components/kinetik/phone" /* demo frame + haptic() stand-in */')
     .replaceAll('from "@kinetik/core"', 'from "@/lib/kinetik/core"')
     .replaceAll('from "@kinetik/core/utils"', 'from "@/lib/kinetik/utils"')

@@ -1,0 +1,1 @@
+Build a square-pattern background on canvas: a grid of cell−gap squares. Brightness = .06 + max(0, wave)³·.55 where wave is sin((x+y)·.35 − 2.4t) (diagonal), sin(dist·.5 − 2.6t) (radial) or a per-column falling head with an 8-cell tail (rain); add a glow within 140 px of the pointer.

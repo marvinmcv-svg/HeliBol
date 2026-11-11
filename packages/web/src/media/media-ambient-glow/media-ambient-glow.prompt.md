@@ -1,0 +1,1 @@
+Build an ambient glow wrapper: a 32×18 canvas absolutely positioned behind the media (scale 1.1, blur-3xl, saturate 150%). Draw the media into it with drawImage — once on image load, or every ~160 ms for video. Media must be same-origin or crossOrigin=anonymous.

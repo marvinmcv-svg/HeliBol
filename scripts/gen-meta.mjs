@@ -37,7 +37,7 @@ export const meta: ComponentMeta = {
   platforms: ["web"],
   engine: ${q(s.engine)},
   dependencies: ${q(s.deps ?? (s.engine === "motion" ? ["motion"] : []))},
-  registryDependencies: ["kinetik-core"],
+  registryDependencies: ${q(["kinetik-core", ...(s.registryDeps ?? [])])},
   tags: ${q(s.tags)},
   pageTypes: ${q(s.pageTypes)},
   inspiration: ${q(s.inspiration ?? [])},

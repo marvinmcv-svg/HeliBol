@@ -1,0 +1,1 @@
+Build a pinned list with Motion: two lists (Pinned, All). Each row is a motion.li with layoutId = item id, so toggling pin unmounts it from one list and mounts it in the other with a shared-layout flight. Section header fades in/out with AnimatePresence. Pin button shows on hover/focus, aria-pressed.

@@ -1,0 +1,1 @@
+Compose an AI hero: ThreeParticleMorph (sphere/helix/torus/wave) filling the right side, a left gradient for legibility, a pill badge, an H1 ending in a TextSmartAnimate word (Reasoning/Memory/Planning/Acting), a subline, and a glass prompt form using InputTypingPlaceholder with a send button.

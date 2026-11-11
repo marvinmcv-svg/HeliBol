@@ -1,0 +1,1 @@
+Build an orbit sphere hero in React Three Fiber: a Fibonacci-sphere Points cloud over a dark occluding sphere, plus several tilted ring groups (thin torus + N small spheres on the circle, first one larger in an accent colour). Rotate each ring group around its own axis at alternating speeds, spin the whole rig slowly and ease its X tilt toward the pointer.

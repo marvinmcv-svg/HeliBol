@@ -1,0 +1,1 @@
+Build an animated data table with Motion: a semantic table whose tbody rows are motion.tr with layout="position" inside AnimatePresence. Header buttons cycle sort asc → desc → none (aria-sort) with a rotating arrow. A filter input narrows rows. Row checkboxes + select-all; when any are selected, a pill bar springs up from the bottom with the count and Clear.

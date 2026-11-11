@@ -1,0 +1,1 @@
+Build a curved image ribbon in React Three Fiber: for each image create an open CylinderGeometry slice (thetaStart = i·(arc+gap), thetaLength = arc) textured with that image, inside a group tilted on Z. Add wheel + drag velocity that decays back to an idle drift; ease the tilt with the pointer. Dispose geometries on unmount.

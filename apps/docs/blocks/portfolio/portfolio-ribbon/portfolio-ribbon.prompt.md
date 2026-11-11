@@ -1,0 +1,1 @@
+Compose a portfolio hero: warm off-white background, a huge two-line uppercase name centred, ThreeImageRibbon spinning in front of it with the work images, NavExpandable floating at the top, and a bottom row with a TextSmartAnimate discipline word and a 'drag or scroll' hint.

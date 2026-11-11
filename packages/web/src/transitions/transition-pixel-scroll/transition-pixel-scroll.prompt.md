@@ -1,0 +1,1 @@
+Build a pixel scroll transition: a 300vh section with a sticky viewport stacking `from`, `to` and a grid of cells. Precompute two random rank arrays. On scroll compute progress p; for p<.45 a cell is on if rankIn < p/.45; after .55 a cell is on while rankOut ≥ (p−.55)/.45; swap which section is visible at .5. Reduced motion: crossfade.

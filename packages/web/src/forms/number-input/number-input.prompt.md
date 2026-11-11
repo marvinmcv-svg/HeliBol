@@ -1,0 +1,1 @@
+Build a number stepper with Motion: − and + buttons around a spinbutton. The value is keyed in AnimatePresence popLayout with direction-aware variants (enter from y=18·dir, exit to −18·dir). Holding a button repeats with delay ×0.8 down to 50 ms. Hitting min/max shakes the field (x keyframes). Keyboard: arrows, Home, End.

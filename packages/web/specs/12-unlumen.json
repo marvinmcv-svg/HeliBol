@@ -1,0 +1,826 @@
+[
+ {
+  "id": "text-smart-animate",
+  "name": "Smart Animate Text",
+  "category": "text",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 300,
+  "description": "Figma-style Smart Animate for words: letters shared between the old and new word glide to their new slots, new letters blur in and leftovers blur out.",
+  "tags": [
+   "text",
+   "morph",
+   "anagram",
+   "layout",
+   "price"
+  ],
+  "pageTypes": [
+   "landing",
+   "pricing"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Smart Animate Text"
+  ],
+  "a11y": "Real text lives in an sr-only aria-live span; animated glyphs are aria-hidden. Reduced motion: crossfade with no movement.",
+  "perf": "Layout animations on a handful of inline-block spans; popLayout keeps exits out of flow.",
+  "props": [
+   [
+    "words",
+    "string[]",
+    "",
+    "Words to cycle through."
+   ],
+   [
+    "interval",
+    "number",
+    "2200",
+    "ms per word."
+   ]
+  ],
+  "prompt": "Build a Smart Animate text component with Motion: split the current word into characters keyed by lowercase letter + occurrence index (b-0, a-0, n-0, a-1\u2026). Render each as a motion.span with layout=\"position\" inside AnimatePresence mode=\"popLayout\" so shared letters move to their new positions while new ones enter (opacity 0, blur 6px, y 8) and removed ones exit upward. Cycle words on an interval; keep an sr-only aria-live copy of the word."
+ },
+ {
+  "id": "avatar-team-stack",
+  "name": "Avatar Team Stack",
+  "category": "cards",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Overlapping, slightly tilted avatars that fan out on hover or focus; the person under the pointer lifts and shows a name card.",
+  "tags": [
+   "avatars",
+   "team",
+   "hover",
+   "social proof"
+  ],
+  "pageTypes": [
+   "landing",
+   "social"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Team Stack"
+  ],
+  "a11y": "Each avatar is a button labelled with name and role; works with keyboard focus; tap toggles on touch. Reduced motion: no lift, instant spread.",
+  "perf": "Springs on margin/scale/rotate of a few elements.",
+  "props": [
+   [
+    "members",
+    "{ name, role, image }[]",
+    "",
+    "People."
+   ],
+   [
+    "size",
+    "number",
+    "56",
+    "Avatar size in px."
+   ]
+  ],
+  "prompt": "Build an avatar stack with Motion: avatars overlap with negative margin and alternate \u00b14\u00b0 tilt. On group hover/focus animate margins to a small positive gap (bouncy spring) and untilt; the hovered/focused avatar lifts (y \u22128, scale 1.12) and shows a small name/role card below via AnimatePresence. Each avatar is a labelled button."
+ },
+ {
+  "id": "link-mention",
+  "name": "Inline Link Mention",
+  "category": "overlays",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Notion-style inline mention pill inside running text that springs open a rich preview card (image, title, description, URL) on hover or keyboard focus.",
+  "tags": [
+   "link",
+   "preview",
+   "mention",
+   "hover card",
+   "docs"
+  ],
+  "pageTypes": [
+   "docs",
+   "blog"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Notion Mention Link"
+  ],
+  "a11y": "Real <a> link; preview has role=tooltip and is wired with aria-describedby while open; opens on focus too. Reduced motion: fade only.",
+  "perf": "Card mounts only while open; 180 ms open delay avoids flicker when the pointer passes over.",
+  "props": [
+   [
+    "href",
+    "string",
+    "",
+    "Link target."
+   ],
+   [
+    "icon",
+    "ReactNode",
+    "",
+    "Favicon/emoji."
+   ],
+   [
+    "title",
+    "string",
+    "",
+    "Preview title."
+   ],
+   [
+    "description",
+    "string",
+    "",
+    "Preview text."
+   ],
+   [
+    "image",
+    "string",
+    "",
+    "Preview image."
+   ]
+  ],
+  "prompt": "Build an inline mention link: a compact pill (icon + label, muted background) that, after a 180 ms hover/focus delay, shows a preview card below it with Motion (from y 6, scale .96, blur 4px; snappy spring, top-left origin). Close on leave/blur after 80 ms. Card: optional cover image, title, description, URL. Use role=tooltip + aria-describedby."
+ },
+ {
+  "id": "orbital-image-wheel",
+  "name": "Orbital Image Wheel",
+  "category": "media",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Images arranged on a giant wheel whose hub sits below the frame. Drag, scroll or use arrow keys to turn it; it springs so one image sits enlarged at the top with its title.",
+  "tags": [
+   "carousel",
+   "wheel",
+   "gallery",
+   "drag",
+   "portfolio"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "media"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Orbital Image Wheel"
+  ],
+  "a11y": "Focusable region with arrow-key navigation; each image is a labelled button; title announced via aria-live. Reduced motion: snaps without spring.",
+  "perf": "All positions are derived from one motion value with useTransform \u2014 no React re-render while turning.",
+  "props": [
+   [
+    "items",
+    "{ image, title }[]",
+    "",
+    "Images."
+   ],
+   [
+    "radius",
+    "number",
+    "0.55",
+    "Wheel radius as a fraction of width."
+   ]
+  ],
+  "prompt": "Build an orbital image wheel with Motion: one angle motion value; each item's rotation = base + angle, position = (sin, \u2212cos)\u00b7R, and scale/opacity mapped from its angular distance to the top. Hub placed below the container. Pan adds delta/R in degrees; wheel adds deltaY; on end, spring to the nearest step (shortest way round). Arrow keys step. Show the active title below."
+ },
+ {
+  "id": "carousel-depth-fade",
+  "name": "Depth Fade Carousel",
+  "category": "media",
+  "engine": "js",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "A native scroll-snap carousel where each card's scale, tilt, blur and opacity depend on its distance from the centre \u2014 cards recede into depth as they slide away.",
+  "tags": [
+   "carousel",
+   "scroll snap",
+   "depth",
+   "gallery"
+  ],
+  "pageTypes": [
+   "landing",
+   "ecommerce",
+   "media"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Horizontal Depth Fade"
+  ],
+  "a11y": "Native scrolling (swipe, trackpad, keyboard when focused); cards labelled \u201cn of total\u201d. Reduced motion: opacity only.",
+  "perf": "rAF-throttled scroll handler writing transform/filter/opacity; zero layout reads per card except offsetLeft.",
+  "props": [
+   [
+    "items",
+    "{ image, title, caption? }[]",
+    "",
+    "Cards."
+   ]
+  ],
+  "prompt": "Build a depth-fade carousel: a horizontal overflow container with scroll-snap center and side padding so the first/last card can centre. On scroll (rAF-throttled) compute each card's distance d from the viewport centre in card widths (clamped \u00b11.5) and set transform perspective(900px) rotateY(\u221218d\u00b0) scale(1\u2212.16|d|), filter blur(3|d|px) saturate, opacity 1\u2212.4|d|, z-index. Reduced motion: opacity only."
+ },
+ {
+  "id": "questionnaire",
+  "name": "Questionnaire",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Typeform-style one-question-at-a-time form: answers slide the next question in from the direction of travel, the progress bar springs forward, number keys pick and Enter continues.",
+  "tags": [
+   "form",
+   "survey",
+   "onboarding",
+   "typeform",
+   "steps"
+  ],
+  "pageTypes": [
+   "onboarding",
+   "auth"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Questionnaire"
+  ],
+  "a11y": "Each question is a fieldset with legend; options are radio/checkbox roles with aria-checked; progressbar with values; keyboard shortcuts 1\u20139 and Enter. Reduced motion: crossfade.",
+  "perf": "One question mounted at a time (AnimatePresence mode=wait).",
+  "props": [
+   [
+    "questions",
+    "{ id, title, hint?, options, multiple? }[]",
+    "",
+    "Questions."
+   ],
+   [
+    "onComplete",
+    "(answers) => void",
+    "",
+    "Called after the last question."
+   ]
+  ],
+  "prompt": "Build a one-question-at-a-time questionnaire with Motion: AnimatePresence mode=wait with direction-aware variants (enter from y=40\u00b7dir with blur, exit to y=\u221240\u00b7dir). Single-choice answers auto-advance after 260 ms; multi-choice shows Continue. Spring a progress bar width. Number keys pick options, Enter continues, a back button returns. Finish with a success state."
+ },
+ {
+  "id": "marquee-vertical",
+  "name": "Vertical Marquee",
+  "category": "media",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 380,
+  "description": "Columns of cards scrolling endlessly up and down in alternating directions, masked to fade at the edges \u2014 the testimonial wall, in pure CSS.",
+  "tags": [
+   "marquee",
+   "testimonials",
+   "social proof",
+   "wall"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Vertical Marquee"
+  ],
+  "a11y": "Duplicated items are aria-hidden; hover/focus pauses; reduced motion shows a still wall.",
+  "perf": "CSS transform animation only, zero JS; Server Component friendly.",
+  "props": [
+   [
+    "columns",
+    "ReactNode[][]",
+    "",
+    "Items per column."
+   ],
+   [
+    "duration",
+    "number",
+    "40",
+    "Seconds per loop (first column)."
+   ]
+  ],
+  "prompt": "Build a vertical marquee in pure CSS: a grid of columns, each a flex column containing its items twice (second copy aria-hidden) animated with translateY(0 \u2192 \u221250%) linear infinite; alternate columns reverse and vary duration by 15%. Mask top/bottom with a linear-gradient mask-image. Pause on hover/focus-within; no animation under reduced motion."
+ },
+ {
+  "id": "nav-gooey",
+  "name": "Gooey Tab Bar",
+  "category": "navigation",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Tab bar whose active blob oozes between items: an SVG goo filter merges the blob with a slower trailing droplet so they stretch and pinch like liquid.",
+  "tags": [
+   "tab bar",
+   "gooey",
+   "svg filter",
+   "navigation",
+   "mobile"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Gooey Navbar Menu"
+  ],
+  "a11y": "Real buttons with aria-current; the goo layer is aria-hidden. Reduced motion: no filter, instant move.",
+  "perf": "One SVG filter on a small layer with two moving circles.",
+  "props": [
+   [
+    "items",
+    "{ label, icon }[]",
+    "",
+    "Tabs."
+   ],
+   [
+    "defaultIndex",
+    "number",
+    "0",
+    "Initial tab."
+   ],
+   [
+    "onChange",
+    "(i) => void",
+    "",
+    "Selection callback."
+   ]
+  ],
+  "prompt": "Build a gooey tab bar: an inline SVG filter (feGaussianBlur stdDeviation 7 \u2192 feColorMatrix alpha 22 \u22129 \u2192 feComposite atop) applied to a layer with two circles \u2014 a big blob (stiff spring) and a smaller droplet (soft spring) both animating left to the active tab centre \u2014 so they merge and stretch. Icon buttons sit above the layer."
+ },
+ {
+  "id": "nav-expandable",
+  "name": "Expandable Floating Nav",
+  "category": "navigation",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A floating pill navbar that morphs into a full menu card with shared layout: the surface grows, links stagger in with blur, and Esc or outside click collapses it.",
+  "tags": [
+   "navbar",
+   "menu",
+   "morph",
+   "floating",
+   "pill"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Expandable Navbar"
+  ],
+  "a11y": "Toggle has aria-expanded/aria-controls; Esc closes and returns focus; links are real anchors. Reduced motion: instant open.",
+  "perf": "One layout animation on the container; children use layout=\"position\" to avoid distortion.",
+  "props": [
+   [
+    "brand",
+    "ReactNode",
+    "",
+    "Logo/brand."
+   ],
+   [
+    "links",
+    "{ label, href, description? }[]",
+    "",
+    "Menu links."
+   ],
+   [
+    "cta",
+    "ReactNode",
+    "",
+    "Optional CTA in the panel."
+   ]
+  ],
+  "prompt": "Build an expandable floating navbar with Motion: a motion.div with layout whose borderRadius animates 999 \u2192 24 and width grows when open; the header row uses layout=\"position\"; a two-line burger morphs into an X. Links stagger in with blur. Close on Escape (refocus toggle) and outside pointerdown."
+ },
+ {
+  "id": "bg-gravity-stars",
+  "name": "Gravity Stars",
+  "category": "backgrounds",
+  "engine": "canvas",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "A starfield where the cursor is a gravity well: nearby stars curve toward it with a swirl, streak while moving, then spring home. Stars twinkle at rest.",
+  "tags": [
+   "stars",
+   "canvas",
+   "gravity",
+   "interactive",
+   "space"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Gravity Stars"
+  ],
+  "a11y": "Decorative canvas (aria-hidden). Reduced motion: a single static frame.",
+  "perf": "useCanvas pauses off-screen/hidden; 220 particles, O(n) per frame.",
+  "props": [
+   [
+    "count",
+    "number",
+    "220",
+    "Stars."
+   ],
+   [
+    "gravity",
+    "number",
+    "1",
+    "Pull strength."
+   ],
+   [
+    "color",
+    "string",
+    "'255,255,255'",
+    "RGB triplet."
+   ]
+  ],
+  "prompt": "Build a gravity starfield on canvas: each star has home, position and velocity. Each frame, if the pointer is inside, add an inverse-square pull toward it plus a perpendicular component (swirl); always add a weak spring toward home and damp velocity by .94. Draw a streak when fast, otherwise a twinkling dot. Reseed on resize. Pause off-screen and render one frame under reduced motion."
+ },
+ {
+  "id": "bg-square-pattern",
+  "name": "Square Pattern",
+  "category": "backgrounds",
+  "engine": "canvas",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "A grid of small squares lit by a travelling wave \u2014 diagonal sweep, radial pulse or digital rain \u2014 with a soft glow under the cursor.",
+  "tags": [
+   "grid",
+   "squares",
+   "canvas",
+   "pattern",
+   "tech"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Square Pattern"
+  ],
+  "a11y": "Decorative canvas. Reduced motion: one static frame.",
+  "perf": "fillRect per cell (~2\u20133k cells), paused off-screen.",
+  "props": [
+   [
+    "cell",
+    "number",
+    "18",
+    "Cell size."
+   ],
+   [
+    "gap",
+    "number",
+    "3",
+    "Gap between squares."
+   ],
+   [
+    "color",
+    "string",
+    "'167,139,250'",
+    "RGB triplet."
+   ],
+   [
+    "pattern",
+    "'diagonal' | 'radial' | 'rain'",
+    "'diagonal'",
+    "Wave pattern."
+   ]
+  ],
+  "prompt": "Build a square-pattern background on canvas: a grid of cell\u2212gap squares. Brightness = .06 + max(0, wave)\u00b3\u00b7.55 where wave is sin((x+y)\u00b7.35 \u2212 2.4t) (diagonal), sin(dist\u00b7.5 \u2212 2.6t) (radial) or a per-column falling head with an 8-cell tail (rain); add a glow within 140 px of the pointer."
+ },
+ {
+  "id": "bg-aurora-bars",
+  "name": "Aurora Bars",
+  "category": "backgrounds",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Soft vertical light bars rising from the bottom edge, each breathing at its own pace \u2014 an aurora curtain built from scaleY-only CSS keyframes.",
+  "tags": [
+   "aurora",
+   "gradient",
+   "css",
+   "hero",
+   "glow"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Aurora Bars"
+  ],
+  "a11y": "aria-hidden decoration; reduced motion freezes bars mid-height.",
+  "perf": "Pure CSS transforms; deterministic per-bar values so SSR matches.",
+  "props": [
+   [
+    "bars",
+    "number",
+    "28",
+    "Bar count."
+   ],
+   [
+    "colors",
+    "[string, string, string]",
+    "violet, pink, cream",
+    "Base, middle, tip."
+   ]
+  ],
+  "prompt": "Build aurora bars: a flex row of N blurred, rounded-top bars at the bottom of a container with a gradient (base\u2192mid\u2192tip). Each bar animates transform: scaleY between two per-bar values (taller in the middle), with its own duration (4\u20139 s) and negative delay, transform-origin bottom. Mask the top with a gradient. Use deterministic pseudo-random values for SSR."
+ },
+ {
+  "id": "media-ambient-glow",
+  "name": "Ambient Glow Media",
+  "category": "media",
+  "engine": "canvas",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "YouTube-style ambient mode: the image or video is drawn into a tiny canvas behind itself, scaled and blurred, so its own colours spill around the frame.",
+  "tags": [
+   "video",
+   "ambient",
+   "glow",
+   "media",
+   "image"
+  ],
+  "pageTypes": [
+   "media",
+   "portfolio"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Video Ambient"
+  ],
+  "a11y": "Glow canvas is aria-hidden; video is muted. Reduced motion: video doesn't autoplay and the glow doesn't resample.",
+  "perf": "32\u00d718 canvas resampled at ~6 fps for video, once for images; the blur is a CSS filter on a tiny bitmap.",
+  "props": [
+   [
+    "src",
+    "string",
+    "",
+    "Image or video URL (same-origin or CORS-enabled)."
+   ],
+   [
+    "kind",
+    "'image' | 'video'",
+    "'image'",
+    "Media type."
+   ],
+   [
+    "intensity",
+    "number",
+    "0.8",
+    "Glow opacity."
+   ]
+  ],
+  "prompt": "Build an ambient glow wrapper: a 32\u00d718 canvas absolutely positioned behind the media (scale 1.1, blur-3xl, saturate 150%). Draw the media into it with drawImage \u2014 once on image load, or every ~160 ms for video. Media must be same-origin or crossOrigin=anonymous."
+ },
+ {
+  "id": "view-switch",
+  "name": "View Switch Icons",
+  "category": "buttons",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 380,
+  "description": "A list / compact / cards view switcher whose glyphs are the same four rectangles morphing between layouts, with a pill sliding under the active mode.",
+  "tags": [
+   "segmented control",
+   "icons",
+   "view",
+   "toggle",
+   "morph"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 List/Compact/Cards View Icons"
+  ],
+  "a11y": "radiogroup with labelled radio buttons. Reduced motion: instant.",
+  "perf": "Springs on SVG rect attributes; layoutId pill.",
+  "props": [
+   [
+    "value",
+    "'list' | 'compact' | 'cards'",
+    "",
+    "Current view."
+   ],
+   [
+    "onChange",
+    "(v) => void",
+    "",
+    "Change handler."
+   ]
+  ],
+  "prompt": "Build a view switcher: a radiogroup of three buttons; each icon is an SVG with four motion.rect elements whose x/y/width/height animate to one of three layouts (list rows with thumbnails, compact lines, 2\u00d72 cards) with a bouncy spring and small per-rect delay. A layoutId pill slides under the active button. Pair it with a grid that animates layout."
+ },
+ {
+  "id": "pinned-list",
+  "name": "Pinned List",
+  "category": "layout",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 380,
+  "description": "A list where pinning an item flies it up into the Pinned section with a shared-layout transition while the rest close the gap.",
+  "tags": [
+   "list",
+   "pin",
+   "layout",
+   "favorites",
+   "sidebar"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "docs"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Pinned List"
+  ],
+  "a11y": "Pin buttons have aria-pressed and a descriptive label; they appear on hover and on focus. Reduced motion: instant reorder.",
+  "perf": "layoutId per row; only moved rows animate.",
+  "props": [
+   [
+    "items",
+    "{ id, title, subtitle?, icon? }[]",
+    "",
+    "Items."
+   ],
+   [
+    "defaultPinned",
+    "string[]",
+    "[]",
+    "Initially pinned ids."
+   ]
+  ],
+  "prompt": "Build a pinned list with Motion: two lists (Pinned, All). Each row is a motion.li with layoutId = item id, so toggling pin unmounts it from one list and mounts it in the other with a shared-layout flight. Section header fades in/out with AnimatePresence. Pin button shows on hover/focus, aria-pressed."
+ },
+ {
+  "id": "card-aurora",
+  "name": "Aurora Card",
+  "category": "cards",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "A quiet card that wakes on hover: drifting aurora blobs fade in behind frosted glass and lean toward the cursor via CSS variables.",
+  "tags": [
+   "card",
+   "aurora",
+   "glass",
+   "hover",
+   "feature"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Aurora Card"
+  ],
+  "a11y": "Purely decorative layer; content stays readable at rest. Pointer lean is off on touch and reduced motion; blob drift stops under reduced motion.",
+  "perf": "CSS keyframes on three blurred blobs; pointer updates two CSS variables (no React renders).",
+  "props": [
+   [
+    "colors",
+    "[string, string, string]",
+    "cyan, violet, pink",
+    "Blob colours."
+   ]
+  ],
+  "prompt": "Build an aurora card: three large blurred blobs drifting (rotate/translate/scale keyframes, different durations) in a layer at 30% opacity that rises to 100% on hover/focus-within; the layer translates by CSS vars --mx/--my set from the pointer. Content sits on a backdrop-blur card surface inset by 1 px so the light shows as a border."
+ },
+ {
+  "id": "transition-pixel-scroll",
+  "name": "Pixel Scroll Transition",
+  "category": "transitions",
+  "engine": "js",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 420,
+  "description": "A scroll-scrubbed pixel dissolve between two sections: squares fill in random order to cover the first, then clear in a new order to reveal the second.",
+  "tags": [
+   "pixel",
+   "scroll",
+   "transition",
+   "dissolve",
+   "storytelling"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Pixel Scroll Transition"
+  ],
+  "a11y": "Pixel grid is aria-hidden; both sections stay in the DOM. Reduced motion: a simple crossfade at the midpoint.",
+  "perf": "Opacity toggles on a few hundred cells, only in a rAF-throttled scroll handler.",
+  "props": [
+   [
+    "from",
+    "ReactNode",
+    "",
+    "First section."
+   ],
+   [
+    "to",
+    "ReactNode",
+    "",
+    "Second section."
+   ],
+   [
+    "columns",
+    "number",
+    "16",
+    "Grid columns."
+   ],
+   [
+    "color",
+    "string",
+    "'#18181b'",
+    "Pixel colour."
+   ],
+   [
+    "scroller",
+    "RefObject<HTMLElement>",
+    "",
+    "Custom scroll container."
+   ]
+  ],
+  "prompt": "Build a pixel scroll transition: a 300vh section with a sticky viewport stacking `from`, `to` and a grid of cells. Precompute two random rank arrays. On scroll compute progress p; for p<.45 a cell is on if rankIn < p/.45; after .55 a cell is on while rankOut \u2265 (p\u2212.55)/.45; swap which section is visible at .5. Reduced motion: crossfade."
+ },
+ {
+  "id": "input-typing-placeholder",
+  "name": "Typing Placeholder Input",
+  "category": "forms",
+  "engine": "js",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "A search field whose placeholder types out example queries, pauses and deletes them \u2014 and stops the moment you focus or type.",
+  "tags": [
+   "input",
+   "search",
+   "placeholder",
+   "typewriter",
+   "ai"
+  ],
+  "pageTypes": [
+   "landing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "unlumen UI \u2014 Animate Text Input Typing"
+  ],
+  "a11y": "A real static placeholder is set for assistive tech; the animated text is aria-hidden and hidden on focus. Reduced motion: suggestions swap whole.",
+  "perf": "setTimeout loop only while idle; stops on focus/value.",
+  "props": [
+   [
+    "suggestions",
+    "string[]",
+    "",
+    "Example queries."
+   ],
+   [
+    "prefix",
+    "string",
+    "'Try'",
+    "Text before the query."
+   ],
+   [
+    "typeSpeed",
+    "number",
+    "55",
+    "ms per character."
+   ],
+   [
+    "pause",
+    "number",
+    "1400",
+    "Pause when a query is complete."
+   ]
+  ],
+  "prompt": "Build an input with an animated placeholder: while the field is empty and unfocused, an aria-hidden overlay types suggestions character by character (55 ms \u00b1 jitter), pauses, deletes at double speed and moves to the next. Hide the native placeholder visually (placeholder:text-transparent) but keep it for screen readers. Stop on focus or value."
+ }
+]

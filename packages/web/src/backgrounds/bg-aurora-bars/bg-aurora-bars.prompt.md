@@ -1,0 +1,1 @@
+Build aurora bars: a flex row of N blurred, rounded-top bars at the bottom of a container with a gradient (base→mid→tip). Each bar animates transform: scaleY between two per-bar values (taller in the middle), with its own duration (4–9 s) and negative delay, transform-origin bottom. Mask the top with a gradient. Use deterministic pseudo-random values for SSR.

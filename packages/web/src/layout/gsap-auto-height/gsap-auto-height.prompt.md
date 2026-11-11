@@ -1,0 +1,1 @@
+Build an accordion with GSAP: per panel, a paused timeline fromTo height 0 → 'auto', fade/lift the inner content, rotate the chevron 180°. Toggle = tl.play() or tl.reverse(), so interrupted toggles reverse smoothly. Single-open mode reverses the others. Panels inert when closed.

@@ -1,0 +1,1 @@
+Build an expandable floating navbar with Motion: a motion.div with layout whose borderRadius animates 999 → 24 and width grows when open; the header row uses layout="position"; a two-line burger morphs into an X. Links stagger in with blur. Close on Escape (refocus toggle) and outside pointerdown.

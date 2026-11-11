@@ -1,0 +1,1 @@
+Build an inline mention link: a compact pill (icon + label, muted background) that, after a 180 ms hover/focus delay, shows a preview card below it with Motion (from y 6, scale .96, blur 4px; snappy spring, top-left origin). Close on leave/blur after 80 ms. Card: optional cover image, title, description, URL. Use role=tooltip + aria-describedby.

@@ -1,0 +1,769 @@
+[
+ {
+  "id": "three-particle-morph",
+  "name": "Particle Morph",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Thousands of particles flow between shapes \u2014 sphere, torus, DNA helix, cube, wave \u2014 each easing at its own rate so the morph ripples instead of snapping.",
+  "tags": [
+   "three.js",
+   "particles",
+   "morph",
+   "hero",
+   "ai"
+  ],
+  "pageTypes": [
+   "landing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "MotionSites \u2014 Particle Brain / Particle Self",
+   "three.js points examples"
+  ],
+  "a11y": "Canvas is decorative (keep meaningful copy in HTML). Under reduced motion the shell switches to an on-demand frameloop and renders one still frame.",
+  "perf": "One Points draw call; positions updated on the CPU (8k particles \u2248 0.3 ms). Lower `count` on mobile.",
+  "props": [
+   [
+    "shapes",
+    "MorphShape[]",
+    "all five",
+    "Shapes to cycle through."
+   ],
+   [
+    "count",
+    "number",
+    "8000",
+    "Particle count."
+   ],
+   [
+    "hold",
+    "number",
+    "3.2",
+    "Seconds per shape."
+   ],
+   [
+    "colors",
+    "[string, string]",
+    "violet \u2192 cyan",
+    "Gradient across particles."
+   ],
+   [
+    "onShapeChange",
+    "(i) => void",
+    "",
+    "Fires when a morph starts."
+   ]
+  ],
+  "prompt": "Build a React Three Fiber particle morph. Precompute Float32Array target positions for each shape (Fibonacci sphere, torus, double helix, cube surface, wave grid) with the same particle count. In useFrame, move every particle toward the current target with a per-index rate (k = dt\u00b7(1.6 + (i%97)/40)) so the morph ripples, flag the position attribute for update, rotate slowly and tilt toward the pointer. Advance the target every `hold` seconds. Additive blending, vertex colours lerped across two colours. Render inside a canvas shell that pauses off-screen and renders a still frame under reduced motion.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-sphere-gallery",
+  "name": "Sphere Gallery",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Photos tiled over a sphere (Fibonacci lattice, each tile facing outward) that you grab and spin with inertia, settling back into a slow idle rotation.",
+  "tags": [
+   "three.js",
+   "gallery",
+   "drag",
+   "portfolio",
+   "images"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "media"
+  ],
+  "inspiration": [
+   "MotionSites \u2014 Sphere Gallery"
+  ],
+  "a11y": "Canvas is decorative \u2014 also provide the images as an HTML list or link grid. Drag uses pointer events (touch works, vertical page scroll preserved). Reduced motion: no idle spin.",
+  "perf": "48 textured planes, textures shared via useTexture; fog hides the back so overdraw is low.",
+  "props": [
+   [
+    "images",
+    "string[]",
+    "",
+    "Image URLs (repeat to fill tiles)."
+   ],
+   [
+    "tiles",
+    "number",
+    "48",
+    "Tile count."
+   ],
+   [
+    "radius",
+    "number",
+    "2.2",
+    "Sphere radius."
+   ],
+   [
+    "autoRotate",
+    "number",
+    "0.12",
+    "Idle spin rad/s."
+   ]
+  ],
+  "prompt": "Build a draggable 3D sphere gallery in React Three Fiber. Place N planes on a Fibonacci sphere; orient each with Matrix4.lookAt so its front faces outward. Load images with drei useTexture (sRGB). Listen to pointerdown/move/up on the canvas element: while dragging, set angular velocity from the pointer delta; when released, ease velocity back to an idle spin. Clamp the X tilt. Add fog so far tiles fade. Under reduced motion drop the idle spin.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-glass-shape",
+  "name": "Glass Shape",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A refracting glass object (drei MeshTransmissionMaterial) floating in front of coloured shapes \u2014 real refraction, chromatic dispersion, faceted or smooth cut \u2014 tilting toward the pointer.",
+  "tags": [
+   "three.js",
+   "glass",
+   "refraction",
+   "hero",
+   "premium"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "MotionSites \u2014 Facet Glass / Glass Tree"
+  ],
+  "a11y": "Canvas is decorative (keep meaningful copy in HTML). Under reduced motion the shell switches to an on-demand frameloop and renders one still frame. Temporal distortion is turned off.",
+  "perf": "Transmission renders the scene twice; DPR capped at 1.75 and resolution 512. Use one glass object per page.",
+  "props": [
+   [
+    "geometry",
+    "'icosahedron' | 'torus' | 'knot' | 'octahedron'",
+    "'icosahedron'",
+    "Shape."
+   ],
+   [
+    "faceted",
+    "boolean",
+    "true",
+    "Low-poly flat-shaded cut."
+   ],
+   [
+    "tint",
+    "string",
+    "'#fff'",
+    "Glass colour."
+   ],
+   [
+    "dispersion",
+    "number",
+    "0.6",
+    "Chromatic aberration."
+   ]
+  ],
+  "prompt": "Build a glass hero object with React Three Fiber + drei MeshTransmissionMaterial (thickness 1.4, ior 1.35, chromaticAberration, backside, samples 6). Put bright coloured primitives behind it so refraction is visible, wrap it in drei Float, rotate slowly and ease rotation toward the pointer. Offer faceted (flatShading, low detail) vs smooth. Light it with drei Environment + Lightformers (no HDR download). Cap DPR at 1.75.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-shader-blob",
+  "name": "Shader Blob",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A living sphere \u2014 simplex-noise vertex displacement and a fresnel rim in a custom ShaderMaterial. Hover makes the surface boil; colours blend by noise height.",
+  "tags": [
+   "three.js",
+   "shader",
+   "glsl",
+   "blob",
+   "ai"
+  ],
+  "pageTypes": [
+   "landing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "MotionSites \u2014 StellarMind / Nomi AI"
+  ],
+  "a11y": "Canvas is decorative (keep meaningful copy in HTML). Under reduced motion the shell switches to an on-demand frameloop and renders one still frame.",
+  "perf": "All deformation on the GPU (icosahedron detail 64); one draw call.",
+  "props": [
+   [
+    "colors",
+    "[string, string, string]",
+    "violet, pink, cyan",
+    "Low, high and rim colours."
+   ],
+   [
+    "intensity",
+    "number",
+    "0.28",
+    "Displacement amplitude."
+   ],
+   [
+    "speed",
+    "number",
+    "1",
+    "Noise speed."
+   ]
+  ],
+  "prompt": "Build a shader blob in React Three Fiber: icosahedronGeometry(1.35, 64) with a ShaderMaterial. Vertex: 3D simplex noise of normal*1.6 + time, displace along the normal by uAmp, pass noise, view-space normal and view vector. Fragment: mix two colours by smoothstep(noise), add a fresnel rim (pow(1\u2212dot(n,v),2.2)) mixed toward a third colour. On pointer over, ease uAmp up by 2.4\u00d7. Under reduced motion freeze time.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-galaxy",
+  "name": "Spiral Galaxy",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A procedural spiral galaxy: tens of thousands of particles thrown along winding arms, warm core fading to a cool rim, with pointer-driven camera drift.",
+  "tags": [
+   "three.js",
+   "particles",
+   "space",
+   "hero",
+   "background"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "three.js Journey galaxy generator",
+   "MotionSites \u2014 Solar Fog"
+  ],
+  "a11y": "Canvas is decorative (keep meaningful copy in HTML). Under reduced motion the shell switches to an on-demand frameloop and renders one still frame.",
+  "perf": "40k points in one draw call, generated once in useMemo.",
+  "props": [
+   [
+    "count",
+    "number",
+    "40000",
+    "Stars."
+   ],
+   [
+    "branches",
+    "number",
+    "4",
+    "Spiral arms."
+   ],
+   [
+    "spin",
+    "number",
+    "1.1",
+    "Arm winding."
+   ],
+   [
+    "radius",
+    "number",
+    "4",
+    "Galaxy radius."
+   ],
+   [
+    "inside",
+    "string",
+    "'#ffb36b'",
+    "Core colour."
+   ],
+   [
+    "outside",
+    "string",
+    "'#3b5bfd'",
+    "Rim colour."
+   ]
+  ],
+  "prompt": "Generate a spiral galaxy with three.js Points: for each particle pick radius r = random^1.6\u00b7R, branch angle = (i % branches)/branches\u00b72\u03c0, twist = r\u00b7spin; offset by random^3 noise (sign random) that grows with r; colour lerps inside\u2192outside by r/R. Additive blending, no depth write. Rotate slowly and drift the camera toward the pointer while it keeps looking at the origin.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-orbit-sphere",
+  "name": "Orbit Sphere",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A dotted planet with tilted orbit rings and satellites \u2014 the classic \"global network / coverage\" hero visual.",
+  "tags": [
+   "three.js",
+   "globe",
+   "orbit",
+   "network",
+   "saas"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard"
+  ],
+  "inspiration": [
+   "MotionSites \u2014 Orbit Sphere"
+  ],
+  "a11y": "Canvas is decorative (keep meaningful copy in HTML). Under reduced motion the shell switches to an on-demand frameloop and renders one still frame.",
+  "perf": "~2.4k points plus a few dozen tiny spheres; ring groups rotate as wholes.",
+  "props": [
+   [
+    "dots",
+    "number",
+    "2400",
+    "Dots on the planet."
+   ],
+   [
+    "rings",
+    "number[]",
+    "[5, 8, 12]",
+    "Satellites per ring."
+   ],
+   [
+    "color",
+    "string",
+    "'#e4e4e7'",
+    "Dot/ring colour."
+   ],
+   [
+    "accent",
+    "string",
+    "'#f97316'",
+    "Lead satellite colour."
+   ]
+  ],
+  "prompt": "Build an orbit sphere hero in React Three Fiber: a Fibonacci-sphere Points cloud over a dark occluding sphere, plus several tilted ring groups (thin torus + N small spheres on the circle, first one larger in an accent colour). Rotate each ring group around its own axis at alternating speeds, spin the whole rig slowly and ease its X tilt toward the pointer.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-wave-terrain",
+  "name": "Wave Terrain",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A rolling field of points displaced on the GPU, with a ripple that follows the cursor across the ground plane \u2014 press to amplify. Depth fog dissolves the horizon.",
+  "tags": [
+   "three.js",
+   "shader",
+   "terrain",
+   "points",
+   "data"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard"
+  ],
+  "inspiration": [
+   "MotionSites \u2014 Moss Valley / Saffron Field"
+  ],
+  "a11y": "Canvas is decorative (keep meaningful copy in HTML). Under reduced motion the shell switches to an on-demand frameloop and renders one still frame.",
+  "perf": "~20k points, all motion in the vertex shader; the pointer is raycast onto a math plane (no mesh raycasting).",
+  "props": [
+   [
+    "resolution",
+    "number",
+    "140",
+    "Points per side."
+   ],
+   [
+    "size",
+    "number",
+    "18",
+    "World size."
+   ],
+   [
+    "color",
+    "string",
+    "'#5eead4'",
+    "Point colour."
+   ],
+   [
+    "fog",
+    "string",
+    "'#020617'",
+    "Horizon colour."
+   ]
+  ],
+  "prompt": "Build a GPU wave terrain: a grid of points (resolution\u00b2) at y=0 rendered with a ShaderMaterial. Vertex shader sums a few sin/cos waves of x, z and time, adds a ripple exp(\u2212d\u00b2\u00b7.35)\u00b7sin(3d \u2212 4t) around uPointer, sets gl_PointSize by depth. Fragment discards outside a circle and fogs by depth. Each frame raycast the pointer onto Plane(y=0) and lerp uPointer to the hit; pointerdown raises uPress.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-image-ribbon",
+  "name": "Image Ribbon",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Photos wrapped on a tilted, genuinely curved ribbon (open cylinder slices) that drifts and spins faster with wheel or drag.",
+  "tags": [
+   "three.js",
+   "carousel",
+   "portfolio",
+   "images",
+   "ribbon"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "media"
+  ],
+  "inspiration": [
+   "MotionSites \u2014 Video Ribbon"
+  ],
+  "a11y": "Canvas is decorative \u2014 mirror the projects as HTML links. Wheel listener is passive so page scroll still works. Reduced motion: no drift.",
+  "perf": "One cylinder slice per image; textures shared.",
+  "props": [
+   [
+    "images",
+    "string[]",
+    "",
+    "Images around the ribbon."
+   ],
+   [
+    "radius",
+    "number",
+    "2.4",
+    "Ribbon radius."
+   ],
+   [
+    "height",
+    "number",
+    "1.2",
+    "Panel height."
+   ],
+   [
+    "speed",
+    "number",
+    "0.15",
+    "Idle drift rad/s."
+   ]
+  ],
+  "prompt": "Build a curved image ribbon in React Three Fiber: for each image create an open CylinderGeometry slice (thetaStart = i\u00b7(arc+gap), thetaLength = arc) textured with that image, inside a group tilted on Z. Add wheel + drag velocity that decays back to an idle drift; ease the tilt with the pointer. Dispose geometries on unmount.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-coin",
+  "name": "3D Coin Flip",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A metallic coin with canvas-drawn embossed faces. It flips on a spring with a little hop and tilts toward the pointer \u2014 fintech/rewards hero.",
+  "tags": [
+   "three.js",
+   "coin",
+   "fintech",
+   "rewards",
+   "flip"
+  ],
+  "pageTypes": [
+   "landing",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "MotionSites \u2014 Fin Coin"
+  ],
+  "a11y": "Decorative; announce results in HTML (demo uses aria-live). Reduced motion: flips snap to the final face.",
+  "perf": "CanvasTexture faces generated once; one cylinder with three material groups.",
+  "props": [
+   [
+    "front",
+    "string",
+    "'K'",
+    "Front mark."
+   ],
+   [
+    "back",
+    "string",
+    "'KINETIK \u00b7 2026'",
+    "Back text."
+   ],
+   [
+    "color",
+    "string",
+    "'#d4a017'",
+    "Metal colour."
+   ],
+   [
+    "flipKey",
+    "number",
+    "0",
+    "Increment to flip."
+   ]
+  ],
+  "prompt": "Build a 3D coin: cylinderGeometry(1.25, 1.25, .16, 96) rotated so its cap faces the camera, with three materials (edge metal, front and back faces using CanvasTextures drawn with a radial gradient, rim ring, ridges and a label). Flip: add 3\u03c0 to a target and integrate a damped spring toward it each frame plus a sin-curve hop. Tilt with the pointer. Light with drei Environment Lightformers.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-tunnel",
+  "name": "Warp Tunnel",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "An endless tunnel of glowing polygon rings (one InstancedMesh) streaming toward the camera; the far end bends toward the pointer.",
+  "tags": [
+   "three.js",
+   "tunnel",
+   "warp",
+   "instanced",
+   "background"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "MotionSites \u2014 Scroll-driven 3D"
+  ],
+  "a11y": "Canvas is decorative (keep meaningful copy in HTML). Under reduced motion the shell switches to an on-demand frameloop and renders one still frame.",
+  "perf": "80 instances in one draw call; matrices + colours updated per frame.",
+  "props": [
+   [
+    "rings",
+    "number",
+    "80",
+    "Ring count."
+   ],
+   [
+    "speed",
+    "number",
+    "3",
+    "Forward speed."
+   ],
+   [
+    "colors",
+    "[string, string]",
+    "pink \u2192 sky",
+    "Ring palette."
+   ],
+   [
+    "sides",
+    "number",
+    "6",
+    "Polygon sides (3\u20138)."
+   ]
+  ],
+  "prompt": "Build a warp tunnel with a three.js InstancedMesh of thin tori (low radial segments make polygons). Each frame advance z modulo the spacing, position ring i at z = \u2212i\u00b7spacing + offset, bend its x/y by steer\u00b7(depth fraction)\u00b2 where steer lerps toward the pointer, spin slowly, and set an instance colour that brightens as rings approach. Black fog.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-instanced-grid",
+  "name": "Instanced Pillar Grid",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A field of 1,296 pillars (one InstancedMesh) that rise and glow under the cursor and breathe gently at rest.",
+  "tags": [
+   "three.js",
+   "instanced",
+   "grid",
+   "hover",
+   "data"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard"
+  ],
+  "inspiration": [
+   "three.js instancing examples"
+  ],
+  "a11y": "Canvas is decorative (keep meaningful copy in HTML). Under reduced motion the shell switches to an on-demand frameloop and renders one still frame.",
+  "perf": "One draw call; per-frame matrix updates for ~1.3k instances. The pointer is raycast onto a plane.",
+  "props": [
+   [
+    "size",
+    "number",
+    "36",
+    "Grid side."
+   ],
+   [
+    "color",
+    "string",
+    "'#27272a'",
+    "Base colour."
+   ],
+   [
+    "accent",
+    "string",
+    "'#a3e635'",
+    "Hot colour."
+   ],
+   [
+    "radius",
+    "number",
+    "4",
+    "Influence radius (cells)."
+   ]
+  ],
+  "prompt": "Build an instanced pillar grid: InstancedMesh of unit boxes, size\u00b2 instances. Each frame raycast the pointer onto the y=0 plane, compute each pillar's distance d (in cells), lift = max(0, 1 \u2212 d/radius), target height = .15 + idle waves + lift\u00b2\u00b71.6, ease heights toward targets, write matrices (scale y = height, y = height/2) and lerp instance colour toward the accent by lift. Camera at an isometric-ish angle looking at the origin.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-floating-shapes",
+  "name": "Floating Shapes",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Playful clay-like primitives bobbing in a soft studio \u2014 pointer parallax, hover swell, contact shadows.",
+  "tags": [
+   "three.js",
+   "playful",
+   "hero",
+   "shapes",
+   "clay"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "MotionSites \u2014 Jelly Garden"
+  ],
+  "a11y": "Canvas is decorative (keep meaningful copy in HTML). Under reduced motion the shell switches to an on-demand frameloop and renders one still frame.",
+  "perf": "14 meshes with physical materials; ContactShadows rendered once per frame at low res.",
+  "props": [
+   [
+    "palette",
+    "string[]",
+    "candy",
+    "Colours used round-robin."
+   ],
+   [
+    "count",
+    "number",
+    "14",
+    "Number of shapes."
+   ]
+  ],
+  "prompt": "Build a playful 3D hero: ~14 primitives (sphere, torus, capsule, box, cone, knot) placed on a golden-angle spiral, each wrapped in drei Float with clearcoat physical materials from a candy palette. Hovering a shape eases its scale up 18%. A Rig group eases its rotation toward the pointer. drei ContactShadows under the scene, Environment Lightformers for soft light.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "gsap-three-waypoints",
+  "name": "Scroll Camera Waypoints",
+  "category": "3d",
+  "engine": "gsap",
+  "deps": [
+   "gsap",
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 460,
+  "description": "A scroll-driven camera flight: a ScrollTrigger-scrubbed GSAP timeline tweens a plain object between waypoints and the R3F camera copies it each frame; captions crossfade per stop.",
+  "tags": [
+   "gsap",
+   "three.js",
+   "scroll",
+   "camera",
+   "storytelling"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "GSAP Demo Hub \u2014 three.js scroll waypoints"
+  ],
+  "a11y": "Captions are real HTML. Reduced motion: no camera flight \u2014 every waypoint becomes a static card.",
+  "perf": "Sticky canvas + scrub:1; the camera is only written in useFrame, GSAP never touches three.js objects directly.",
+  "props": [
+   [
+    "waypoints",
+    "Waypoint[]",
+    "",
+    "{ title, body?, position, target }."
+   ],
+   [
+    "scroller",
+    "RefObject<HTMLElement>",
+    "",
+    "Custom scroll container."
+   ]
+  ],
+  "prompt": "Build a scroll-driven three.js camera tour: a tall section with a sticky R3F Canvas. Keep a plain rig object {px,py,pz,tx,ty,tz}; a GSAP timeline with a scrub:1 ScrollTrigger tweens it from waypoint to waypoint (one unit each) and crossfades HTML captions. A CameraRig component copies rig \u2192 camera.position and lookAt in useFrame. Reduced motion: render the waypoints as static cards.",
+  "registryDeps": []
+ }
+]

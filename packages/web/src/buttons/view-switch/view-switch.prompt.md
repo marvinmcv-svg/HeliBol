@@ -1,0 +1,1 @@
+Build a view switcher: a radiogroup of three buttons; each icon is an SVG with four motion.rect elements whose x/y/width/height animate to one of three layouts (list rows with thumbnails, compact lines, 2×2 cards) with a bouncy spring and small per-rect delay. A layoutId pill slides under the active button. Pair it with a grid that animates layout.

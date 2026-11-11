@@ -1,0 +1,1 @@
+Build an aurora card: three large blurred blobs drifting (rotate/translate/scale keyframes, different durations) in a layer at 30% opacity that rises to 100% on hover/focus-within; the layer translates by CSS vars --mx/--my set from the pointer. Content sits on a backdrop-blur card surface inset by 1 px so the light shows as a border.

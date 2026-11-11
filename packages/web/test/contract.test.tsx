@@ -17,7 +17,7 @@ const entries = Object.entries(metas).map(([file, mod]) => {
 // Directly scroll-linked feedback moves only as the user scrolls, so it is allowed under reduced motion.
 const USER_DRIVEN = new Set(["scroll-progress", "before-after"]);
 // WebGL can't run in jsdom; covered by Playwright instead.
-const SKIP_RENDER = new Set(["canvas-3d-shell"]);
+const SKIP_RENDER = new Set(["canvas-3d-shell", "gsap-three-waypoints"]);
 
 afterEach(() => {
   cleanup();
@@ -71,7 +71,7 @@ describe("component contract", () => {
       expect(handled || !animates || meta.engine === "motion" || USER_DRIVEN.has(slug)).toBe(true);
     });
 
-    if (!SKIP_RENDER.has(slug)) {
+    if (!SKIP_RENDER.has(slug) && meta.engine !== "r3f") {
       it.each([false, true])("renders (reduced motion: %s)", async (reduced) => {
         if (reduced) document.documentElement.setAttribute("data-reduce-motion", "");
         const Demo = (await demos[`../src/${category}/${slug}/${slug}.demo.tsx`]()).default;

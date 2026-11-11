@@ -1,0 +1,661 @@
+[
+ {
+  "id": "data-table",
+  "name": "Animated Data Table",
+  "category": "data",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Sortable, filterable, selectable table: rows glide to their new order, filtered rows fade out, the sort arrow flips and a bulk-action bar springs up on selection.",
+  "tags": [
+   "table",
+   "sort",
+   "filter",
+   "selection",
+   "dashboard"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "settings"
+  ],
+  "inspiration": [
+   "21st.dev \u2014 Tables"
+  ],
+  "a11y": "Real <table> with caption, scope=col and aria-sort; checkboxes labelled per row; bulk bar is role=status. Reduced motion: no row movement.",
+  "perf": "layout=\"position\" on rows only (no size animation); memoised filtering/sorting.",
+  "props": [
+   [
+    "rows",
+    "T[] (with id)",
+    "",
+    "Data."
+   ],
+   [
+    "columns",
+    "{ key, header, render?, align?, sortable? }[]",
+    "",
+    "Columns."
+   ],
+   [
+    "searchKeys",
+    "(keyof T)[]",
+    "all columns",
+    "Filtered keys."
+   ],
+   [
+    "caption",
+    "string",
+    "",
+    "Accessible caption."
+   ]
+  ],
+  "prompt": "Build an animated data table with Motion: a semantic table whose tbody rows are motion.tr with layout=\"position\" inside AnimatePresence. Header buttons cycle sort asc \u2192 desc \u2192 none (aria-sort) with a rotating arrow. A filter input narrows rows. Row checkboxes + select-all; when any are selected, a pill bar springs up from the bottom with the count and Clear."
+ },
+ {
+  "id": "date-picker",
+  "name": "Date Picker",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 440,
+  "description": "Popover calendar that springs open from its field: months slide in the direction you navigate, the selection circle glides between days and the full ARIA grid keyboard model works.",
+  "tags": [
+   "date",
+   "calendar",
+   "picker",
+   "popover",
+   "booking"
+  ],
+  "pageTypes": [
+   "ecommerce",
+   "settings",
+   "dashboard"
+  ],
+  "inspiration": [
+   "21st.dev \u2014 Calendars / Date pickers"
+  ],
+  "a11y": "Button with aria-haspopup=dialog; grid of gridcells with roving tabindex; Arrows, Home/End, PageUp/PageDown, Enter, Esc. Locale-aware labels via Intl. Reduced motion: fades only.",
+  "perf": "42 day buttons per month; only the visible month mounts.",
+  "props": [
+   [
+    "value",
+    "Date | null",
+    "null",
+    "Initial date."
+   ],
+   [
+    "onChange",
+    "(d: Date) => void",
+    "",
+    "Selection callback."
+   ],
+   [
+    "locale",
+    "string",
+    "'en-US'",
+    "Intl locale."
+   ],
+   [
+    "weekStart",
+    "0 | 1",
+    "1",
+    "First weekday."
+   ],
+   [
+    "label",
+    "string",
+    "'Date'",
+    "Field label."
+   ]
+  ],
+  "prompt": "Build an animated date picker with Motion: a trigger button opens a popover (scale .96 \u2192 1, snappy spring). Header month label and the 6\u00d77 day grid are keyed by month inside AnimatePresence popLayout with direction-aware x slide. The selected day has a layoutId circle (bouncy). Implement roving tabindex and the WAI-ARIA date grid keys. Use Intl.DateTimeFormat for labels."
+ },
+ {
+  "id": "radio-cards",
+  "name": "Radio Cards",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Selectable option cards built on native radio inputs; a highlight ring glides between cards with shared layout and the dot springs in.",
+  "tags": [
+   "radio",
+   "cards",
+   "select",
+   "checkout",
+   "plans"
+  ],
+  "pageTypes": [
+   "ecommerce",
+   "pricing",
+   "onboarding"
+  ],
+  "inspiration": [
+   "21st.dev \u2014 Radio groups"
+  ],
+  "a11y": "Native radios (sr-only) inside labels inside a fieldset/legend, so arrow keys and forms work; focus ring via :has(:focus-visible). Reduced motion: instant.",
+  "perf": "One layoutId element moves between cards.",
+  "props": [
+   [
+    "options",
+    "{ value, title, description?, icon?, aside? }[]",
+    "",
+    "Options."
+   ],
+   [
+    "value",
+    "string",
+    "",
+    "Selected value."
+   ],
+   [
+    "onChange",
+    "(v) => void",
+    "",
+    "Change handler."
+   ],
+   [
+    "label",
+    "string",
+    "",
+    "Legend."
+   ]
+  ],
+  "prompt": "Build radio cards: a fieldset with legend; each option is a label wrapping an sr-only native radio, a custom dot (inner circle springs scale 0\u21921), icon, title/description and an aside (price). The selected card renders a motion.span with a shared layoutId (ring + tinted background) so it glides between cards."
+ },
+ {
+  "id": "pagination-animated",
+  "name": "Animated Pagination",
+  "category": "navigation",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 280,
+  "description": "Pagination where the active pill slides between pages, numbers shuffle in and out as the window moves, and arrows nudge in their direction on press.",
+  "tags": [
+   "pagination",
+   "pages",
+   "navigation",
+   "table"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "blog",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "21st.dev \u2014 Paginations"
+  ],
+  "a11y": "nav landmark, aria-current=page, labelled buttons, ellipses hidden from AT. Reduced motion: instant.",
+  "perf": "popLayout list with a single layoutId pill.",
+  "props": [
+   [
+    "page",
+    "number",
+    "",
+    "Current page (1-based)."
+   ],
+   [
+    "total",
+    "number",
+    "",
+    "Page count."
+   ],
+   [
+    "onChange",
+    "(p) => void",
+    "",
+    "Page change."
+   ],
+   [
+    "siblings",
+    "number",
+    "1",
+    "Pages either side."
+   ]
+  ],
+  "prompt": "Build animated pagination with Motion: compute [1, \u2026, p\u2212s..p+s, \u2026, total]; render as motion.li with layout=\"position\" inside AnimatePresence popLayout (scale/opacity in/out). The current page has a layoutId pill. Prev/next arrows nudge x on tap and disable at the ends."
+ },
+ {
+  "id": "number-input",
+  "name": "Number Input Stepper",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 280,
+  "description": "A stepper whose digits roll in the direction of change, buttons auto-repeat (accelerating) while held, and the field shakes at its limits.",
+  "tags": [
+   "number",
+   "stepper",
+   "input",
+   "quantity",
+   "counter"
+  ],
+  "pageTypes": [
+   "ecommerce",
+   "settings"
+  ],
+  "inspiration": [
+   "21st.dev \u2014 Inputs / Number fields"
+  ],
+  "a11y": "ARIA spinbutton with valuenow/min/max/valuetext; Arrow Up/Down, Home/End. Reduced motion: fade instead of roll, no shake.",
+  "perf": "Single span swap per change; hold-repeat via setTimeout accelerating to 50 ms.",
+  "props": [
+   [
+    "value",
+    "number",
+    "",
+    "Value."
+   ],
+   [
+    "onChange",
+    "(v) => void",
+    "",
+    "Change handler."
+   ],
+   [
+    "min",
+    "number",
+    "-\u221e",
+    "Minimum."
+   ],
+   [
+    "max",
+    "number",
+    "\u221e",
+    "Maximum."
+   ],
+   [
+    "step",
+    "number",
+    "1",
+    "Step."
+   ],
+   [
+    "label",
+    "string",
+    "",
+    "Label."
+   ],
+   [
+    "format",
+    "(v) => string",
+    "String",
+    "Display format."
+   ]
+  ],
+  "prompt": "Build a number stepper with Motion: \u2212 and + buttons around a spinbutton. The value is keyed in AnimatePresence popLayout with direction-aware variants (enter from y=18\u00b7dir, exit to \u221218\u00b7dir). Holding a button repeats with delay \u00d70.8 down to 50 ms. Hitting min/max shakes the field (x keyframes). Keyboard: arrows, Home, End."
+ },
+ {
+  "id": "range-slider",
+  "name": "Range Slider with Histogram",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Dual-thumb range slider over a live histogram: bars inside the range light up, the active thumb grows with a value bubble, and thumbs can't cross.",
+  "tags": [
+   "slider",
+   "range",
+   "filter",
+   "histogram",
+   "price"
+  ],
+  "pageTypes": [
+   "ecommerce",
+   "dashboard"
+  ],
+  "inspiration": [
+   "21st.dev \u2014 Sliders"
+  ],
+  "a11y": "Each thumb is a full ARIA slider (arrows, PageUp/Down, Home/End) with value text; pointer capture for dragging; histogram aria-hidden. Reduced motion: no scale or colour tweens.",
+  "perf": "Bars tween colour/scale only when their in-range state flips.",
+  "props": [
+   [
+    "value",
+    "[number, number]",
+    "",
+    "Range."
+   ],
+   [
+    "onChange",
+    "(v) => void",
+    "",
+    "Change handler."
+   ],
+   [
+    "min",
+    "number",
+    "0",
+    "Minimum."
+   ],
+   [
+    "max",
+    "number",
+    "100",
+    "Maximum."
+   ],
+   [
+    "step",
+    "number",
+    "1",
+    "Step."
+   ],
+   [
+    "histogram",
+    "number[]",
+    "",
+    "Optional distribution."
+   ],
+   [
+    "label",
+    "string",
+    "",
+    "Label."
+   ],
+   [
+    "format",
+    "(v) => string",
+    "String",
+    "Value format."
+   ]
+  ],
+  "prompt": "Build a dual-thumb range slider: a track with a filled segment between thumbs; pointerdown picks the nearest thumb, captures the pointer and snaps values to step without crossing. Each thumb is role=slider with keyboard support and a value bubble while active (spring scale). Optional histogram bars above the track animate colour/scaleY when inside the range."
+ },
+ {
+  "id": "gsap-flip-carousel",
+  "name": "Flip Carousel",
+  "category": "media",
+  "engine": "gsap",
+  "deps": [
+   "gsap",
+   "@gsap/react",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 400,
+  "description": "A carousel where DOM order is the truth: next/prev rotates the array and GSAP Flip animates every card from its old box to its new one \u2014 the centre slot is bigger, so cards grow as they pass through.",
+  "tags": [
+   "gsap",
+   "flip",
+   "carousel",
+   "gallery",
+   "layout"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "ecommerce",
+   "media"
+  ],
+  "inspiration": [
+   "GSAP Demo Hub \u2014 Flip carousel"
+  ],
+  "a11y": "Arrow keys on the focused region, labelled buttons, aria-live title; non-centre cards aria-hidden. Reduced motion: instant re-order.",
+  "perf": "Flip.getState before the React update, Flip.from in a layout effect after \u2014 no manual measuring.",
+  "props": [
+   [
+    "items",
+    "{ image, title }[]",
+    "",
+    "Cards."
+   ]
+  ],
+  "prompt": "Build a Flip carousel: state is an order array; on next/prev call Flip.getState(track.children) then rotate the array; in a useGSAP layout effect keyed on order run Flip.from(state, { duration .7, ease power3.inOut, nested: true }). Size classes come from distance to the centre slot (big centre, smaller neighbours, faded ends)."
+ },
+ {
+  "id": "gsap-shader-scroll",
+  "name": "Shader on Scroll",
+  "category": "backgrounds",
+  "engine": "gsap",
+  "deps": [
+   "gsap"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A full-screen fragment shader (raw WebGL) whose uniforms are scrubbed by ScrollTrigger: scrolling twists and zooms an fbm noise field and crossfades the palette panel by panel.",
+  "tags": [
+   "gsap",
+   "webgl",
+   "shader",
+   "scroll",
+   "storytelling"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "GSAP Demo Hub \u2014 Shader on scroll"
+  ],
+  "a11y": "Canvas aria-hidden; text panels are real HTML. Reduced motion: time stops, scroll still changes the palette. CSS gradient fallback without WebGL.",
+  "perf": "One fullscreen triangle; DPR capped at 1.5; rAF pauses off-screen; context released on unmount.",
+  "props": [
+   [
+    "panels",
+    "ReactNode[]",
+    "",
+    "Panels scrolled over the shader."
+   ],
+   [
+    "palettes",
+    "[string, string][]",
+    "4 presets",
+    "Colour pair per panel."
+   ],
+   [
+    "scroller",
+    "RefObject<HTMLElement>",
+    "",
+    "Custom scroll container."
+   ]
+  ],
+  "prompt": "Build a scroll-driven shader section: a sticky canvas with a raw WebGL fullscreen triangle running an fbm domain-warp fragment shader (uniforms uTime, uProgress, uA, uB). A ScrollTrigger (scrub) tweens a progress object; progress rotates/zooms the noise domain and picks/lerps palette pairs per panel. Render with rAF only while visible."
+ },
+ {
+  "id": "gsap-text-replace",
+  "name": "Text Replace",
+  "category": "text",
+  "engine": "gsap",
+  "deps": [
+   "gsap",
+   "@gsap/react"
+  ],
+  "priority": "P2",
+  "previewHeight": 280,
+  "description": "Animated text replacement with GSAP's TextPlugin: each phrase is rewritten into the next, by character or by word, with a highlight sweeping behind it.",
+  "tags": [
+   "gsap",
+   "text plugin",
+   "headline",
+   "typewriter",
+   "rotate"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "GSAP Demo Hub \u2014 Animate text replacement"
+  ],
+  "a11y": "The text node is aria-live=polite; reduced motion swaps phrases with a fade.",
+  "perf": "One repeating timeline; TextPlugin edits a single text node.",
+  "props": [
+   [
+    "phrases",
+    "string[]",
+    "",
+    "Phrases to cycle."
+   ],
+   [
+    "mode",
+    "'char' | 'word'",
+    "'char'",
+    "Replace granularity."
+   ],
+   [
+    "hold",
+    "number",
+    "1.6",
+    "Seconds per phrase."
+   ]
+  ],
+  "prompt": "Build a TextPlugin headline: a repeating GSAP timeline that, for each phrase, sweeps a highlight bar in (scaleX 0\u21921 from the left), tweens the span with text: { value: next, delimiter: mode === 'word' ? ' ' : '' }, then sweeps the bar out to the right. Reduced motion: fade out, set text, fade in."
+ },
+ {
+  "id": "gsap-scrollto-nav",
+  "name": "ScrollTo Table of Contents",
+  "category": "navigation",
+  "engine": "gsap",
+  "deps": [
+   "gsap"
+  ],
+  "priority": "P2",
+  "previewHeight": 420,
+  "description": "Docs-style table of contents: links glide the scroller to each section with ScrollToPlugin (eased, interruptible) while ScrollTriggers track the active section and a bar slides beside it.",
+  "tags": [
+   "gsap",
+   "scrollto",
+   "toc",
+   "docs",
+   "navigation"
+  ],
+  "pageTypes": [
+   "docs",
+   "blog"
+  ],
+  "inspiration": [
+   "GSAP Demo Hub \u2014 ScrollTo / scroll waypoints"
+  ],
+  "a11y": "Real anchor links with aria-current=location; sections are focusable regions and receive focus after the jump. Reduced motion: instant jump.",
+  "perf": "ScrollTo autoKill hands control back as soon as the user scrolls.",
+  "props": [
+   [
+    "sections",
+    "{ id, label, content }[]",
+    "",
+    "Sections."
+   ],
+   [
+    "scroller",
+    "RefObject<HTMLElement>",
+    "window",
+    "Scroll container."
+   ]
+  ],
+  "prompt": "Build a table of contents with GSAP ScrollToPlugin: clicking a link tweens the scroller with scrollTo: { y: section, offsetY: 16, autoKill: true } (power3.inOut, 1 s) and focuses the section. One ScrollTrigger per section (start/end at 40%) sets the active index; an indicator bar tweens to the active link's offsetTop/height."
+ },
+ {
+  "id": "gsap-auto-height",
+  "name": "Auto-Height Accordion",
+  "category": "layout",
+  "engine": "gsap",
+  "deps": [
+   "gsap",
+   "@gsap/react",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Accordion with one paused GSAP timeline per panel tweening to height:auto, fading the content and turning the chevron; toggling plays or reverses, so fast clicks turn around mid-flight.",
+  "tags": [
+   "gsap",
+   "accordion",
+   "height auto",
+   "faq",
+   "toggle"
+  ],
+  "pageTypes": [
+   "landing",
+   "docs"
+  ],
+  "inspiration": [
+   "GSAP Demo Hub \u2014 Animate auto height / toggle direction"
+  ],
+  "a11y": "Buttons with aria-expanded/aria-controls; panels are labelled regions and inert while closed. Reduced motion: zero durations.",
+  "perf": "Timelines built once; GSAP measures the auto height.",
+  "props": [
+   [
+    "items",
+    "{ title, content }[]",
+    "",
+    "Panels."
+   ],
+   [
+    "multiple",
+    "boolean",
+    "false",
+    "Allow several open."
+   ]
+  ],
+  "prompt": "Build an accordion with GSAP: per panel, a paused timeline fromTo height 0 \u2192 'auto', fade/lift the inner content, rotate the chevron 180\u00b0. Toggle = tl.play() or tl.reverse(), so interrupted toggles reverse smoothly. Single-open mode reverses the others. Panels inert when closed."
+ },
+ {
+  "id": "gsap-keyframes-loader",
+  "name": "Keyframes Loader",
+  "category": "loaders",
+  "engine": "gsap",
+  "deps": [
+   "gsap",
+   "@gsap/react"
+  ],
+  "priority": "P2",
+  "previewHeight": 280,
+  "description": "A loader choreographed entirely with GSAP percentage keyframes: four blocks hop, squash on landing, travel around a square and spin, staggered in time.",
+  "tags": [
+   "gsap",
+   "keyframes",
+   "loader",
+   "playful",
+   "spinner"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "onboarding"
+  ],
+  "inspiration": [
+   "GSAP Demo Hub \u2014 Keyframes"
+  ],
+  "a11y": "role=status with a label and sr-only text. Reduced motion: gentle opacity pulse.",
+  "perf": "One tween with keyframes + stagger; transforms only.",
+  "props": [
+   [
+    "label",
+    "string",
+    "'Loading'",
+    "Accessible label."
+   ],
+   [
+    "colors",
+    "string[]",
+    "4 colours",
+    "Block colours."
+   ],
+   [
+    "size",
+    "number",
+    "18",
+    "Block size."
+   ]
+  ],
+  "prompt": "Build a GSAP keyframes loader: four absolutely positioned blocks; one gsap.to(blocks, { keyframes: { '0%':\u2026, '15%': hop with stretch, '30%': land with squash, '55%', '70%', '85%': travel around a square with rotation, easeEach: 'power2.inOut' }, duration 2.4, stagger: { each .6, repeat: -1 } }). Reduced motion: yoyo opacity."
+ }
+]

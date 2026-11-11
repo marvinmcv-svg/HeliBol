@@ -1,0 +1,1 @@
+Build a vertical marquee in pure CSS: a grid of columns, each a flex column containing its items twice (second copy aria-hidden) animated with translateY(0 → −50%) linear infinite; alternate columns reverse and vary duration by 15%. Mask top/bottom with a linear-gradient mask-image. Pause on hover/focus-within; no animation under reduced motion.

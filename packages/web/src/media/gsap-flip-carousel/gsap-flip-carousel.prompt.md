@@ -1,0 +1,1 @@
+Build a Flip carousel: state is an order array; on next/prev call Flip.getState(track.children) then rotate the array; in a useGSAP layout effect keyed on order run Flip.from(state, { duration .7, ease power3.inOut, nested: true }). Size classes come from distance to the centre slot (big centre, smaller neighbours, faded ends).

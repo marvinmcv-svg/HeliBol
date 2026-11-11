@@ -1,0 +1,1 @@
+Build radio cards: a fieldset with legend; each option is a label wrapping an sr-only native radio, a custom dot (inner circle springs scale 0→1), icon, title/description and an aside (price). The selected card renders a motion.span with a shared layoutId (ring + tinted background) so it glides between cards.

@@ -1,0 +1,1 @@
+Build an animated date picker with Motion: a trigger button opens a popover (scale .96 → 1, snappy spring). Header month label and the 6×7 day grid are keyed by month inside AnimatePresence popLayout with direction-aware x slide. The selected day has a layoutId circle (bouncy). Implement roving tabindex and the WAI-ARIA date grid keys. Use Intl.DateTimeFormat for labels.

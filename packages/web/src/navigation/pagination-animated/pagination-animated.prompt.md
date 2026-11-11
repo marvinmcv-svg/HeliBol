@@ -1,0 +1,1 @@
+Build animated pagination with Motion: compute [1, …, p−s..p+s, …, total]; render as motion.li with layout="position" inside AnimatePresence popLayout (scale/opacity in/out). The current page has a layoutId pill. Prev/next arrows nudge x on tap and disable at the ends.

@@ -1,0 +1,1 @@
+Build an input with an animated placeholder: while the field is empty and unfocused, an aria-hidden overlay types suggestions character by character (55 ms ± jitter), pauses, deletes at double speed and moves to the next. Hide the native placeholder visually (placeholder:text-transparent) but keep it for screen readers. Stop on focus or value.

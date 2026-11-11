@@ -1,0 +1,1 @@
+Build a dual-thumb range slider: a track with a filled segment between thumbs; pointerdown picks the nearest thumb, captures the pointer and snaps values to step without crossing. Each thumb is role=slider with keyboard support and a value bubble while active (spring scale). Optional histogram bars above the track animate colour/scaleY when inside the range.

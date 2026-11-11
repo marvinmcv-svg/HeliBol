@@ -1,0 +1,1 @@
+Build a table of contents with GSAP ScrollToPlugin: clicking a link tweens the scroller with scrollTo: { y: section, offsetY: 16, autoKill: true } (power3.inOut, 1 s) and focuses the section. One ScrollTrigger per section (start/end at 40%) sets the active index; an indicator bar tweens to the active link's offsetTop/height.

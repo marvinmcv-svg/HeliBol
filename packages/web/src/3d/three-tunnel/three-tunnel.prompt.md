@@ -1,0 +1,1 @@
+Build a warp tunnel with a three.js InstancedMesh of thin tori (low radial segments make polygons). Each frame advance z modulo the spacing, position ring i at z = −i·spacing + offset, bend its x/y by steer·(depth fraction)² where steer lerps toward the pointer, spin slowly, and set an instance colour that brightens as rings approach. Black fog.

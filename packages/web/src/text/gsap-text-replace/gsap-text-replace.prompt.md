@@ -1,0 +1,1 @@
+Build a TextPlugin headline: a repeating GSAP timeline that, for each phrase, sweeps a highlight bar in (scaleX 0→1 from the left), tweens the span with text: { value: next, delimiter: mode === 'word' ? ' ' : '' }, then sweeps the bar out to the right. Reduced motion: fade out, set text, fade in.

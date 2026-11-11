@@ -1,0 +1,1 @@
+Generate a spiral galaxy with three.js Points: for each particle pick radius r = random^1.6·R, branch angle = (i % branches)/branches·2π, twist = r·spin; offset by random^3 noise (sign random) that grows with r; colour lerps inside→outside by r/R. Additive blending, no depth write. Rotate slowly and drift the camera toward the pointer while it keeps looking at the origin.
