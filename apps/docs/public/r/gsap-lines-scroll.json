@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-lines-scroll",
+  "type": "registry:component",
+  "title": "Line Reveal on Scroll",
+  "description": "Paragraph lines rise out of their masks and un-blur one after another, scrubbed by scroll. Lines re-split automatically on resize so they always match the layout.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-lines-scroll.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-lines-scroll.tsx",
+      "content": "\"use client\";\nimport { useRef, type ElementType, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { SplitText } from \"gsap/SplitText\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);\n\nexport interface GsapLinesScrollProps {\n  children: string;\n  as?: ElementType;\n  scroller?: RefObject<HTMLElement | null>;\n  className?: string;\n}\n\n/**\n * Responsive line-by-line reveal scrubbed by scroll: SplitText with autoSplit re-splits on\n * resize/font load (so lines are always the real rendered lines), each line rises out of its\n * mask and un-blurs in sequence as the paragraph travels up the viewport.\n */\nexport function GsapLinesScroll({ children, as: Tag = \"p\", scroller, className }: GsapLinesScrollProps) {\n  const ref = useRef<HTMLElement>(null);\n  const reduced = useReducedMotion();\n\n  useGSAP(\n    () => {\n      if (reduced) return;\n      SplitText.create(ref.current, {\n        type: \"lines\",\n        mask: \"lines\",\n        autoSplit: true,\n        onSplit: (self) =>\n          gsap.from(self.lines, {\n            yPercent: 100,\n            opacity: 0.1,\n            filter: \"blur(6px)\",\n            stagger: 0.15,\n            ease: \"power2.out\",\n            scrollTrigger: { trigger: ref.current, scroller: scroller?.current ?? undefined, start: \"top 85%\", end: \"bottom 45%\", scrub: 0.6 },\n          }),\n      });\n    },\n    { scope: ref, dependencies: [reduced, children] },\n  );\n\n  return (\n    <Tag ref={ref} className={cn(className)}>\n      {children}\n    </Tag>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "scroll",
+      "splittext",
+      "lines",
+      "manifesto",
+      "editorial"
+    ],
+    "pageTypes": [
+      "landing",
+      "blog",
+      "portfolio"
+    ]
+  }
+}

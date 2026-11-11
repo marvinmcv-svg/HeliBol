@@ -1,0 +1,1 @@
+Build a mask expand: 260vh section, sticky stage; image wrapper clipPath inset(38% 39% 38% 39% round 24px) → inset(0 round 0) and image scale 1.5→1 (power2.inOut), left/right words xPercent ∓140 + fade, caption rising at .7 — all in one timeline with scrollTrigger { start top top, end bottom bottom, scrub .6 }.

@@ -32,3 +32,11 @@ Decisions made while executing `motion-library-master-plan.md`. Per Section 0.9,
 | 21 | **`useCanvas` in core** (DPR sizing, off-screen and hidden-tab pausing, pointer tracking, a static frame under reduced motion). | 9 canvas pieces share it, so none re-implement lifecycle or a11y. Raw WebGL (`bg-shader`) instead of three.js for backgrounds: ~1 KB. |
 | 22 | **Vitest `fsModuleCache: false`.** | Vitest 5 reused the cached transform of the contract test, so its `import.meta.glob` never saw new components (588 tests ran instead of 1,164). |
 | 23 | Default array props are hoisted to module constants before use in effect deps. | `TextSparkles` with an inline default array caused an infinite render loop; the test suite caught it. |
+
+## kinetik 2.1 (GSAP collection)
+
+| # | Decision | Why |
+|---|---|---|
+| 24 | **GSAP Demo Hub scraped with Firecrawl** (sitemap, 13 category and 16 plugin listings, per-demo technique notes) → `docs/research/gsap-demos.json`. 29 new GSAP components, one per uncovered technique, written from scratch. | kinetik had 5 GSAP components; GSAP's plugins (Flip, Observer, Draggable/Inertia, MorphSVG, Physics2D, CustomWiggle…) are now free to use. We copied techniques only, never demo code or media. |
+| 25 | **`DemoScroller` mounts its children only after its own element exists.** | Children's layout effects ran before the scroller's ref was attached, so every ScrollTrigger inside a preview silently bound to `window` (scroll demos looked frozen). |
+| 26 | **Thumbnail auto-fit:** the capture stage scrolls scroll demos to a set point (`thumbAt`, default 42%) and zooms small components to their painted bounding box (≤2.4×; full-bleed demos untouched). Denser gallery grid (3–4 columns) and a moving wall of every thumbnail on the home page. | The gallery "looked empty": small buttons sat in large black frames and scroll demos were captured before anything happened. |

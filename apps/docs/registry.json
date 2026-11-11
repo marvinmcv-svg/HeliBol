@@ -180,6 +180,45 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-tilt-scene",
+      "type": "registry:component",
+      "title": "3D Tilt Scene",
+      "description": "A whole composition rotates toward the cursor in 3D; layers marked with data-depth float at different translateZ so they separate as it tilts.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "3d",
+          "tilt",
+          "parallax",
+          "depth",
+          "card"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-tilt-scene.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-tilt-scene.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "activity-rings",
       "type": "registry:component",
       "title": "Activity Rings",
@@ -693,6 +732,45 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-batch-reveal",
+      "type": "registry:component",
+      "title": "Batch Scroll Reveal",
+      "description": "Grid items that enter the viewport together animate together — ScrollTrigger.batch groups them so a fast scroll reveals whole rows instead of a long queue.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "scroll",
+          "stagger",
+          "grid",
+          "reveal",
+          "ecommerce"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "blog",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-batch-reveal.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-batch-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "widget-battery",
       "type": "registry:component",
       "title": "Battery Level",
@@ -903,6 +981,44 @@
           "path": "components/kinetik/nav-bottom-bar.tsx",
           "type": "registry:component",
           "target": "components/kinetik/nav-bottom-bar.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-footer-bounce",
+      "type": "registry:component",
+      "title": "Bouncy Footer",
+      "description": "The footer's top edge is an SVG curve pulled down by your scroll speed as you land, then it springs back like a trampoline.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "footer",
+          "scroll",
+          "elastic",
+          "svg",
+          "fun"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-footer-bounce.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-footer-bounce.tsx"
         }
       ]
     },
@@ -1517,6 +1633,44 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-curve-wipe",
+      "type": "registry:component",
+      "title": "Curved Wipe Transition",
+      "description": "Page transition with a liquid curved wipe: an SVG path bulges up to cover the screen, the content swaps, then it peels away with the opposite bend.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "transitions"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "page transition",
+          "wipe",
+          "svg",
+          "liquid",
+          "router"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-curve-wipe.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-curve-wipe.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "cursor-custom",
       "type": "registry:component",
       "title": "Custom Cursor",
@@ -1548,6 +1702,84 @@
           "path": "components/kinetik/cursor-custom.tsx",
           "type": "registry:component",
           "target": "components/kinetik/cursor-custom.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-wiggle",
+      "type": "registry:component",
+      "title": "CustomWiggle Attention",
+      "description": "Attention micro-interactions with CustomWiggle: a bell that rings, an input error shake, a jelly squash and a nudge — each always returns exactly to rest.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "wiggle",
+          "shake",
+          "error",
+          "notification",
+          "micro-interaction"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "auth",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-wiggle.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-wiggle.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-card-stack",
+      "type": "registry:component",
+      "title": "Cycling Card Stack",
+      "description": "A fanned deck: drag the top card away (or press Next/Space) and it arcs off then tucks in behind the pile while the rest step forward. Loops forever.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "cards",
+          "stack",
+          "deck",
+          "draggable",
+          "gallery"
+        ],
+        "pageTypes": [
+          "landing",
+          "social",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-card-stack.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-card-stack.tsx"
         }
       ]
     },
@@ -2212,6 +2444,44 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-flair-trail",
+      "type": "registry:component",
+      "title": "Flair Cursor Trail",
+      "description": "Every few pixels of pointer travel a sprite (emoji, star, shape) pops out, flies in the direction you moved, spins and falls with gravity, then disappears.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "cursor",
+          "trail",
+          "emoji",
+          "confetti",
+          "fun"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-flair-trail.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-flair-trail.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "bg-flicker-grid",
       "type": "registry:component",
       "title": "Flickering Grid",
@@ -2279,6 +2549,123 @@
           "path": "components/kinetik/card-flip.tsx",
           "type": "registry:component",
           "target": "components/kinetik/card-flip.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-flip-filter",
+      "type": "registry:component",
+      "title": "Flip Filter Grid",
+      "description": "Filter chips re-arrange a grid with GSAP Flip — survivors glide to their new cells, new items pop in and removed ones shrink away.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "flip",
+          "filter",
+          "grid",
+          "gallery",
+          "layout"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "portfolio",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-flip-filter.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-flip-filter.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-flip-modal",
+      "type": "registry:component",
+      "title": "Flip Grid Modal",
+      "description": "Click a thumbnail and the very same image node flies from the grid into a product dialog (Flip), text staggers in; closing flies it back home.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "flip",
+          "modal",
+          "gallery",
+          "shared element",
+          "ecommerce"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-flip-modal.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-flip-modal.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-flip-layout",
+      "type": "registry:component",
+      "title": "Flip Layout Switch",
+      "description": "Grid ↔ list ↔ featured toggle: React re-renders with new classes and Flip animates every card and its nested image from the old box to the new one.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "flip",
+          "layout",
+          "grid",
+          "list",
+          "view switcher"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-flip-layout.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-flip-layout.tsx"
         }
       ]
     },
@@ -3003,6 +3390,44 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-horizontal-text",
+      "type": "registry:component",
+      "title": "Horizontal Text Scroll",
+      "description": "One giant line of type slides sideways as you scroll down, while each letter drops in, rotates and recolours as it crosses the screen (containerAnimation).",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "scroll",
+          "typography",
+          "horizontal",
+          "splittext",
+          "editorial"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-horizontal-text.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-horizontal-text.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "hover-card",
       "type": "registry:component",
       "title": "Hover Card",
@@ -3072,6 +3497,44 @@
           "path": "components/kinetik/nav-hover-highlight.tsx",
           "type": "registry:component",
           "target": "components/kinetik/nav-hover-highlight.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-hover-preview",
+      "type": "registry:component",
+      "title": "Hover Image Preview List",
+      "description": "Agency project index: hovering a row reveals its image in a card that trails the cursor, tilts with your speed and clip-reveals between projects.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "portfolio",
+          "list",
+          "hover",
+          "image",
+          "agency"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-hover-preview.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-hover-preview.tsx"
         }
       ]
     },
@@ -3183,6 +3646,46 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-infinite-slider",
+      "type": "registry:component",
+      "title": "Infinite Drag Slider",
+      "description": "Seamless infinite slider — drag or flick it with momentum, snap to cards, use arrows or keys; cards scale and fade by their distance from centre. No cloned slides.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "media"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "slider",
+          "carousel",
+          "draggable",
+          "inertia",
+          "infinite"
+        ],
+        "pageTypes": [
+          "landing",
+          "ecommerce",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-infinite-slider.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-infinite-slider.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "bg-boxes",
       "type": "registry:component",
       "title": "Interactive Boxes",
@@ -3212,6 +3715,44 @@
           "path": "components/kinetik/bg-boxes.tsx",
           "type": "registry:component",
           "target": "components/kinetik/bg-boxes.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-menu-overlay",
+      "type": "registry:component",
+      "title": "Interruptible Menu Overlay",
+      "description": "Full-screen menu as ONE paused timeline — panels wipe down, link letters rise from masks — played forward to open and reversed (faster) to close, so it can be interrupted at any point.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "menu",
+          "overlay",
+          "navigation",
+          "splittext",
+          "agency"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-menu-overlay.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-menu-overlay.tsx"
         }
       ]
     },
@@ -3535,6 +4076,45 @@
           "path": "components/kinetik/text-loop-lines.tsx",
           "type": "registry:component",
           "target": "components/kinetik/text-loop-lines.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-lines-scroll",
+      "type": "registry:component",
+      "title": "Line Reveal on Scroll",
+      "description": "Paragraph lines rise out of their masks and un-blur one after another, scrubbed by scroll. Lines re-split automatically on resize so they always match the layout.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "scroll",
+          "splittext",
+          "lines",
+          "manifesto",
+          "editorial"
+        ],
+        "pageTypes": [
+          "landing",
+          "blog",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-lines-scroll.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-lines-scroll.tsx"
         }
       ]
     },
@@ -4188,6 +4768,82 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-morph-blob",
+      "type": "registry:component",
+      "title": "MorphSVG Shape Cycle",
+      "description": "One SVG path morphs between a blob, star, heart, bolt and drop with an elastic overshoot — MorphSVG matches different point counts automatically.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "svg"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "svg",
+          "morph",
+          "icons",
+          "shapes",
+          "logo"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-morph-blob.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-morph-blob.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-path-waypoints",
+      "type": "registry:component",
+      "title": "Motion Path Waypoints",
+      "description": "Delivery-tracker route: a marker drives along a winding path to any waypoint (from wherever it is), facing the road, while the travelled route draws itself.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "svg"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "motion path",
+          "tracking",
+          "svg",
+          "timeline",
+          "delivery"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-path-waypoints.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-path-waypoints.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "motion-provider",
       "type": "registry:component",
       "title": "Motion Provider",
@@ -4441,6 +5097,44 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-observer-slides",
+      "type": "registry:component",
+      "title": "Observer Fullscreen Slides",
+      "description": "Full-screen slides that move one step per wheel flick, swipe or arrow key (GSAP Observer), with a sliding mask, counter-zooming image and rolling title letters. Loops forever.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "slides",
+          "observer",
+          "fullscreen",
+          "carousel",
+          "storytelling"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-observer-slides.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-observer-slides.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "text-odometer",
       "type": "registry:component",
       "title": "Odometer Number",
@@ -4624,6 +5318,43 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-particle-text",
+      "type": "registry:component",
+      "title": "Particle Text Morph",
+      "description": "Thousands of particles assemble into a word, hold, scatter and re-form into the next — sampled from canvas text, tweened by GSAP, pushed around by your cursor.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "text"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "particles",
+          "canvas",
+          "text",
+          "hero",
+          "generative"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-particle-text.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-particle-text.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "password-strength",
       "type": "registry:component",
       "title": "Password Strength",
@@ -4657,6 +5388,45 @@
           "path": "components/kinetik/password-strength.tsx",
           "type": "registry:component",
           "target": "components/kinetik/password-strength.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-confetti-cannon",
+      "type": "registry:component",
+      "title": "Physics Confetti Cannon",
+      "description": "Click the button and it fires projectile confetti — Physics2D velocity, angle and gravity so pieces arc and fall naturally while flipping in 3D.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "confetti",
+          "celebration",
+          "physics",
+          "success",
+          "button"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "onboarding",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-confetti-cannon.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-confetti-cannon.tsx"
         }
       ]
     },
@@ -4913,6 +5683,44 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-proximity-grid",
+      "type": "registry:component",
+      "title": "Proximity Scale Grid",
+      "description": "Icon tiles swell and brighten by how close they are to the cursor — distance mapped to 0..1 with gsap.utils.mapRange — then settle back with an elastic ripple.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cursor"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "hover",
+          "grid",
+          "proximity",
+          "icons",
+          "playful"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-proximity-grid.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-proximity-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "button-pulse",
       "type": "registry:component",
       "title": "Pulse CTA",
@@ -4981,6 +5789,45 @@
           "path": "components/kinetik/transition-slide-stack.tsx",
           "type": "registry:component",
           "target": "components/kinetik/transition-slide-stack.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-radial-menu",
+      "type": "registry:component",
+      "title": "Radial Action Menu",
+      "description": "A FAB blooms into a ring of actions with a bouncy stagger — and closes with a different, crisp ease instead of replaying the bounce backwards.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "fab",
+          "menu",
+          "radial",
+          "actions",
+          "mobile"
+        ],
+        "pageTypes": [
+          "social",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-radial-menu.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-radial-menu.tsx"
         }
       ]
     },
@@ -5200,6 +6047,43 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-stagger-grid",
+      "type": "registry:component",
+      "title": "Ripple Stagger Grid",
+      "description": "Click any dot and a shock-wave ripples outward from it — GSAP grid stagger from an index — each dot lifting, swelling and recolouring by distance.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "stagger",
+          "grid",
+          "ripple",
+          "playful",
+          "loading"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-stagger-grid.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-stagger-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "bg-light-rays",
       "type": "registry:component",
       "title": "Rotating Light Rays",
@@ -5343,6 +6227,82 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-image-sequence",
+      "type": "registry:component",
+      "title": "Scroll Image Sequence",
+      "description": "Apple-style product spin: a pinned canvas paints frame N of a sequence as you scroll. Works with real frame URLs or a procedural painter.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "scroll",
+          "canvas",
+          "image sequence",
+          "product",
+          "apple"
+        ],
+        "pageTypes": [
+          "landing",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-image-sequence.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-image-sequence.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-mask-expand",
+      "type": "registry:component",
+      "title": "Scroll Mask Expand",
+      "description": "A small rounded window between two words grows to full screen as you scroll, pushing the words apart and zooming the photo out — curtains-open reveal.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "scroll",
+          "clip-path",
+          "mask",
+          "hero",
+          "reveal"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-mask-expand.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-mask-expand.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "scroll-progress",
       "type": "registry:component",
       "title": "Scroll Progress",
@@ -5414,6 +6374,44 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-scroll-spy",
+      "type": "registry:component",
+      "title": "Scroll Spy Rail",
+      "description": "Long-read layout with a lateral rail: the active chapter highlights as you read, the rail fills with progress, and labels glide you to their section with ScrollTo.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "scroll",
+          "navigation",
+          "toc",
+          "docs",
+          "scrollto"
+        ],
+        "pageTypes": [
+          "docs",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-scroll-spy.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-scroll-spy.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "text-velocity-marquee",
       "type": "registry:component",
       "title": "Scroll Velocity Marquee",
@@ -5446,6 +6444,44 @@
           "path": "components/kinetik/text-velocity-marquee.tsx",
           "type": "registry:component",
           "target": "components/kinetik/text-velocity-marquee.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-bento-scrub",
+      "type": "registry:component",
+      "title": "Scrubbed Bento Gallery",
+      "description": "A full-bleed hero image shrinks into the centre of a bento grid as you scroll while the other tiles fade in — a Flip layout change scrubbed by ScrollTrigger.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "scroll",
+          "flip",
+          "bento",
+          "gallery",
+          "hero"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-bento-scrub.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-bento-scrub.tsx"
         }
       ]
     },
@@ -6597,6 +7633,44 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-throw-board",
+      "type": "registry:component",
+      "title": "Throwable Sticker Board",
+      "description": "A desk of polaroids and stickers you can pick up and throw — Draggable with InertiaPlugin keeps momentum, bounds keep them on the board, the held item lifts and tilts.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "draggable",
+          "inertia",
+          "stickers",
+          "playful",
+          "moodboard"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-throw-board.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-throw-board.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "toast-stack",
       "type": "registry:component",
       "title": "Toast Stack",
@@ -6733,6 +7807,44 @@
           "path": "components/kinetik/text-variable-proximity.tsx",
           "type": "registry:component",
           "target": "components/kinetik/text-variable-proximity.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "gsap-velocity-skew",
+      "type": "registry:component",
+      "title": "Velocity Skew",
+      "description": "Images lean with your scroll speed — ScrollTrigger velocity drives a clamped skewY that eases back to straight when you stop.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "scroll"
+      ],
+      "meta": {
+        "engine": "gsap",
+        "tags": [
+          "scroll",
+          "velocity",
+          "skew",
+          "gallery",
+          "editorial"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/gsap-velocity-skew.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/gsap-velocity-skew.tsx"
         }
       ]
     },

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-proximity-grid",
+  "type": "registry:component",
+  "title": "Proximity Scale Grid",
+  "description": "Icon tiles swell and brighten by how close they are to the cursor — distance mapped to 0..1 with gsap.utils.mapRange — then settle back with an elastic ripple.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-proximity-grid.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-proximity-grid.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport gsap from \"gsap\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(useGSAP);\n\nexport interface GsapProximityGridProps {\n  items: ReactNode[];\n  /** Influence radius in px. */\n  radius?: number;\n  /** Scale reached right under the cursor. */\n  maxScale?: number;\n  columns?: number;\n  className?: string;\n}\n\n/**\n * Every tile scales (and lifts) by how close it is to the pointer: distance → 0..1 with\n * gsap.utils.mapRange, one overwrite:true tween per tile per move so nothing fights.\n */\nexport function GsapProximityGrid({ items, radius = 180, maxScale = 1.9, columns = 6, className }: GsapProximityGridProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n\n  const { contextSafe } = useGSAP({ scope: root });\n\n  const onMove = contextSafe((e: React.PointerEvent) => {\n    if (reduced || e.pointerType === \"touch\") return;\n    root.current!.querySelectorAll<HTMLElement>(\"[data-tile]\").forEach((tile) => {\n      const r = tile.getBoundingClientRect();\n      const d = Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));\n      const p = gsap.utils.clamp(0, 1, gsap.utils.mapRange(0, radius, 1, 0, d));\n      gsap.to(tile, { scale: 1 + (maxScale - 1) * p, zIndex: Math.round(p * 10), filter: `brightness(${1 + p * 0.25})`, duration: 0.35, ease: \"power2.out\", overwrite: true });\n    });\n  });\n\n  const onLeave = contextSafe(() => {\n    gsap.to(root.current!.querySelectorAll(\"[data-tile]\"), { scale: 1, filter: \"brightness(1)\", duration: 0.6, ease: \"elastic.out(1, 0.5)\", overwrite: true, stagger: { each: 0.01, from: \"center\" } });\n  });\n\n  return (\n    <div ref={root} onPointerMove={onMove} onPointerLeave={onLeave} className={cn(\"grid gap-3\", className)} style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>\n      {items.map((item, i) => (\n        <div key={i} data-tile className=\"relative grid aspect-square place-items-center rounded-2xl border border-border bg-card shadow-sm will-change-transform\">\n          {item}\n        </div>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "hover",
+      "grid",
+      "proximity",
+      "icons",
+      "playful"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

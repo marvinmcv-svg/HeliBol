@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-confetti-cannon",
+  "type": "registry:component",
+  "title": "Physics Confetti Cannon",
+  "description": "Click the button and it fires projectile confetti — Physics2D velocity, angle and gravity so pieces arc and fall naturally while flipping in 3D.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-confetti-cannon.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-confetti-cannon.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport gsap from \"gsap\";\nimport { Physics2DPlugin } from \"gsap/Physics2DPlugin\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(Physics2DPlugin, useGSAP);\n\nexport interface GsapConfettiCannonProps {\n  children: ReactNode;\n  /** Pieces per burst. */\n  count?: number;\n  colors?: string[];\n  /** Launch angle in degrees (−90 = straight up). */\n  angle?: number;\n  /** Cone width in degrees. */\n  spread?: number;\n  className?: string;\n  onFire?: () => void;\n}\n\nconst COLORS = [\"#8b5cf6\", \"#ec4899\", \"#f59e0b\", \"#22d3ee\", \"#10b981\", \"#f43f5e\"];\n\n/**\n * Wraps a button: clicking fires real projectile confetti from it. Each piece gets a\n * Physics2D velocity/angle/gravity (so it arcs and falls naturally), plus independent\n * 3D flips and a fade, and is removed when it lands.\n */\nexport function GsapConfettiCannon({ children, count = 60, colors = COLORS, angle = -90, spread = 70, className, onFire }: GsapConfettiCannonProps) {\n  const root = useRef<HTMLSpanElement>(null);\n  const reduced = useReducedMotion();\n  const { contextSafe } = useGSAP({ scope: root });\n\n  const fire = contextSafe(() => {\n    onFire?.();\n    if (reduced) return;\n    const host = root.current!;\n    const r = host.getBoundingClientRect();\n    for (let i = 0; i < count; i++) {\n      const el = document.createElement(\"i\");\n      el.setAttribute(\"aria-hidden\", \"true\");\n      const w = gsap.utils.random(6, 11);\n      Object.assign(el.style, {\n        position: \"absolute\",\n        left: `${r.width / 2}px`,\n        top: `${r.height / 2}px`,\n        width: `${w}px`,\n        height: `${w * gsap.utils.random(0.4, 1.6)}px`,\n        background: colors[i % colors.length],\n        borderRadius: i % 3 === 0 ? \"50%\" : \"2px\",\n        pointerEvents: \"none\",\n        zIndex: \"50\",\n      });\n      host.appendChild(el);\n      gsap\n        .timeline({ onComplete: () => el.remove() })\n        .to(el, {\n          physics2D: { velocity: gsap.utils.random(320, 640), angle: angle + gsap.utils.random(-spread / 2, spread / 2), gravity: 900, friction: 0.03 },\n          duration: 2.2,\n        })\n        .to(el, { rotationX: gsap.utils.random(360, 1080), rotationY: gsap.utils.random(-720, 720), rotation: gsap.utils.random(-360, 360), duration: 2.2, ease: \"none\" }, 0)\n        .to(el, { opacity: 0, duration: 0.5 }, 1.6);\n    }\n    gsap.fromTo(host.firstElementChild, { scale: 0.9 }, { scale: 1, duration: 0.6, ease: \"elastic.out(1.2, 0.4)\" });\n  });\n\n  return (\n    <span ref={root} onClick={fire} className={cn(\"relative inline-block\", className)}>\n      {children}\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "confetti",
+      "celebration",
+      "physics",
+      "success",
+      "button"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "onboarding",
+      "dashboard"
+    ]
+  }
+}

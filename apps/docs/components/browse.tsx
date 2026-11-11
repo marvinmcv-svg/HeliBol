@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Search, X } from "lucide-react";
 import { cn } from "@kinetik/core";
@@ -32,6 +32,14 @@ export function Browse({ items, initialCategory, kind = "component" }: { items: 
   const [cat, setCat] = useState<string | null>(initialCategory ?? null);
   const [engine, setEngine] = useState<Engine | null>(null);
   const [page, setPage] = useState<PageType | null>(null);
+  // deep links like /components?engine=gsap or ?q=scroll
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    const e = sp.get("engine");
+    if (e && items.some((i) => i.engine === e)) setEngine(e as Engine);
+    const qq = sp.get("q");
+    if (qq) setQ(qq);
+  }, [items]);
 
   const usedEngines = Array.from(new Set(items.map((i) => i.engine)));
   const usedPages = Array.from(new Set(items.flatMap((i) => i.pageTypes)));
@@ -93,7 +101,7 @@ export function Browse({ items, initialCategory, kind = "component" }: { items: 
           )}
         </div>
       </div>
-      <motion.div layout className={kind === "block" ? "grid grid-cols-1 gap-5 xl:grid-cols-2" : kind === "flow" ? "grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3" : "grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3"}>
+      <motion.div layout className={kind === "block" ? "grid grid-cols-1 gap-5 xl:grid-cols-2" : kind === "flow" ? "grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3" : "grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 min-[1800px]:grid-cols-4"}>
         <AnimatePresence mode="popLayout">
           {filtered.map((m) => (
             <motion.div key={m.id} layout initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }} transition={spring.smooth}>

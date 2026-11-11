@@ -1,0 +1,1 @@
+Before setMode, state = Flip.getState('[data-flip], [data-flip-img]') (elements have data-flip-id); after React commits (useGSAP with [mode] dependency) run Flip.from(state, { duration .65, power3.inOut, nested: true, stagger .025 }).

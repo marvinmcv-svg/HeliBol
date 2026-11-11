@@ -2,7 +2,7 @@
 
 Status of every component ID in `motion-library-master-plan.md` (Sections 7 & 8), plus everything built beyond it.
 
-**Summary (kinetik 2.0):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **226 registry items live** (194 components + blocks/flows). Research and gap analysis: `docs/research/README.md`.
+**Summary (kinetik 2.1):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **255 registry items live** (223 components + 20 blocks + 12 flows), including the 29-piece GSAP collection. Research and gap analysis: `docs/research/README.md`.
 
 Legend: ✅ done · 🟡 partial · ⬜ todo
 
@@ -337,3 +337,9 @@ Legend: ✅ done · 🟡 partial · ⬜ todo
 ## Built beyond the plan (94)
 
 `activity-rings`, `ai-agent-steps`, `ai-chat-app`, `ai-chat-stream`, `ai-code-stream`, `ai-orb`, `ai-prompt-box`, `ai-suggestions`, `ai-thinking`, `ai-voice-wave`, `bg-blinds`, `bg-dot-glow`, `bg-flicker-grid`, `bg-lamp`, `bg-light-rays`, `bg-retro-grid`, `bg-ripple-rings`, `bg-topography`, `bg-waves`, `button-arrow-slide`, `button-download`, `button-expand-icon`, `button-neumorph`, `button-pulse`, `button-rainbow`, `button-send`, `button-subscribe`, `card-3d-layers`, `card-expand-gallery`, `card-fan`, `card-folder`, `card-holo`, `card-neon`, `card-pixel-reveal`, `card-profile`, `card-shine`, `card-social-post`, `changelog`, `contact-section`, `cursor-blob`, `cursor-click-spark`, `cursor-crosshair`, `flow-breathe`, `flow-chat`, `flow-food-order`, `flow-music-player`, `flow-ride`, `flow-stories`, `heatmap-grid`, `hero-dev-terminal`, `hero-editorial`, `hero-floating-images`, `hero-mesh-cards`, `hero-scroll-tilt`, `hero-spotlight-grid`, `hero-video-dialog`, `hover-card`, `integrations-orbit`, `loader-morph`, `masonry-reveal`, `mockup-browser`, `mockup-iphone`, `mockup-laptop`, `mockup-window`, `nav-bottom-bar`, `nav-hover-highlight`, `nav-speed-dial`, `orbit-icons`, `product-page`, `select-animated`, `settings-page`, `slider-elastic`, `tag-input`, `text-circular`, `text-falling`, `text-loop-lines`, `text-morph`, `text-roll-hover`, `text-sparkles`, `text-split-flap`, `text-stroke-draw`, `text-variable-proximity`, `text-wave`, `widget-battery`, `widget-calendar`, `widget-clock`, `widget-file-tree`, `widget-music`, `widget-notifications`, `widget-stock`, `widget-terminal`, `widget-timer`, `widget-water`, `widget-weather`
+
+## GSAP collection (kinetik 2.1, 29)
+
+Original implementations of the techniques catalogued from GSAP's Demo Hub (`docs/research/gsap-demos.json`).
+
+`gsap-proximity-grid` · `gsap-flair-trail` · `gsap-hover-preview` · `gsap-tilt-scene` · `gsap-velocity-skew` · `gsap-bento-scrub` · `gsap-batch-reveal` · `gsap-image-sequence` · `gsap-mask-expand` · `gsap-scroll-spy` · `gsap-horizontal-text` · `gsap-lines-scroll` · `gsap-footer-bounce` · `gsap-observer-slides` · `gsap-infinite-slider` · `gsap-card-stack` · `gsap-flip-filter` · `gsap-flip-layout` · `gsap-flip-modal` · `gsap-stagger-grid` · `gsap-radial-menu` · `gsap-menu-overlay` · `gsap-curve-wipe` · `gsap-morph-blob` · `gsap-path-waypoints` · `gsap-wiggle` · `gsap-confetti-cannon` · `gsap-throw-board` · `gsap-particle-text`

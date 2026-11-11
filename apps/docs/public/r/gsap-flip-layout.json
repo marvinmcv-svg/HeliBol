@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-flip-layout",
+  "type": "registry:component",
+  "title": "Flip Layout Switch",
+  "description": "Grid ↔ list ↔ featured toggle: React re-renders with new classes and Flip animates every card and its nested image from the old box to the new one.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-flip-layout.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-flip-layout.tsx",
+      "content": "\"use client\";\nimport { useRef, useState, type ReactNode } from \"react\";\nimport gsap from \"gsap\";\nimport { Flip } from \"gsap/Flip\";\nimport { useGSAP } from \"@gsap/react\";\nimport { LayoutGrid, List, Rows3 } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(Flip, useGSAP);\n\ntype Mode = \"grid\" | \"list\" | \"feature\";\n\nexport interface GsapFlipLayoutProps {\n  items: { id: string; image: string; title: string; meta: string }[];\n  className?: string;\n}\n\nconst container: Record<Mode, string> = {\n  grid: \"grid grid-cols-3 gap-3\",\n  list: \"flex flex-col gap-2\",\n  feature: \"grid grid-cols-4 gap-3 [&>*:first-child]:col-span-2 [&>*:first-child]:row-span-2\",\n};\nconst card: Record<Mode, string> = {\n  grid: \"flex flex-col\",\n  list: \"flex flex-row items-center gap-3\",\n  feature: \"flex flex-col\",\n};\nconst img: Record<Mode, string> = {\n  grid: \"aspect-[4/3] w-full\",\n  list: \"size-12 shrink-0\",\n  feature: \"aspect-square w-full\",\n};\n\n/**\n * Grid ↔ list ↔ featured layout switch. React re-renders with the new classes and\n * Flip animates every card, image and caption from its old box to its new one —\n * including nested elements (getState on cards + images, `nested: true`).\n */\nexport function GsapFlipLayout({ items, className }: GsapFlipLayoutProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const [mode, setMode] = useState<Mode>(\"grid\");\n  const state = useRef<Flip.FlipState | null>(null);\n  const reduced = useReducedMotion();\n\n  useGSAP(\n    () => {\n      if (!state.current || reduced) return;\n      Flip.from(state.current, { duration: 0.65, ease: \"power3.inOut\", nested: true, stagger: 0.025, absolute: false, scale: false });\n      state.current = null;\n    },\n    { scope: root, dependencies: [mode] },\n  );\n\n  const change = (m: Mode) => {\n    if (m === mode) return;\n    state.current = Flip.getState(root.current!.querySelectorAll(\"[data-flip], [data-flip-img]\"));\n    setMode(m);\n  };\n\n  const modes: [Mode, typeof LayoutGrid, string][] = [[\"grid\", LayoutGrid, \"Grid\"], [\"list\", List, \"List\"], [\"feature\", Rows3, \"Featured\"]];\n\n  return (\n    <div ref={root} className={cn(\"space-y-4\", className)}>\n      <div role=\"radiogroup\" aria-label=\"Layout\" className=\"inline-flex rounded-full border border-border p-1\">\n        {modes.map(([m, Icon, label]) => (\n          <button key={m} role=\"radio\" aria-checked={mode === m} onClick={() => change(m)} className={cn(\"flex items-center gap-1.5 rounded-full px-3 py-1 text-xs transition-colors\", mode === m ? \"bg-foreground text-background\" : \"text-muted-foreground\")}>\n            <Icon className=\"size-3.5\" />\n            {label}\n          </button>\n        ))}\n      </div>\n      <div className={container[mode]}>\n        {items.map((it) => (\n          <article key={it.id} data-flip-id={it.id} data-flip className={cn(\"overflow-hidden rounded-xl border border-border bg-card p-2\", card[mode])}>\n            <img data-flip-img data-flip-id={`${it.id}-img`} src={it.image} alt=\"\" className={cn(\"rounded-lg object-cover\", img[mode])} />\n            <div className={cn(\"min-w-0\", mode !== \"list\" && \"pt-2\")}>\n              <p className=\"truncate text-sm font-medium\">{it.title}</p>\n              <p className=\"truncate text-xs text-muted-foreground\">{it.meta}</p>\n            </div>\n          </article>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "flip",
+      "layout",
+      "grid",
+      "list",
+      "view switcher"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "ecommerce"
+    ]
+  }
+}

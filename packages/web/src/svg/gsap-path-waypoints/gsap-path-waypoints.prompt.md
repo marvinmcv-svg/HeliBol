@@ -1,0 +1,1 @@
+gsap.to(marker, { motionPath: { path, align: path, alignOrigin [.5,.5], autoRotate: true, start: currentProgress, end: target.at }, duration .6 + |Δ|·2.2, power2.inOut }) together with gsap.to(trail, { drawSVG: `0% ${target.at·100}%` }); position stop circles with path.getPointAtLength(total·at).

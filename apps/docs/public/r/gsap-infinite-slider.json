@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-infinite-slider",
+  "type": "registry:component",
+  "title": "Infinite Drag Slider",
+  "description": "Seamless infinite slider — drag or flick it with momentum, snap to cards, use arrows or keys; cards scale and fade by their distance from centre. No cloned slides.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-infinite-slider.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-infinite-slider.tsx",
+      "content": "\"use client\";\nimport { useRef, useState, type ReactNode } from \"react\";\nimport gsap from \"gsap\";\nimport { Draggable } from \"gsap/Draggable\";\nimport { InertiaPlugin } from \"gsap/InertiaPlugin\";\nimport { useGSAP } from \"@gsap/react\";\nimport { ChevronLeft, ChevronRight } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(Draggable, InertiaPlugin, useGSAP);\n\nexport interface GsapInfiniteSliderProps {\n  slides: ReactNode[];\n  /** Card width in px. */\n  itemWidth?: number;\n  gap?: number;\n  /** Seconds between auto-advances (0 = off). */\n  autoplay?: number;\n  className?: string;\n}\n\n/**\n * Seamless infinite slider. Every card's x is a wrap() of one shared offset, so there is no\n * cloning and no jump at the seams. Drag/flick it (Draggable + Inertia on a proxy, snapping to\n * whole cards), use the arrows or keys; cards scale/fade with their distance from center.\n */\nexport function GsapInfiniteSlider({ slides, itemWidth = 240, gap = 20, autoplay = 0, className }: GsapInfiniteSliderProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const offset = useRef({ x: 0 });\n  const [active, setActive] = useState(0);\n  const reduced = useReducedMotion();\n  const step = itemWidth + gap;\n  const total = step * slides.length;\n\n  const layout = () => {\n    const el = root.current;\n    if (!el) return;\n    const cards = el.querySelectorAll<HTMLElement>(\"[data-card]\");\n    const center = el.clientWidth / 2 - itemWidth / 2;\n    // each card's distance from center, wrapped into [-total/2, total/2) → seamless loop\n    const wrap = gsap.utils.wrap(-total / 2, total / 2);\n    cards.forEach((card, i) => {\n      const x = wrap(i * step + offset.current.x);\n      const dist = Math.min(1, Math.abs(x) / (step * 2.2));\n      gsap.set(card, { x: center + x, scale: 1 - dist * 0.18, opacity: 1 - dist * 0.55, zIndex: Math.round(10 - dist * 10) });\n    });\n    const idx = Math.round(-offset.current.x / step);\n    setActive(((idx % slides.length) + slides.length) % slides.length);\n  };\n\n  const { contextSafe } = useGSAP(\n    () => {\n      layout();\n      const proxy = document.createElement(\"div\");\n      const d = Draggable.create(proxy, {\n        type: \"x\",\n        trigger: root.current,\n        inertia: !reduced,\n        onPress() {\n          gsap.killTweensOf(offset.current);\n          gsap.set(proxy, { x: offset.current.x });\n        },\n        onDrag() {\n          offset.current.x = gsap.getProperty(proxy, \"x\") as number;\n          layout();\n        },\n        onThrowUpdate() {\n          offset.current.x = gsap.getProperty(proxy, \"x\") as number;\n          layout();\n        },\n        snap: { x: (v: number) => Math.round(v / step) * step },\n        onRelease() {\n          if (reduced || !this.tween) to(Math.round(offset.current.x / step) * step);\n        },\n      })[0];\n      const ro = new ResizeObserver(layout);\n      ro.observe(root.current!);\n      let timer: ReturnType<typeof setInterval> | undefined;\n      if (autoplay > 0 && !reduced) timer = setInterval(() => !d.isPressed && to(Math.round(offset.current.x / step) * step - step), autoplay * 1000);\n      return () => {\n        ro.disconnect();\n        clearInterval(timer);\n        d.kill();\n      };\n    },\n    { scope: root, dependencies: [slides.length, step, reduced, autoplay] },\n  );\n\n  const to = contextSafe((x: number) => {\n    gsap.to(offset.current, { x, duration: reduced ? 0 : 0.8, ease: \"power3.out\", overwrite: true, onUpdate: layout });\n  });\n  const nav = (dir: 1 | -1) => to(Math.round(offset.current.x / step) * step - dir * step);\n\n  return (\n    <div\n      ref={root}\n      tabIndex={0}\n      role=\"region\"\n      aria-roledescription=\"carousel\"\n      aria-label=\"Slider — drag, use arrows or arrow keys\"\n      onKeyDown={(e) => {\n        if (e.key === \"ArrowRight\") nav(1);\n        if (e.key === \"ArrowLeft\") nav(-1);\n      }}\n      className={cn(\"relative h-full w-full cursor-grab touch-pan-y select-none overflow-hidden outline-none active:cursor-grabbing\", className)}\n    >\n      {slides.map((s, i) => (\n        <div key={i} data-card aria-hidden={active !== i} className=\"absolute left-0 top-1/2 -translate-y-1/2\" style={{ width: itemWidth }}>\n          {s}\n        </div>\n      ))}\n      <div className=\"absolute inset-x-0 bottom-3 z-20 flex items-center justify-center gap-3\">\n        <button onClick={() => nav(-1)} aria-label=\"Previous\" className=\"grid size-9 place-items-center rounded-full border border-border bg-background/80 backdrop-blur hover:bg-accent\"><ChevronLeft className=\"size-4\" /></button>\n        <span className=\"min-w-12 text-center font-mono text-xs text-muted-foreground\">{active + 1} / {slides.length}</span>\n        <button onClick={() => nav(1)} aria-label=\"Next\" className=\"grid size-9 place-items-center rounded-full border border-border bg-background/80 backdrop-blur hover:bg-accent\"><ChevronRight className=\"size-4\" /></button>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "slider",
+      "carousel",
+      "draggable",
+      "inertia",
+      "infinite"
+    ],
+    "pageTypes": [
+      "landing",
+      "ecommerce",
+      "portfolio"
+    ]
+  }
+}

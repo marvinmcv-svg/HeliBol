@@ -1,0 +1,1 @@
+On filter click: state = Flip.getState(items); set display none/'' by tag; Flip.from(state, { duration .7, power3.inOut, scale, absolute, stagger .03, onEnter: els => fromTo scale 0→1 back.out, onLeave: els => to scale 0, opacity 0 }).

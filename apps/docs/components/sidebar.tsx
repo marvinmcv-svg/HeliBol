@@ -26,6 +26,7 @@ export function Sidebar() {
         {link("/components", "All components", <span className="text-[10px] text-muted-foreground">{components.length}</span>)}
         {link("/blocks", "Blocks", <span className="text-[10px] text-muted-foreground">{blocks.length}</span>)}
         {link("/flows", "Mobile flows", <span className="text-[10px] text-muted-foreground">{flows.length}</span>)}
+        {link("/components?engine=gsap", "GSAP collection", <span className="text-[10px] text-[#0ae448]">{components.filter((m) => m.engine === "gsap").length}</span>)}
         {link("/playground", "Motion playground")}
         {link("/docs", "Getting started")}
       </div>

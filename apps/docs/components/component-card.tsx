@@ -4,7 +4,7 @@ import { EngineBadge } from "./engine-badge";
 import { CardPreview } from "./card-preview";
 
 const sizes = {
-  md: { h: "h-56", top: "after:top-56", inner: "scale-[0.72] [height:139%] [width:139%]" },
+  md: { h: "h-48", top: "after:top-48", inner: "scale-[0.6] [height:166.67%] [width:166.67%]" },
   lg: { h: "h-80", top: "after:top-80", inner: "scale-[0.5] [height:200%] [width:200%]" },
   phone: { h: "h-[26rem]", top: "after:top-[26rem]", inner: "h-full w-full" },
 };

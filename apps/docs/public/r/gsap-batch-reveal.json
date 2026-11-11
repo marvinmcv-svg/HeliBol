@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-batch-reveal",
+  "type": "registry:component",
+  "title": "Batch Scroll Reveal",
+  "description": "Grid items that enter the viewport together animate together — ScrollTrigger.batch groups them so a fast scroll reveals whole rows instead of a long queue.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-batch-reveal.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-batch-reveal.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger, useGSAP);\n\nexport interface GsapBatchRevealProps {\n  children: ReactNode;\n  scroller?: RefObject<HTMLElement | null>;\n  /** Max items animated together per batch. */\n  batchMax?: number;\n  className?: string;\n}\n\n/**\n * ScrollTrigger.batch(): items marked `data-batch` that enter the viewport in the same tick are\n * grouped and staggered together, so a fast scroll reveals a whole row at once instead of a\n * long queue. Items fade back out when scrolled past upward, and come back in again.\n */\nexport function GsapBatchReveal({ children, scroller, batchMax = 6, className }: GsapBatchRevealProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n\n  useGSAP(\n    () => {\n      const items = root.current!.querySelectorAll(\"[data-batch]\");\n      if (reduced) {\n        gsap.set(items, { autoAlpha: 1 });\n        return;\n      }\n      gsap.set(items, { autoAlpha: 0, y: 60, scale: 0.94 });\n      ScrollTrigger.batch(items, {\n        scroller: scroller?.current ?? undefined,\n        batchMax,\n        start: \"top 92%\",\n        onEnter: (b) => gsap.to(b, { autoAlpha: 1, y: 0, scale: 1, stagger: 0.08, duration: 0.7, ease: \"power3.out\", overwrite: true }),\n        onLeaveBack: (b) => gsap.to(b, { autoAlpha: 0, y: 60, scale: 0.94, stagger: 0.04, duration: 0.4, overwrite: true }),\n      });\n    },\n    { scope: root, dependencies: [reduced] },\n  );\n\n  return (\n    <div ref={root} className={cn(className)}>\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "scroll",
+      "stagger",
+      "grid",
+      "reveal",
+      "ecommerce"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "blog",
+      "landing"
+    ]
+  }
+}

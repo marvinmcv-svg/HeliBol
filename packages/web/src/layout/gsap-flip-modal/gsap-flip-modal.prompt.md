@@ -1,0 +1,1 @@
+On open: state = Flip.getState(thumb); render the dialog; append the thumb into the dialog's slot; Flip.from(state, { duration .7, power3.inOut, scale, zIndex 60 }); stagger the text in. On close: state = getState; append back into its grid button; Flip.from(state, … onComplete: unmount dialog).

@@ -1,0 +1,1 @@
+Register CustomEase + CustomWiggle. ring: rotation 0→22, origin 50% 8%, ease CustomWiggle.create('ring', { wiggles 7, type easeOut }); shake: x 0→10 uniform 6 wiggles .5s; jelly: scaleX→1.25 and scaleY→.8 easeOut wiggles offset 40ms; nudge: y→−8 anticipate. Fire on click/hover/trigger change.

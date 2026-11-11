@@ -1,0 +1,1 @@
+Make an infinite slider: keep one offset; for card i, x = wrap(−total/2, total/2)(i·step + offset); place at center + x with scale 1 − d·.18 and opacity 1 − d·.55 where d = min(1, |x|/(2.2·step)). Draggable.create(proxy, { type: 'x', trigger: root, inertia: true, snap: v => round(v/step)·step, onDrag/onThrowUpdate: offset = proxy.x → layout }). Arrows tween offset by ±step.

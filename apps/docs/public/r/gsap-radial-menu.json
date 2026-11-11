@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-radial-menu",
+  "type": "registry:component",
+  "title": "Radial Action Menu",
+  "description": "A FAB blooms into a ring of actions with a bouncy stagger — and closes with a different, crisp ease instead of replaying the bounce backwards.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-radial-menu.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-radial-menu.tsx",
+      "content": "\"use client\";\nimport { useRef, useState, type ComponentType } from \"react\";\nimport gsap from \"gsap\";\nimport { useGSAP } from \"@gsap/react\";\nimport { Plus } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(useGSAP);\n\nexport interface RadialItem {\n  label: string;\n  icon: ComponentType<{ className?: string }>;\n  onSelect?: () => void;\n}\n\nexport interface GsapRadialMenuProps {\n  items: RadialItem[];\n  /** Orbit radius in px. */\n  radius?: number;\n  /** Arc in degrees the items spread over (360 = full circle). */\n  arc?: number;\n  /** Starting angle in degrees (−90 = straight up). */\n  startAngle?: number;\n  className?: string;\n}\n\n/**\n * A FAB that blooms into a ring of actions. Opening uses a bouncy back.out stagger; closing\n * runs a separate, quicker power3.in timeline (a different ease for the reverse direction),\n * so the exit feels crisp instead of replaying the bounce backwards.\n */\nexport function GsapRadialMenu({ items, radius = 96, arc = 360, startAngle = -90, className }: GsapRadialMenuProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const [open, setOpen] = useState(false);\n  const reduced = useReducedMotion();\n  const { contextSafe } = useGSAP({ scope: root });\n\n  const pos = (i: number) => {\n    const step = arc >= 360 ? arc / items.length : arc / Math.max(1, items.length - 1);\n    const a = ((startAngle + step * i) * Math.PI) / 180;\n    return { x: Math.cos(a) * radius, y: Math.sin(a) * radius };\n  };\n\n  const toggle = contextSafe(() => {\n    const next = !open;\n    setOpen(next);\n    const els = root.current!.querySelectorAll<HTMLElement>(\"[data-item]\");\n    const fab = root.current!.querySelector(\"[data-fab-icon]\");\n    gsap.killTweensOf([els, fab]);\n    if (reduced) {\n      els.forEach((el, i) => gsap.set(el, { ...(next ? pos(i) : { x: 0, y: 0 }), autoAlpha: next ? 1 : 0, scale: 1 }));\n      return;\n    }\n    if (next) {\n      gsap.to(fab, { rotation: 135, duration: 0.5, ease: \"back.out(2)\" });\n      els.forEach((el, i) =>\n        gsap.fromTo(el, { x: 0, y: 0, scale: 0.3, autoAlpha: 0 }, { ...pos(i), scale: 1, autoAlpha: 1, duration: 0.6, ease: \"back.out(2.2)\", delay: i * 0.045 }),\n      );\n    } else {\n      gsap.to(fab, { rotation: 0, duration: 0.3, ease: \"power3.in\" });\n      gsap.to([...els].reverse(), { x: 0, y: 0, scale: 0.3, autoAlpha: 0, duration: 0.25, ease: \"power3.in\", stagger: 0.025 });\n    }\n  });\n\n  return (\n    <div ref={root} className={cn(\"relative grid size-14 place-items-center\", className)}>\n      {items.map((it, i) => {\n        const Icon = it.icon;\n        return (\n          <button\n            key={it.label}\n            data-item\n            tabIndex={open ? 0 : -1}\n            aria-hidden={!open}\n            onClick={() => {\n              it.onSelect?.();\n              toggle();\n            }}\n            className=\"invisible absolute grid size-12 place-items-center rounded-full border border-border bg-card shadow-lg opacity-0 hover:bg-accent\"\n            title={it.label}\n          >\n            <Icon className=\"size-5\" />\n            <span className=\"sr-only\">{it.label}</span>\n          </button>\n        );\n      })}\n      <button onClick={toggle} aria-expanded={open} aria-label={open ? \"Close actions\" : \"Open actions\"} className=\"relative z-10 grid size-14 place-items-center rounded-full bg-foreground text-background shadow-xl\">\n        <Plus data-fab-icon className=\"size-6\" />\n      </button>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "fab",
+      "menu",
+      "radial",
+      "actions",
+      "mobile"
+    ],
+    "pageTypes": [
+      "social",
+      "dashboard"
+    ]
+  }
+}

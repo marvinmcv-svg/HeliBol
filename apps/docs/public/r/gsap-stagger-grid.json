@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-stagger-grid",
+  "type": "registry:component",
+  "title": "Ripple Stagger Grid",
+  "description": "Click any dot and a shock-wave ripples outward from it — GSAP grid stagger from an index — each dot lifting, swelling and recolouring by distance.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-stagger-grid.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-stagger-grid.tsx",
+      "content": "\"use client\";\nimport { useRef } from \"react\";\nimport gsap from \"gsap\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(useGSAP);\n\nexport interface GsapStaggerGridProps {\n  rows?: number;\n  cols?: number;\n  /** Plays a wave on mount from this cell index (\"center\" for the middle). */\n  autoplayFrom?: number | \"center\" | \"random\";\n  className?: string;\n}\n\n/**\n * GSAP's grid stagger made tactile: click any cell and a shock-wave ripples outward from it\n * (`stagger: { grid, from: index, amount }`), each dot squashing, lifting and recolouring by\n * its distance. Keyboard: every cell is a button.\n */\nexport function GsapStaggerGrid({ rows = 9, cols = 15, autoplayFrom = \"center\", className }: GsapStaggerGridProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n\n  const { contextSafe } = useGSAP(\n    () => {\n      if (!reduced) wave(autoplayFrom === \"center\" ? Math.floor((rows * cols) / 2) : autoplayFrom === \"random\" ? Math.floor(Math.random() * rows * cols) : autoplayFrom);\n    },\n    { scope: root },\n  );\n\n  const wave = contextSafe((from: number) => {\n    const dots = root.current!.querySelectorAll(\"[data-dot]\");\n    if (reduced) {\n      gsap.fromTo(dots, { opacity: 0.4 }, { opacity: 1, duration: 0.3 });\n      return;\n    }\n    const rest = getComputedStyle(dots[0]).backgroundColor;\n    gsap\n      .timeline()\n      .to(dots, {\n        keyframes: { y: [0, -18, 0], scale: [1, 1.6, 1], ease: \"sine.inOut\" },\n        backgroundColor: (i: number) => `hsl(${250 + (i % cols) * 6} 90% 65%)`,\n        duration: 0.7,\n        stagger: { grid: [rows, cols], from, amount: 1 },\n      })\n      .to(dots, { backgroundColor: rest, duration: 0.8, stagger: { grid: [rows, cols], from, amount: 1 } }, 0.5);\n  });\n\n  return (\n    <div ref={root} className={cn(\"grid gap-2\", className)} style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>\n      {Array.from({ length: rows * cols }, (_, i) => (\n        <button key={i} onClick={() => wave(i)} aria-label={`Ripple from cell ${i + 1}`} className=\"grid aspect-square place-items-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring\">\n          <span data-dot className=\"block size-3 rounded-full bg-muted-foreground\" />\n        </button>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "stagger",
+      "grid",
+      "ripple",
+      "playful",
+      "loading"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

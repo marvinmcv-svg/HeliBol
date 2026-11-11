@@ -1,0 +1,1 @@
+Add an SVG (viewBox 0 0 100 100, preserveAspectRatio none) above the footer with path M0,100 Q50,100−y 100,100 Z. ScrollTrigger on the footer (top bottom → bottom bottom): onUpdate tween y to clamp(±90, velocity/30) quickly; onLeave/onEnterBack tween y→0 with elastic.out(1,.25) over 1.4s, re-rendering the path on update.

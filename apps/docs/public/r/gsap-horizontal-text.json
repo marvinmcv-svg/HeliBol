@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-horizontal-text",
+  "type": "registry:component",
+  "title": "Horizontal Text Scroll",
+  "description": "One giant line of type slides sideways as you scroll down, while each letter drops in, rotates and recolours as it crosses the screen (containerAnimation).",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-horizontal-text.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-horizontal-text.tsx",
+      "content": "\"use client\";\nimport { useRef, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { SplitText } from \"gsap/SplitText\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);\n\nexport interface GsapHorizontalTextProps {\n  text: string;\n  scroller?: RefObject<HTMLElement | null>;\n  /** Scroll length in viewport heights. */\n  length?: number;\n  className?: string;\n}\n\n/**\n * One giant line of type slides sideways as you scroll down (pinned via sticky, x scrubbed by\n * ScrollTrigger). Each letter has its own ScrollTrigger on the horizontal tween\n * (containerAnimation) so letters drop in, rotate and recolor as they cross the screen.\n */\nexport function GsapHorizontalText({ text, scroller, length = 4, className }: GsapHorizontalTextProps) {\n  const section = useRef<HTMLElement>(null);\n  const line = useRef<HTMLHeadingElement>(null);\n  const reduced = useReducedMotion();\n\n  useGSAP(\n    () => {\n      if (reduced) return;\n      const sc = scroller?.current ?? undefined;\n      const split = SplitText.create(line.current, { type: \"chars\" });\n      const move = gsap.to(line.current, {\n        x: () => -(line.current!.scrollWidth - section.current!.clientWidth),\n        ease: \"none\",\n        scrollTrigger: { trigger: section.current, scroller: sc, start: \"top top\", end: \"bottom bottom\", scrub: 0.5, invalidateOnRefresh: true },\n      });\n      split.chars.forEach((c, i) => {\n        gsap.from(c, {\n          yPercent: i % 2 ? -120 : 120,\n          rotation: i % 2 ? -25 : 25,\n          opacity: 0,\n          color: \"hsl(265 90% 70%)\",\n          ease: \"back.out(2)\",\n          scrollTrigger: { trigger: c, containerAnimation: move, scroller: sc, start: \"left 95%\", end: \"left 55%\", scrub: 0.4 },\n        });\n      });\n    },\n    { scope: section, dependencies: [reduced, text] },\n  );\n\n  if (reduced) return <h3 className={cn(\"px-6 py-12 text-6xl font-black uppercase tracking-tight\", className)}>{text}</h3>;\n\n  return (\n    <section ref={section} className={cn(\"relative\", className)} style={{ height: `${length * 100}cqh` }}>\n      <div className=\"sticky top-0 flex h-[100cqh] items-center overflow-hidden\">\n        <h3 ref={line} className=\"whitespace-nowrap pl-[60vw] pr-[10vw] text-[clamp(5rem,22cqh,14rem)] font-black uppercase leading-none tracking-tighter\">\n          {text}\n        </h3>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "scroll",
+      "typography",
+      "horizontal",
+      "splittext",
+      "editorial"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

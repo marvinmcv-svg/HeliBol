@@ -1,0 +1,1 @@
+Use ScrollTrigger.batch('[data-batch]', { batchMax, start: 'top 92%', onEnter: b => gsap.to(b, { autoAlpha 1, y 0, scale 1, stagger .08, duration .7, power3.out, overwrite }), onLeaveBack: b => gsap.to(b, { autoAlpha 0, y 60, scale .94, stagger .04 }) }) after gsap.set(items, { autoAlpha 0, y 60, scale .94 }).

@@ -14,5 +14,6 @@ export const metadata = { robots: { index: false } };
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   if (!all.some((m) => m.id === id)) notFound();
-  return <ThumbStage id={id} />;
+  // only zoom-to-fit components; blocks and flows are composed screens already
+  return <ThumbStage id={id} fit={components.some((m) => m.id === id)} />;
 }

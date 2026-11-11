@@ -1,0 +1,1 @@
+Cover: tween path d from 'M0 100 V100 Q50 100 100 100 V100z' → 'M0 100 V50 Q50 0 100 50 V100z' (power3.in) → 'M0 100 V0 Q50 0 100 0 V100z'; swap content; reveal: 'M0 0 V50 Q50 100 100 50 V0z' → 'M0 0 V0 Q50 0 100 0 V0z' (power2.out) while the new screen rises 60px→0.

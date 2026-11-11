@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-bento-scrub",
+  "type": "registry:component",
+  "title": "Scrubbed Bento Gallery",
+  "description": "A full-bleed hero image shrinks into the centre of a bento grid as you scroll while the other tiles fade in — a Flip layout change scrubbed by ScrollTrigger.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-bento-scrub.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-bento-scrub.tsx",
+      "content": "\"use client\";\nimport { useRef, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { Flip } from \"gsap/Flip\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(Flip, ScrollTrigger, useGSAP);\n\nexport interface GsapBentoScrubProps {\n  /** 7 images: index 0 is the hero that starts full-bleed. */\n  images: string[];\n  scroller?: RefObject<HTMLElement | null>;\n  title?: string;\n  className?: string;\n}\n\nconst AREAS = [\"hero\", \"a\", \"b\", \"c\", \"d\", \"e\", \"f\"];\n\n/**\n * A full-bleed hero image settles into the middle of a bento grid as you scroll. Flip records\n * the \"final\" grid state, then a scrubbed Flip.from (tied to a pinned ScrollTrigger) plays the\n * layout change backwards and forwards with the scrollbar.\n */\nexport function GsapBentoScrub({ images, scroller, title = \"Every frame, in its place.\", className }: GsapBentoScrubProps) {\n  const section = useRef<HTMLElement>(null);\n  const grid = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n\n  useGSAP(\n    () => {\n      const g = grid.current!;\n      const hero = g.querySelector<HTMLElement>(\"[data-area='hero']\")!;\n      if (reduced) return;\n      // final layout = the grid; start layout = hero covering the whole sticky stage\n      const state = Flip.getState(g.querySelectorAll(\"[data-cell]\"), { props: \"borderRadius\" });\n      Object.assign(hero.style, { position: \"absolute\", inset: \"0\", zIndex: \"10\", borderRadius: \"0px\" });\n      const tl = Flip.to(state, { ease: \"none\", absolute: true, scale: true, simple: true, props: \"borderRadius\" });\n      const items = g.querySelectorAll(\"[data-cell]:not([data-area='hero'])\");\n      tl.fromTo(items, { autoAlpha: 0 }, { autoAlpha: 1, stagger: 0.05, duration: 0.3 }, 0.35);\n      ScrollTrigger.create({\n        trigger: section.current,\n        scroller: scroller?.current ?? undefined,\n        start: \"top top\",\n        end: \"bottom bottom\",\n        scrub: 0.6,\n        animation: tl,\n        invalidateOnRefresh: true,\n      });\n    },\n    { scope: section, dependencies: [reduced] },\n  );\n\n  return (\n    <section ref={section} className={cn(\"relative\", className)} style={{ height: reduced ? undefined : \"260cqh\" }}>\n      <div className=\"sticky top-0 flex h-[100cqh] flex-col gap-3 overflow-hidden p-3\">\n        <p className=\"text-center text-sm font-medium tracking-tight text-muted-foreground\">{title}</p>\n        <div ref={grid} className=\"grid min-h-0 flex-1 grid-cols-4 grid-rows-3 gap-2 [grid-template-areas:'a_hero_hero_b'_'c_hero_hero_d'_'e_f_f_d']\">\n          {AREAS.map((a, i) => (\n            <div key={a} data-cell data-area={a} className=\"overflow-hidden rounded-xl bg-muted\" style={{ gridArea: a }}>\n              {images[i] && <img src={images[i]} alt=\"\" className=\"h-full w-full object-cover\" />}\n            </div>\n          ))}\n        </div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "scroll",
+      "flip",
+      "bento",
+      "gallery",
+      "hero"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

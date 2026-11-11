@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-footer-bounce",
+  "type": "registry:component",
+  "title": "Bouncy Footer",
+  "description": "The footer's top edge is an SVG curve pulled down by your scroll speed as you land, then it springs back like a trampoline.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-footer-bounce.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-footer-bounce.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger, useGSAP);\n\nexport interface GsapFooterBounceProps {\n  children: ReactNode;\n  scroller?: RefObject<HTMLElement | null>;\n  /** Fill colour of the footer (any CSS colour). */\n  color?: string;\n  className?: string;\n}\n\n/**\n * The footer's top edge is an SVG curve whose control point is pulled down by your scroll\n * speed as you arrive, then springs back with elastic.out — like the page landing on a\n * trampoline.\n */\nexport function GsapFooterBounce({ children, scroller, color = \"var(--foreground)\", className }: GsapFooterBounceProps) {\n  const root = useRef<HTMLElement>(null);\n  const path = useRef<SVGPathElement>(null);\n  const reduced = useReducedMotion();\n\n  useGSAP(\n    () => {\n      if (reduced) return;\n      const curve = { y: 0 };\n      const render = () => path.current!.setAttribute(\"d\", `M0,100 Q50,${100 - curve.y} 100,100 L100,100 L0,100 Z`);\n      render();\n      ScrollTrigger.create({\n        trigger: root.current,\n        scroller: scroller?.current ?? undefined,\n        start: \"top bottom\",\n        end: \"bottom bottom\",\n        onUpdate(self) {\n          const v = gsap.utils.clamp(-90, 90, self.getVelocity() / 30);\n          gsap.to(curve, { y: v, duration: 0.25, ease: \"power2.out\", overwrite: true, onUpdate: render });\n        },\n        onLeave() {\n          gsap.to(curve, { y: 0, duration: 1.4, ease: \"elastic.out(1, 0.25)\", overwrite: true, onUpdate: render });\n        },\n        onEnterBack() {\n          gsap.to(curve, { y: 0, duration: 1.4, ease: \"elastic.out(1, 0.25)\", overwrite: true, onUpdate: render });\n        },\n      });\n    },\n    { scope: root, dependencies: [reduced] },\n  );\n\n  return (\n    <footer ref={root} className={cn(\"relative\", className)}>\n      <svg aria-hidden viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" className=\"absolute bottom-full left-0 h-24 w-full overflow-visible\" style={{ color }}>\n        <path ref={path} d=\"M0,100 Q50,100 100,100 L100,100 L0,100 Z\" fill=\"currentColor\" />\n      </svg>\n      <div style={{ background: color }}>{children}</div>\n    </footer>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "footer",
+      "scroll",
+      "elastic",
+      "svg",
+      "fun"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

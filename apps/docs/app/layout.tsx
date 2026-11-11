@@ -9,7 +9,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: { default: "kinetik — the motion library for web & mobile", template: "%s · kinetik" },
   description:
-    "220+ copy-paste animated components, blocks and mobile flows for React, Next.js and React Native. Live previews, source, install command and an AI prompt for every piece.",
+    "250+ copy-paste animated components, blocks and mobile flows for React, Next.js and React Native. Live previews, source, install command and an AI prompt for every piece.",
 };
 
 const boot = `try{var t=localStorage.getItem("theme");if(t!=="light")document.documentElement.classList.add("dark");if(localStorage.getItem("kinetik-reduce-motion")==="1")document.documentElement.setAttribute("data-reduce-motion","")}catch(e){document.documentElement.classList.add("dark")}`;

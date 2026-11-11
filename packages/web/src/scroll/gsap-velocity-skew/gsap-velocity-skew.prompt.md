@@ -1,0 +1,1 @@
+Implement velocity skew: one ScrollTrigger over the section; onUpdate compute s = clamp(±max, self.getVelocity()/−250); if |s| > |proxy.skew| set proxy.skew = s and gsap.to(proxy, { skew: 0, duration .8, ease power3, overwrite: true, onUpdate: () => quickSetter('[data-skew]','skewY','deg')(proxy.skew) }).

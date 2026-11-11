@@ -1,0 +1,1 @@
+Create a scroll image sequence: section length·100vh with a sticky canvas; preload frames as Image objects; gsap.to(seq, { frame: frames−1, snap: 'frame', ease: none, scrollTrigger: { start top top, end bottom bottom, scrub .5 }, onUpdate: paint }) where paint draws the frame cover-fitted into a DPR-scaled canvas, only when the frame index changed.

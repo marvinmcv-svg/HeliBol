@@ -1,0 +1,1 @@
+Open: rotate the + icon 135° (back.out), each item fromTo(x0,y0,scale .3,hidden → cos/sin(angle)·radius, scale 1, visible) with back.out(2.2) and i·45ms delay. Close: a separate set of tweens back to center with power3.in, .25s, reversed stagger — different ease for the reverse direction.

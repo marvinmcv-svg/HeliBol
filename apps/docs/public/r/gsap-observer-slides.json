@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-observer-slides",
+  "type": "registry:component",
+  "title": "Observer Fullscreen Slides",
+  "description": "Full-screen slides that move one step per wheel flick, swipe or arrow key (GSAP Observer), with a sliding mask, counter-zooming image and rolling title letters. Loops forever.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-observer-slides.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-observer-slides.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport gsap from \"gsap\";\nimport { Observer } from \"gsap/Observer\";\nimport { SplitText } from \"gsap/SplitText\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(Observer, SplitText, useGSAP);\n\nexport interface ObserverSlide {\n  title: string;\n  image: string;\n  kicker?: string;\n}\n\nexport interface GsapObserverSlidesProps {\n  slides: ObserverSlide[];\n  className?: string;\n}\n\n/**\n * Full-screen slides driven by GSAP Observer: one wheel flick, swipe or arrow key moves one\n * slide (infinite loop, either direction). Outer/inner wrappers counter-translate to create a\n * sliding mask, the image counter-zooms, and the title's characters roll in.\n */\nexport function GsapObserverSlides({ slides, className }: GsapObserverSlidesProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const [index, setIndex] = useState(0);\n  const cur = useRef(0);\n  const busy = useRef(false);\n  const chars = useRef<Element[][]>([]);\n  const reduced = useReducedMotion();\n\n  const { contextSafe } = useGSAP(\n    () => {\n      const q = gsap.utils.selector(root);\n      gsap.set(q(\"[data-slide]\"), { autoAlpha: 0, zIndex: 0 });\n      gsap.set(q(\"[data-slide]\")[0], { autoAlpha: 1, zIndex: 1 });\n      chars.current = q(\"[data-title]\").map((el) => SplitText.create(el, { type: \"chars\" }).chars);\n      const obs = Observer.create({\n        target: root.current,\n        type: \"wheel,touch,pointer\",\n        wheelSpeed: -1,\n        tolerance: 12,\n        preventDefault: true,\n        onDown: () => go(cur.current - 1, -1),\n        onUp: () => go(cur.current + 1, 1),\n      });\n      return () => obs.kill();\n    },\n    { scope: root },\n  );\n\n  const go = contextSafe((to: number, dir: 1 | -1) => {\n    if (busy.current) return;\n    const n = slides.length;\n    const next = ((to % n) + n) % n;\n    const q = gsap.utils.selector(root);\n    const all = q(\"[data-slide]\");\n    const from = all[cur.current];\n    const target = all[next];\n    cur.current = next;\n    setIndex(next);\n    if (reduced) {\n      gsap.set(from, { autoAlpha: 0, zIndex: 0 });\n      gsap.set(target, { autoAlpha: 1, zIndex: 1 });\n      return;\n    }\n    busy.current = true;\n    const outer = target.querySelector(\"[data-outer]\");\n    const inner = target.querySelector(\"[data-inner]\");\n    gsap\n      .timeline({ defaults: { duration: 1.1, ease: \"power3.inOut\" }, onComplete: () => void (busy.current = false) })\n      .set(target, { autoAlpha: 1, zIndex: 1 })\n      .set(from, { zIndex: 0 })\n      .fromTo(outer, { yPercent: 100 * dir }, { yPercent: 0 }, 0)\n      .fromTo(inner, { yPercent: -100 * dir }, { yPercent: 0 }, 0)\n      .fromTo(target.querySelector(\"img\"), { scale: 1.4 }, { scale: 1 }, 0)\n      .to(from.querySelector(\"img\"), { yPercent: -15 * dir, duration: 1.1 }, 0)\n      .fromTo(chars.current[next], { yPercent: 120 * dir, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.8, ease: \"power3.out\", stagger: { each: 0.025, from: \"random\" } }, 0.35)\n      .set(from, { autoAlpha: 0 })\n      .set(from.querySelector(\"img\"), { yPercent: 0 });\n  });\n\n  return (\n    <div\n      ref={root}\n      tabIndex={0}\n      role=\"region\"\n      aria-roledescription=\"carousel\"\n      aria-label=\"Slides — scroll, swipe or use arrow keys\"\n      onKeyDown={(e) => {\n        if (e.key === \"ArrowDown\" || e.key === \"ArrowRight\") go(cur.current + 1, 1);\n        if (e.key === \"ArrowUp\" || e.key === \"ArrowLeft\") go(cur.current - 1, -1);\n      }}\n      className={cn(\"relative h-full w-full touch-none overflow-hidden bg-black outline-none\", className)}\n    >\n      {slides.map((s, i) => (\n        <section key={s.title} data-slide aria-hidden={index !== i} className=\"absolute inset-0\">\n          <div data-outer className=\"h-full w-full overflow-hidden\">\n            <div data-inner className=\"h-full w-full overflow-hidden\">\n              <img src={s.image} alt=\"\" className=\"absolute inset-0 h-full w-full object-cover\" />\n              <div className=\"absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30\" />\n              <div className=\"absolute inset-x-0 bottom-0 p-8 text-white\">\n                {s.kicker && <p className=\"text-xs uppercase tracking-[0.3em] opacity-70\">{s.kicker}</p>}\n                <h3 data-title className=\"text-5xl font-semibold tracking-tight sm:text-6xl\">{s.title}</h3>\n              </div>\n            </div>\n          </div>\n        </section>\n      ))}\n      <div className=\"absolute right-5 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-2\" aria-hidden>\n        {slides.map((s, i) => (\n          <span key={s.title} className={cn(\"h-6 w-1 rounded-full bg-white/30 transition-all duration-500\", index === i && \"h-10 bg-white\")} />\n        ))}\n      </div>\n      <p className=\"absolute left-5 top-4 z-10 font-mono text-xs text-white/70\">\n        {String(index + 1).padStart(2, \"0\")} / {String(slides.length).padStart(2, \"0\")}\n      </p>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "slides",
+      "observer",
+      "fullscreen",
+      "carousel",
+      "storytelling"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

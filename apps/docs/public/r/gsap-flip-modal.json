@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-flip-modal",
+  "type": "registry:component",
+  "title": "Flip Grid Modal",
+  "description": "Click a thumbnail and the very same image node flies from the grid into a product dialog (Flip), text staggers in; closing flies it back home.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-flip-modal.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-flip-modal.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport gsap from \"gsap\";\nimport { Flip } from \"gsap/Flip\";\nimport { useGSAP } from \"@gsap/react\";\nimport { X } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(Flip, useGSAP);\n\nexport interface FlipModalItem {\n  id: string;\n  image: string;\n  title: string;\n  body: string;\n}\n\nexport interface GsapFlipModalProps {\n  items: FlipModalItem[];\n  className?: string;\n}\n\n/**\n * Grid → modal with GSAP Flip: the clicked thumbnail is physically moved into the dialog\n * (same DOM node), and Flip.from animates it from the grid cell to its modal box; closing\n * reverses it back into its slot. Text and backdrop fade around the move.\n */\nexport function GsapFlipModal({ items, className }: GsapFlipModalProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const [open, setOpen] = useState<FlipModalItem | null>(null);\n  const reduced = useReducedMotion();\n  const closeBtn = useRef<HTMLButtonElement>(null);\n  const { contextSafe } = useGSAP({ scope: root });\n\n  const show = contextSafe((it: FlipModalItem) => {\n    const thumb = root.current!.querySelector<HTMLElement>(`[data-thumb=\"${it.id}\"]`)!;\n    const state = Flip.getState(thumb);\n    setOpen(it);\n    requestAnimationFrame(() => {\n      const slot = root.current!.querySelector<HTMLElement>(\"[data-modal-slot]\")!;\n      slot.appendChild(thumb);\n      gsap.fromTo(root.current!.querySelector(\"[data-backdrop]\"), { opacity: 0 }, { opacity: 1, duration: reduced ? 0 : 0.4 });\n      if (!reduced) {\n        Flip.from(state, { duration: 0.7, ease: \"power3.inOut\", scale: true, zIndex: 60 });\n        gsap.fromTo(root.current!.querySelectorAll(\"[data-modal-text] > *\"), { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.06, delay: 0.35, duration: 0.5 });\n      }\n      closeBtn.current?.focus();\n    });\n  });\n\n  const hide = contextSafe(() => {\n    if (!open) return;\n    const thumb = root.current!.querySelector<HTMLElement>(`[data-thumb=\"${open.id}\"]`)!;\n    const home = root.current!.querySelector<HTMLElement>(`[data-home=\"${open.id}\"]`)!;\n    const state = Flip.getState(thumb);\n    home.appendChild(thumb);\n    const done = () => setOpen(null);\n    if (reduced) return done();\n    gsap.to(root.current!.querySelector(\"[data-backdrop]\"), { opacity: 0, duration: 0.4 });\n    Flip.from(state, { duration: 0.6, ease: \"power3.inOut\", scale: true, zIndex: 60, onComplete: done });\n  });\n\n  useEffect(() => {\n    if (!open) return;\n    const onKey = (e: KeyboardEvent) => e.key === \"Escape\" && hide();\n    window.addEventListener(\"keydown\", onKey);\n    return () => window.removeEventListener(\"keydown\", onKey);\n  }, [open, hide]);\n\n  return (\n    <div ref={root} className={cn(\"relative\", className)}>\n      <div className=\"grid grid-cols-3 gap-3 sm:grid-cols-4\">\n        {items.map((it) => (\n          <button key={it.id} data-home={it.id} onClick={() => show(it)} aria-label={`Open ${it.title}`} className=\"aspect-square overflow-hidden rounded-xl bg-muted\">\n            <img data-thumb={it.id} src={it.image} alt=\"\" className=\"h-full w-full rounded-xl object-cover\" />\n          </button>\n        ))}\n      </div>\n      {open && (\n        <div className=\"absolute inset-0 z-50 grid place-items-center p-2\" role=\"dialog\" aria-modal=\"true\" aria-label={open.title}>\n          <div data-backdrop className=\"absolute inset-0 rounded-2xl bg-background/80 backdrop-blur-sm\" onClick={hide} />\n          <div className=\"relative grid w-full max-w-xl grid-cols-[1.2fr_1fr] gap-4 rounded-2xl border border-border bg-card p-3 shadow-2xl\">\n            <div data-modal-slot className=\"aspect-[4/5] overflow-hidden rounded-xl\" />\n            <div data-modal-text className=\"flex flex-col py-2 pr-2\">\n              <p className=\"text-[10px] uppercase tracking-[0.3em] text-muted-foreground\">Print</p>\n              <h3 className=\"mt-1 text-2xl font-semibold tracking-tight\">{open.title}</h3>\n              <p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">{open.body}</p>\n              <button className=\"mt-auto rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background\">Add to bag — $64</button>\n            </div>\n            <button ref={closeBtn} onClick={hide} aria-label=\"Close\" className=\"absolute right-2 top-2 grid size-8 place-items-center rounded-full bg-background/80 hover:bg-accent\">\n              <X className=\"size-4\" />\n            </button>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "flip",
+      "modal",
+      "gallery",
+      "shared element",
+      "ecommerce"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "portfolio"
+    ]
+  }
+}

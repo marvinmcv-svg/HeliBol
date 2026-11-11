@@ -106,7 +106,7 @@ export function CommandMenu() {
                   if (e.key === "Enter" && results[sel]) go(results[sel].href);
                   if (e.key === "Escape") setOpen(false);
                 }}
-                placeholder="Search 220+ components, blocks, flows… (try “scroll”, “gsap”, “pricing”)"
+                placeholder="Search 250+ components, blocks, flows… (try “scroll”, “gsap”, “pricing”)"
                 className="h-12 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
                 role="combobox"
                 aria-expanded

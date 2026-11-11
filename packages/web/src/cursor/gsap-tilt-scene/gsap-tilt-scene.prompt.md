@@ -1,0 +1,1 @@
+Create a tilt scene: wrapper with perspective 1100px, inner stage with transform-style preserve-3d; gsap.set each [data-depth] child to z = depth·30. On pointermove map pointer to −.5..+.5 and quickTo(rotationY)=px·max·2, quickTo(rotationX)=−py·max·2 (.8s power3); reset to 0 on leave.

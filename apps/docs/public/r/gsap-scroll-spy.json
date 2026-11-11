@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-scroll-spy",
+  "type": "registry:component",
+  "title": "Scroll Spy Rail",
+  "description": "Long-read layout with a lateral rail: the active chapter highlights as you read, the rail fills with progress, and labels glide you to their section with ScrollTo.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-scroll-spy.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-scroll-spy.tsx",
+      "content": "\"use client\";\nimport { useRef, useState, type ReactNode, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { ScrollToPlugin } from \"gsap/ScrollToPlugin\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);\n\nexport interface ScrollSpySection {\n  id: string;\n  label: string;\n  content: ReactNode;\n}\n\nexport interface GsapScrollSpyProps {\n  sections: ScrollSpySection[];\n  scroller?: RefObject<HTMLElement | null>;\n  className?: string;\n}\n\n/**\n * Long-read layout with a lateral progress rail: one ScrollTrigger per section sets the active\n * label, the rail's fill scrubs with overall progress, and clicking a label glides there\n * with ScrollToPlugin (offset-aware, inside any scroller).\n */\nexport function GsapScrollSpy({ sections, scroller, className }: GsapScrollSpyProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const [active, setActive] = useState(0);\n  const reduced = useReducedMotion();\n\n  const { contextSafe } = useGSAP(\n    () => {\n      const sc = scroller?.current ?? undefined;\n      root.current!.querySelectorAll<HTMLElement>(\"[data-spy]\").forEach((el, i) => {\n        ScrollTrigger.create({ trigger: el, scroller: sc, start: \"top 50%\", end: \"bottom 50%\", onToggle: (s) => s.isActive && setActive(i) });\n      });\n      gsap.fromTo(\n        root.current!.querySelector(\"[data-fill]\"),\n        { scaleY: 0 },\n        { scaleY: 1, ease: \"none\", scrollTrigger: { trigger: root.current!.querySelector(\"[data-body]\"), scroller: sc, start: \"top 50%\", end: \"bottom 50%\", scrub: true } },\n      );\n    },\n    { scope: root },\n  );\n\n  const go = contextSafe((i: number) => {\n    const target = root.current!.querySelectorAll<HTMLElement>(\"[data-spy]\")[i];\n    const sc = scroller?.current ?? window;\n    gsap.to(sc, { scrollTo: { y: target, offsetY: 24 }, duration: reduced ? 0 : 1, ease: \"power3.inOut\" });\n  });\n\n  return (\n    <div ref={root} className={cn(\"relative flex gap-8\", className)}>\n      <nav aria-label=\"Sections\" className=\"sticky top-6 h-fit shrink-0 self-start\">\n        <div className=\"relative flex gap-3\">\n          <div className=\"relative w-0.5 rounded-full bg-border\">\n            <div data-fill className=\"absolute inset-0 origin-top rounded-full bg-foreground\" />\n          </div>\n          <ol className=\"space-y-3 text-sm\">\n            {sections.map((s, i) => (\n              <li key={s.id}>\n                <button\n                  onClick={() => go(i)}\n                  aria-current={active === i ? \"true\" : undefined}\n                  className={cn(\"flex items-center gap-2 text-left transition-[color,transform] duration-300\", active === i ? \"translate-x-1 text-foreground\" : \"text-muted-foreground hover:text-foreground\")}\n                >\n                  <span className=\"font-mono text-[10px] tabular-nums\">{String(i + 1).padStart(2, \"0\")}</span>\n                  {s.label}\n                </button>\n              </li>\n            ))}\n          </ol>\n        </div>\n      </nav>\n      <div data-body className=\"min-w-0 flex-1 space-y-16\">\n        {sections.map((s) => (\n          <section key={s.id} id={s.id} data-spy>\n            {s.content}\n          </section>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "scroll",
+      "navigation",
+      "toc",
+      "docs",
+      "scrollto"
+    ],
+    "pageTypes": [
+      "docs",
+      "blog"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-morph-blob",
+  "type": "registry:component",
+  "title": "MorphSVG Shape Cycle",
+  "description": "One SVG path morphs between a blob, star, heart, bolt and drop with an elastic overshoot — MorphSVG matches different point counts automatically.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-morph-blob.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-morph-blob.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport gsap from \"gsap\";\nimport { MorphSVGPlugin } from \"gsap/MorphSVGPlugin\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(MorphSVGPlugin, useGSAP);\n\nexport interface MorphShape {\n  label: string;\n  /** Path data in a 0..200 viewBox. Any number of points — MorphSVG matches them. */\n  d: string;\n  color: string;\n}\n\nexport interface GsapMorphBlobProps {\n  shapes?: MorphShape[];\n  /** Seconds per shape when autoplaying (0 = manual only). */\n  interval?: number;\n  className?: string;\n}\n\nconst DEFAULT_SHAPES: MorphShape[] = [\n  { label: \"Blob\", color: \"#8b5cf6\", d: \"M100,18 C146,18 182,52 182,98 C182,146 150,182 102,182 C52,182 18,150 18,102 C18,54 56,18 100,18 Z\" },\n  { label: \"Star\", color: \"#f59e0b\", d: \"M100,12 L124,72 L188,76 L138,116 L156,180 L100,144 L44,180 L62,116 L12,76 L76,72 Z\" },\n  { label: \"Heart\", color: \"#ec4899\", d: \"M100,176 C40,132 14,100 14,66 C14,36 38,16 64,16 C82,16 94,26 100,40 C106,26 118,16 136,16 C162,16 186,36 186,66 C186,100 160,132 100,176 Z\" },\n  { label: \"Bolt\", color: \"#22d3ee\", d: \"M116,10 L42,112 L94,112 L80,190 L158,82 L106,82 Z\" },\n  { label: \"Drop\", color: \"#10b981\", d: \"M100,12 C130,62 168,98 168,132 C168,168 138,190 100,190 C62,190 32,168 32,132 C32,98 70,62 100,12 Z\" },\n];\n\n/**\n * MorphSVGPlugin cycles one path through very different shapes (different point counts),\n * auto-matching points with `shapeIndex: \"auto\"` and a smooth `type: \"rotational\"` morph,\n * while the fill colour and a soft shadow follow along.\n */\nexport function GsapMorphBlob({ shapes = DEFAULT_SHAPES, interval = 2.2, className }: GsapMorphBlobProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const path = useRef<SVGPathElement>(null);\n  const [i, setI] = useState(0);\n  const reduced = useReducedMotion();\n  const { contextSafe } = useGSAP({ scope: root });\n\n  const to = contextSafe((n: number) => {\n    setI(n);\n    const s = shapes[n];\n    gsap.to(path.current, {\n      morphSVG: { shape: s.d, type: \"rotational\", shapeIndex: \"auto\" },\n      fill: s.color,\n      duration: reduced ? 0 : 0.9,\n      ease: \"elastic.out(1, 0.6)\",\n      overwrite: true,\n    });\n  });\n\n  useGSAP(\n    () => {\n      if (!interval || reduced) return;\n      let n = 0;\n      const id = setInterval(() => to((n = (n + 1) % shapes.length)), interval * 1000);\n      return () => clearInterval(id);\n    },\n    { scope: root, dependencies: [interval, reduced, shapes.length] },\n  );\n\n  return (\n    <div ref={root} className={cn(\"flex flex-col items-center gap-5\", className)}>\n      <svg viewBox=\"0 0 200 200\" className=\"size-56 overflow-visible drop-shadow-[0_20px_40px_rgba(139,92,246,0.35)]\" role=\"img\" aria-label={shapes[i].label}>\n        <path ref={path} d={shapes[0].d} fill={shapes[0].color} />\n      </svg>\n      <div className=\"flex flex-wrap justify-center gap-1.5\">\n        {shapes.map((s, n) => (\n          <button key={s.label} onClick={() => to(n)} aria-pressed={i === n} className={cn(\"rounded-full border px-3 py-1 text-xs transition-colors\", i === n ? \"border-foreground bg-foreground text-background\" : \"border-border text-muted-foreground\")}>\n            {s.label}\n          </button>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "svg"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "svg",
+      "morph",
+      "icons",
+      "shapes",
+      "logo"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

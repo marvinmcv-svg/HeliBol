@@ -71,6 +71,23 @@ Other patterns REA surfaced:
 | Fancy Components | 45 | text/typography + physics (gravity, elastic line, image trail) |
 | Motion Primitives | 33 | low-level: text effect/loop/morph/roll, morphing dialog/popover, toolbar, tilt, dock |
 
+## GSAP Demo Hub (scraped with Firecrawl)
+
+`demos.gsap.com` was reachable through Firecrawl, unlike the hosts above. Its `sitemap.xml` lists **~80 demos**; the 13 category pages (Buttons, Cursor, Galleries & Media, Hover, Loaders, Navigation, Scroll, Sliders, Text, Page Transitions, UI, WebGL, Fun) and 16 plugin pages give the taxonomy. Each demo page carries a title, tags, a "How it works" note and the core logic. Full catalog + the demo → kinetik mapping: [`gsap-demos.json`](gsap-demos.json).
+
+What it showed:
+
+- **Scroll is GSAP's biggest category (20 demos)**: velocity skew, scrubbed Flip bento, batch reveals, image sequences, mask-on-scroll, waypoints/indicators, bouncing footer, Observer-driven looping panels.
+- **Flip is the layout workhorse**: filtering, grid ↔ list, grid → modal, carousels.
+- **Plugins are now free**, so MorphSVG, DrawSVG, Physics2D, Inertia, CustomWiggle and SplitText are fair game for a copy-paste library.
+- **Newest pattern: `easeReverse`**, a different ease on the way back, so exits feel crisp instead of replaying a bounce backwards.
+
+kinetik had only 5 GSAP components, so this round adds **29 GSAP components**: one per technique not already covered, all written from scratch (no GSAP demo code or media copied). The **GSAP collection** (`/components?engine=gsap`) groups them.
+
+The [GSAP Showcase](https://gsap.com/showcase/) (Site of the Day/Week winners) filters by Scroll Animation, Text Animation, SVG Animation, UI Interactions, WebGL, Three.js and, notably, **Reduced Motion**. That supports kinetik's reduced-motion-everywhere rule.
+
+**Bug found along the way:** scroll demos in preview frames were binding their ScrollTriggers to `window` because the demo scroller's ref is attached after children's layout effects. `DemoScroller` now mounts children only once its element exists, which fixed every scroll demo, old and new.
+
 ## Closed platforms (from search)
 
 - **Mobbin** browses by **Screens, UI Elements and Flows**. Category chips include Checkout, Settings, Login, Subscription & Paywall, Account Setup and Welcome. Flows cover whole journeys, including error states. It also has text-in-screenshot search, prototype mode and copy-to-Figma. Reported size: roughly 600k screens from ~1,150 apps.

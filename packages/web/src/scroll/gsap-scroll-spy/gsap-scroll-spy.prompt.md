@@ -1,0 +1,1 @@
+Create a scroll-spy: sticky left nav with a 2px rail whose inner fill scaleY 0→1 is scrubbed by the body's ScrollTrigger (top 50% → bottom 50%); one ScrollTrigger per section (top 50% → bottom 50%) sets the active index onToggle; clicking a label runs gsap.to(scroller, { scrollTo: { y: section, offsetY: 24 }, duration 1, power3.inOut }).

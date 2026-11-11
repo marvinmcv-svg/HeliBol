@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-velocity-skew",
+  "type": "registry:component",
+  "title": "Velocity Skew",
+  "description": "Images lean with your scroll speed — ScrollTrigger velocity drives a clamped skewY that eases back to straight when you stop.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-velocity-skew.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-velocity-skew.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger, useGSAP);\n\nexport interface GsapVelocitySkewProps {\n  children: ReactNode;\n  /** Scroll container (defaults to window). */\n  scroller?: RefObject<HTMLElement | null>;\n  /** Max skew in degrees. */\n  max?: number;\n  className?: string;\n}\n\n/**\n * Items marked `data-skew` lean with scroll speed: ScrollTrigger's getVelocity() → clamped skewY,\n * applied with a quickSetter and eased back to 0 when scrolling stops. Only the bigger\n * velocity wins, so it never jitters.\n */\nexport function GsapVelocitySkew({ children, scroller, max = 14, className }: GsapVelocitySkewProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n\n  useGSAP(\n    () => {\n      if (reduced) return;\n      const targets = root.current!.querySelectorAll(\"[data-skew]\");\n      const proxy = { skew: 0 };\n      const set = gsap.quickSetter(targets, \"skewY\", \"deg\");\n      const clamp = gsap.utils.clamp(-max, max);\n      ScrollTrigger.create({\n        trigger: root.current,\n        scroller: scroller?.current ?? undefined,\n        start: \"top bottom\",\n        end: \"bottom top\",\n        onUpdate(self) {\n          const s = clamp(self.getVelocity() / -250);\n          if (Math.abs(s) > Math.abs(proxy.skew)) {\n            proxy.skew = s;\n            gsap.to(proxy, { skew: 0, duration: 0.8, ease: \"power3\", overwrite: true, onUpdate: () => set(proxy.skew) });\n          }\n        },\n      });\n      gsap.set(targets, { transformOrigin: \"center center\", force3D: true });\n    },\n    { scope: root, dependencies: [reduced, max] },\n  );\n\n  return (\n    <div ref={root} className={cn(className)}>\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "scroll",
+      "velocity",
+      "skew",
+      "gallery",
+      "editorial"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

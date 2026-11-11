@@ -1,0 +1,1 @@
+Observer.create({ target, type: 'wheel,touch,pointer', wheelSpeed −1, tolerance 12, preventDefault, onUp: next, onDown: prev }). Transition: outer wrapper yPercent 100·dir→0 while inner yPercent −100·dir→0 (sliding mask), image scale 1.4→1, old image yPercent −15·dir, title chars (split once up front) yPercent 120·dir→0 stagger random; ignore input while busy.

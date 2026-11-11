@@ -1,0 +1,1 @@
+SplitText.create(el, { type: 'lines', mask: 'lines', autoSplit: true, onSplit: self => gsap.from(self.lines, { yPercent 100, opacity .1, filter blur(6px), stagger .15, ease power2.out, scrollTrigger: { trigger el, start 'top 85%', end 'bottom 45%', scrub .6 } }) }) — returning the tween from onSplit lets autoSplit clean it up.

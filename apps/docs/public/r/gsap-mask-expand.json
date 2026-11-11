@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-mask-expand",
+  "type": "registry:component",
+  "title": "Scroll Mask Expand",
+  "description": "A small rounded window between two words grows to full screen as you scroll, pushing the words apart and zooming the photo out — curtains-open reveal.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-mask-expand.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-mask-expand.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger, useGSAP);\n\nexport interface GsapMaskExpandProps {\n  image: string;\n  /** Text split across the opening window: left word, right word. */\n  words?: [string, string];\n  scroller?: RefObject<HTMLElement | null>;\n  children?: ReactNode;\n  className?: string;\n}\n\n/**\n * A small rounded window in the middle of a headline grows (clip-path inset scrubbed by a\n * pinned ScrollTrigger) until the image fills the screen, pushing the two words apart and\n * zooming the photo out from 1.5× — the classic \"open the curtains\" reveal.\n */\nexport function GsapMaskExpand({ image, words = [\"Into\", \"the wild\"], scroller, children, className }: GsapMaskExpandProps) {\n  const section = useRef<HTMLElement>(null);\n  const reduced = useReducedMotion();\n\n  useGSAP(\n    () => {\n      if (reduced) return;\n      const q = gsap.utils.selector(section);\n      gsap\n        .timeline({ scrollTrigger: { trigger: section.current, scroller: scroller?.current ?? undefined, start: \"top top\", end: \"bottom bottom\", scrub: 0.6 } })\n        .fromTo(q(\"[data-window]\"), { clipPath: \"inset(38% 39% 38% 39% round 24px)\" }, { clipPath: \"inset(0% 0% 0% 0% round 0px)\", ease: \"power2.inOut\" })\n        .fromTo(q(\"[data-photo]\"), { scale: 1.5 }, { scale: 1, ease: \"power2.inOut\" }, 0)\n        .to(q(\"[data-left]\"), { xPercent: -140, autoAlpha: 0, ease: \"power2.in\" }, 0)\n        .to(q(\"[data-right]\"), { xPercent: 140, autoAlpha: 0, ease: \"power2.in\" }, 0)\n        .from(q(\"[data-after]\"), { y: 40, autoAlpha: 0, duration: 0.3 }, 0.7);\n    },\n    { scope: section, dependencies: [reduced] },\n  );\n\n  return (\n    <section ref={section} className={cn(\"relative\", className)} style={{ height: reduced ? \"100cqh\" : \"260cqh\" }}>\n      <div className=\"sticky top-0 h-[100cqh] overflow-hidden\">\n        <div data-window className=\"absolute inset-0\" style={{ clipPath: reduced ? undefined : \"inset(38% 39% 38% 39% round 24px)\" }}>\n          <img data-photo src={image} alt=\"\" className=\"h-full w-full object-cover\" />\n          <div className=\"absolute inset-0 bg-gradient-to-t from-black/60 to-transparent\" />\n        </div>\n        {!reduced && (\n          <div aria-hidden className=\"pointer-events-none absolute inset-0 flex items-center justify-center gap-[24%] text-5xl font-semibold tracking-tight sm:text-6xl\">\n            <span data-left>{words[0]}</span>\n            <span data-right>{words[1]}</span>\n          </div>\n        )}\n        <div data-after className=\"absolute inset-x-0 bottom-0 p-6 text-white\">\n          {children}\n        </div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "scroll",
+      "clip-path",
+      "mask",
+      "hero",
+      "reveal"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

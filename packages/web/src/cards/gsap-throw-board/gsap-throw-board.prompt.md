@@ -1,0 +1,1 @@
+Draggable.create(stickers, { bounds: board, inertia: true, edgeResistance .75, onPress: raise zIndex + scale 1.08 + big shadow, onDrag: rotation = clamp(±25, deltaX·1.5), onRelease: scale 1, random tilt ±12 (back.out) }); entrance: from scale 0, rotation −40 stagger .06.

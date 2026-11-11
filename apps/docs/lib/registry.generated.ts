@@ -5,196 +5,225 @@ import { meta as c0 } from "@web/3d/canvas-3d-shell/canvas-3d-shell.meta";
 import { meta as c1 } from "@web/text/text-flip-words/text-flip-words.meta";
 import { meta as c2 } from "@web/cards/card-3d-layers/card-3d-layers.meta";
 import { meta as c3 } from "@web/cursor/tilt-card/tilt-card.meta";
-import { meta as c4 } from "@web/data/activity-rings/activity-rings.meta";
-import { meta as c5 } from "@web/ai/ai-agent-steps/ai-agent-steps.meta";
-import { meta as c6 } from "@web/ai/ai-prompt-box/ai-prompt-box.meta";
-import { meta as c7 } from "@web/cards/animated-beam/animated-beam.meta";
-import { meta as c8 } from "@web/navigation/nav-breadcrumb/nav-breadcrumb.meta";
-import { meta as c9 } from "@web/text/text-gradient-animated/text-gradient-animated.meta";
-import { meta as c10 } from "@web/backgrounds/bg-gradient-mesh/bg-gradient-mesh.meta";
-import { meta as c11 } from "@web/forms/select-animated/select-animated.meta";
-import { meta as c12 } from "@web/layout/animated-tabs/animated-tabs.meta";
-import { meta as c13 } from "@web/widgets/widget-terminal/widget-terminal.meta";
-import { meta as c14 } from "@web/buttons/button-arrow-slide/button-arrow-slide.meta";
-import { meta as c15 } from "@web/backgrounds/bg-aurora/bg-aurora.meta";
-import { meta as c16 } from "@web/layout/auto-animate-list/auto-animate-list.meta";
-import { meta as c17 } from "@web/data/chart-bar-grow/chart-bar-grow.meta";
-import { meta as c18 } from "@web/widgets/widget-battery/widget-battery.meta";
-import { meta as c19 } from "@web/media/before-after/before-after.meta";
-import { meta as c20 } from "@web/cards/bento-grid/bento-grid.meta";
-import { meta as c21 } from "@web/text/text-blur-in/text-blur-in.meta";
-import { meta as c22 } from "@web/buttons/button-border-beam/button-border-beam.meta";
-import { meta as c23 } from "@web/navigation/nav-bottom-bar/nav-bottom-bar.meta";
-import { meta as c24 } from "@web/mockups/mockup-browser/mockup-browser.meta";
-import { meta as c25 } from "@web/cards/card-fan/card-fan.meta";
-import { meta as c26 } from "@web/text/text-circular/text-circular.meta";
-import { meta as c27 } from "@web/cursor/cursor-click-spark/cursor-click-spark.meta";
-import { meta as c28 } from "@web/ai/ai-code-stream/ai-code-stream.meta";
-import { meta as c29 } from "@web/navigation/nav-sidebar/nav-sidebar.meta";
-import { meta as c30 } from "@web/overlays/command-palette/command-palette.meta";
-import { meta as c31 } from "@web/overlays/context-menu/context-menu.meta";
-import { meta as c32 } from "@web/data/heatmap-grid/heatmap-grid.meta";
-import { meta as c33 } from "@web/buttons/copy-button/copy-button.meta";
-import { meta as c34 } from "@web/widgets/widget-timer/widget-timer.meta";
-import { meta as c35 } from "@web/loaders/preloader-counter/preloader-counter.meta";
-import { meta as c36 } from "@web/media/coverflow/coverflow.meta";
-import { meta as c37 } from "@web/cursor/cursor-crosshair/cursor-crosshair.meta";
-import { meta as c38 } from "@web/svg/svg-motion-path/svg-motion-path.meta";
-import { meta as c39 } from "@web/cursor/spotlight/spotlight.meta";
-import { meta as c40 } from "@web/transitions/transition-curtain/transition-curtain.meta";
-import { meta as c41 } from "@web/cursor/cursor-custom/cursor-custom.meta";
-import { meta as c42 } from "@web/data/chart-donut/chart-donut.meta";
-import { meta as c43 } from "@web/buttons/button-download/button-download.meta";
-import { meta as c44 } from "@web/media/carousel-drag/carousel-drag.meta";
-import { meta as c45 } from "@web/overlays/drawer-draggable/drawer-draggable.meta";
-import { meta as c46 } from "@web/buttons/checkbox-draw/checkbox-draw.meta";
-import { meta as c47 } from "@web/layout/dynamic-island/dynamic-island.meta";
-import { meta as c48 } from "@web/forms/slider-elastic/slider-elastic.meta";
-import { meta as c49 } from "@web/buttons/button-emoji-burst/button-emoji-burst.meta";
-import { meta as c50 } from "@web/forms/error-shake/error-shake.meta";
-import { meta as c51 } from "@web/layout/expandable-card/expandable-card.meta";
-import { meta as c52 } from "@web/cards/card-expand-gallery/card-expand-gallery.meta";
-import { meta as c53 } from "@web/buttons/button-expand-icon/button-expand-icon.meta";
-import { meta as c54 } from "@web/forms/search-expand/search-expand.meta";
-import { meta as c55 } from "@web/backgrounds/bg-beams/bg-beams.meta";
-import { meta as c56 } from "@web/text/text-falling/text-falling.meta";
-import { meta as c57 } from "@web/forms/file-dropzone/file-dropzone.meta";
-import { meta as c58 } from "@web/widgets/widget-file-tree/widget-file-tree.meta";
-import { meta as c59 } from "@web/backgrounds/bg-noise/bg-noise.meta";
-import { meta as c60 } from "@web/backgrounds/bg-flicker-grid/bg-flicker-grid.meta";
-import { meta as c61 } from "@web/cards/card-flip/card-flip.meta";
-import { meta as c62 } from "@web/forms/input-floating-label/input-floating-label.meta";
-import { meta as c63 } from "@web/cards/card-folder/card-folder.meta";
-import { meta as c64 } from "@web/cursor/cursor-eyes/cursor-eyes.meta";
-import { meta as c65 } from "@web/forms/form-stepper/form-stepper.meta";
-import { meta as c66 } from "@web/cards/card-glass/card-glass.meta";
-import { meta as c67 } from "@web/text/text-glitch/text-glitch.meta";
-import { meta as c68 } from "@web/backgrounds/bg-dot-glow/bg-dot-glow.meta";
-import { meta as c69 } from "@web/buttons/button-gooey/button-gooey.meta";
-import { meta as c70 } from "@web/backgrounds/bg-grid-dots/bg-grid-dots.meta";
-import { meta as c71 } from "@web/heroes/hero-dev-terminal/hero-dev-terminal.meta";
-import { meta as c72 } from "@web/heroes/hero-globe/hero-globe.meta";
-import { meta as c73 } from "@web/heroes/hero-editorial/hero-editorial.meta";
-import { meta as c74 } from "@web/heroes/hero-floating-images/hero-floating-images.meta";
-import { meta as c75 } from "@web/heroes/hero-mesh-cards/hero-mesh-cards.meta";
-import { meta as c76 } from "@web/heroes/hero-scroll-tilt/hero-scroll-tilt.meta";
-import { meta as c77 } from "@web/heroes/hero-spotlight-grid/hero-spotlight-grid.meta";
-import { meta as c78 } from "@web/heroes/hero-video-dialog/hero-video-dialog.meta";
-import { meta as c79 } from "@web/buttons/button-hold-confirm/button-hold-confirm.meta";
-import { meta as c80 } from "@web/cards/card-holo/card-holo.meta";
-import { meta as c81 } from "@web/scroll/horizontal-scroll-section/horizontal-scroll-section.meta";
-import { meta as c82 } from "@web/overlays/hover-card/hover-card.meta";
-import { meta as c83 } from "@web/navigation/nav-hover-highlight/nav-hover-highlight.meta";
-import { meta as c84 } from "@web/cards/card-hover-reveal/card-hover-reveal.meta";
-import { meta as c85 } from "@web/media/image-reveal-mask/image-reveal-mask.meta";
-import { meta as c86 } from "@web/cursor/cursor-image-trail/cursor-image-trail.meta";
-import { meta as c87 } from "@web/backgrounds/bg-boxes/bg-boxes.meta";
-import { meta as c88 } from "@web/mockups/mockup-iphone/mockup-iphone.meta";
-import { meta as c89 } from "@web/data/stat-counter-grid/stat-counter-grid.meta";
-import { meta as c90 } from "@web/backgrounds/bg-lamp/bg-lamp.meta";
-import { meta as c91 } from "@web/mockups/mockup-laptop/mockup-laptop.meta";
-import { meta as c92 } from "@web/text/text-roll-hover/text-roll-hover.meta";
-import { meta as c93 } from "@web/backgrounds/bg-blinds/bg-blinds.meta";
-import { meta as c94 } from "@web/buttons/like-burst/like-burst.meta";
-import { meta as c95 } from "@web/data/chart-line-draw/chart-line-draw.meta";
-import { meta as c96 } from "@web/text/text-loop-lines/text-loop-lines.meta";
-import { meta as c97 } from "@web/cursor/cursor-blob/cursor-blob.meta";
-import { meta as c98 } from "@web/backgrounds/bg-shader/bg-shader.meta";
-import { meta as c99 } from "@web/backgrounds/bg-waves/bg-waves.meta";
-import { meta as c100 } from "@web/widgets/widget-stock/widget-stock.meta";
-import { meta as c101 } from "@web/mockups/mockup-window/mockup-window.meta";
-import { meta as c102 } from "@web/buttons/button-magnetic/button-magnetic.meta";
-import { meta as c103 } from "@web/navigation/dock-magnify/dock-magnify.meta";
-import { meta as c104 } from "@web/text/text-highlighter/text-highlighter.meta";
-import { meta as c105 } from "@web/media/marquee/marquee.meta";
-import { meta as c106 } from "@web/media/masonry-reveal/masonry-reveal.meta";
-import { meta as c107 } from "@web/backgrounds/bg-meteors/bg-meteors.meta";
-import { meta as c108 } from "@web/widgets/widget-calendar/widget-calendar.meta";
-import { meta as c109 } from "@web/buttons/icon-morph/icon-morph.meta";
-import { meta as c110 } from "@web/navigation/nav-mega-menu/nav-mega-menu.meta";
-import { meta as c111 } from "@web/navigation/menu-toggle-morph/menu-toggle-morph.meta";
-import { meta as c112 } from "@web/overlays/popover-morph/popover-morph.meta";
-import { meta as c113 } from "@web/loaders/loader-morph/loader-morph.meta";
-import { meta as c114 } from "@web/text/text-morph/text-morph.meta";
-import { meta as c115 } from "@web/foundations/motion-provider/motion-provider.meta";
-import { meta as c116 } from "@web/overlays/dialog-animated/dialog-animated.meta";
-import { meta as c117 } from "@web/cards/card-neon/card-neon.meta";
-import { meta as c118 } from "@web/buttons/button-neumorph/button-neumorph.meta";
-import { meta as c119 } from "@web/widgets/widget-notifications/widget-notifications.meta";
-import { meta as c120 } from "@web/widgets/widget-music/widget-music.meta";
-import { meta as c121 } from "@web/text/number-ticker/number-ticker.meta";
-import { meta as c122 } from "@web/text/text-odometer/text-odometer.meta";
-import { meta as c123 } from "@web/data/orbit-icons/orbit-icons.meta";
-import { meta as c124 } from "@web/forms/otp-input/otp-input.meta";
-import { meta as c125 } from "@web/scroll/parallax-layer/parallax-layer.meta";
-import { meta as c126 } from "@web/backgrounds/bg-particles/bg-particles.meta";
-import { meta as c127 } from "@web/forms/password-strength/password-strength.meta";
-import { meta as c128 } from "@web/scroll/pinned-story/pinned-story.meta";
-import { meta as c129 } from "@web/cards/card-pixel-reveal/card-pixel-reveal.meta";
-import { meta as c130 } from "@web/buttons/button-press/button-press.meta";
-import { meta as c131 } from "@web/cards/card-profile/card-profile.meta";
-import { meta as c132 } from "@web/loaders/progress-bar-animated/progress-bar-animated.meta";
-import { meta as c133 } from "@web/loaders/progress-ring/progress-ring.meta";
-import { meta as c134 } from "@web/ai/ai-suggestions/ai-suggestions.meta";
-import { meta as c135 } from "@web/buttons/button-pulse/button-pulse.meta";
-import { meta as c136 } from "@web/transitions/transition-slide-stack/transition-slide-stack.meta";
-import { meta as c137 } from "@web/buttons/button-rainbow/button-rainbow.meta";
-import { meta as c138 } from "@web/buttons/rating-stars/rating-stars.meta";
-import { meta as c139 } from "@web/layout/reorder-list/reorder-list.meta";
-import { meta as c140 } from "@web/backgrounds/bg-retro-grid/bg-retro-grid.meta";
-import { meta as c141 } from "@web/buttons/button-ripple/button-ripple.meta";
-import { meta as c142 } from "@web/backgrounds/bg-ripple-rings/bg-ripple-rings.meta";
-import { meta as c143 } from "@web/backgrounds/bg-light-rays/bg-light-rays.meta";
-import { meta as c144 } from "@web/text/text-rotate/text-rotate.meta";
-import { meta as c145 } from "@web/text/text-scramble/text-scramble.meta";
-import { meta as c146 } from "@web/text/text-scroll-highlight/text-scroll-highlight.meta";
-import { meta as c147 } from "@web/scroll/scroll-progress/scroll-progress.meta";
-import { meta as c148 } from "@web/scroll/scroll-reveal/scroll-reveal.meta";
-import { meta as c149 } from "@web/text/text-velocity-marquee/text-velocity-marquee.meta";
-import { meta as c150 } from "@web/buttons/button-send/button-send.meta";
-import { meta as c151 } from "@web/svg/svg-morph-shapes/svg-morph-shapes.meta";
-import { meta as c152 } from "@web/transitions/vt-shared-element/vt-shared-element.meta";
-import { meta as c153 } from "@web/media/lightbox/lightbox.meta";
-import { meta as c154 } from "@web/buttons/button-shimmer/button-shimmer.meta";
-import { meta as c155 } from "@web/text/text-shimmer/text-shimmer.meta";
-import { meta as c156 } from "@web/cards/card-shine/card-shine.meta";
-import { meta as c157 } from "@web/loaders/skeleton-shimmer/skeleton-shimmer.meta";
-import { meta as c158 } from "@web/navigation/navbar-hide-on-scroll/navbar-hide-on-scroll.meta";
-import { meta as c159 } from "@web/layout/accordion-smooth/accordion-smooth.meta";
-import { meta as c160 } from "@web/foundations/smooth-scroll/smooth-scroll.meta";
-import { meta as c161 } from "@web/cards/card-social-post/card-social-post.meta";
-import { meta as c162 } from "@web/text/text-sparkles/text-sparkles.meta";
-import { meta as c163 } from "@web/navigation/nav-speed-dial/nav-speed-dial.meta";
-import { meta as c164 } from "@web/loaders/spinner-set/spinner-set.meta";
-import { meta as c165 } from "@web/text/text-split-reveal/text-split-reveal.meta";
-import { meta as c166 } from "@web/text/text-split-flap/text-split-flap.meta";
-import { meta as c167 } from "@web/cards/card-spotlight-border/card-spotlight-border.meta";
-import { meta as c168 } from "@web/buttons/toggle-switch/toggle-switch.meta";
-import { meta as c169 } from "@web/overlays/tooltip-animated/tooltip-animated.meta";
-import { meta as c170 } from "@web/buttons/button-stateful/button-stateful.meta";
-import { meta as c171 } from "@web/scroll/sticky-stack-cards/sticky-stack-cards.meta";
-import { meta as c172 } from "@web/ai/ai-chat-stream/ai-chat-stream.meta";
-import { meta as c173 } from "@web/text/text-stroke-draw/text-stroke-draw.meta";
-import { meta as c174 } from "@web/buttons/button-subscribe/button-subscribe.meta";
-import { meta as c175 } from "@web/loaders/success-check/success-check.meta";
-import { meta as c176 } from "@web/svg/svg-path-draw/svg-path-draw.meta";
-import { meta as c177 } from "@web/cards/card-swipe-deck/card-swipe-deck.meta";
-import { meta as c178 } from "@web/forms/tag-input/tag-input.meta";
-import { meta as c179 } from "@web/buttons/theme-toggle/theme-toggle.meta";
-import { meta as c180 } from "@web/ai/ai-thinking/ai-thinking.meta";
-import { meta as c181 } from "@web/overlays/toast-stack/toast-stack.meta";
-import { meta as c182 } from "@web/backgrounds/bg-topography/bg-topography.meta";
-import { meta as c183 } from "@web/text/text-typewriter/text-typewriter.meta";
-import { meta as c184 } from "@web/text/text-variable-proximity/text-variable-proximity.meta";
-import { meta as c185 } from "@web/media/video-hover/video-hover.meta";
-import { meta as c186 } from "@web/ai/ai-voice-wave/ai-voice-wave.meta";
-import { meta as c187 } from "@web/ai/ai-orb/ai-orb.meta";
-import { meta as c188 } from "@web/backgrounds/bg-starfield/bg-starfield.meta";
-import { meta as c189 } from "@web/widgets/widget-water/widget-water.meta";
-import { meta as c190 } from "@web/text/text-wave/text-wave.meta";
-import { meta as c191 } from "@web/widgets/widget-weather/widget-weather.meta";
-import { meta as c192 } from "@web/widgets/widget-clock/widget-clock.meta";
-import { meta as c193 } from "@web/scroll/zoom-through/zoom-through.meta";
+import { meta as c4 } from "@web/cursor/gsap-tilt-scene/gsap-tilt-scene.meta";
+import { meta as c5 } from "@web/data/activity-rings/activity-rings.meta";
+import { meta as c6 } from "@web/ai/ai-agent-steps/ai-agent-steps.meta";
+import { meta as c7 } from "@web/ai/ai-prompt-box/ai-prompt-box.meta";
+import { meta as c8 } from "@web/cards/animated-beam/animated-beam.meta";
+import { meta as c9 } from "@web/navigation/nav-breadcrumb/nav-breadcrumb.meta";
+import { meta as c10 } from "@web/text/text-gradient-animated/text-gradient-animated.meta";
+import { meta as c11 } from "@web/backgrounds/bg-gradient-mesh/bg-gradient-mesh.meta";
+import { meta as c12 } from "@web/forms/select-animated/select-animated.meta";
+import { meta as c13 } from "@web/layout/animated-tabs/animated-tabs.meta";
+import { meta as c14 } from "@web/widgets/widget-terminal/widget-terminal.meta";
+import { meta as c15 } from "@web/buttons/button-arrow-slide/button-arrow-slide.meta";
+import { meta as c16 } from "@web/backgrounds/bg-aurora/bg-aurora.meta";
+import { meta as c17 } from "@web/layout/auto-animate-list/auto-animate-list.meta";
+import { meta as c18 } from "@web/data/chart-bar-grow/chart-bar-grow.meta";
+import { meta as c19 } from "@web/scroll/gsap-batch-reveal/gsap-batch-reveal.meta";
+import { meta as c20 } from "@web/widgets/widget-battery/widget-battery.meta";
+import { meta as c21 } from "@web/media/before-after/before-after.meta";
+import { meta as c22 } from "@web/cards/bento-grid/bento-grid.meta";
+import { meta as c23 } from "@web/text/text-blur-in/text-blur-in.meta";
+import { meta as c24 } from "@web/buttons/button-border-beam/button-border-beam.meta";
+import { meta as c25 } from "@web/navigation/nav-bottom-bar/nav-bottom-bar.meta";
+import { meta as c26 } from "@web/scroll/gsap-footer-bounce/gsap-footer-bounce.meta";
+import { meta as c27 } from "@web/mockups/mockup-browser/mockup-browser.meta";
+import { meta as c28 } from "@web/cards/card-fan/card-fan.meta";
+import { meta as c29 } from "@web/text/text-circular/text-circular.meta";
+import { meta as c30 } from "@web/cursor/cursor-click-spark/cursor-click-spark.meta";
+import { meta as c31 } from "@web/ai/ai-code-stream/ai-code-stream.meta";
+import { meta as c32 } from "@web/navigation/nav-sidebar/nav-sidebar.meta";
+import { meta as c33 } from "@web/overlays/command-palette/command-palette.meta";
+import { meta as c34 } from "@web/overlays/context-menu/context-menu.meta";
+import { meta as c35 } from "@web/data/heatmap-grid/heatmap-grid.meta";
+import { meta as c36 } from "@web/buttons/copy-button/copy-button.meta";
+import { meta as c37 } from "@web/widgets/widget-timer/widget-timer.meta";
+import { meta as c38 } from "@web/loaders/preloader-counter/preloader-counter.meta";
+import { meta as c39 } from "@web/media/coverflow/coverflow.meta";
+import { meta as c40 } from "@web/cursor/cursor-crosshair/cursor-crosshair.meta";
+import { meta as c41 } from "@web/svg/svg-motion-path/svg-motion-path.meta";
+import { meta as c42 } from "@web/cursor/spotlight/spotlight.meta";
+import { meta as c43 } from "@web/transitions/transition-curtain/transition-curtain.meta";
+import { meta as c44 } from "@web/transitions/gsap-curve-wipe/gsap-curve-wipe.meta";
+import { meta as c45 } from "@web/cursor/cursor-custom/cursor-custom.meta";
+import { meta as c46 } from "@web/buttons/gsap-wiggle/gsap-wiggle.meta";
+import { meta as c47 } from "@web/media/gsap-card-stack/gsap-card-stack.meta";
+import { meta as c48 } from "@web/data/chart-donut/chart-donut.meta";
+import { meta as c49 } from "@web/buttons/button-download/button-download.meta";
+import { meta as c50 } from "@web/media/carousel-drag/carousel-drag.meta";
+import { meta as c51 } from "@web/overlays/drawer-draggable/drawer-draggable.meta";
+import { meta as c52 } from "@web/buttons/checkbox-draw/checkbox-draw.meta";
+import { meta as c53 } from "@web/layout/dynamic-island/dynamic-island.meta";
+import { meta as c54 } from "@web/forms/slider-elastic/slider-elastic.meta";
+import { meta as c55 } from "@web/buttons/button-emoji-burst/button-emoji-burst.meta";
+import { meta as c56 } from "@web/forms/error-shake/error-shake.meta";
+import { meta as c57 } from "@web/layout/expandable-card/expandable-card.meta";
+import { meta as c58 } from "@web/cards/card-expand-gallery/card-expand-gallery.meta";
+import { meta as c59 } from "@web/buttons/button-expand-icon/button-expand-icon.meta";
+import { meta as c60 } from "@web/forms/search-expand/search-expand.meta";
+import { meta as c61 } from "@web/backgrounds/bg-beams/bg-beams.meta";
+import { meta as c62 } from "@web/text/text-falling/text-falling.meta";
+import { meta as c63 } from "@web/forms/file-dropzone/file-dropzone.meta";
+import { meta as c64 } from "@web/widgets/widget-file-tree/widget-file-tree.meta";
+import { meta as c65 } from "@web/backgrounds/bg-noise/bg-noise.meta";
+import { meta as c66 } from "@web/cursor/gsap-flair-trail/gsap-flair-trail.meta";
+import { meta as c67 } from "@web/backgrounds/bg-flicker-grid/bg-flicker-grid.meta";
+import { meta as c68 } from "@web/cards/card-flip/card-flip.meta";
+import { meta as c69 } from "@web/layout/gsap-flip-filter/gsap-flip-filter.meta";
+import { meta as c70 } from "@web/layout/gsap-flip-modal/gsap-flip-modal.meta";
+import { meta as c71 } from "@web/layout/gsap-flip-layout/gsap-flip-layout.meta";
+import { meta as c72 } from "@web/forms/input-floating-label/input-floating-label.meta";
+import { meta as c73 } from "@web/cards/card-folder/card-folder.meta";
+import { meta as c74 } from "@web/cursor/cursor-eyes/cursor-eyes.meta";
+import { meta as c75 } from "@web/forms/form-stepper/form-stepper.meta";
+import { meta as c76 } from "@web/cards/card-glass/card-glass.meta";
+import { meta as c77 } from "@web/text/text-glitch/text-glitch.meta";
+import { meta as c78 } from "@web/backgrounds/bg-dot-glow/bg-dot-glow.meta";
+import { meta as c79 } from "@web/buttons/button-gooey/button-gooey.meta";
+import { meta as c80 } from "@web/backgrounds/bg-grid-dots/bg-grid-dots.meta";
+import { meta as c81 } from "@web/heroes/hero-dev-terminal/hero-dev-terminal.meta";
+import { meta as c82 } from "@web/heroes/hero-globe/hero-globe.meta";
+import { meta as c83 } from "@web/heroes/hero-editorial/hero-editorial.meta";
+import { meta as c84 } from "@web/heroes/hero-floating-images/hero-floating-images.meta";
+import { meta as c85 } from "@web/heroes/hero-mesh-cards/hero-mesh-cards.meta";
+import { meta as c86 } from "@web/heroes/hero-scroll-tilt/hero-scroll-tilt.meta";
+import { meta as c87 } from "@web/heroes/hero-spotlight-grid/hero-spotlight-grid.meta";
+import { meta as c88 } from "@web/heroes/hero-video-dialog/hero-video-dialog.meta";
+import { meta as c89 } from "@web/buttons/button-hold-confirm/button-hold-confirm.meta";
+import { meta as c90 } from "@web/cards/card-holo/card-holo.meta";
+import { meta as c91 } from "@web/scroll/horizontal-scroll-section/horizontal-scroll-section.meta";
+import { meta as c92 } from "@web/scroll/gsap-horizontal-text/gsap-horizontal-text.meta";
+import { meta as c93 } from "@web/overlays/hover-card/hover-card.meta";
+import { meta as c94 } from "@web/navigation/nav-hover-highlight/nav-hover-highlight.meta";
+import { meta as c95 } from "@web/cursor/gsap-hover-preview/gsap-hover-preview.meta";
+import { meta as c96 } from "@web/cards/card-hover-reveal/card-hover-reveal.meta";
+import { meta as c97 } from "@web/media/image-reveal-mask/image-reveal-mask.meta";
+import { meta as c98 } from "@web/cursor/cursor-image-trail/cursor-image-trail.meta";
+import { meta as c99 } from "@web/media/gsap-infinite-slider/gsap-infinite-slider.meta";
+import { meta as c100 } from "@web/backgrounds/bg-boxes/bg-boxes.meta";
+import { meta as c101 } from "@web/navigation/gsap-menu-overlay/gsap-menu-overlay.meta";
+import { meta as c102 } from "@web/mockups/mockup-iphone/mockup-iphone.meta";
+import { meta as c103 } from "@web/data/stat-counter-grid/stat-counter-grid.meta";
+import { meta as c104 } from "@web/backgrounds/bg-lamp/bg-lamp.meta";
+import { meta as c105 } from "@web/mockups/mockup-laptop/mockup-laptop.meta";
+import { meta as c106 } from "@web/text/text-roll-hover/text-roll-hover.meta";
+import { meta as c107 } from "@web/backgrounds/bg-blinds/bg-blinds.meta";
+import { meta as c108 } from "@web/buttons/like-burst/like-burst.meta";
+import { meta as c109 } from "@web/data/chart-line-draw/chart-line-draw.meta";
+import { meta as c110 } from "@web/text/text-loop-lines/text-loop-lines.meta";
+import { meta as c111 } from "@web/scroll/gsap-lines-scroll/gsap-lines-scroll.meta";
+import { meta as c112 } from "@web/cursor/cursor-blob/cursor-blob.meta";
+import { meta as c113 } from "@web/backgrounds/bg-shader/bg-shader.meta";
+import { meta as c114 } from "@web/backgrounds/bg-waves/bg-waves.meta";
+import { meta as c115 } from "@web/widgets/widget-stock/widget-stock.meta";
+import { meta as c116 } from "@web/mockups/mockup-window/mockup-window.meta";
+import { meta as c117 } from "@web/buttons/button-magnetic/button-magnetic.meta";
+import { meta as c118 } from "@web/navigation/dock-magnify/dock-magnify.meta";
+import { meta as c119 } from "@web/text/text-highlighter/text-highlighter.meta";
+import { meta as c120 } from "@web/media/marquee/marquee.meta";
+import { meta as c121 } from "@web/media/masonry-reveal/masonry-reveal.meta";
+import { meta as c122 } from "@web/backgrounds/bg-meteors/bg-meteors.meta";
+import { meta as c123 } from "@web/widgets/widget-calendar/widget-calendar.meta";
+import { meta as c124 } from "@web/buttons/icon-morph/icon-morph.meta";
+import { meta as c125 } from "@web/navigation/nav-mega-menu/nav-mega-menu.meta";
+import { meta as c126 } from "@web/navigation/menu-toggle-morph/menu-toggle-morph.meta";
+import { meta as c127 } from "@web/overlays/popover-morph/popover-morph.meta";
+import { meta as c128 } from "@web/loaders/loader-morph/loader-morph.meta";
+import { meta as c129 } from "@web/text/text-morph/text-morph.meta";
+import { meta as c130 } from "@web/svg/gsap-morph-blob/gsap-morph-blob.meta";
+import { meta as c131 } from "@web/svg/gsap-path-waypoints/gsap-path-waypoints.meta";
+import { meta as c132 } from "@web/foundations/motion-provider/motion-provider.meta";
+import { meta as c133 } from "@web/overlays/dialog-animated/dialog-animated.meta";
+import { meta as c134 } from "@web/cards/card-neon/card-neon.meta";
+import { meta as c135 } from "@web/buttons/button-neumorph/button-neumorph.meta";
+import { meta as c136 } from "@web/widgets/widget-notifications/widget-notifications.meta";
+import { meta as c137 } from "@web/widgets/widget-music/widget-music.meta";
+import { meta as c138 } from "@web/text/number-ticker/number-ticker.meta";
+import { meta as c139 } from "@web/scroll/gsap-observer-slides/gsap-observer-slides.meta";
+import { meta as c140 } from "@web/text/text-odometer/text-odometer.meta";
+import { meta as c141 } from "@web/data/orbit-icons/orbit-icons.meta";
+import { meta as c142 } from "@web/forms/otp-input/otp-input.meta";
+import { meta as c143 } from "@web/scroll/parallax-layer/parallax-layer.meta";
+import { meta as c144 } from "@web/backgrounds/bg-particles/bg-particles.meta";
+import { meta as c145 } from "@web/text/gsap-particle-text/gsap-particle-text.meta";
+import { meta as c146 } from "@web/forms/password-strength/password-strength.meta";
+import { meta as c147 } from "@web/buttons/gsap-confetti-cannon/gsap-confetti-cannon.meta";
+import { meta as c148 } from "@web/scroll/pinned-story/pinned-story.meta";
+import { meta as c149 } from "@web/cards/card-pixel-reveal/card-pixel-reveal.meta";
+import { meta as c150 } from "@web/buttons/button-press/button-press.meta";
+import { meta as c151 } from "@web/cards/card-profile/card-profile.meta";
+import { meta as c152 } from "@web/loaders/progress-bar-animated/progress-bar-animated.meta";
+import { meta as c153 } from "@web/loaders/progress-ring/progress-ring.meta";
+import { meta as c154 } from "@web/ai/ai-suggestions/ai-suggestions.meta";
+import { meta as c155 } from "@web/cursor/gsap-proximity-grid/gsap-proximity-grid.meta";
+import { meta as c156 } from "@web/buttons/button-pulse/button-pulse.meta";
+import { meta as c157 } from "@web/transitions/transition-slide-stack/transition-slide-stack.meta";
+import { meta as c158 } from "@web/navigation/gsap-radial-menu/gsap-radial-menu.meta";
+import { meta as c159 } from "@web/buttons/button-rainbow/button-rainbow.meta";
+import { meta as c160 } from "@web/buttons/rating-stars/rating-stars.meta";
+import { meta as c161 } from "@web/layout/reorder-list/reorder-list.meta";
+import { meta as c162 } from "@web/backgrounds/bg-retro-grid/bg-retro-grid.meta";
+import { meta as c163 } from "@web/buttons/button-ripple/button-ripple.meta";
+import { meta as c164 } from "@web/backgrounds/bg-ripple-rings/bg-ripple-rings.meta";
+import { meta as c165 } from "@web/layout/gsap-stagger-grid/gsap-stagger-grid.meta";
+import { meta as c166 } from "@web/backgrounds/bg-light-rays/bg-light-rays.meta";
+import { meta as c167 } from "@web/text/text-rotate/text-rotate.meta";
+import { meta as c168 } from "@web/text/text-scramble/text-scramble.meta";
+import { meta as c169 } from "@web/text/text-scroll-highlight/text-scroll-highlight.meta";
+import { meta as c170 } from "@web/scroll/gsap-image-sequence/gsap-image-sequence.meta";
+import { meta as c171 } from "@web/scroll/gsap-mask-expand/gsap-mask-expand.meta";
+import { meta as c172 } from "@web/scroll/scroll-progress/scroll-progress.meta";
+import { meta as c173 } from "@web/scroll/scroll-reveal/scroll-reveal.meta";
+import { meta as c174 } from "@web/scroll/gsap-scroll-spy/gsap-scroll-spy.meta";
+import { meta as c175 } from "@web/text/text-velocity-marquee/text-velocity-marquee.meta";
+import { meta as c176 } from "@web/scroll/gsap-bento-scrub/gsap-bento-scrub.meta";
+import { meta as c177 } from "@web/buttons/button-send/button-send.meta";
+import { meta as c178 } from "@web/svg/svg-morph-shapes/svg-morph-shapes.meta";
+import { meta as c179 } from "@web/transitions/vt-shared-element/vt-shared-element.meta";
+import { meta as c180 } from "@web/media/lightbox/lightbox.meta";
+import { meta as c181 } from "@web/buttons/button-shimmer/button-shimmer.meta";
+import { meta as c182 } from "@web/text/text-shimmer/text-shimmer.meta";
+import { meta as c183 } from "@web/cards/card-shine/card-shine.meta";
+import { meta as c184 } from "@web/loaders/skeleton-shimmer/skeleton-shimmer.meta";
+import { meta as c185 } from "@web/navigation/navbar-hide-on-scroll/navbar-hide-on-scroll.meta";
+import { meta as c186 } from "@web/layout/accordion-smooth/accordion-smooth.meta";
+import { meta as c187 } from "@web/foundations/smooth-scroll/smooth-scroll.meta";
+import { meta as c188 } from "@web/cards/card-social-post/card-social-post.meta";
+import { meta as c189 } from "@web/text/text-sparkles/text-sparkles.meta";
+import { meta as c190 } from "@web/navigation/nav-speed-dial/nav-speed-dial.meta";
+import { meta as c191 } from "@web/loaders/spinner-set/spinner-set.meta";
+import { meta as c192 } from "@web/text/text-split-reveal/text-split-reveal.meta";
+import { meta as c193 } from "@web/text/text-split-flap/text-split-flap.meta";
+import { meta as c194 } from "@web/cards/card-spotlight-border/card-spotlight-border.meta";
+import { meta as c195 } from "@web/buttons/toggle-switch/toggle-switch.meta";
+import { meta as c196 } from "@web/overlays/tooltip-animated/tooltip-animated.meta";
+import { meta as c197 } from "@web/buttons/button-stateful/button-stateful.meta";
+import { meta as c198 } from "@web/scroll/sticky-stack-cards/sticky-stack-cards.meta";
+import { meta as c199 } from "@web/ai/ai-chat-stream/ai-chat-stream.meta";
+import { meta as c200 } from "@web/text/text-stroke-draw/text-stroke-draw.meta";
+import { meta as c201 } from "@web/buttons/button-subscribe/button-subscribe.meta";
+import { meta as c202 } from "@web/loaders/success-check/success-check.meta";
+import { meta as c203 } from "@web/svg/svg-path-draw/svg-path-draw.meta";
+import { meta as c204 } from "@web/cards/card-swipe-deck/card-swipe-deck.meta";
+import { meta as c205 } from "@web/forms/tag-input/tag-input.meta";
+import { meta as c206 } from "@web/buttons/theme-toggle/theme-toggle.meta";
+import { meta as c207 } from "@web/ai/ai-thinking/ai-thinking.meta";
+import { meta as c208 } from "@web/cards/gsap-throw-board/gsap-throw-board.meta";
+import { meta as c209 } from "@web/overlays/toast-stack/toast-stack.meta";
+import { meta as c210 } from "@web/backgrounds/bg-topography/bg-topography.meta";
+import { meta as c211 } from "@web/text/text-typewriter/text-typewriter.meta";
+import { meta as c212 } from "@web/text/text-variable-proximity/text-variable-proximity.meta";
+import { meta as c213 } from "@web/scroll/gsap-velocity-skew/gsap-velocity-skew.meta";
+import { meta as c214 } from "@web/media/video-hover/video-hover.meta";
+import { meta as c215 } from "@web/ai/ai-voice-wave/ai-voice-wave.meta";
+import { meta as c216 } from "@web/ai/ai-orb/ai-orb.meta";
+import { meta as c217 } from "@web/backgrounds/bg-starfield/bg-starfield.meta";
+import { meta as c218 } from "@web/widgets/widget-water/widget-water.meta";
+import { meta as c219 } from "@web/text/text-wave/text-wave.meta";
+import { meta as c220 } from "@web/widgets/widget-weather/widget-weather.meta";
+import { meta as c221 } from "@web/widgets/widget-clock/widget-clock.meta";
+import { meta as c222 } from "@web/scroll/zoom-through/zoom-through.meta";
 import { meta as b0 } from "../blocks/ai/ai-chat-app/ai-chat-app.meta";
 import { meta as b1 } from "../blocks/landing/hero-split-text/hero-split-text.meta";
 import { meta as b2 } from "../blocks/landing/cta-spotlight/cta-spotlight.meta";
@@ -228,7 +257,7 @@ import { meta as f9 } from "../flows/commerce/flow-checkout/flow-checkout.meta";
 import { meta as f10 } from "../flows/wellness/flow-breathe/flow-breathe.meta";
 import { meta as f11 } from "../flows/settings/flow-profile-settings/flow-profile-settings.meta";
 
-export const components: ComponentMeta[] = [c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35, c36, c37, c38, c39, c40, c41, c42, c43, c44, c45, c46, c47, c48, c49, c50, c51, c52, c53, c54, c55, c56, c57, c58, c59, c60, c61, c62, c63, c64, c65, c66, c67, c68, c69, c70, c71, c72, c73, c74, c75, c76, c77, c78, c79, c80, c81, c82, c83, c84, c85, c86, c87, c88, c89, c90, c91, c92, c93, c94, c95, c96, c97, c98, c99, c100, c101, c102, c103, c104, c105, c106, c107, c108, c109, c110, c111, c112, c113, c114, c115, c116, c117, c118, c119, c120, c121, c122, c123, c124, c125, c126, c127, c128, c129, c130, c131, c132, c133, c134, c135, c136, c137, c138, c139, c140, c141, c142, c143, c144, c145, c146, c147, c148, c149, c150, c151, c152, c153, c154, c155, c156, c157, c158, c159, c160, c161, c162, c163, c164, c165, c166, c167, c168, c169, c170, c171, c172, c173, c174, c175, c176, c177, c178, c179, c180, c181, c182, c183, c184, c185, c186, c187, c188, c189, c190, c191, c192, c193];
+export const components: ComponentMeta[] = [c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35, c36, c37, c38, c39, c40, c41, c42, c43, c44, c45, c46, c47, c48, c49, c50, c51, c52, c53, c54, c55, c56, c57, c58, c59, c60, c61, c62, c63, c64, c65, c66, c67, c68, c69, c70, c71, c72, c73, c74, c75, c76, c77, c78, c79, c80, c81, c82, c83, c84, c85, c86, c87, c88, c89, c90, c91, c92, c93, c94, c95, c96, c97, c98, c99, c100, c101, c102, c103, c104, c105, c106, c107, c108, c109, c110, c111, c112, c113, c114, c115, c116, c117, c118, c119, c120, c121, c122, c123, c124, c125, c126, c127, c128, c129, c130, c131, c132, c133, c134, c135, c136, c137, c138, c139, c140, c141, c142, c143, c144, c145, c146, c147, c148, c149, c150, c151, c152, c153, c154, c155, c156, c157, c158, c159, c160, c161, c162, c163, c164, c165, c166, c167, c168, c169, c170, c171, c172, c173, c174, c175, c176, c177, c178, c179, c180, c181, c182, c183, c184, c185, c186, c187, c188, c189, c190, c191, c192, c193, c194, c195, c196, c197, c198, c199, c200, c201, c202, c203, c204, c205, c206, c207, c208, c209, c210, c211, c212, c213, c214, c215, c216, c217, c218, c219, c220, c221, c222];
 export const blocks: ComponentMeta[] = [b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17, b18, b19];
 export const flows: ComponentMeta[] = [f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11];
 
@@ -239,6 +268,7 @@ export const demoLoaders: Record<string, () => Promise<{ default: ComponentType 
   "text-flip-words": () => import("@web/text/text-flip-words/text-flip-words.demo"),
   "card-3d-layers": () => import("@web/cards/card-3d-layers/card-3d-layers.demo"),
   "tilt-card": () => import("@web/cursor/tilt-card/tilt-card.demo"),
+  "gsap-tilt-scene": () => import("@web/cursor/gsap-tilt-scene/gsap-tilt-scene.demo"),
   "activity-rings": () => import("@web/data/activity-rings/activity-rings.demo"),
   "ai-agent-steps": () => import("@web/ai/ai-agent-steps/ai-agent-steps.demo"),
   "ai-prompt-box": () => import("@web/ai/ai-prompt-box/ai-prompt-box.demo"),
@@ -253,12 +283,14 @@ export const demoLoaders: Record<string, () => Promise<{ default: ComponentType 
   "bg-aurora": () => import("@web/backgrounds/bg-aurora/bg-aurora.demo"),
   "auto-animate-list": () => import("@web/layout/auto-animate-list/auto-animate-list.demo"),
   "chart-bar-grow": () => import("@web/data/chart-bar-grow/chart-bar-grow.demo"),
+  "gsap-batch-reveal": () => import("@web/scroll/gsap-batch-reveal/gsap-batch-reveal.demo"),
   "widget-battery": () => import("@web/widgets/widget-battery/widget-battery.demo"),
   "before-after": () => import("@web/media/before-after/before-after.demo"),
   "bento-grid": () => import("@web/cards/bento-grid/bento-grid.demo"),
   "text-blur-in": () => import("@web/text/text-blur-in/text-blur-in.demo"),
   "button-border-beam": () => import("@web/buttons/button-border-beam/button-border-beam.demo"),
   "nav-bottom-bar": () => import("@web/navigation/nav-bottom-bar/nav-bottom-bar.demo"),
+  "gsap-footer-bounce": () => import("@web/scroll/gsap-footer-bounce/gsap-footer-bounce.demo"),
   "mockup-browser": () => import("@web/mockups/mockup-browser/mockup-browser.demo"),
   "card-fan": () => import("@web/cards/card-fan/card-fan.demo"),
   "text-circular": () => import("@web/text/text-circular/text-circular.demo"),
@@ -276,7 +308,10 @@ export const demoLoaders: Record<string, () => Promise<{ default: ComponentType 
   "svg-motion-path": () => import("@web/svg/svg-motion-path/svg-motion-path.demo"),
   "spotlight": () => import("@web/cursor/spotlight/spotlight.demo"),
   "transition-curtain": () => import("@web/transitions/transition-curtain/transition-curtain.demo"),
+  "gsap-curve-wipe": () => import("@web/transitions/gsap-curve-wipe/gsap-curve-wipe.demo"),
   "cursor-custom": () => import("@web/cursor/cursor-custom/cursor-custom.demo"),
+  "gsap-wiggle": () => import("@web/buttons/gsap-wiggle/gsap-wiggle.demo"),
+  "gsap-card-stack": () => import("@web/media/gsap-card-stack/gsap-card-stack.demo"),
   "chart-donut": () => import("@web/data/chart-donut/chart-donut.demo"),
   "button-download": () => import("@web/buttons/button-download/button-download.demo"),
   "carousel-drag": () => import("@web/media/carousel-drag/carousel-drag.demo"),
@@ -295,8 +330,12 @@ export const demoLoaders: Record<string, () => Promise<{ default: ComponentType 
   "file-dropzone": () => import("@web/forms/file-dropzone/file-dropzone.demo"),
   "widget-file-tree": () => import("@web/widgets/widget-file-tree/widget-file-tree.demo"),
   "bg-noise": () => import("@web/backgrounds/bg-noise/bg-noise.demo"),
+  "gsap-flair-trail": () => import("@web/cursor/gsap-flair-trail/gsap-flair-trail.demo"),
   "bg-flicker-grid": () => import("@web/backgrounds/bg-flicker-grid/bg-flicker-grid.demo"),
   "card-flip": () => import("@web/cards/card-flip/card-flip.demo"),
+  "gsap-flip-filter": () => import("@web/layout/gsap-flip-filter/gsap-flip-filter.demo"),
+  "gsap-flip-modal": () => import("@web/layout/gsap-flip-modal/gsap-flip-modal.demo"),
+  "gsap-flip-layout": () => import("@web/layout/gsap-flip-layout/gsap-flip-layout.demo"),
   "input-floating-label": () => import("@web/forms/input-floating-label/input-floating-label.demo"),
   "card-folder": () => import("@web/cards/card-folder/card-folder.demo"),
   "cursor-eyes": () => import("@web/cursor/cursor-eyes/cursor-eyes.demo"),
@@ -317,12 +356,16 @@ export const demoLoaders: Record<string, () => Promise<{ default: ComponentType 
   "button-hold-confirm": () => import("@web/buttons/button-hold-confirm/button-hold-confirm.demo"),
   "card-holo": () => import("@web/cards/card-holo/card-holo.demo"),
   "horizontal-scroll-section": () => import("@web/scroll/horizontal-scroll-section/horizontal-scroll-section.demo"),
+  "gsap-horizontal-text": () => import("@web/scroll/gsap-horizontal-text/gsap-horizontal-text.demo"),
   "hover-card": () => import("@web/overlays/hover-card/hover-card.demo"),
   "nav-hover-highlight": () => import("@web/navigation/nav-hover-highlight/nav-hover-highlight.demo"),
+  "gsap-hover-preview": () => import("@web/cursor/gsap-hover-preview/gsap-hover-preview.demo"),
   "card-hover-reveal": () => import("@web/cards/card-hover-reveal/card-hover-reveal.demo"),
   "image-reveal-mask": () => import("@web/media/image-reveal-mask/image-reveal-mask.demo"),
   "cursor-image-trail": () => import("@web/cursor/cursor-image-trail/cursor-image-trail.demo"),
+  "gsap-infinite-slider": () => import("@web/media/gsap-infinite-slider/gsap-infinite-slider.demo"),
   "bg-boxes": () => import("@web/backgrounds/bg-boxes/bg-boxes.demo"),
+  "gsap-menu-overlay": () => import("@web/navigation/gsap-menu-overlay/gsap-menu-overlay.demo"),
   "mockup-iphone": () => import("@web/mockups/mockup-iphone/mockup-iphone.demo"),
   "stat-counter-grid": () => import("@web/data/stat-counter-grid/stat-counter-grid.demo"),
   "bg-lamp": () => import("@web/backgrounds/bg-lamp/bg-lamp.demo"),
@@ -332,6 +375,7 @@ export const demoLoaders: Record<string, () => Promise<{ default: ComponentType 
   "like-burst": () => import("@web/buttons/like-burst/like-burst.demo"),
   "chart-line-draw": () => import("@web/data/chart-line-draw/chart-line-draw.demo"),
   "text-loop-lines": () => import("@web/text/text-loop-lines/text-loop-lines.demo"),
+  "gsap-lines-scroll": () => import("@web/scroll/gsap-lines-scroll/gsap-lines-scroll.demo"),
   "cursor-blob": () => import("@web/cursor/cursor-blob/cursor-blob.demo"),
   "bg-shader": () => import("@web/backgrounds/bg-shader/bg-shader.demo"),
   "bg-waves": () => import("@web/backgrounds/bg-waves/bg-waves.demo"),
@@ -350,6 +394,8 @@ export const demoLoaders: Record<string, () => Promise<{ default: ComponentType 
   "popover-morph": () => import("@web/overlays/popover-morph/popover-morph.demo"),
   "loader-morph": () => import("@web/loaders/loader-morph/loader-morph.demo"),
   "text-morph": () => import("@web/text/text-morph/text-morph.demo"),
+  "gsap-morph-blob": () => import("@web/svg/gsap-morph-blob/gsap-morph-blob.demo"),
+  "gsap-path-waypoints": () => import("@web/svg/gsap-path-waypoints/gsap-path-waypoints.demo"),
   "motion-provider": () => import("@web/foundations/motion-provider/motion-provider.demo"),
   "dialog-animated": () => import("@web/overlays/dialog-animated/dialog-animated.demo"),
   "card-neon": () => import("@web/cards/card-neon/card-neon.demo"),
@@ -357,12 +403,15 @@ export const demoLoaders: Record<string, () => Promise<{ default: ComponentType 
   "widget-notifications": () => import("@web/widgets/widget-notifications/widget-notifications.demo"),
   "widget-music": () => import("@web/widgets/widget-music/widget-music.demo"),
   "number-ticker": () => import("@web/text/number-ticker/number-ticker.demo"),
+  "gsap-observer-slides": () => import("@web/scroll/gsap-observer-slides/gsap-observer-slides.demo"),
   "text-odometer": () => import("@web/text/text-odometer/text-odometer.demo"),
   "orbit-icons": () => import("@web/data/orbit-icons/orbit-icons.demo"),
   "otp-input": () => import("@web/forms/otp-input/otp-input.demo"),
   "parallax-layer": () => import("@web/scroll/parallax-layer/parallax-layer.demo"),
   "bg-particles": () => import("@web/backgrounds/bg-particles/bg-particles.demo"),
+  "gsap-particle-text": () => import("@web/text/gsap-particle-text/gsap-particle-text.demo"),
   "password-strength": () => import("@web/forms/password-strength/password-strength.demo"),
+  "gsap-confetti-cannon": () => import("@web/buttons/gsap-confetti-cannon/gsap-confetti-cannon.demo"),
   "pinned-story": () => import("@web/scroll/pinned-story/pinned-story.demo"),
   "card-pixel-reveal": () => import("@web/cards/card-pixel-reveal/card-pixel-reveal.demo"),
   "button-press": () => import("@web/buttons/button-press/button-press.demo"),
@@ -370,21 +419,28 @@ export const demoLoaders: Record<string, () => Promise<{ default: ComponentType 
   "progress-bar-animated": () => import("@web/loaders/progress-bar-animated/progress-bar-animated.demo"),
   "progress-ring": () => import("@web/loaders/progress-ring/progress-ring.demo"),
   "ai-suggestions": () => import("@web/ai/ai-suggestions/ai-suggestions.demo"),
+  "gsap-proximity-grid": () => import("@web/cursor/gsap-proximity-grid/gsap-proximity-grid.demo"),
   "button-pulse": () => import("@web/buttons/button-pulse/button-pulse.demo"),
   "transition-slide-stack": () => import("@web/transitions/transition-slide-stack/transition-slide-stack.demo"),
+  "gsap-radial-menu": () => import("@web/navigation/gsap-radial-menu/gsap-radial-menu.demo"),
   "button-rainbow": () => import("@web/buttons/button-rainbow/button-rainbow.demo"),
   "rating-stars": () => import("@web/buttons/rating-stars/rating-stars.demo"),
   "reorder-list": () => import("@web/layout/reorder-list/reorder-list.demo"),
   "bg-retro-grid": () => import("@web/backgrounds/bg-retro-grid/bg-retro-grid.demo"),
   "button-ripple": () => import("@web/buttons/button-ripple/button-ripple.demo"),
   "bg-ripple-rings": () => import("@web/backgrounds/bg-ripple-rings/bg-ripple-rings.demo"),
+  "gsap-stagger-grid": () => import("@web/layout/gsap-stagger-grid/gsap-stagger-grid.demo"),
   "bg-light-rays": () => import("@web/backgrounds/bg-light-rays/bg-light-rays.demo"),
   "text-rotate": () => import("@web/text/text-rotate/text-rotate.demo"),
   "text-scramble": () => import("@web/text/text-scramble/text-scramble.demo"),
   "text-scroll-highlight": () => import("@web/text/text-scroll-highlight/text-scroll-highlight.demo"),
+  "gsap-image-sequence": () => import("@web/scroll/gsap-image-sequence/gsap-image-sequence.demo"),
+  "gsap-mask-expand": () => import("@web/scroll/gsap-mask-expand/gsap-mask-expand.demo"),
   "scroll-progress": () => import("@web/scroll/scroll-progress/scroll-progress.demo"),
   "scroll-reveal": () => import("@web/scroll/scroll-reveal/scroll-reveal.demo"),
+  "gsap-scroll-spy": () => import("@web/scroll/gsap-scroll-spy/gsap-scroll-spy.demo"),
   "text-velocity-marquee": () => import("@web/text/text-velocity-marquee/text-velocity-marquee.demo"),
+  "gsap-bento-scrub": () => import("@web/scroll/gsap-bento-scrub/gsap-bento-scrub.demo"),
   "button-send": () => import("@web/buttons/button-send/button-send.demo"),
   "svg-morph-shapes": () => import("@web/svg/svg-morph-shapes/svg-morph-shapes.demo"),
   "vt-shared-element": () => import("@web/transitions/vt-shared-element/vt-shared-element.demo"),
@@ -416,10 +472,12 @@ export const demoLoaders: Record<string, () => Promise<{ default: ComponentType 
   "tag-input": () => import("@web/forms/tag-input/tag-input.demo"),
   "theme-toggle": () => import("@web/buttons/theme-toggle/theme-toggle.demo"),
   "ai-thinking": () => import("@web/ai/ai-thinking/ai-thinking.demo"),
+  "gsap-throw-board": () => import("@web/cards/gsap-throw-board/gsap-throw-board.demo"),
   "toast-stack": () => import("@web/overlays/toast-stack/toast-stack.demo"),
   "bg-topography": () => import("@web/backgrounds/bg-topography/bg-topography.demo"),
   "text-typewriter": () => import("@web/text/text-typewriter/text-typewriter.demo"),
   "text-variable-proximity": () => import("@web/text/text-variable-proximity/text-variable-proximity.demo"),
+  "gsap-velocity-skew": () => import("@web/scroll/gsap-velocity-skew/gsap-velocity-skew.demo"),
   "video-hover": () => import("@web/media/video-hover/video-hover.demo"),
   "ai-voice-wave": () => import("@web/ai/ai-voice-wave/ai-voice-wave.demo"),
   "ai-orb": () => import("@web/ai/ai-orb/ai-orb.demo"),

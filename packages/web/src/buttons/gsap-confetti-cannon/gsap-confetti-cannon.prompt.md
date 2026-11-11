@@ -1,0 +1,1 @@
+For each piece append an absolutely positioned <i> at the button center, then gsap.to(el, { physics2D: { velocity random(320,640), angle angle ± spread/2, gravity 900, friction .03 }, duration 2.2 }) plus random rotationX/rotationY/rotation over 2.2s and fade from 1.6s; remove on complete. Elastic squash on the button.

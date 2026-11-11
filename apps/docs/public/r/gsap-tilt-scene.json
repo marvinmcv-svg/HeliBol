@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-tilt-scene",
+  "type": "registry:component",
+  "title": "3D Tilt Scene",
+  "description": "A whole composition rotates toward the cursor in 3D; layers marked with data-depth float at different translateZ so they separate as it tilts.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-tilt-scene.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-tilt-scene.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport gsap from \"gsap\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(useGSAP);\n\nexport interface GsapTiltSceneProps {\n  children: ReactNode;\n  /** Max rotation in degrees. */\n  max?: number;\n  className?: string;\n}\n\n/**\n * The whole scene rotates in 3D toward the cursor (quickTo on rotationX/Y); children marked\n * `data-depth=\"1..5\"` sit at translateZ steps so the layers separate as it tilts.\n */\nexport function GsapTiltScene({ children, max = 14, className }: GsapTiltSceneProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const stage = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n  const q = useRef<{ rx: gsap.QuickToFunc; ry: gsap.QuickToFunc } | null>(null);\n\n  const { contextSafe } = useGSAP(\n    () => {\n      stage.current!.querySelectorAll<HTMLElement>(\"[data-depth]\").forEach((el) => gsap.set(el, { z: Number(el.dataset.depth) * 30 }));\n      if (reduced) return;\n      q.current = {\n        rx: gsap.quickTo(stage.current, \"rotationX\", { duration: 0.8, ease: \"power3\" }),\n        ry: gsap.quickTo(stage.current, \"rotationY\", { duration: 0.8, ease: \"power3\" }),\n      };\n    },\n    { scope: root, dependencies: [reduced] },\n  );\n\n  const move = contextSafe((e: React.PointerEvent) => {\n    if (!q.current || e.pointerType === \"touch\") return;\n    const b = root.current!.getBoundingClientRect();\n    const px = (e.clientX - b.left) / b.width - 0.5;\n    const py = (e.clientY - b.top) / b.height - 0.5;\n    q.current.ry(px * max * 2);\n    q.current.rx(-py * max * 2);\n  });\n\n  const leave = contextSafe(() => {\n    q.current?.rx(0);\n    q.current?.ry(0);\n  });\n\n  return (\n    <div ref={root} onPointerMove={move} onPointerLeave={leave} className={cn(\"[perspective:1100px]\", className)}>\n      <div ref={stage} className=\"relative h-full w-full [transform-style:preserve-3d]\">\n        {children}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "3d",
+      "tilt",
+      "parallax",
+      "depth",
+      "card"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio",
+      "ecommerce"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Build tl = timeline({ paused }) .fromTo(panels, { scaleY 0 }, { scaleY 1, origin top, .8s expo.inOut, stagger .08 }) .from(chars (SplitText chars with mask), { yPercent 110, .7s expo.out, stagger .012 }, '−=.35') .from(footer, { autoAlpha 0, y 12 }); open → tl.timeScale(1).play(), close → tl.timeScale(1.8).reverse().

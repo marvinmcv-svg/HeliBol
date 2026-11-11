@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-wiggle",
+  "type": "registry:component",
+  "title": "CustomWiggle Attention",
+  "description": "Attention micro-interactions with CustomWiggle: a bell that rings, an input error shake, a jelly squash and a nudge — each always returns exactly to rest.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-wiggle.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-wiggle.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport gsap from \"gsap\";\nimport { CustomEase } from \"gsap/CustomEase\";\nimport { CustomWiggle } from \"gsap/CustomWiggle\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(CustomEase, CustomWiggle, useGSAP);\n\nexport type WiggleKind = \"ring\" | \"shake\" | \"jelly\" | \"nudge\";\n\nexport interface GsapWiggleProps {\n  children: ReactNode;\n  kind?: WiggleKind;\n  /** Wiggle on hover as well as on click/`trigger` changes. */\n  onHover?: boolean;\n  /** Change this value to fire the wiggle programmatically (e.g. on validation error). */\n  trigger?: unknown;\n  className?: string;\n}\n\nconst KINDS: Record<WiggleKind, (el: Element) => gsap.core.Tween | gsap.core.Timeline> = {\n  // bell: rotation pivots from the top, decaying \"easeOut\" wiggle\n  ring: (el) => gsap.fromTo(el, { rotation: 0 }, { rotation: 22, transformOrigin: \"50% 8%\", duration: 1, ease: CustomWiggle.create(\"kRing\", { wiggles: 7, type: \"easeOut\" }) }),\n  // error shake: x only, uniform intensity\n  shake: (el) => gsap.fromTo(el, { x: 0 }, { x: 10, duration: 0.5, ease: CustomWiggle.create(\"kShake\", { wiggles: 6, type: \"uniform\" }) }),\n  // jelly: squash & stretch on two axes with offset timing\n  jelly: (el) =>\n    gsap\n      .timeline()\n      .fromTo(el, { scaleX: 1 }, { scaleX: 1.25, duration: 0.8, ease: CustomWiggle.create(\"kJellyX\", { wiggles: 4, type: \"easeOut\" }) }, 0)\n      .fromTo(el, { scaleY: 1 }, { scaleY: 0.8, duration: 0.8, ease: CustomWiggle.create(\"kJellyY\", { wiggles: 4, type: \"easeOut\" }) }, 0.04),\n  // nudge: small anticipation-y \"look at me\"\n  nudge: (el) => gsap.fromTo(el, { y: 0 }, { y: -8, duration: 0.7, ease: CustomWiggle.create(\"kNudge\", { wiggles: 3, type: \"anticipate\" }) }),\n};\n\n/**\n * Attention wiggles powered by CustomWiggle: a bell that rings, an error shake, a jelly\n * squash and a nudge — each one tween whose ease *is* the oscillation, so it always\n * returns exactly to rest. Fires on click, hover, or when `trigger` changes.\n */\nexport function GsapWiggle({ children, kind = \"ring\", onHover = false, trigger, className }: GsapWiggleProps) {\n  const ref = useRef<HTMLSpanElement>(null);\n  const reduced = useReducedMotion();\n  const first = useRef(true);\n\n  const { contextSafe } = useGSAP(\n    () => {\n      if (first.current) {\n        first.current = false;\n        return;\n      }\n      play();\n    },\n    { scope: ref, dependencies: [trigger] },\n  );\n\n  const play = contextSafe(() => {\n    if (!ref.current) return;\n    if (reduced) {\n      gsap.fromTo(ref.current, { opacity: 0.4 }, { opacity: 1, duration: 0.3 });\n      return;\n    }\n    gsap.killTweensOf(ref.current);\n    KINDS[kind](ref.current);\n  });\n\n  return (\n    <span ref={ref} onClick={play} onPointerEnter={onHover ? play : undefined} className={cn(\"inline-block will-change-transform\", className)}>\n      {children}\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "wiggle",
+      "shake",
+      "error",
+      "notification",
+      "micro-interaction"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "auth",
+      "landing"
+    ]
+  }
+}

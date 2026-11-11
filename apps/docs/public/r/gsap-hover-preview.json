@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-hover-preview",
+  "type": "registry:component",
+  "title": "Hover Image Preview List",
+  "description": "Agency project index: hovering a row reveals its image in a card that trails the cursor, tilts with your speed and clip-reveals between projects.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-hover-preview.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-hover-preview.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport gsap from \"gsap\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(useGSAP);\n\nexport interface HoverPreviewItem {\n  title: string;\n  meta: string;\n  image: string;\n  href?: string;\n}\n\nexport interface GsapHoverPreviewProps {\n  items: HoverPreviewItem[];\n  className?: string;\n}\n\n/**\n * Agency-style project index: hovering a row reveals its image in a card that trails the\n * cursor (gsap.quickTo for x/y, velocity-based rotation) and clip-reveals between images.\n */\nexport function GsapHoverPreview({ items, className }: GsapHoverPreviewProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const card = useRef<HTMLDivElement>(null);\n  const [active, setActive] = useState(-1);\n  const reduced = useReducedMotion();\n  const movers = useRef<{ x: gsap.QuickToFunc; y: gsap.QuickToFunc; r: gsap.QuickToFunc } | null>(null);\n  const lastX = useRef(0);\n\n  const { contextSafe } = useGSAP(\n    () => {\n      gsap.set(card.current, { xPercent: -50, yPercent: -50, scale: 0, autoAlpha: 0 });\n      movers.current = {\n        x: gsap.quickTo(card.current, \"x\", { duration: 0.5, ease: \"power3\" }),\n        y: gsap.quickTo(card.current, \"y\", { duration: 0.5, ease: \"power3\" }),\n        r: gsap.quickTo(card.current, \"rotation\", { duration: 0.8, ease: \"power3\" }),\n      };\n    },\n    { scope: root },\n  );\n\n  const onMove = contextSafe((e: React.PointerEvent) => {\n    if (reduced || !movers.current) return;\n    const b = root.current!.getBoundingClientRect();\n    const x = e.clientX - b.left;\n    movers.current.x(x);\n    movers.current.y(e.clientY - b.top);\n    movers.current.r(gsap.utils.clamp(-12, 12, (x - lastX.current) * 0.6));\n    lastX.current = x;\n  });\n\n  const enter = contextSafe((i: number) => {\n    setActive(i);\n    if (reduced) return;\n    gsap.to(card.current, { scale: 1, autoAlpha: 1, duration: 0.4, ease: \"back.out(1.6)\" });\n    const imgs = card.current!.querySelectorAll<HTMLElement>(\"[data-img]\");\n    gsap.fromTo(imgs[i], { clipPath: \"inset(100% 0 0 0)\", scale: 1.3 }, { clipPath: \"inset(0% 0 0 0)\", scale: 1, duration: 0.6, ease: \"expo.out\", overwrite: true });\n  });\n\n  const leave = contextSafe(() => {\n    setActive(-1);\n    gsap.to(card.current, { scale: 0, autoAlpha: 0, duration: 0.3, ease: \"power2.in\" });\n  });\n\n  return (\n    <div ref={root} onPointerMove={onMove} onPointerLeave={leave} className={cn(\"relative\", className)}>\n      <ul className=\"divide-y divide-border border-y border-border\">\n        {items.map((it, i) => (\n          <li key={it.title}>\n            <a\n              href={it.href ?? \"#\"}\n              onClick={(e) => !it.href && e.preventDefault()}\n              onPointerEnter={() => enter(i)}\n              onFocus={() => enter(i)}\n              onBlur={leave}\n              className={cn(\"flex items-baseline justify-between gap-4 py-5 transition-[opacity,padding] duration-300\", active !== -1 && active !== i && \"opacity-30\", active === i && \"pl-3\")}\n            >\n              <span className=\"text-3xl font-semibold tracking-tight sm:text-4xl\">{it.title}</span>\n              <span className=\"shrink-0 text-sm text-muted-foreground\">{it.meta}</span>\n            </a>\n          </li>\n        ))}\n      </ul>\n      <div ref={card} aria-hidden className=\"pointer-events-none absolute left-0 top-0 z-10 h-48 w-40 overflow-hidden rounded-xl shadow-2xl\">\n        {items.map((it, i) => (\n          <img key={it.image} data-img src={it.image} alt=\"\" className=\"absolute inset-0 h-full w-full object-cover\" style={{ zIndex: i === active ? 2 : 1, clipPath: \"inset(100% 0 0 0)\" }} />\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "portfolio",
+      "list",
+      "hover",
+      "image",
+      "agency"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

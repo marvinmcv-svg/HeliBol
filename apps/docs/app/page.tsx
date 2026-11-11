@@ -16,12 +16,23 @@ import { CtaSpotlight } from "@/blocks/landing/cta-spotlight/cta-spotlight";
 import { ComponentCard } from "@/components/component-card";
 import { CopyButton } from "@/components/copy-button";
 import { EngineBadge } from "@/components/engine-badge";
-import { blocks, components, flows } from "@/lib/registry.generated";
+import { blocks, components, flows, thumbs } from "@/lib/registry.generated";
 import { categories, engines } from "@/lib/taxonomy";
 
 const featured = ["hero-mesh-cards", "ai-prompt-box", "card-holo", "text-morph", "bg-particles", "dynamic-island", "widget-music", "card-swipe-deck", "hero-globe"];
 const featuredBlocks = ["ai-chat-app", "product-page", "pricing-toggle", "settings-page"];
 const featuredFlows = ["flow-stories", "flow-music-player", "flow-ride"];
+const featuredGsap = ["gsap-bento-scrub", "gsap-observer-slides", "gsap-particle-text", "gsap-hover-preview", "gsap-flip-filter", "gsap-infinite-slider", "gsap-menu-overlay", "gsap-morph-blob", "gsap-confetti-cannon"];
+
+const hrefFor = (id: string) => {
+  const c = components.find((m) => m.id === id);
+  if (c) return `/components/${c.category}/${c.id}`;
+  return blocks.some((m) => m.id === id) ? `/blocks/${id}` : `/flows/${id}`;
+};
+const nameFor = (id: string) => [...components, ...blocks, ...flows].find((m) => m.id === id)?.name ?? id;
+// Every item with a thumbnail, dealt round-robin into three rows for the wall.
+const wallIds = Object.keys(thumbs).filter((id) => !id.startsWith("flow-"));
+const wallRows = [0, 1, 2].map((r) => wallIds.filter((_, i) => i % 3 === r));
 
 export default function Home() {
   const pick = <T extends { id: string }>(list: T[], ids: string[]) => ids.map((id) => list.find((m) => m.id === id)!).filter(Boolean);
@@ -82,6 +93,22 @@ export default function Home() {
         </Marquee>
       </div>
 
+      {/* THUMBNAIL WALL — every item, moving */}
+      <section aria-label="Everything in the library" className="relative space-y-4 overflow-hidden py-10">
+        {wallRows.map((row, r) => (
+          <Marquee key={r} duration={90 + r * 25} reverse={r === 1} pauseOnHover gap="1rem">
+            {row.map((id) => (
+              <Link key={id} href={hrefFor(id)} className="group/t relative block w-64 shrink-0 overflow-hidden rounded-xl border border-border bg-card sm:w-72">
+                <img src={thumbs[id]} alt="" loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover/t:scale-[1.04]" />
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent px-3 pt-6 pb-2 text-xs font-medium text-white opacity-0 transition-opacity group-hover/t:opacity-100">{nameFor(id)}</span>
+              </Link>
+            ))}
+          </Marquee>
+        ))}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent" />
+      </section>
+
       {/* FEATURED */}
       <section className="mx-auto max-w-[1280px] px-4 py-20 sm:px-8">
         <ScrollReveal className="mb-8 flex flex-wrap items-end justify-between gap-4">
@@ -97,6 +124,27 @@ export default function Home() {
           {pick(components, featured).map((m) => (
             <ComponentCard key={m.id} meta={m} href={`/components/${m.category}/${m.id}`} />
           ))}
+        </div>
+      </section>
+
+      {/* GSAP COLLECTION */}
+      <section className="border-y border-border/60 bg-[radial-gradient(60%_80%_at_50%_0%,rgba(10,228,72,0.08),transparent)]">
+        <div className="mx-auto max-w-[1280px] px-4 py-20 sm:px-8">
+          <ScrollReveal className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium text-[#0ae448]">New · GSAP collection</p>
+              <h2 className="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">Every GSAP plugin, as a component.</h2>
+              <p className="mt-2 max-w-2xl text-sm text-muted-foreground">ScrollTrigger, Flip, Observer, Draggable + Inertia, MorphSVG, MotionPath, SplitText, Physics2D and CustomWiggle — {components.filter((m) => m.engine === "gsap").length} components built from the techniques in GSAP&apos;s Demo Hub.</p>
+            </div>
+            <Link href="/components?engine=gsap" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+              Browse the collection <ArrowRight className="size-3.5" />
+            </Link>
+          </ScrollReveal>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {pick(components, featuredGsap).map((m) => (
+              <ComponentCard key={m.id} meta={m} href={`/components/${m.category}/${m.id}`} />
+            ))}
+          </div>
         </div>
       </section>
 

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-particle-text",
+  "type": "registry:component",
+  "title": "Particle Text Morph",
+  "description": "Thousands of particles assemble into a word, hold, scatter and re-form into the next — sampled from canvas text, tweened by GSAP, pushed around by your cursor.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-particle-text.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-particle-text.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport gsap from \"gsap\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(useGSAP);\n\nexport interface GsapParticleTextProps {\n  /** Words to cycle through. */\n  words: string[];\n  /** Seconds each word holds. */\n  hold?: number;\n  /** Sampling step in px (lower = more particles). */\n  density?: number;\n  colors?: string[];\n  className?: string;\n}\n\ninterface P {\n  x: number;\n  y: number;\n  tx: number;\n  ty: number;\n  r: number;\n  c: string;\n  a: number;\n}\n\nconst COLORS = [\"#a78bfa\", \"#f0abfc\", \"#67e8f9\", \"#fcd34d\", \"#ffffff\"];\n\n/**\n * Particles assemble into a word, hold, scatter and re-form into the next one. Text is drawn\n * to an offscreen canvas and sampled into target points; GSAP tweens every particle's x/y with\n * a staggered expo ease (gsap.ticker draws one canvas). The pointer pushes particles away.\n */\nexport function GsapParticleText({ words, hold = 2.4, density = 5, colors = COLORS, className }: GsapParticleTextProps) {\n  const wrap = useRef<HTMLDivElement>(null);\n  const canvas = useRef<HTMLCanvasElement>(null);\n  const parts = useRef<P[]>([]);\n  const mouse = useRef<{ x: number; y: number } | null>(null);\n  const [label, setLabel] = useState(words[0]);\n  const reduced = useReducedMotion();\n\n  const sample = (word: string, w: number, h: number) => {\n    const off = document.createElement(\"canvas\");\n    off.width = w;\n    off.height = h;\n    const ctx = off.getContext(\"2d\");\n    if (!ctx) return [] as { x: number; y: number }[];\n    let size = Math.min(h * 0.55, (w * 1.6) / Math.max(4, word.length));\n    ctx.font = `800 ${size}px system-ui, sans-serif`;\n    while (ctx.measureText(word).width > w * 0.9 && size > 10) ctx.font = `800 ${(size -= 4)}px system-ui, sans-serif`;\n    ctx.textAlign = \"center\";\n    ctx.textBaseline = \"middle\";\n    ctx.fillText(word, w / 2, h / 2);\n    const data = ctx.getImageData(0, 0, w, h).data;\n    const pts: { x: number; y: number }[] = [];\n    for (let y = 0; y < h; y += density) for (let x = 0; x < w; x += density) if (data[(y * w + x) * 4 + 3] > 128) pts.push({ x, y });\n    return pts;\n  };\n\n  useGSAP(\n    () => {\n      const c = canvas.current;\n      const ctx = c?.getContext(\"2d\");\n      if (!c || !ctx) return;\n      const dpr = Math.min(2, window.devicePixelRatio || 1);\n      const w = c.clientWidth;\n      const h = c.clientHeight;\n      c.width = w * dpr;\n      c.height = h * dpr;\n      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);\n\n      let wi = 0;\n      const form = (word: string, first: boolean) => {\n        setLabel(word);\n        const pts = gsap.utils.shuffle(sample(word, w, h));\n        const ps = parts.current;\n        while (ps.length < pts.length) ps.push({ x: Math.random() * w, y: Math.random() * h, tx: 0, ty: 0, r: gsap.utils.random(1, 2.2), c: gsap.utils.random(colors), a: 0 });\n        ps.forEach((p, i) => {\n          const t = pts[i % pts.length];\n          const extra = i >= pts.length;\n          p.tx = t.x + (extra ? gsap.utils.random(-2, 2) : 0);\n          p.ty = t.y + (extra ? gsap.utils.random(-2, 2) : 0);\n          if (reduced) Object.assign(p, { x: p.tx, y: p.ty, a: extra ? 0 : 1 });\n        });\n        if (reduced) return draw();\n        gsap.to(ps, {\n          x: (i: number) => ps[i].tx,\n          y: (i: number) => ps[i].ty,\n          a: (i: number) => (i >= pts.length ? 0 : 1),\n          duration: first ? 1.6 : 1.3,\n          ease: \"expo.inOut\",\n          stagger: { amount: 0.6, from: \"random\" },\n          overwrite: true,\n        });\n      };\n\n      const draw = () => {\n        ctx.clearRect(0, 0, w, h);\n        const m = mouse.current;\n        for (const p of parts.current) {\n          let { x, y } = p;\n          if (m) {\n            const dx = x - m.x;\n            const dy = y - m.y;\n            const d = Math.hypot(dx, dy);\n            if (d < 70) {\n              const f = (70 - d) / 70;\n              x += (dx / (d || 1)) * f * 28;\n              y += (dy / (d || 1)) * f * 28;\n            }\n          }\n          ctx.globalAlpha = p.a;\n          ctx.fillStyle = p.c;\n          ctx.beginPath();\n          ctx.arc(x, y, p.r, 0, Math.PI * 2);\n          ctx.fill();\n        }\n        ctx.globalAlpha = 1;\n      };\n\n      form(words[0], true);\n      if (reduced) return;\n      gsap.ticker.add(draw);\n      const cycle = gsap.delayedCall(hold + 1.6, function next() {\n        wi = (wi + 1) % words.length;\n        gsap.to(parts.current, { x: () => gsap.utils.random(0, w) as number, y: () => gsap.utils.random(0, h) as number, duration: 0.6, ease: \"power2.in\", stagger: { amount: 0.2, from: \"random\" }, onComplete: () => form(words[wi], false) });\n        gsap.delayedCall(hold + 2, next);\n      });\n      return () => {\n        gsap.ticker.remove(draw);\n        cycle.kill();\n      };\n    },\n    { scope: wrap, dependencies: [words.join(\"|\"), reduced, density] },\n  );\n\n  useEffect(() => () => void (parts.current = []), []);\n\n  return (\n    <div\n      ref={wrap}\n      onPointerMove={(e) => {\n        const r = canvas.current!.getBoundingClientRect();\n        mouse.current = { x: e.clientX - r.left, y: e.clientY - r.top };\n      }}\n      onPointerLeave={() => (mouse.current = null)}\n      className={cn(\"relative\", className)}\n    >\n      <canvas ref={canvas} aria-hidden className=\"h-full w-full\" />\n      <span className=\"sr-only\" aria-live=\"polite\">{label}</span>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "particles",
+      "canvas",
+      "text",
+      "hero",
+      "generative"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

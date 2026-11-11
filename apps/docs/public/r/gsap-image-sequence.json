@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-image-sequence",
+  "type": "registry:component",
+  "title": "Scroll Image Sequence",
+  "description": "Apple-style product spin: a pinned canvas paints frame N of a sequence as you scroll. Works with real frame URLs or a procedural painter.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-image-sequence.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-image-sequence.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, type ReactNode, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger, useGSAP);\n\nexport interface GsapImageSequenceProps {\n  /** Frame count. */\n  frames: number;\n  /** Returns the URL of frame i — or omit and pass `draw` to paint frames procedurally. */\n  frameUrl?: (i: number) => string;\n  /** Procedural painter (used by the demo; handy for generative sequences). */\n  draw?: (ctx: CanvasRenderingContext2D, frame: number, w: number, h: number) => void;\n  scroller?: RefObject<HTMLElement | null>;\n  /** Scroll length in viewport heights. */\n  length?: number;\n  children?: ReactNode;\n  className?: string;\n}\n\n/**\n * Apple-style scroll-scrubbed image sequence: a pinned canvas paints frame\n * round(progress × (frames − 1)) — tweening a plain { frame } object with scrub so it eases\n * between scroll positions. Frames are preloaded as Image objects; only one draw per change.\n */\nexport function GsapImageSequence({ frames, frameUrl, draw, scroller, length = 3, children, className }: GsapImageSequenceProps) {\n  const section = useRef<HTMLElement>(null);\n  const canvas = useRef<HTMLCanvasElement>(null);\n  const images = useRef<HTMLImageElement[]>([]);\n  const current = useRef(0);\n  const reduced = useReducedMotion();\n\n  const paint = (i: number) => {\n    const c = canvas.current;\n    const ctx = c?.getContext(\"2d\");\n    if (!c || !ctx) return;\n    const dpr = Math.min(2, window.devicePixelRatio || 1);\n    const w = c.clientWidth;\n    const h = c.clientHeight;\n    if (c.width !== Math.round(w * dpr)) {\n      c.width = Math.round(w * dpr);\n      c.height = Math.round(h * dpr);\n    }\n    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);\n    if (draw) return draw(ctx, i, w, h);\n    const img = images.current[i];\n    if (!img?.complete) return;\n    const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);\n    ctx.clearRect(0, 0, w, h);\n    ctx.drawImage(img, (w - img.naturalWidth * s) / 2, (h - img.naturalHeight * s) / 2, img.naturalWidth * s, img.naturalHeight * s);\n  };\n\n  useEffect(() => {\n    if (!frameUrl) return;\n    images.current = Array.from({ length: frames }, (_, i) => {\n      const im = new Image();\n      im.src = frameUrl(i);\n      if (i === 0) im.onload = () => paint(0);\n      return im;\n    });\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, [frames, frameUrl]);\n\n  useGSAP(\n    () => {\n      paint(reduced ? frames - 1 : 0);\n      if (reduced) return;\n      const seq = { frame: 0 };\n      gsap.to(seq, {\n        frame: frames - 1,\n        snap: \"frame\",\n        ease: \"none\",\n        onUpdate: () => {\n          if (seq.frame !== current.current) {\n            current.current = seq.frame;\n            paint(seq.frame);\n          }\n        },\n        scrollTrigger: { trigger: section.current, scroller: scroller?.current ?? undefined, start: \"top top\", end: \"bottom bottom\", scrub: 0.5 },\n      });\n    },\n    { scope: section, dependencies: [reduced, frames] },\n  );\n\n  return (\n    <section ref={section} className={cn(\"relative\", className)} style={{ height: reduced ? \"100cqh\" : `${length * 100}cqh` }}>\n      <div className=\"sticky top-0 h-[100cqh] overflow-hidden\">\n        <canvas ref={canvas} className=\"absolute inset-0 h-full w-full\" aria-hidden />\n        <div className=\"relative h-full\">{children}</div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "scroll",
+      "canvas",
+      "image sequence",
+      "product",
+      "apple"
+    ],
+    "pageTypes": [
+      "landing",
+      "ecommerce"
+    ]
+  }
+}

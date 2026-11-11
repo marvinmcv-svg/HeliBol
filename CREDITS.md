@@ -17,4 +17,5 @@ Libraries: Motion, GSAP (+ ScrollTrigger, SplitText, ScrambleText, DrawSVG), Len
 ## Research tooling
 
 - **REA — Reverse Engineer Anything** ([morluto/rea](https://github.com/morluto/rea), MIT): static JavaScript analysis of the libraries above and thumbnail capture for the gallery. See `docs/research/`.
+- **GSAP Demo Hub** ([demos.gsap.com](https://demos.gsap.com), read with Firecrawl): technique catalog for the GSAP collection. Titles, tags and techniques were studied; no demo code or media was copied. GSAP itself is used under its free Standard License.
 - Catalog and taxonomy data come from the public MIT repositories of 21st.dev (`serafimcloud/21st`), Magic UI, Motion Primitives, Cult UI, Animata and Fancy Components, and from React Bits (MIT + Commons Clause, studied only, nothing reused).

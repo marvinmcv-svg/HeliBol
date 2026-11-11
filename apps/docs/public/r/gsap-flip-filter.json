@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-flip-filter",
+  "type": "registry:component",
+  "title": "Flip Filter Grid",
+  "description": "Filter chips re-arrange a grid with GSAP Flip — survivors glide to their new cells, new items pop in and removed ones shrink away.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-flip-filter.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-flip-filter.tsx",
+      "content": "\"use client\";\nimport { useRef, useState, type ReactNode } from \"react\";\nimport gsap from \"gsap\";\nimport { Flip } from \"gsap/Flip\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(Flip, useGSAP);\n\nexport interface FlipFilterItem {\n  id: string;\n  tags: string[];\n  node: ReactNode;\n}\n\nexport interface GsapFlipFilterProps {\n  items: FlipFilterItem[];\n  filters: string[];\n  className?: string;\n}\n\n/**\n * Filterable grid with GSAP Flip: record positions, toggle `hidden` on items, then Flip.from\n * moves the survivors to their new cells while onEnter/onLeave scale new and removed items.\n * Works with any CSS grid / flex layout — the DOM decides, Flip animates.\n */\nexport function GsapFlipFilter({ items, filters, className }: GsapFlipFilterProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const [active, setActive] = useState(\"All\");\n  const reduced = useReducedMotion();\n  const { contextSafe } = useGSAP({ scope: root });\n\n  const apply = contextSafe((f: string) => {\n    setActive(f);\n    const els = gsap.utils.toArray<HTMLElement>(\"[data-item]\", root.current);\n    const state = Flip.getState(els);\n    els.forEach((el) => {\n      const show = f === \"All\" || el.dataset.tags!.split(\",\").includes(f);\n      el.style.display = show ? \"\" : \"none\";\n    });\n    if (reduced) return;\n    Flip.from(state, {\n      duration: 0.7,\n      ease: \"power3.inOut\",\n      scale: true,\n      absolute: true,\n      stagger: 0.03,\n      onEnter: (els) => gsap.fromTo(els, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.6, ease: \"back.out(1.6)\" }),\n      onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0, duration: 0.4 }),\n    });\n  });\n\n  return (\n    <div ref={root} className={cn(\"space-y-4\", className)}>\n      <div role=\"toolbar\" aria-label=\"Filter\" className=\"flex flex-wrap gap-2\">\n        {[\"All\", ...filters].map((f) => (\n          <button\n            key={f}\n            onClick={() => apply(f)}\n            aria-pressed={active === f}\n            className={cn(\"rounded-full border px-3 py-1 text-sm transition-colors\", active === f ? \"border-foreground bg-foreground text-background\" : \"border-border text-muted-foreground hover:text-foreground\")}\n          >\n            {f}\n          </button>\n        ))}\n      </div>\n      <div className=\"grid grid-cols-3 gap-3 sm:grid-cols-4\">\n        {items.map((it) => (\n          <div key={it.id} data-item data-tags={it.tags.join(\",\")}>\n            {it.node}\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "flip",
+      "filter",
+      "grid",
+      "gallery",
+      "layout"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "portfolio",
+      "blog"
+    ]
+  }
+}

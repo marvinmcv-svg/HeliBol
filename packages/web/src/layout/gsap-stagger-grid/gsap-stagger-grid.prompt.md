@@ -1,0 +1,1 @@
+gsap.timeline().to(dots, { keyframes: { y: [0,−18,0], scale: [1,1.6,1] }, backgroundColor: i => hsl(250 + col·6 90% 65%), duration .7, stagger: { grid: [rows, cols], from: clickedIndex, amount: 1 } }).to(dots, { backgroundColor: rest, duration .8, stagger: same }, .5).

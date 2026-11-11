@@ -1,0 +1,1 @@
+Keep order = [indices]; place(pos): y = pos·−14, scale 1 − pos·.06, rotation alternating ±pos·2.5, zIndex n−pos, hide beyond 4. Draggable top card; on release beyond 90px (or Next) tween it x ±260, y −40, rotate ±18, rotate order (first → last), place others (.6s), then send the card behind (zIndex 0) and tween it into the last slot.
