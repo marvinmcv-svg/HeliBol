@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "three-tunnel",
+  "type": "registry:component",
+  "title": "Warp Tunnel",
+  "description": "An endless tunnel of glowing polygon rings (one InstancedMesh) streaming toward the camera; the far end bends toward the pointer.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/canvas-3d-shell.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/three-tunnel.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/three-tunnel.tsx",
+      "content": "\"use client\";\nimport { useMemo, useRef } from \"react\";\nimport { useFrame } from \"@react-three/fiber\";\nimport * as THREE from \"three\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\nimport { Canvas3DShell } from \"@/components/kinetik/canvas-3d-shell\";\n\nexport interface ThreeTunnelProps {\n  /** Number of rings in the tunnel. */\n  rings?: number;\n  /** Forward speed in world units per second. */\n  speed?: number;\n  colors?: [string, string];\n  /** Shape of each ring: smooth circle or polygon with this many sides (3–8). */\n  sides?: number;\n  className?: string;\n}\n\nfunction Tunnel({ rings, speed, colors, sides }: Required<Omit<ThreeTunnelProps, \"className\">>) {\n  const reduced = useReducedMotion();\n  const mesh = useRef<THREE.InstancedMesh>(null);\n  const spacing = 0.9;\n  const depth = rings * spacing;\n  const dummy = useMemo(() => new THREE.Object3D(), []);\n  const palette = useMemo(() => {\n    const a = new THREE.Color(colors[0]), b = new THREE.Color(colors[1]);\n    return Array.from({ length: rings }, (_, i) => a.clone().lerp(b, (Math.sin(i * 0.35) + 1) / 2));\n  }, [rings, colors]);\n  const z = useRef(0);\n  const steer = useRef(new THREE.Vector2());\n\n  useFrame((s, dt) => {\n    const m = mesh.current;\n    if (!m) return;\n    if (!reduced) z.current = (z.current + dt * speed) % spacing;\n    steer.current.lerp(s.pointer, 0.04);\n    for (let i = 0; i < rings; i++) {\n      const pz = -i * spacing + z.current;\n      // The tunnel bends with depth — the pointer steers where the far end points.\n      const bend = (-pz / depth) ** 2;\n      dummy.position.set(steer.current.x * bend * 6, steer.current.y * bend * 4, pz);\n      dummy.rotation.set(0, 0, i * 0.12 + (reduced ? 0 : s.clock.elapsedTime * 0.2));\n      const fade = 1 - Math.min(1, -pz / depth);\n      dummy.scale.setScalar(1);\n      dummy.updateMatrix();\n      m.setMatrixAt(i, dummy.matrix);\n      m.setColorAt(i, palette[i].clone().multiplyScalar(0.25 + fade * 1.2));\n    }\n    m.instanceMatrix.needsUpdate = true;\n    if (m.instanceColor) m.instanceColor.needsUpdate = true;\n  });\n\n  return (\n    <instancedMesh ref={mesh} args={[undefined, undefined, rings]}>\n      <torusGeometry args={[2, 0.025, 6, sides >= 3 && sides <= 8 ? sides : 64]} />\n      <meshBasicMaterial toneMapped={false} />\n    </instancedMesh>\n  );\n}\n\n/** An endless warp tunnel of glowing rings (one InstancedMesh) that bends toward the pointer. */\nexport function ThreeTunnel({ rings = 80, speed = 3, colors = [\"#f0abfc\", \"#38bdf8\"], sides = 6, className }: ThreeTunnelProps) {\n  return (\n    <Canvas3DShell className={className} camera={{ position: [0, 0, 1.5], fov: 70 }}>\n      <fog attach=\"fog\" args={[\"#000\", 10, 60]} />\n      <Tunnel rings={rings} speed={speed} colors={colors} sides={sides} />\n    </Canvas3DShell>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "three.js",
+      "tunnel",
+      "warp",
+      "instanced",
+      "background"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

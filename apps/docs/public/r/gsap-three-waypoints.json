@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-three-waypoints",
+  "type": "registry:component",
+  "title": "Scroll Camera Waypoints",
+  "description": "A scroll-driven camera flight: a ScrollTrigger-scrubbed GSAP timeline tweens a plain object between waypoints and the R3F camera copies it each frame; captions crossfade per stop.",
+  "dependencies": [
+    "gsap",
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-three-waypoints.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-three-waypoints.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, type RefObject } from \"react\";\nimport { Canvas, useFrame } from \"@react-three/fiber\";\nimport { Environment, Lightformer } from \"@react-three/drei\";\nimport * as THREE from \"three\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger);\n\nexport interface Waypoint {\n  title: string;\n  body?: string;\n  /** Camera position for this stop. */\n  position: [number, number, number];\n  /** Point the camera looks at. */\n  target: [number, number, number];\n}\n\nexport interface GsapThreeWaypointsProps {\n  waypoints: Waypoint[];\n  scroller?: RefObject<HTMLElement | null>;\n  className?: string;\n}\n\n/** Shared mutable camera state: GSAP tweens it, R3F reads it every frame. */\ntype Rig = { px: number; py: number; pz: number; tx: number; ty: number; tz: number };\n\nfunction CameraRig({ rig }: { rig: Rig }) {\n  const look = useRef(new THREE.Vector3());\n  useFrame(({ camera }) => {\n    camera.position.set(rig.px, rig.py, rig.pz);\n    look.current.set(rig.tx, rig.ty, rig.tz);\n    camera.lookAt(look.current);\n  });\n  return null;\n}\n\n/** A small \"city\" of blocks so each waypoint has something to frame. */\nfunction Scene() {\n  const blocks = Array.from({ length: 42 }, (_, i) => {\n    const x = ((i % 7) - 3) * 1.6, z = (Math.floor(i / 7) - 3) * 1.6, h = 0.4 + ((i * 37) % 9) * 0.35;\n    return { x, z, h, hot: i % 9 === 4 };\n  });\n  return (\n    <group>\n      <mesh rotation-x={-Math.PI / 2}><planeGeometry args={[30, 30]} /><meshStandardMaterial color=\"#111827\" /></mesh>\n      {blocks.map((b, i) => (\n        <mesh key={i} position={[b.x, b.h / 2, b.z]}>\n          <boxGeometry args={[1, b.h, 1]} />\n          <meshStandardMaterial color={b.hot ? \"#f97316\" : \"#334155\"} emissive={b.hot ? \"#f97316\" : \"#000\"} emissiveIntensity={b.hot ? 0.6 : 0} roughness={0.4} />\n        </mesh>\n      ))}\n      <mesh position={[0, 3.4, 0]}><torusKnotGeometry args={[0.6, 0.18, 160, 24]} /><meshStandardMaterial color=\"#e2e8f0\" metalness={0.8} roughness={0.15} /></mesh>\n    </group>\n  );\n}\n\n/**\n * Scroll-driven camera flight: a GSAP timeline (scrubbed by ScrollTrigger) tweens a plain object\n * between waypoints; the R3F camera copies it every frame. Captions fade in per stop.\n */\nexport function GsapThreeWaypoints({ waypoints, scroller, className }: GsapThreeWaypointsProps) {\n  const section = useRef<HTMLElement>(null);\n  const reduced = useReducedMotion();\n  const first = waypoints[0];\n  const rig = useRef<Rig>({ px: first.position[0], py: first.position[1], pz: first.position[2], tx: first.target[0], ty: first.target[1], tz: first.target[2] });\n\n  useEffect(() => {\n    if (reduced || !section.current) return;\n    const captions = section.current.querySelectorAll<HTMLElement>(\"[data-caption]\");\n    const ctx = gsap.context(() => {\n      const tl = gsap.timeline({ defaults: { ease: \"power2.inOut\" }, scrollTrigger: { trigger: section.current, scroller: scroller?.current ?? undefined, start: \"top top\", end: \"bottom bottom\", scrub: 1 } });\n      gsap.set(captions, { autoAlpha: 0, y: 30 });\n      gsap.set(captions[0], { autoAlpha: 1, y: 0 });\n      waypoints.slice(1).forEach((w, i) => {\n        tl.to(rig.current, { px: w.position[0], py: w.position[1], pz: w.position[2], tx: w.target[0], ty: w.target[1], tz: w.target[2], duration: 1 }, i)\n          .to(captions[i], { autoAlpha: 0, y: -30, duration: 0.3 }, i)\n          .to(captions[i + 1], { autoAlpha: 1, y: 0, duration: 0.3 }, i + 0.7);\n      });\n    }, section);\n    return () => ctx.revert();\n  }, [reduced, scroller, waypoints]);\n\n  if (reduced) {\n    // No camera flight: each stop becomes a static card.\n    return (\n      <section className={cn(\"grid gap-4 p-6\", className)}>\n        {waypoints.map((w) => (\n          <article key={w.title} className=\"rounded-2xl border border-border bg-card p-5\"><h3 className=\"text-lg font-semibold\">{w.title}</h3>{w.body && <p className=\"text-sm text-muted-foreground\">{w.body}</p>}</article>\n        ))}\n      </section>\n    );\n  }\n\n  return (\n    <section ref={section} className={cn(\"relative\", className)} style={{ height: `${waypoints.length * 90}cqh` }}>\n      <div className=\"sticky top-0 h-[100cqh] overflow-hidden bg-[#0b1120]\">\n        <Canvas dpr={[1, 1.75]} camera={{ fov: 45 }} gl={{ antialias: true }}>\n          <fog attach=\"fog\" args={[\"#0b1120\", 8, 26]} />\n          <ambientLight intensity={0.5} />\n          <directionalLight position={[5, 8, 3]} intensity={2} />\n          <Scene />\n          <CameraRig rig={rig.current} />\n          <Environment resolution={128}><Lightformer intensity={2} position={[0, 6, 0]} rotation-x={Math.PI / 2} scale={[10, 10, 1]} /></Environment>\n        </Canvas>\n        {waypoints.map((w, i) => (\n          <div key={w.title} data-caption className=\"pointer-events-none absolute bottom-8 left-6 max-w-xs text-white\" style={{ visibility: i ? \"hidden\" : undefined }}>\n            <p className=\"text-[10px] uppercase tracking-[0.3em] text-orange-300\">Stop {String(i + 1).padStart(2, \"0\")}</p>\n            <h3 className=\"mt-1 text-2xl font-semibold tracking-tight\">{w.title}</h3>\n            {w.body && <p className=\"mt-1 text-sm text-white/60\">{w.body}</p>}\n          </div>\n        ))}\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "gsap",
+      "three.js",
+      "scroll",
+      "camera",
+      "storytelling"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

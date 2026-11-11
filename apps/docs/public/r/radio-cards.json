@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-cards",
+  "type": "registry:component",
+  "title": "Radio Cards",
+  "description": "Selectable option cards built on native radio inputs; a highlight ring glides between cards with shared layout and the dot springs in.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/radio-cards.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/radio-cards.tsx",
+      "content": "\"use client\";\nimport { useId, useRef, type ReactNode } from \"react\";\nimport { motion } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface RadioCardOption {\n  value: string;\n  title: string;\n  description?: string;\n  icon?: ReactNode;\n  /** Right-aligned extra, e.g. a price. */\n  aside?: ReactNode;\n}\n\nexport interface RadioCardsProps {\n  options: RadioCardOption[];\n  value: string;\n  onChange: (v: string) => void;\n  label: string;\n  className?: string;\n}\n\n/**\n * Selectable cards backed by native radio inputs (so arrow keys, forms and screen readers just work).\n * A highlight ring glides between cards with shared layout and the dot springs in.\n */\nexport function RadioCards({ options, value, onChange, label, className }: RadioCardsProps) {\n  const reduced = useReducedMotion();\n  const name = useId();\n  const ref = useRef<HTMLFieldSetElement>(null);\n  return (\n    <fieldset ref={ref} className={cn(\"grid gap-2\", className)}>\n      <legend className=\"mb-2 text-sm font-medium\">{label}</legend>\n      {options.map((o) => {\n        const on = o.value === value;\n        return (\n          <label key={o.value} className={cn(\"relative flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring\", on ? \"border-transparent\" : \"border-border hover:bg-muted/50\")}>\n            <input type=\"radio\" name={name} value={o.value} checked={on} onChange={() => onChange(o.value)} className=\"sr-only\" />\n            {on && <motion.span layoutId={`${name}-ring`} transition={reduced ? { duration: 0 } : spring.smooth} className=\"absolute inset-0 rounded-2xl bg-primary/5 ring-2 ring-primary\" />}\n            <span className={cn(\"relative grid size-5 shrink-0 place-items-center rounded-full border-2 transition-colors\", on ? \"border-primary\" : \"border-border\")}>\n              <motion.span initial={false} animate={{ scale: on ? 1 : 0 }} transition={reduced ? { duration: 0 } : spring.bouncy} className=\"size-2.5 rounded-full bg-primary\" />\n            </span>\n            {o.icon && <span className=\"relative text-muted-foreground\">{o.icon}</span>}\n            <span className=\"relative min-w-0 flex-1\">\n              <span className=\"block text-sm font-medium\">{o.title}</span>\n              {o.description && <span className=\"block text-xs text-muted-foreground\">{o.description}</span>}\n            </span>\n            {o.aside && <span className=\"relative text-sm font-semibold tabular-nums\">{o.aside}</span>}\n          </label>\n        );\n      })}\n    </fieldset>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "radio",
+      "cards",
+      "select",
+      "checkout",
+      "plans"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "pricing",
+      "onboarding"
+    ]
+  }
+}

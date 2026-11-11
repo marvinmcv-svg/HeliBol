@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "three-floating-shapes",
+  "type": "registry:component",
+  "title": "Floating Shapes",
+  "description": "Playful clay-like primitives bobbing in a soft studio — pointer parallax, hover swell, contact shadows.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/canvas-3d-shell.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/three-floating-shapes.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/three-floating-shapes.tsx",
+      "content": "\"use client\";\nimport { useMemo, useRef, type ReactNode } from \"react\";\nimport { useFrame } from \"@react-three/fiber\";\nimport { ContactShadows, Environment, Float, Lightformer } from \"@react-three/drei\";\nimport * as THREE from \"three\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\nimport { Canvas3DShell } from \"@/components/kinetik/canvas-3d-shell\";\n\nexport interface ThreeFloatingShapesProps {\n  /** Candy palette used round-robin for the shapes. */\n  palette?: string[];\n  count?: number;\n  className?: string;\n}\n\nconst DEFAULT_PALETTE = [\"#fb7185\", \"#fbbf24\", \"#34d399\", \"#60a5fa\", \"#c084fc\", \"#f9a8d4\"];\nconst KINDS = [\"sphere\", \"torus\", \"capsule\", \"box\", \"cone\", \"knot\"] as const;\n\nfunction Shape({ kind, color, position, scale, speed }: { kind: (typeof KINDS)[number]; color: string; position: [number, number, number]; scale: number; speed: number }) {\n  const ref = useRef<THREE.Mesh>(null);\n  const hovered = useRef(0);\n  useFrame((_, dt) => {\n    const m = ref.current;\n    if (!m) return;\n    const s = scale * (1 + hovered.current * 0.18);\n    m.scale.lerp(new THREE.Vector3(s, s, s), Math.min(1, dt * 10));\n  });\n  return (\n    <Float speed={speed} rotationIntensity={1.2} floatIntensity={1.4}>\n      <mesh ref={ref} position={position} scale={scale} onPointerOver={() => (hovered.current = 1)} onPointerOut={() => (hovered.current = 0)}>\n        {kind === \"sphere\" && <sphereGeometry args={[0.5, 48, 48]} />}\n        {kind === \"torus\" && <torusGeometry args={[0.42, 0.17, 32, 96]} />}\n        {kind === \"capsule\" && <capsuleGeometry args={[0.25, 0.5, 12, 32]} />}\n        {kind === \"box\" && <boxGeometry args={[0.7, 0.7, 0.7]} />}\n        {kind === \"cone\" && <coneGeometry args={[0.45, 0.8, 48]} />}\n        {kind === \"knot\" && <torusKnotGeometry args={[0.32, 0.11, 160, 24]} />}\n        <meshPhysicalMaterial color={color} roughness={0.25} clearcoat={1} clearcoatRoughness={0.15} />\n      </mesh>\n    </Float>\n  );\n}\n\nfunction Rig({ children }: { children: ReactNode }) {\n  const reduced = useReducedMotion();\n  const g = useRef<THREE.Group>(null);\n  useFrame((s) => {\n    if (!g.current || reduced) return;\n    g.current.rotation.y += (s.pointer.x * 0.35 - g.current.rotation.y) * 0.05;\n    g.current.rotation.x += (-s.pointer.y * 0.2 - g.current.rotation.x) * 0.05;\n  });\n  return <group ref={g}>{children}</group>;\n}\n\n/** Playful clay-like primitives bobbing in a soft studio, with pointer parallax and hover swell — the \"jelly garden\" hero. */\nexport function ThreeFloatingShapes({ palette = DEFAULT_PALETTE, count = 14, className }: ThreeFloatingShapesProps) {\n  const reduced = useReducedMotion();\n  const shapes = useMemo(\n    () =>\n      Array.from({ length: count }, (_, i) => {\n        const a = i * 2.399; // golden angle spreads them evenly\n        const r = 1.2 + (i % 4) * 0.55;\n        return {\n          kind: KINDS[i % KINDS.length],\n          color: palette[i % palette.length],\n          position: [Math.cos(a) * r * 1.4, Math.sin(a) * r * 0.7, -((i * 37) % 5) * 0.4] as [number, number, number],\n          scale: 0.7 + ((i * 13) % 5) * 0.12,\n          speed: reduced ? 0 : 1 + (i % 3) * 0.4,\n        };\n      }),\n    [count, palette, reduced],\n  );\n  return (\n    <Canvas3DShell className={className} camera={{ position: [0, 0, 7], fov: 45 }}>\n      <ambientLight intensity={0.7} />\n      <directionalLight position={[3, 5, 4]} intensity={2.4} />\n      <Rig>\n        {shapes.map((s, i) => <Shape key={i} {...s} />)}\n      </Rig>\n      <ContactShadows position={[0, -2.6, 0]} opacity={0.35} scale={14} blur={2.6} far={5} />\n      <Environment resolution={128}>\n        <Lightformer intensity={3} position={[0, 4, 4]} scale={[8, 4, 1]} />\n        <Lightformer intensity={1.5} position={[-4, 0, 2]} rotation-y={Math.PI / 2} scale={[4, 4, 1]} />\n      </Environment>\n    </Canvas3DShell>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "three.js",
+      "playful",
+      "hero",
+      "shapes",
+      "clay"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

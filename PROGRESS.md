@@ -2,7 +2,7 @@
 
 Status of every component ID in `motion-library-master-plan.md` (Sections 7 & 8), plus everything built beyond it.
 
-**Summary (kinetik 2.1):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **255 registry items live** (223 components + 20 blocks + 12 flows), including the 29-piece GSAP collection. Research and gap analysis: `docs/research/README.md`.
+**Summary (kinetik 2.2):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **304 registry items live** (266 components + 24 blocks + 14 flows), including the 36-piece GSAP collection and the 13-piece three.js collection. Research and gap analysis: `docs/research/README.md`.
 
 Legend: ✅ done · 🟡 partial · ⬜ todo
 
@@ -343,3 +343,21 @@ Legend: ✅ done · 🟡 partial · ⬜ todo
 Original implementations of the techniques catalogued from GSAP's Demo Hub (`docs/research/gsap-demos.json`).
 
 `gsap-proximity-grid` · `gsap-flair-trail` · `gsap-hover-preview` · `gsap-tilt-scene` · `gsap-velocity-skew` · `gsap-bento-scrub` · `gsap-batch-reveal` · `gsap-image-sequence` · `gsap-mask-expand` · `gsap-scroll-spy` · `gsap-horizontal-text` · `gsap-lines-scroll` · `gsap-footer-bounce` · `gsap-observer-slides` · `gsap-infinite-slider` · `gsap-card-stack` · `gsap-flip-filter` · `gsap-flip-layout` · `gsap-flip-modal` · `gsap-stagger-grid` · `gsap-radial-menu` · `gsap-menu-overlay` · `gsap-curve-wipe` · `gsap-morph-blob` · `gsap-path-waypoints` · `gsap-wiggle` · `gsap-confetti-cannon` · `gsap-throw-board` · `gsap-particle-text`
+
+## kinetik 2.2 (49 new items)
+
+Sources and reasoning: `docs/research/sources-2.2.md`.
+
+**three.js / R3F (13):** `three-particle-morph` · `three-sphere-gallery` · `three-glass-shape` · `three-shader-blob` · `three-galaxy` · `three-orbit-sphere` · `three-wave-terrain` · `three-image-ribbon` · `three-coin` · `three-tunnel` · `three-instanced-grid` · `three-floating-shapes` · `gsap-three-waypoints`
+
+**unlumen-inspired (18):** `text-smart-animate` · `avatar-team-stack` · `link-mention` · `orbital-image-wheel` · `carousel-depth-fade` · `questionnaire` · `marquee-vertical` · `nav-gooey` · `nav-expandable` · `bg-gravity-stars` · `bg-square-pattern` · `bg-aurora-bars` · `media-ambient-glow` · `view-switch` · `pinned-list` · `card-aurora` · `transition-pixel-scroll` · `input-typing-placeholder`
+
+**21st.dev UI sections (6):** `data-table` · `date-picker` · `radio-cards` · `pagination-animated` · `number-input` · `range-slider`
+
+**GSAP round 2 (6 + waypoints above):** `gsap-flip-carousel` · `gsap-shader-scroll` · `gsap-text-replace` · `gsap-scrollto-nav` · `gsap-auto-height` · `gsap-keyframes-loader`
+
+**Blocks (4):** `hero-liquid-glass` · `hero-ink-reveal` · `hero-ai-particles` · `portfolio-ribbon`
+
+**Flows (2):** `flow-empty-state` · `flow-search-filter`
+
+Still open: thumbnails for the 49 new items (REA capture needs Chrome + the dev server; until then cards mount the live demo), native Expo source for the new flows, Rive/Lottie players, MCP server.

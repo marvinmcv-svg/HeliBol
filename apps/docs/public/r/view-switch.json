@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "view-switch",
+  "type": "registry:component",
+  "title": "View Switch Icons",
+  "description": "A list / compact / cards view switcher whose glyphs are the same four rectangles morphing between layouts, with a pill sliding under the active mode.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/view-switch.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/view-switch.tsx",
+      "content": "\"use client\";\nimport { useId } from \"react\";\nimport { motion } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport type ViewMode = \"list\" | \"compact\" | \"cards\";\n\nexport interface ViewSwitchProps {\n  value: ViewMode;\n  onChange: (v: ViewMode) => void;\n  className?: string;\n}\n\n/**\n * One animated glyph per mode, built from the same four rectangles; switching modes morphs the\n * rectangles (x/y/width/height springs) rather than swapping icons. A pill slides under the\n * active button.\n */\nfunction Glyph({ mode, active }: { mode: ViewMode; active: boolean }) {\n  const reduced = useReducedMotion();\n  // four rects per layout: [x, y, w, h] in a 16×16 box\n  const layouts: Record<ViewMode, [number, number, number, number][]> = {\n    list: [[1, 2, 3, 3], [6, 2, 9, 3], [1, 9.5, 3, 3], [6, 9.5, 9, 3]],\n    compact: [[1, 1.5, 14, 2], [1, 5.5, 14, 2], [1, 9.5, 14, 2], [1, 13.5, 14, 2]],\n    cards: [[1, 1, 6, 6], [9, 1, 6, 6], [1, 9, 6, 6], [9, 9, 6, 6]],\n  };\n  return (\n    <svg viewBox=\"0 0 16 16\" className=\"size-4\" aria-hidden>\n      {layouts[mode].map(([x, y, w, h], i) => (\n        <motion.rect\n          key={i}\n          initial={false}\n          animate={{ x, y, width: w, height: h, opacity: active ? 1 : 0.55 }}\n          transition={reduced ? { duration: 0 } : { ...spring.bouncy, delay: active ? i * 0.03 : 0 }}\n          rx={1}\n          fill=\"currentColor\"\n        />\n      ))}\n    </svg>\n  );\n}\n\nexport function ViewSwitch({ value, onChange, className }: ViewSwitchProps) {\n  const reduced = useReducedMotion();\n  const group = useId();\n  const modes: ViewMode[] = [\"list\", \"compact\", \"cards\"];\n  return (\n    <div role=\"radiogroup\" aria-label=\"View\" className={cn(\"inline-flex rounded-xl border border-border bg-muted/60 p-1\", className)}>\n      {modes.map((m) => (\n        <button\n          key={m}\n          type=\"button\"\n          role=\"radio\"\n          aria-checked={value === m}\n          aria-label={`${m} view`}\n          onClick={() => onChange(m)}\n          className={cn(\"relative grid h-8 w-10 place-items-center rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\", value === m ? \"text-foreground\" : \"text-muted-foreground hover:text-foreground\")}\n        >\n          {value === m && <motion.span layoutId={`${group}-pill`} transition={reduced ? { duration: 0 } : spring.snappy} className=\"absolute inset-0 rounded-lg bg-background shadow-sm\" />}\n          <span className=\"relative\"><Glyph mode={m} active={value === m} /></span>\n        </button>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "segmented control",
+      "icons",
+      "view",
+      "toggle",
+      "morph"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "ecommerce"
+    ]
+  }
+}

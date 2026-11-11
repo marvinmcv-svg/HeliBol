@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "three-sphere-gallery",
+  "type": "registry:component",
+  "title": "Sphere Gallery",
+  "description": "Photos tiled over a sphere (Fibonacci lattice, each tile facing outward) that you grab and spin with inertia, settling back into a slow idle rotation.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/canvas-3d-shell.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/three-sphere-gallery.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/three-sphere-gallery.tsx",
+      "content": "\"use client\";\nimport { useEffect, useMemo, useRef } from \"react\";\nimport { useFrame, useThree } from \"@react-three/fiber\";\nimport { useTexture } from \"@react-three/drei\";\nimport * as THREE from \"three\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\nimport { Canvas3DShell } from \"@/components/kinetik/canvas-3d-shell\";\n\nexport interface ThreeSphereGalleryProps {\n  images: string[];\n  /** How many tiles to place on the sphere (images repeat to fill). */\n  tiles?: number;\n  radius?: number;\n  /** Idle spin in radians per second. */\n  autoRotate?: number;\n  className?: string;\n}\n\nfunction Gallery({ images, tiles, radius, autoRotate }: Required<Omit<ThreeSphereGalleryProps, \"className\">>) {\n  const reduced = useReducedMotion();\n  const group = useRef<THREE.Group>(null);\n  const textures = useTexture(images);\n  textures.forEach((t) => (t.colorSpace = THREE.SRGBColorSpace));\n  const gl = useThree((s) => s.gl);\n\n  // Fibonacci lattice → even spacing; each tile looks outward from the centre.\n  const placements = useMemo(() => {\n    const out: { pos: THREE.Vector3; quat: THREE.Quaternion; tex: number }[] = [];\n    const m = new THREE.Matrix4();\n    for (let i = 0; i < tiles; i++) {\n      const phi = Math.acos(1 - 2 * (i + 0.5) / tiles);\n      const theta = Math.PI * (1 + Math.sqrt(5)) * i;\n      const pos = new THREE.Vector3().setFromSphericalCoords(radius, phi, theta);\n      m.lookAt(pos.clone().multiplyScalar(2), pos, new THREE.Vector3(0, 1, 0));\n      out.push({ pos, quat: new THREE.Quaternion().setFromRotationMatrix(m), tex: i % images.length });\n    }\n    return out;\n  }, [tiles, radius, images.length]);\n\n  // Drag to spin with inertia — pointer events on the canvas element, so it works with touch too.\n  const drag = useRef({ down: false, x: 0, y: 0, vx: 0, vy: 0 });\n  useEffect(() => {\n    const el = gl.domElement;\n    el.style.touchAction = \"pan-y\";\n    el.style.cursor = \"grab\";\n    const d = drag.current;\n    const down = (e: PointerEvent) => { d.down = true; d.x = e.clientX; d.y = e.clientY; el.style.cursor = \"grabbing\"; };\n    const move = (e: PointerEvent) => {\n      if (!d.down) return;\n      d.vx = (e.clientX - d.x) * 0.006; d.vy = (e.clientY - d.y) * 0.006; d.x = e.clientX; d.y = e.clientY;\n    };\n    const up = () => { d.down = false; el.style.cursor = \"grab\"; };\n    el.addEventListener(\"pointerdown\", down);\n    window.addEventListener(\"pointermove\", move);\n    window.addEventListener(\"pointerup\", up);\n    return () => { el.removeEventListener(\"pointerdown\", down); window.removeEventListener(\"pointermove\", move); window.removeEventListener(\"pointerup\", up); };\n  }, [gl]);\n\n  useFrame((_, dt) => {\n    const g = group.current;\n    if (!g) return;\n    const d = drag.current;\n    g.rotation.y += d.vx;\n    g.rotation.x = THREE.MathUtils.clamp(g.rotation.x + d.vy, -0.9, 0.9);\n    if (!d.down) {\n      // friction back toward the idle spin\n      d.vx += ((reduced ? 0 : autoRotate) * dt - d.vx) * 0.04;\n      d.vy *= 0.9;\n    } else { d.vx *= 0.5; d.vy *= 0.5; }\n  });\n\n  const w = (radius * 2.6) / Math.sqrt(tiles);\n  return (\n    <group ref={group}>\n      {placements.map((p, i) => (\n        <mesh key={i} position={p.pos} quaternion={p.quat}>\n          <planeGeometry args={[w * 1.25, w, 1, 1]} />\n          <meshBasicMaterial map={textures[p.tex]} side={THREE.DoubleSide} toneMapped={false} />\n        </mesh>\n      ))}\n    </group>\n  );\n}\n\n/** Photos tiled over a sphere you can grab and spin, with inertia and a slow idle rotation. */\nexport function ThreeSphereGallery({ images, tiles = 48, radius = 2.2, autoRotate = 0.12, className }: ThreeSphereGalleryProps) {\n  return (\n    <Canvas3DShell className={className} camera={{ position: [0, 0, 6.4], fov: 45 }}>\n      <fog attach=\"fog\" args={[\"#05050a\", 5, 9.5]} />\n      <Gallery images={images} tiles={tiles} radius={radius} autoRotate={autoRotate} />\n    </Canvas3DShell>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "three.js",
+      "gallery",
+      "drag",
+      "portfolio",
+      "images"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "media"
+    ]
+  }
+}

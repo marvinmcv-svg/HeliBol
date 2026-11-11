@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "number-input",
+  "type": "registry:component",
+  "title": "Number Input Stepper",
+  "description": "A stepper whose digits roll in the direction of change, buttons auto-repeat (accelerating) while held, and the field shakes at its limits.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/number-input.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/number-input.tsx",
+      "content": "\"use client\";\nimport { useId, useRef, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Minus, Plus } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface NumberInputProps {\n  value: number;\n  onChange: (v: number) => void;\n  min?: number;\n  max?: number;\n  step?: number;\n  label: string;\n  /** Formats the displayed value (e.g. currency). */\n  format?: (v: number) => string;\n  className?: string;\n}\n\n/**\n * A stepper whose digits roll in the direction of change (up for +, down for −), buttons repeat when\n * held, and the field shakes when you hit a limit. Implements the ARIA spinbutton pattern.\n */\nexport function NumberInput({ value, onChange, min = -Infinity, max = Infinity, step = 1, label, format = String, className }: NumberInputProps) {\n  const reduced = useReducedMotion();\n  const id = useId();\n  const [dir, setDir] = useState(1);\n  const [shake, setShake] = useState(0);\n  const hold = useRef<ReturnType<typeof setTimeout>>(undefined);\n  const latest = useRef(value);\n  latest.current = value;\n\n  const bump = (d: 1 | -1) => {\n    const next = latest.current + d * step;\n    if (next < min || next > max) { setShake((s) => s + 1); return false; }\n    setDir(d);\n    latest.current = next;\n    onChange(next);\n    return true;\n  };\n  const startHold = (d: 1 | -1) => {\n    if (!bump(d)) return;\n    let delay = 380;\n    const loop = () => { if (bump(d)) { delay = Math.max(50, delay * 0.8); hold.current = setTimeout(loop, delay); } };\n    hold.current = setTimeout(loop, delay);\n  };\n  const stop = () => clearTimeout(hold.current);\n\n  const btn = (d: 1 | -1) => (\n    <motion.button\n      type=\"button\"\n      tabIndex={-1}\n      aria-label={d > 0 ? \"Increase\" : \"Decrease\"}\n      disabled={d > 0 ? value >= max : value <= min}\n      onPointerDown={() => startHold(d)}\n      onPointerUp={stop}\n      onPointerLeave={stop}\n      whileTap={reduced ? undefined : { scale: 0.85 }}\n      className=\"grid size-9 place-items-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-30\"\n    >\n      {d > 0 ? <Plus className=\"size-4\" /> : <Minus className=\"size-4\" />}\n    </motion.button>\n  );\n\n  return (\n    <div className={cn(\"inline-flex flex-col gap-1\", className)}>\n      <span id={`${id}-l`} className=\"text-sm font-medium\">{label}</span>\n      <motion.div\n        key={shake}\n        animate={shake && !reduced ? { x: [0, -6, 6, -4, 4, 0] } : undefined}\n        transition={{ duration: 0.35 }}\n        className=\"flex items-center gap-1 rounded-xl border border-border bg-background p-1 shadow-sm\"\n      >\n        {btn(-1)}\n        <div\n          role=\"spinbutton\"\n          tabIndex={0}\n          aria-labelledby={`${id}-l`}\n          aria-valuenow={value}\n          aria-valuemin={Number.isFinite(min) ? min : undefined}\n          aria-valuemax={Number.isFinite(max) ? max : undefined}\n          aria-valuetext={format(value)}\n          onKeyDown={(e) => {\n            if (e.key === \"ArrowUp\") (e.preventDefault(), bump(1));\n            if (e.key === \"ArrowDown\") (e.preventDefault(), bump(-1));\n            if (e.key === \"Home\" && Number.isFinite(min)) (e.preventDefault(), setDir(-1), onChange(min));\n            if (e.key === \"End\" && Number.isFinite(max)) (e.preventDefault(), setDir(1), onChange(max));\n          }}\n          className=\"relative grid h-9 min-w-16 place-items-center overflow-hidden rounded-md px-2 text-lg font-semibold tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        >\n          <AnimatePresence mode=\"popLayout\" initial={false} custom={dir}>\n            <motion.span\n              key={value}\n              custom={dir}\n              variants={{ enter: (d: number) => ({ y: reduced ? 0 : d * 18, opacity: 0 }), center: { y: 0, opacity: 1 }, exit: (d: number) => ({ y: reduced ? 0 : d * -18, opacity: 0 }) }}\n              initial=\"enter\"\n              animate=\"center\"\n              exit=\"exit\"\n              transition={reduced ? { duration: 0.08 } : spring.snappy}\n            >\n              {format(value)}\n            </motion.span>\n          </AnimatePresence>\n        </div>\n        {btn(1)}\n      </motion.div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "number",
+      "stepper",
+      "input",
+      "quantity",
+      "counter"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "settings"
+    ]
+  }
+}

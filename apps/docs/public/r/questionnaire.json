@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "questionnaire",
+  "type": "registry:component",
+  "title": "Questionnaire",
+  "description": "Typeform-style one-question-at-a-time form: answers slide the next question in from the direction of travel, the progress bar springs forward, number keys pick and Enter continues.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/questionnaire.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/questionnaire.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ArrowLeft, Check } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface Question {\n  id: string;\n  title: string;\n  hint?: string;\n  options: string[];\n  /** Allow picking several options. */\n  multiple?: boolean;\n}\n\nexport interface QuestionnaireProps {\n  questions: Question[];\n  onComplete?: (answers: Record<string, string[]>) => void;\n  className?: string;\n}\n\n/**\n * One question at a time, Typeform-style: answers slide the next question in from the direction of\n * travel, a progress bar springs forward, number keys pick options and Enter continues.\n */\nexport function Questionnaire({ questions, onComplete, className }: QuestionnaireProps) {\n  const reduced = useReducedMotion();\n  const [step, setStep] = useState(0);\n  const [dir, setDir] = useState(1);\n  const [answers, setAnswers] = useState<Record<string, string[]>>({});\n  const done = step >= questions.length;\n  const q = questions[Math.min(step, questions.length - 1)];\n  const picked = answers[q.id] ?? [];\n\n  const go = (d: number) => {\n    setDir(d);\n    const next = step + d;\n    if (next === questions.length) onComplete?.(answers);\n    setStep(Math.max(0, Math.min(questions.length, next)));\n  };\n  const pick = (opt: string) => {\n    const cur = answers[q.id] ?? [];\n    const val = q.multiple ? (cur.includes(opt) ? cur.filter((o) => o !== opt) : [...cur, opt]) : [opt];\n    setAnswers((a) => ({ ...a, [q.id]: val }));\n    if (!q.multiple) setTimeout(() => go(1), reduced ? 0 : 260);\n  };\n\n  const variants = {\n    enter: (d: number) => (reduced ? { opacity: 0 } : { opacity: 0, y: d * 40, filter: \"blur(6px)\" }),\n    center: { opacity: 1, y: 0, filter: \"blur(0px)\" },\n    exit: (d: number) => (reduced ? { opacity: 0 } : { opacity: 0, y: d * -40, filter: \"blur(6px)\" }),\n  };\n\n  return (\n    <div\n      className={cn(\"flex h-full w-full max-w-lg flex-col\", className)}\n      onKeyDown={(e) => {\n        if (done) return;\n        const n = Number(e.key);\n        if (n >= 1 && n <= q.options.length) pick(q.options[n - 1]);\n        if (e.key === \"Enter\" && picked.length) go(1);\n      }}\n    >\n      <div className=\"h-1 overflow-hidden rounded-full bg-muted\" role=\"progressbar\" aria-valuemin={0} aria-valuemax={questions.length} aria-valuenow={step}>\n        <motion.div className=\"h-full rounded-full bg-primary\" animate={{ width: `${(step / questions.length) * 100}%` }} transition={reduced ? { duration: 0 } : spring.smooth} />\n      </div>\n      <div className=\"relative mt-8 flex-1\">\n        <AnimatePresence mode=\"wait\" custom={dir} initial={false}>\n          {done ? (\n            <motion.div key=\"done\" variants={variants} custom={dir} initial=\"enter\" animate=\"center\" exit=\"exit\" transition={spring.smooth} className=\"flex flex-col items-start gap-3\">\n              <span className=\"grid size-12 place-items-center rounded-full bg-primary text-primary-foreground\"><Check className=\"size-6\" /></span>\n              <h3 className=\"text-2xl font-semibold tracking-tight\">All set — thanks!</h3>\n              <p className=\"text-sm text-muted-foreground\">We tailored your workspace from {Object.keys(answers).length} answers.</p>\n              <button type=\"button\" onClick={() => (setAnswers({}), setDir(-1), setStep(0))} className=\"text-sm underline underline-offset-4\">Start over</button>\n            </motion.div>\n          ) : (\n            <motion.fieldset key={q.id} variants={variants} custom={dir} initial=\"enter\" animate=\"center\" exit=\"exit\" transition={reduced ? { duration: 0.15 } : spring.smooth}>\n              <legend className=\"text-sm text-muted-foreground\">\n                {step + 1} → {questions.length}\n              </legend>\n              <h3 className=\"mt-1 text-2xl font-semibold tracking-tight\">{q.title}</h3>\n              {q.hint && <p className=\"mt-1 text-sm text-muted-foreground\">{q.hint}</p>}\n              <div className=\"mt-5 grid gap-2\">\n                {q.options.map((opt, i) => {\n                  const on = picked.includes(opt);\n                  return (\n                    <motion.button\n                      key={opt}\n                      type=\"button\"\n                      role={q.multiple ? \"checkbox\" : \"radio\"}\n                      aria-checked={on}\n                      onClick={() => pick(opt)}\n                      whileTap={reduced ? undefined : { scale: 0.98 }}\n                      animate={on && !reduced ? { scale: [1, 1.02, 1] } : undefined}\n                      className={cn(\"flex items-center gap-3 rounded-xl border px-3 py-2.5 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\", on ? \"border-primary bg-primary/10\" : \"border-border hover:bg-muted\")}\n                    >\n                      <kbd className={cn(\"grid size-6 place-items-center rounded-md border text-[11px]\", on ? \"border-primary bg-primary text-primary-foreground\" : \"border-border\")}>{on ? <Check className=\"size-3.5\" /> : i + 1}</kbd>\n                      {opt}\n                    </motion.button>\n                  );\n                })}\n              </div>\n              <div className=\"mt-6 flex items-center gap-3\">\n                {step > 0 && (\n                  <button type=\"button\" onClick={() => go(-1)} aria-label=\"Previous question\" className=\"grid size-9 place-items-center rounded-lg border border-border hover:bg-muted\"><ArrowLeft className=\"size-4\" /></button>\n                )}\n                {q.multiple && (\n                  <button type=\"button\" disabled={!picked.length} onClick={() => go(1)} className=\"rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-40\">\n                    Continue <span className=\"opacity-60\">↵</span>\n                  </button>\n                )}\n              </div>\n            </motion.fieldset>\n          )}\n        </AnimatePresence>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "form",
+      "survey",
+      "onboarding",
+      "typeform",
+      "steps"
+    ],
+    "pageTypes": [
+      "onboarding",
+      "auth"
+    ]
+  }
+}

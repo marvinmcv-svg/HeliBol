@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "orbital-image-wheel",
+  "type": "registry:component",
+  "title": "Orbital Image Wheel",
+  "description": "Images arranged on a giant wheel whose hub sits below the frame. Drag, scroll or use arrow keys to turn it; it springs so one image sits enlarged at the top with its title.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/orbital-image-wheel.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/orbital-image-wheel.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport { animate, motion, useMotionValue, useTransform, type MotionValue } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface OrbitalImageWheelProps {\n  items: { image: string; title: string }[];\n  /** Wheel radius as a fraction of the container width. */\n  radius?: number;\n  className?: string;\n}\n\nfunction Spoke({ i, n, angle, radius, image, title, active, onSelect }: { i: number; n: number; angle: MotionValue<number>; radius: number; image: string; title: string; active: boolean; onSelect: () => void }) {\n  const base = (i / n) * 360;\n  // Position on the wheel and scale by closeness to the top (the \"selected\" slot).\n  const rot = useTransform(angle, (a) => base + a);\n  const x = useTransform(rot, (r) => Math.sin((r * Math.PI) / 180) * radius);\n  const y = useTransform(rot, (r) => -Math.cos((r * Math.PI) / 180) * radius);\n  const near = useTransform(rot, (r) => {\n    const d = Math.abs(((((r % 360) + 540) % 360) - 180));\n    return 1 - Math.min(1, d / 60);\n  });\n  const scale = useTransform(near, [0, 1], [0.62, 1.15]);\n  const opacity = useTransform(near, [0, 1], [0.45, 1]);\n  return (\n    <motion.button\n      type=\"button\"\n      onClick={onSelect}\n      aria-label={title}\n      aria-current={active || undefined}\n      style={{ x, y, scale, opacity, rotate: rot }}\n      className=\"absolute left-1/2 top-1/2 -ml-[44px] -mt-[58px] h-[116px] w-[88px] overflow-hidden rounded-2xl shadow-xl outline-none ring-offset-2 ring-offset-background focus-visible:ring-2 focus-visible:ring-ring\"\n    >\n      <img src={image} alt=\"\" draggable={false} className=\"size-full object-cover\" />\n    </motion.button>\n  );\n}\n\n/**\n * Images arranged on a big wheel whose hub sits below the frame. Drag, scroll or use the arrow keys\n * to turn it; it snaps so one image sits at the top, enlarged, with its title.\n */\nexport function OrbitalImageWheel({ items, radius = 0.55, className }: OrbitalImageWheelProps) {\n  const reduced = useReducedMotion();\n  const box = useRef<HTMLDivElement>(null);\n  const [w, setW] = useState(600);\n  const angle = useMotionValue(0);\n  const [active, setActive] = useState(0);\n  const n = items.length;\n  const step = 360 / n;\n\n  useEffect(() => {\n    const el = box.current;\n    if (!el) return;\n    const ro = new ResizeObserver(([e]) => setW(e.contentRect.width));\n    ro.observe(el);\n    return () => ro.disconnect();\n  }, []);\n\n  const goTo = (idx: number) => {\n    const target = -idx * step;\n    // shortest way round from the current angle\n    const cur = angle.get();\n    const delta = ((((target - cur) % 360) + 540) % 360) - 180;\n    const dest = cur + delta;\n    setActive(((idx % n) + n) % n);\n    if (reduced) angle.set(dest);\n    else animate(angle, dest, { type: \"spring\", stiffness: 140, damping: 22 });\n  };\n  const snap = () => goTo(Math.round(-angle.get() / step));\n\n  useEffect(() => {\n    const el = box.current;\n    if (!el) return;\n    let t: ReturnType<typeof setTimeout>;\n    const wheel = (e: WheelEvent) => {\n      e.preventDefault();\n      angle.set(angle.get() - (e.deltaY + e.deltaX) * 0.08);\n      clearTimeout(t);\n      t = setTimeout(snap, 140);\n    };\n    el.addEventListener(\"wheel\", wheel, { passive: false });\n    return () => el.removeEventListener(\"wheel\", wheel);\n  });\n\n  const R = w * radius;\n  return (\n    <div\n      ref={box}\n      tabIndex={0}\n      role=\"region\"\n      aria-roledescription=\"carousel\"\n      aria-label=\"Image wheel\"\n      onKeyDown={(e) => {\n        if (e.key === \"ArrowRight\") goTo(active + 1);\n        if (e.key === \"ArrowLeft\") goTo(active - 1);\n      }}\n      className={cn(\"relative h-full w-full touch-pan-y overflow-hidden outline-none\", className)}\n    >\n      <motion.div\n        className=\"absolute inset-0 cursor-grab active:cursor-grabbing\"\n        onPan={(_, info) => angle.set(angle.get() + info.delta.x * (180 / (Math.PI * R)))}\n        onPanEnd={snap}\n        style={{ top: R * 0.9 }}\n      >\n        {items.map((it, i) => (\n          <Spoke key={i} i={i} n={n} angle={angle} radius={R} image={it.image} title={it.title} active={i === active} onSelect={() => goTo(i)} />\n        ))}\n      </motion.div>\n      <div className=\"pointer-events-none absolute inset-x-0 bottom-6 text-center\" aria-live=\"polite\">\n        <p className=\"text-[10px] uppercase tracking-[0.3em] text-muted-foreground\">{String(active + 1).padStart(2, \"0\")} / {String(n).padStart(2, \"0\")}</p>\n        <motion.p key={active} initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className=\"text-xl font-semibold tracking-tight\">{items[active].title}</motion.p>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "carousel",
+      "wheel",
+      "gallery",
+      "drag",
+      "portfolio"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "media"
+    ]
+  }
+}

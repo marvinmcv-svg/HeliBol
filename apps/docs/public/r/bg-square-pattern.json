@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-square-pattern",
+  "type": "registry:component",
+  "title": "Square Pattern",
+  "description": "A grid of small squares lit by a travelling wave — diagonal sweep, radial pulse or digital rain — with a soft glow under the cursor.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-square-pattern.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-square-pattern.tsx",
+      "content": "\"use client\";\nimport { cn, useCanvas } from \"@/lib/kinetik/core\";\n\nexport interface BgSquarePatternProps {\n  /** Cell size in CSS px. */\n  cell?: number;\n  /** Gap between squares in CSS px. */\n  gap?: number;\n  /** RGB triplet for lit squares, e.g. \"167,139,250\". */\n  color?: string;\n  /** Wave pattern travelling across the grid. */\n  pattern?: \"diagonal\" | \"radial\" | \"rain\";\n  className?: string;\n}\n\n/**\n * A grid of small squares lit by a travelling wave (diagonal sweep, radial pulse or digital rain),\n * plus a soft glow that follows the cursor. Static dim grid under reduced motion.\n */\nexport function BgSquarePattern({ cell = 18, gap = 3, color = \"167,139,250\", pattern = \"diagonal\", className }: BgSquarePatternProps) {\n  const ref = useCanvas(({ ctx, width, height, time, pointer }) => {\n    ctx.clearRect(0, 0, width, height);\n    const cols = Math.ceil(width / cell), rows = Math.ceil(height / cell);\n    const cx = cols / 2, cy = rows / 2;\n    const size = cell - gap;\n    for (let x = 0; x < cols; x++) {\n      for (let y = 0; y < rows; y++) {\n        let w = 0;\n        if (pattern === \"diagonal\") w = Math.sin((x + y) * 0.35 - time * 2.4);\n        else if (pattern === \"radial\") w = Math.sin(Math.hypot(x - cx, y - cy) * 0.5 - time * 2.6);\n        else {\n          // rain: each column has its own falling head\n          const head = ((time * (6 + ((x * 7919) % 11)) + x * 13) % (rows + 12)) - 6;\n          const d = head - y;\n          w = d >= 0 && d < 8 ? 1 - d / 8 : -1;\n        }\n        let a = 0.06 + Math.max(0, w) ** 3 * 0.55;\n        if (pointer) {\n          const d = Math.hypot(x * cell + cell / 2 - pointer.x, y * cell + cell / 2 - pointer.y);\n          a += Math.max(0, 1 - d / 140) * 0.5;\n        }\n        ctx.fillStyle = `rgba(${color},${Math.min(0.9, a)})`;\n        ctx.fillRect(x * cell + gap / 2, y * cell + gap / 2, size, size);\n      }\n    }\n  });\n  return <canvas ref={ref} aria-hidden className={cn(\"absolute inset-0 size-full\", className)} />;\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "grid",
+      "squares",
+      "canvas",
+      "pattern",
+      "tech"
+    ],
+    "pageTypes": [
+      "landing",
+      "dashboard"
+    ]
+  }
+}

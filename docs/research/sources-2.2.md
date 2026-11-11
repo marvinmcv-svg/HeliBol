@@ -1,0 +1,16 @@
+# kinetik 2.2 — sources and what came from each
+
+Round 2.2 widened the library with a **three.js collection** and with gaps found in five more catalogs. As before, **every component is written from scratch**: we studied catalogs (titles, categories, techniques), never copied code, prompts, media or layouts.
+
+| Source | How it was read | What it showed | Added in 2.2 |
+|---|---|---|---|
+| **MotionSites** ([motionsites.ai](https://motionsites.ai), [/3d-websites](https://motionsites.ai/3d-websites)) | Firecrawl scrape of the gallery and the 3D page (titles + category tags only) | A prompt library for cinematic sites. Categories: Hero, Landing, SaaS, 3D, Portfolio, Agency, AI, Interactive, Ecommerce, Fashion, Fintech. Recurring motifs: particle brains, sphere galleries, faceted glass, orbit spheres, video ribbons, fin-coins, liquid glass, ink reveals. | three.js collection (particle morph, sphere gallery, glass shape, orbit sphere, image ribbon, coin, floating shapes, tunnel, wave terrain) and 4 blocks: liquid-glass hero, ink-reveal hero, AI particle hero, 3D ribbon portfolio |
+| **three.js / pmndrs** | Our own knowledge of the three.js, R3F and drei APIs (three r186, R3F 9, drei 10) | Instancing, custom ShaderMaterial, MeshTransmissionMaterial, points with additive blending | shader blob (simplex noise), spiral galaxy, instanced pillar grid, warp tunnel; all built on the existing `Canvas3DShell` (pauses off-screen, still frame under reduced motion) |
+| **unlumen UI** ([ui.unlumen.com/components](https://ui.unlumen.com/components)) | Firecrawl scrape of the component index (names only) | ~55 Motion components for shadcn: smart-animate text, team stack, Notion mention link, orbital image wheel, depth-fade carousel, questionnaire, vertical marquee, gooey/expandable navbars, gravity stars, square pattern, aurora bars, video ambient, view-mode icons, pinned list, aurora card, pixel scroll transition, typing input | 18 components covering each idea we didn't already have |
+| **21st.dev** (taxonomy from `serafimcloud/21st`, see `catalogs.json`) | The 2.0 gap list: "tables, calendars/date pickers, radio groups, pagination" were still missing | — | data table, date picker, radio cards, pagination, number input, range slider with histogram |
+| **GSAP Demo Hub** (`gsap-demos.json`) | Re-checked the 2.1 mapping for uncovered demos | flip-carousel, shader-on-scroll, threejs-scroll-waypoints, animate-text-replacement, ScrollTo, animate-auto-height/toggle-direction and keyframes were uncovered | 7 GSAP components: flip carousel, shader on scroll, three.js scroll waypoints, TextPlugin text replace, ScrollTo table of contents, auto-height accordion, keyframes loader |
+| **Mobbin** | The Mobbin MCP is connected, but `search_flows` needs a paid Mobbin plan, so no screens were pulled. The 2.0 roadmap item "error/empty-state flows" drove the choice. | — | 2 flows: empty state → first task (with celebration), search & filter sheet |
+
+## Engine mix after 2.2
+
+GSAP went from 34 to 41 components. Three.js / R3F went from 1 to 13 (plus two R3F blocks). The contract suite skips jsdom rendering for `r3f` items (WebGL can't run there); everything else renders in both normal and reduced-motion modes.

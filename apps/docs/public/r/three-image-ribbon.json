@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "three-image-ribbon",
+  "type": "registry:component",
+  "title": "Image Ribbon",
+  "description": "Photos wrapped on a tilted, genuinely curved ribbon (open cylinder slices) that drifts and spins faster with wheel or drag.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/canvas-3d-shell.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/three-image-ribbon.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/three-image-ribbon.tsx",
+      "content": "\"use client\";\nimport { useEffect, useMemo, useRef } from \"react\";\nimport { useFrame, useThree } from \"@react-three/fiber\";\nimport { useTexture } from \"@react-three/drei\";\nimport * as THREE from \"three\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\nimport { Canvas3DShell } from \"@/components/kinetik/canvas-3d-shell\";\n\nexport interface ThreeImageRibbonProps {\n  images: string[];\n  radius?: number;\n  /** Panel height in world units. */\n  height?: number;\n  /** Idle drift, radians per second. */\n  speed?: number;\n  className?: string;\n}\n\nfunction Ribbon({ images, radius, height, speed }: Required<Omit<ThreeImageRibbonProps, \"className\">>) {\n  const reduced = useReducedMotion();\n  const group = useRef<THREE.Group>(null);\n  const textures = useTexture(images);\n  textures.forEach((t) => (t.colorSpace = THREE.SRGBColorSpace));\n  const gl = useThree((s) => s.gl);\n  const n = images.length;\n  const gap = 0.04;\n  const arc = (Math.PI * 2) / n - gap;\n  // Open cylinder slices → each photo is genuinely curved, not a flat card on a circle.\n  const geometries = useMemo(() => Array.from({ length: n }, (_, i) => new THREE.CylinderGeometry(radius, radius, height, 24, 1, true, i * (arc + gap), arc)), [n, radius, height, arc]);\n  useEffect(() => () => geometries.forEach((g) => g.dispose()), [geometries]);\n\n  // Wheel and drag add velocity; it decays back to the idle drift.\n  const vel = useRef(0);\n  useEffect(() => {\n    const el = gl.domElement;\n    let down = false, lastX = 0;\n    const wheel = (e: WheelEvent) => { vel.current += (e.deltaY + e.deltaX) * 0.0004; };\n    const pd = (e: PointerEvent) => { down = true; lastX = e.clientX; };\n    const pm = (e: PointerEvent) => { if (down) { vel.current = (e.clientX - lastX) * 0.004; lastX = e.clientX; } };\n    const pu = () => (down = false);\n    el.addEventListener(\"wheel\", wheel, { passive: true });\n    el.addEventListener(\"pointerdown\", pd);\n    window.addEventListener(\"pointermove\", pm);\n    window.addEventListener(\"pointerup\", pu);\n    el.style.cursor = \"grab\";\n    return () => { el.removeEventListener(\"wheel\", wheel); el.removeEventListener(\"pointerdown\", pd); window.removeEventListener(\"pointermove\", pm); window.removeEventListener(\"pointerup\", pu); };\n  }, [gl]);\n\n  useFrame((s, dt) => {\n    const g = group.current;\n    if (!g) return;\n    vel.current += ((reduced ? 0 : speed * dt) - vel.current) * 0.05;\n    g.rotation.y += vel.current;\n    g.rotation.z += ((reduced ? -0.12 : -0.12 + s.pointer.y * 0.06) - g.rotation.z) * 0.05;\n  });\n\n  return (\n    <group ref={group} rotation={[0.05, 0, -0.12]}>\n      {geometries.map((geo, i) => (\n        <mesh key={i} geometry={geo}>\n          {/* BackSide: we look at the inside of the ribbon from its centre-ish */}\n          <meshBasicMaterial map={textures[i]} side={THREE.DoubleSide} toneMapped={false} />\n        </mesh>\n      ))}\n    </group>\n  );\n}\n\n/** Photos wrapped on a tilted, curved ribbon that drifts, and spins faster with wheel or drag — the video-ribbon portfolio look. */\nexport function ThreeImageRibbon({ images, radius = 2.4, height = 1.2, speed = 0.15, className }: ThreeImageRibbonProps) {\n  return (\n    <Canvas3DShell className={className} camera={{ position: [0, 0.4, 5.2], fov: 45 }}>\n      <Ribbon images={images} radius={radius} height={height} speed={speed} />\n    </Canvas3DShell>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "three.js",
+      "carousel",
+      "portfolio",
+      "images",
+      "ribbon"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "media"
+    ]
+  }
+}

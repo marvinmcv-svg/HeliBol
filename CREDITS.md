@@ -19,3 +19,10 @@ Libraries: Motion, GSAP (+ ScrollTrigger, SplitText, ScrambleText, DrawSVG), Len
 - **REA — Reverse Engineer Anything** ([morluto/rea](https://github.com/morluto/rea), MIT): static JavaScript analysis of the libraries above and thumbnail capture for the gallery. See `docs/research/`.
 - **GSAP Demo Hub** ([demos.gsap.com](https://demos.gsap.com), read with Firecrawl): technique catalog for the GSAP collection. Titles, tags and techniques were studied; no demo code or media was copied. GSAP itself is used under its free Standard License.
 - Catalog and taxonomy data come from the public MIT repositories of 21st.dev (`serafimcloud/21st`), Magic UI, Motion Primitives, Cult UI, Animata and Fancy Components, and from React Bits (MIT + Commons Clause, studied only, nothing reused).
+
+## kinetik 2.2 inspiration (studied only, nothing copied)
+
+- **MotionSites** ([motionsites.ai](https://motionsites.ai)) — gallery categories and motifs of cinematic/3D sites (particle brain, sphere gallery, facet glass, video ribbon, fin coin, liquid glass, ink reveal).
+- **unlumen UI** ([ui.unlumen.com](https://ui.unlumen.com)) — component index (names) used to find gaps.
+- **three.js / pmndrs** (MIT) — three.js, React Three Fiber and drei are dependencies; scenes are original. Simplex noise GLSL in `three-shader-blob` is the public-domain/MIT Ashima Arts implementation by Ian McEwan & Stefan Gustavson, credited inline.
+- **21st.dev** taxonomy and the **GSAP Demo Hub** catalog (see above) for the UI-section and GSAP gaps.

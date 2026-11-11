@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "data-table",
+  "type": "registry:component",
+  "title": "Animated Data Table",
+  "description": "Sortable, filterable, selectable table: rows glide to their new order, filtered rows fade out, the sort arrow flips and a bulk-action bar springs up on selection.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/data-table.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/data-table.tsx",
+      "content": "\"use client\";\nimport { useMemo, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ArrowUp } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface DataTableColumn<T> {\n  key: keyof T & string;\n  header: string;\n  /** Custom cell renderer. */\n  render?: (row: T) => ReactNode;\n  align?: \"left\" | \"right\";\n  sortable?: boolean;\n}\n\nexport interface DataTableProps<T extends { id: string }> {\n  rows: T[];\n  columns: DataTableColumn<T>[];\n  /** Columns searched by the filter box. */\n  searchKeys?: (keyof T & string)[];\n  caption?: string;\n  className?: string;\n}\n\n/**\n * A sortable, filterable, selectable table where rows glide to their new order (layout animation),\n * filtered rows collapse out, the sort arrow flips, and a bulk-action bar slides up on selection.\n */\nexport function DataTable<T extends { id: string }>({ rows, columns, searchKeys, caption, className }: DataTableProps<T>) {\n  const reduced = useReducedMotion();\n  const [sort, setSort] = useState<{ key: keyof T & string; dir: 1 | -1 } | null>(null);\n  const [query, setQuery] = useState(\"\");\n  const [selected, setSelected] = useState<Set<string>>(new Set());\n\n  const view = useMemo(() => {\n    const q = query.trim().toLowerCase();\n    let out = q ? rows.filter((r) => (searchKeys ?? columns.map((c) => c.key)).some((k) => String(r[k]).toLowerCase().includes(q))) : rows;\n    if (sort) out = [...out].sort((a, b) => (a[sort.key] > b[sort.key] ? 1 : a[sort.key] < b[sort.key] ? -1 : 0) * sort.dir);\n    return out;\n  }, [rows, query, sort, searchKeys, columns]);\n\n  const toggleSort = (key: keyof T & string) => setSort((s) => (s?.key === key ? (s.dir === 1 ? { key, dir: -1 } : null) : { key, dir: 1 }));\n  const allOn = view.length > 0 && view.every((r) => selected.has(r.id));\n  const toggleAll = () => setSelected(allOn ? new Set() : new Set(view.map((r) => r.id)));\n  const toggle = (id: string) => setSelected((s) => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });\n  const t = reduced ? { duration: 0 } : spring.smooth;\n\n  return (\n    <div className={cn(\"relative flex h-full flex-col gap-3\", className)}>\n      <input\n        type=\"search\"\n        value={query}\n        onChange={(e) => setQuery(e.target.value)}\n        placeholder=\"Filter…\"\n        aria-label=\"Filter rows\"\n        className=\"h-9 w-56 rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n      />\n      <div className=\"min-h-0 flex-1 overflow-auto rounded-xl border border-border\">\n        <table className=\"w-full border-collapse text-sm\">\n          {caption && <caption className=\"sr-only\">{caption}</caption>}\n          <thead className=\"sticky top-0 z-10 bg-muted/80 backdrop-blur\">\n            <tr>\n              <th className=\"w-10 px-3 py-2 text-left\">\n                <input type=\"checkbox\" checked={allOn} onChange={toggleAll} aria-label=\"Select all rows\" className=\"size-4 accent-[var(--color-primary,currentColor)]\" />\n              </th>\n              {columns.map((c) => {\n                const active = sort?.key === c.key;\n                return (\n                  <th key={c.key} scope=\"col\" aria-sort={active ? (sort!.dir === 1 ? \"ascending\" : \"descending\") : \"none\"} className={cn(\"px-3 py-2 font-medium text-muted-foreground\", c.align === \"right\" ? \"text-right\" : \"text-left\")}>\n                    {c.sortable === false ? c.header : (\n                      <button type=\"button\" onClick={() => toggleSort(c.key)} className={cn(\"inline-flex items-center gap-1 rounded hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\", active && \"text-foreground\")}>\n                        {c.header}\n                        <motion.span initial={false} animate={{ rotate: active && sort!.dir === -1 ? 180 : 0, opacity: active ? 1 : 0.25 }} transition={t}>\n                          <ArrowUp className=\"size-3.5\" />\n                        </motion.span>\n                      </button>\n                    )}\n                  </th>\n                );\n              })}\n            </tr>\n          </thead>\n          <tbody>\n            <AnimatePresence initial={false}>\n              {view.map((r) => (\n                <motion.tr\n                  key={r.id}\n                  layout={reduced ? false : \"position\"}\n                  initial={{ opacity: 0 }}\n                  animate={{ opacity: 1 }}\n                  exit={{ opacity: 0 }}\n                  transition={t}\n                  className={cn(\"border-t border-border transition-colors\", selected.has(r.id) ? \"bg-primary/5\" : \"hover:bg-muted/50\")}\n                >\n                  <td className=\"px-3 py-2\"><input type=\"checkbox\" checked={selected.has(r.id)} onChange={() => toggle(r.id)} aria-label={`Select row ${r.id}`} className=\"size-4\" /></td>\n                  {columns.map((c) => (\n                    <td key={c.key} className={cn(\"px-3 py-2\", c.align === \"right\" && \"text-right tabular-nums\")}>{c.render ? c.render(r) : String(r[c.key])}</td>\n                  ))}\n                </motion.tr>\n              ))}\n            </AnimatePresence>\n          </tbody>\n        </table>\n        {view.length === 0 && <p className=\"p-6 text-center text-sm text-muted-foreground\">No rows match “{query}”.</p>}\n      </div>\n      <AnimatePresence>\n        {selected.size > 0 && (\n          <motion.div\n            role=\"status\"\n            initial={reduced ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.96 }}\n            animate={{ opacity: 1, y: 0, scale: 1 }}\n            exit={reduced ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.96 }}\n            transition={reduced ? { duration: 0.1 } : spring.bouncy}\n            className=\"absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full bg-foreground py-1.5 pl-4 pr-1.5 text-sm text-background shadow-xl\"\n          >\n            {selected.size} selected\n            <button type=\"button\" onClick={() => setSelected(new Set())} className=\"rounded-full bg-background/15 px-3 py-1 hover:bg-background/25\">Clear</button>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "table",
+      "sort",
+      "filter",
+      "selection",
+      "dashboard"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "settings"
+    ]
+  }
+}

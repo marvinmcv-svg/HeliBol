@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-smart-animate",
+  "type": "registry:component",
+  "title": "Smart Animate Text",
+  "description": "Figma-style Smart Animate for words: letters shared between the old and new word glide to their new slots, new letters blur in and leftovers blur out.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-smart-animate.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-smart-animate.tsx",
+      "content": "\"use client\";\nimport { useEffect, useMemo, useState } from \"react\";\nimport { AnimatePresence, LayoutGroup, motion } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextSmartAnimateProps {\n  /** Words or phrases to cycle through. */\n  words: string[];\n  /** Milliseconds each word stays. */\n  interval?: number;\n  className?: string;\n}\n\n/**\n * Figma \"Smart Animate\" for text: letters shared between the old and new word glide to their\n * new position (keyed by letter + occurrence), new letters blur in, leftovers blur out.\n */\nexport function TextSmartAnimate({ words, interval = 2200, className }: TextSmartAnimateProps) {\n  const reduced = useReducedMotion();\n  const [i, setI] = useState(0);\n  useEffect(() => {\n    const id = setInterval(() => setI((n) => (n + 1) % words.length), interval);\n    return () => clearInterval(id);\n  }, [words.length, interval]);\n  const word = words[i];\n\n  // \"banana\" → b-0 a-0 n-0 a-1 n-1 a-2: the same key in two words = the same glyph moving.\n  const letters = useMemo(() => {\n    const seen: Record<string, number> = {};\n    return [...word].map((ch) => {\n      const k = ch.toLowerCase();\n      seen[k] = (seen[k] ?? -1) + 1;\n      return { ch, key: `${k}-${seen[k]}` };\n    });\n  }, [word]);\n\n  return (\n    <span className={cn(\"inline-flex whitespace-pre\", className)} aria-live=\"polite\">\n      <span className=\"sr-only\">{word}</span>\n      <LayoutGroup>\n        <span aria-hidden className=\"inline-flex\">\n          <AnimatePresence mode=\"popLayout\" initial={false}>\n            {letters.map((l) => (\n              <motion.span\n                key={l.key}\n                layout={reduced ? false : \"position\"}\n                initial={reduced ? { opacity: 0 } : { opacity: 0, filter: \"blur(6px)\", y: 8 }}\n                animate={{ opacity: 1, filter: \"blur(0px)\", y: 0 }}\n                exit={reduced ? { opacity: 0 } : { opacity: 0, filter: \"blur(6px)\", y: -8 }}\n                transition={reduced ? { duration: 0.15 } : spring.smooth}\n                className=\"inline-block\"\n              >\n                {l.ch === \" \" ? \" \" : l.ch}\n              </motion.span>\n            ))}\n          </AnimatePresence>\n        </span>\n      </LayoutGroup>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "text",
+      "morph",
+      "anagram",
+      "layout",
+      "price"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing"
+    ]
+  }
+}

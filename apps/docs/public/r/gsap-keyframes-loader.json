@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-keyframes-loader",
+  "type": "registry:component",
+  "title": "Keyframes Loader",
+  "description": "A loader choreographed entirely with GSAP percentage keyframes: four blocks hop, squash on landing, travel around a square and spin, staggered in time.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-keyframes-loader.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-keyframes-loader.tsx",
+      "content": "\"use client\";\nimport { useRef } from \"react\";\nimport gsap from \"gsap\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(useGSAP);\n\nexport interface GsapKeyframesLoaderProps {\n  /** Accessible label announced to screen readers. */\n  label?: string;\n  colors?: string[];\n  size?: number;\n  className?: string;\n}\n\nconst DEFAULT_COLORS = [\"#a78bfa\", \"#f472b6\", \"#fbbf24\", \"#34d399\"];\n\n/**\n * A loader choreographed entirely with GSAP keyframes: four blocks hop, squash on landing, swap\n * places around a square and spin, each block offset in time — one keyframes array + stagger, no\n * timeline bookkeeping. Reduced motion: a gentle opacity pulse.\n */\nexport function GsapKeyframesLoader({ label = \"Loading\", colors = DEFAULT_COLORS, size = 18, className }: GsapKeyframesLoaderProps) {\n  const root = useRef<HTMLDivElement>(null);\n  const reduced = useReducedMotion();\n  const gap = size * 1.4;\n\n  useGSAP(\n    () => {\n      const blocks = gsap.utils.toArray<HTMLElement>(\"[data-block]\");\n      if (reduced) {\n        gsap.to(blocks, { opacity: 0.35, duration: 0.8, repeat: -1, yoyo: true, stagger: 0.2, ease: \"sine.inOut\" });\n        return;\n      }\n      gsap.to(blocks, {\n        keyframes: {\n          // percentage keyframes; easeEach shapes every segment\n          \"0%\": { x: 0, y: 0, scaleX: 1, scaleY: 1, rotate: 0 },\n          \"15%\": { y: -size * 1.6, scaleX: 0.9, scaleY: 1.12 },\n          \"30%\": { x: gap, y: 0, scaleX: 1.25, scaleY: 0.75 },\n          \"40%\": { scaleX: 1, scaleY: 1, rotate: 90 },\n          \"55%\": { y: gap, x: gap, rotate: 180 },\n          \"70%\": { x: 0, y: gap, rotate: 270 },\n          \"85%\": { x: 0, y: 0, rotate: 360, scaleX: 1.15, scaleY: 0.85 },\n          \"100%\": { scaleX: 1, scaleY: 1, rotate: 360 },\n          easeEach: \"power2.inOut\",\n        },\n        duration: 2.4,\n        stagger: { each: 0.6, repeat: -1 },\n      });\n    },\n    { scope: root, dependencies: [reduced, size], revertOnUpdate: true },\n  );\n\n  return (\n    <div ref={root} role=\"status\" aria-label={label} className={cn(\"relative\", className)} style={{ width: gap + size, height: gap + size }}>\n      {colors.slice(0, 4).map((c, i) => (\n        <span\n          key={i}\n          data-block\n          aria-hidden\n          className=\"absolute rounded-[28%]\"\n          style={{ width: size, height: size, background: c, left: (i % 2) * gap, top: Math.floor(i / 2) * gap, boxShadow: `0 6px 18px -6px ${c}` }}\n        />\n      ))}\n      <span className=\"sr-only\">{label}…</span>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "loaders"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "gsap",
+      "keyframes",
+      "loader",
+      "playful",
+      "spinner"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "onboarding"
+    ]
+  }
+}

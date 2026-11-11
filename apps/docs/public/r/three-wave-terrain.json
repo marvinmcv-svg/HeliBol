@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "three-wave-terrain",
+  "type": "registry:component",
+  "title": "Wave Terrain",
+  "description": "A rolling field of points displaced on the GPU, with a ripple that follows the cursor across the ground plane — press to amplify. Depth fog dissolves the horizon.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/canvas-3d-shell.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/three-wave-terrain.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/three-wave-terrain.tsx",
+      "content": "\"use client\";\nimport { useEffect, useMemo, useRef } from \"react\";\nimport { useFrame, useThree } from \"@react-three/fiber\";\nimport * as THREE from \"three\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\nimport { Canvas3DShell } from \"@/components/kinetik/canvas-3d-shell\";\n\nexport interface ThreeWaveTerrainProps {\n  /** Points per side of the grid. */\n  resolution?: number;\n  size?: number;\n  color?: string;\n  /** Background/fog colour so the far edge dissolves. */\n  fog?: string;\n  className?: string;\n}\n\nconst vertexShader = /* glsl */ `\nuniform float uTime; uniform vec2 uPointer; uniform float uPress;\nvarying float vH;\nvoid main(){\n  vec3 p = position;\n  float h = sin(p.x * .6 + uTime) * .25 + cos(p.z * .8 + uTime * .7) * .25 + sin((p.x + p.z) * .35 + uTime * .5) * .35;\n  float d = distance(p.xz, uPointer);\n  h += exp(-d * d * .35) * (.9 + uPress) * sin(d * 3. - uTime * 4.) ;\n  p.y += h;\n  vH = h;\n  vec4 mv = modelViewMatrix * vec4(p, 1.);\n  gl_PointSize = 2.2 * (8. / -mv.z);\n  gl_Position = projectionMatrix * mv;\n}`;\nconst fragmentShader = /* glsl */ `\nuniform vec3 uColor; uniform vec3 uFog; varying float vH;\nvoid main(){\n  float r = length(gl_PointCoord - .5); if (r > .5) discard;\n  float depth = gl_FragCoord.z / gl_FragCoord.w;\n  float f = smoothstep(4., 14., depth);\n  vec3 c = uColor * (.55 + vH * .6);\n  gl_FragColor = vec4(mix(c, uFog, f), 1. - f * .9);\n}`;\n\nfunction Terrain({ resolution, size, color, fog }: Required<Omit<ThreeWaveTerrainProps, \"className\">>) {\n  const reduced = useReducedMotion();\n  const positions = useMemo(() => {\n    const arr = new Float32Array(resolution * resolution * 3);\n    for (let i = 0; i < resolution; i++)\n      for (let j = 0; j < resolution; j++) arr.set([(i / resolution - 0.5) * size, 0, (j / resolution - 0.5) * size], (i * resolution + j) * 3);\n    return arr;\n  }, [resolution, size]);\n  const uniforms = useMemo(() => ({ uTime: { value: 0 }, uPointer: { value: new THREE.Vector2(0, 0) }, uPress: { value: 0 }, uColor: { value: new THREE.Color(color) }, uFog: { value: new THREE.Color(fog) } }), [color, fog]);\n  const plane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 1, 0), 0), []);\n  const hit = useMemo(() => new THREE.Vector3(), []);\n  const press = useRef(0);\n  const gl = useThree((s) => s.gl);\n  useEffect(() => {\n    const el = gl.domElement;\n    const down = () => (press.current = 1.2);\n    const up = () => (press.current = 0);\n    el.addEventListener(\"pointerdown\", down);\n    window.addEventListener(\"pointerup\", up);\n    return () => { el.removeEventListener(\"pointerdown\", down); window.removeEventListener(\"pointerup\", up); };\n  }, [gl]);\n\n  useFrame((s, dt) => {\n    if (reduced) return;\n    uniforms.uTime.value += dt;\n    // Project the pointer onto the ground plane so the ripple sits under the cursor.\n    s.raycaster.setFromCamera(s.pointer, s.camera);\n    if (s.raycaster.ray.intersectPlane(plane, hit)) uniforms.uPointer.value.lerp(new THREE.Vector2(hit.x, hit.z), 0.08);\n    uniforms.uPress.value += (press.current - uniforms.uPress.value) * 0.1;\n  });\n\n  return (\n    <points>\n      <bufferGeometry><bufferAttribute attach=\"attributes-position\" args={[positions, 3]} /></bufferGeometry>\n      <shaderMaterial vertexShader={vertexShader} fragmentShader={fragmentShader} uniforms={uniforms} transparent depthWrite={false} />\n    </points>\n  );\n}\n\n/** A rolling field of points (GPU-displaced in a vertex shader) with a ripple that follows the cursor; press to amplify. */\nexport function ThreeWaveTerrain({ resolution = 140, size = 18, color = \"#5eead4\", fog = \"#020617\", className }: ThreeWaveTerrainProps) {\n  return (\n    <Canvas3DShell className={className} camera={{ position: [0, 2.6, 6.5], fov: 50 }}>\n      <group rotation={[-0.08, 0, 0]}>\n        <Terrain resolution={resolution} size={size} color={color} fog={fog} />\n      </group>\n    </Canvas3DShell>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "three.js",
+      "shader",
+      "terrain",
+      "points",
+      "data"
+    ],
+    "pageTypes": [
+      "landing",
+      "dashboard"
+    ]
+  }
+}

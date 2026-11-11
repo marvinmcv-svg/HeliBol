@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "three-orbit-sphere",
+  "type": "registry:component",
+  "title": "Orbit Sphere",
+  "description": "A dotted planet with tilted orbit rings and satellites — the classic \"global network / coverage\" hero visual.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/canvas-3d-shell.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/three-orbit-sphere.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/three-orbit-sphere.tsx",
+      "content": "\"use client\";\nimport { useMemo, useRef } from \"react\";\nimport { useFrame } from \"@react-three/fiber\";\nimport * as THREE from \"three\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\nimport { Canvas3DShell } from \"@/components/kinetik/canvas-3d-shell\";\n\nexport interface ThreeOrbitSphereProps {\n  /** Dots on the core sphere. */\n  dots?: number;\n  /** Orbiting satellites per ring; one entry per ring. */\n  rings?: number[];\n  color?: string;\n  accent?: string;\n  className?: string;\n}\n\nconst DEFAULT_RINGS = [5, 8, 12];\n\nfunction Scene({ dots, rings, color, accent }: Required<Omit<ThreeOrbitSphereProps, \"className\">>) {\n  const reduced = useReducedMotion();\n  const root = useRef<THREE.Group>(null);\n  const ringRefs = useRef<(THREE.Group | null)[]>([]);\n  const sphere = useMemo(() => {\n    const arr = new Float32Array(dots * 3);\n    for (let i = 0; i < dots; i++) {\n      const phi = Math.acos(1 - 2 * (i + 0.5) / dots);\n      const theta = Math.PI * (1 + Math.sqrt(5)) * i;\n      arr.set(new THREE.Vector3().setFromSphericalCoords(1.2, phi, theta).toArray(), i * 3);\n    }\n    return arr;\n  }, [dots]);\n  // Each ring: radius, tilt, speed — tilted planes read as \"orbits\" instead of flat circles.\n  const ringDefs = useMemo(() => rings.map((n, i) => ({ n, r: 1.65 + i * 0.42, tilt: [0.5 + i * 0.35, i * 0.8, 0.2 * i] as [number, number, number], speed: (i % 2 ? -1 : 1) * (0.5 - i * 0.1) })), [rings]);\n\n  useFrame((s, dt) => {\n    if (reduced) return;\n    ringRefs.current.forEach((g, i) => g && (g.rotation.z += dt * ringDefs[i].speed));\n    const r = root.current;\n    if (r) {\n      r.rotation.y += dt * 0.12;\n      r.rotation.x += (s.pointer.y * 0.5 - r.rotation.x) * 0.04;\n    }\n  });\n\n  return (\n    <group ref={root}>\n      <points>\n        <bufferGeometry><bufferAttribute attach=\"attributes-position\" args={[sphere, 3]} /></bufferGeometry>\n        <pointsMaterial size={0.035} color={color} transparent opacity={0.85} sizeAttenuation depthWrite={false} />\n      </points>\n      <mesh><sphereGeometry args={[1.17, 48, 48]} /><meshBasicMaterial color=\"#000\" transparent opacity={0.6} /></mesh>\n      {ringDefs.map((d, i) => (\n        <group key={i} rotation={d.tilt}>\n          <mesh rotation={[0, 0, 0]}>\n            <torusGeometry args={[d.r, 0.003, 8, 160]} />\n            <meshBasicMaterial color={color} transparent opacity={0.25} />\n          </mesh>\n          <group ref={(g) => { ringRefs.current[i] = g; }}>\n            {Array.from({ length: d.n }, (_, k) => {\n              const a = (k / d.n) * Math.PI * 2;\n              return (\n                <mesh key={k} position={[Math.cos(a) * d.r, Math.sin(a) * d.r, 0]}>\n                  <sphereGeometry args={[k === 0 ? 0.07 : 0.035, 16, 16]} />\n                  <meshBasicMaterial color={k === 0 ? accent : color} />\n                </mesh>\n              );\n            })}\n          </group>\n        </group>\n      ))}\n    </group>\n  );\n}\n\n/** A dotted planet with tilted orbit rings and satellites — the \"network / coverage\" hero visual. */\nexport function ThreeOrbitSphere({ dots = 2400, rings = DEFAULT_RINGS, color = \"#e4e4e7\", accent = \"#f97316\", className }: ThreeOrbitSphereProps) {\n  return (\n    <Canvas3DShell className={className} camera={{ position: [0, 0, 6.2], fov: 45 }}>\n      <Scene dots={dots} rings={rings} color={color} accent={accent} />\n    </Canvas3DShell>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "three.js",
+      "globe",
+      "orbit",
+      "network",
+      "saas"
+    ],
+    "pageTypes": [
+      "landing",
+      "dashboard"
+    ]
+  }
+}

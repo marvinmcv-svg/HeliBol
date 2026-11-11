@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar-team-stack",
+  "type": "registry:component",
+  "title": "Avatar Team Stack",
+  "description": "Overlapping, slightly tilted avatars that fan out on hover or focus; the person under the pointer lifts and shows a name card.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/avatar-team-stack.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/avatar-team-stack.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TeamMember {\n  name: string;\n  role: string;\n  image: string;\n}\n\nexport interface AvatarTeamStackProps {\n  members: TeamMember[];\n  /** Avatar size in px. */\n  size?: number;\n  className?: string;\n}\n\n/**\n * Overlapping avatars that fan out when you hover or focus the group; the hovered person lifts and\n * shows a name card. Tap toggles on touch.\n */\nexport function AvatarTeamStack({ members, size = 56, className }: AvatarTeamStackProps) {\n  const reduced = useReducedMotion();\n  const [open, setOpen] = useState(false);\n  const [active, setActive] = useState<number | null>(null);\n  const overlap = size * 0.42;\n  const spread = size * 0.12;\n\n  return (\n    <div\n      role=\"group\"\n      aria-label=\"Team\"\n      className={cn(\"relative inline-flex items-center\", className)}\n      onPointerEnter={() => setOpen(true)}\n      onPointerLeave={() => (setOpen(false), setActive(null))}\n      onFocus={() => setOpen(true)}\n      onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node) && (setOpen(false), setActive(null))}\n    >\n      {members.map((m, i) => (\n        <motion.button\n          key={m.name}\n          type=\"button\"\n          aria-label={`${m.name}, ${m.role}`}\n          onPointerEnter={() => setActive(i)}\n          onFocus={() => setActive(i)}\n          onClick={() => setOpen((o) => !o)}\n          className=\"relative rounded-full outline-none ring-offset-2 ring-offset-background focus-visible:ring-2 focus-visible:ring-ring\"\n          style={{ width: size, height: size, zIndex: active === i ? 50 : members.length - i }}\n          animate={{\n            marginLeft: i === 0 ? 0 : open ? spread : -overlap,\n            y: !reduced && active === i ? -8 : 0,\n            scale: !reduced && active === i ? 1.12 : 1,\n            rotate: reduced || open ? 0 : (i % 2 ? 4 : -4),\n          }}\n          transition={reduced ? { duration: 0 } : spring.bouncy}\n        >\n          <img src={m.image} alt=\"\" className=\"size-full rounded-full border-2 border-background object-cover shadow-md\" />\n          <AnimatePresence>\n            {open && active === i && (\n              <motion.span\n                initial={{ opacity: 0, y: 6, scale: 0.9 }}\n                animate={{ opacity: 1, y: 0, scale: 1 }}\n                exit={{ opacity: 0, y: 6, scale: 0.9 }}\n                transition={reduced ? { duration: 0.1 } : spring.snappy}\n                className=\"pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-xl border border-border bg-popover px-3 py-1.5 text-left text-xs shadow-lg\"\n              >\n                <span className=\"block font-medium text-popover-foreground\">{m.name}</span>\n                <span className=\"block text-muted-foreground\">{m.role}</span>\n              </motion.span>\n            )}\n          </AnimatePresence>\n        </motion.button>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "avatars",
+      "team",
+      "hover",
+      "social proof"
+    ],
+    "pageTypes": [
+      "landing",
+      "social"
+    ]
+  }
+}

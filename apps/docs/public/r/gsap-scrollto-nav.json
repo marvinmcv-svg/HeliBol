@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-scrollto-nav",
+  "type": "registry:component",
+  "title": "ScrollTo Table of Contents",
+  "description": "Docs-style table of contents: links glide the scroller to each section with ScrollToPlugin (eased, interruptible) while ScrollTriggers track the active section and a bar slides beside it.",
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-scrollto-nav.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-scrollto-nav.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState, type ReactNode, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollToPlugin } from \"gsap/ScrollToPlugin\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollToPlugin, ScrollTrigger);\n\nexport interface ScrollToSection {\n  id: string;\n  label: string;\n  content: ReactNode;\n}\n\nexport interface GsapScrollToNavProps {\n  sections: ScrollToSection[];\n  /** The element that scrolls (defaults to window). */\n  scroller?: RefObject<HTMLElement | null>;\n  className?: string;\n}\n\n/**\n * Docs-style table of contents: clicking a link glides the scroller to the section with GSAP's\n * ScrollToPlugin (eased, interruptible, offset for the sticky header), while ScrollTriggers track the\n * active section and a bar slides beside the current link.\n */\nexport function GsapScrollToNav({ sections, scroller, className }: GsapScrollToNavProps) {\n  const reduced = useReducedMotion();\n  const [active, setActive] = useState(0);\n  const root = useRef<HTMLDivElement>(null);\n  const list = useRef<HTMLUListElement>(null);\n  const bar = useRef<HTMLSpanElement>(null);\n\n  useEffect(() => {\n    const els = sections.map((s) => root.current!.querySelector<HTMLElement>(`#${CSS.escape(s.id)}`)!);\n    const triggers = els.map((el, i) =>\n      ScrollTrigger.create({ trigger: el, scroller: scroller?.current ?? undefined, start: \"top 40%\", end: \"bottom 40%\", onToggle: (self) => self.isActive && setActive(i) }),\n    );\n    return () => triggers.forEach((t) => t.kill());\n  }, [sections, scroller]);\n\n  useEffect(() => {\n    const link = list.current?.children[active] as HTMLElement | undefined;\n    if (!link || !bar.current) return;\n    gsap.to(bar.current, { y: link.offsetTop, height: link.offsetHeight, duration: reduced ? 0 : 0.45, ease: \"power3.out\" });\n  }, [active, reduced]);\n\n  const go = (i: number) => {\n    const el = root.current!.querySelector<HTMLElement>(`#${CSS.escape(sections[i].id)}`)!;\n    gsap.to(scroller?.current ?? window, { duration: reduced ? 0 : 1, ease: \"power3.inOut\", scrollTo: { y: el, offsetY: 16, autoKill: true }, overwrite: true });\n    el.focus({ preventScroll: true });\n  };\n\n  return (\n    <div ref={root} className={cn(\"grid grid-cols-[9rem_1fr] gap-6\", className)}>\n      <nav aria-label=\"On this page\" className=\"sticky top-4 h-fit\">\n        <p className=\"mb-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground\">On this page</p>\n        <div className=\"relative pl-3\">\n          <span aria-hidden className=\"absolute left-0 top-0 h-full w-px bg-border\" />\n          <span ref={bar} aria-hidden className=\"absolute left-0 top-0 w-0.5 -translate-x-[0.5px] rounded-full bg-primary\" style={{ height: 0 }} />\n          <ul ref={list} className=\"space-y-1\">\n            {sections.map((s, i) => (\n              <li key={s.id}>\n                <a\n                  href={`#${s.id}`}\n                  aria-current={i === active ? \"location\" : undefined}\n                  onClick={(e) => (e.preventDefault(), go(i))}\n                  className={cn(\"block py-0.5 text-sm transition-colors\", i === active ? \"font-medium text-foreground\" : \"text-muted-foreground hover:text-foreground\")}\n                >\n                  {s.label}\n                </a>\n              </li>\n            ))}\n          </ul>\n        </div>\n      </nav>\n      <div className=\"space-y-10 pb-[60cqh]\">\n        {sections.map((s) => (\n          <section key={s.id} id={s.id} tabIndex={-1} aria-label={s.label} className=\"scroll-mt-4 outline-none\">\n            {s.content}\n          </section>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "gsap",
+      "scrollto",
+      "toc",
+      "docs",
+      "navigation"
+    ],
+    "pageTypes": [
+      "docs",
+      "blog"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-auto-height",
+  "type": "registry:component",
+  "title": "Auto-Height Accordion",
+  "description": "Accordion with one paused GSAP timeline per panel tweening to height:auto, fading the content and turning the chevron; toggling plays or reverses, so fast clicks turn around mid-flight.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-auto-height.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-auto-height.tsx",
+      "content": "\"use client\";\nimport { useId, useRef, useState, type ReactNode } from \"react\";\nimport gsap from \"gsap\";\nimport { useGSAP } from \"@gsap/react\";\nimport { ChevronDown } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(useGSAP);\n\nexport interface GsapAutoHeightItem {\n  title: string;\n  content: ReactNode;\n}\n\nexport interface GsapAutoHeightProps {\n  items: GsapAutoHeightItem[];\n  /** Allow several panels open at once. */\n  multiple?: boolean;\n  className?: string;\n}\n\n/**\n * Accordion built on one paused GSAP timeline per panel that tweens to height:\"auto\" (GSAP measures\n * it), fades and lifts the content, and rotates the chevron. Toggling just plays or reverses that\n * timeline, so rapid clicks reverse smoothly mid-flight instead of jumping.\n */\nexport function GsapAutoHeight({ items, multiple = false, className }: GsapAutoHeightProps) {\n  const reduced = useReducedMotion();\n  const root = useRef<HTMLDivElement>(null);\n  const tls = useRef<gsap.core.Timeline[]>([]);\n  const [open, setOpen] = useState<Set<number>>(new Set());\n  const id = useId();\n\n  useGSAP(\n    () => {\n      tls.current = gsap.utils.toArray<HTMLElement>(\"[data-panel]\").map((panel, i) => {\n        const tl = gsap.timeline({ paused: true, defaults: { duration: reduced ? 0 : 0.45, ease: \"power3.inOut\" } });\n        tl.fromTo(panel, { height: 0 }, { height: \"auto\" })\n          .fromTo(panel.firstElementChild, { autoAlpha: 0, y: reduced ? 0 : -8 }, { autoAlpha: 1, y: 0, duration: reduced ? 0 : 0.3, ease: \"power2.out\" }, reduced ? 0 : 0.15)\n          .to(root.current!.querySelectorAll(\"[data-chevron]\")[i], { rotate: 180 }, 0);\n        return tl;\n      });\n    },\n    { scope: root, dependencies: [items.length, reduced], revertOnUpdate: true },\n  );\n\n  const toggle = (i: number) => {\n    setOpen((prev) => {\n      const next = new Set(multiple ? prev : prev.has(i) ? [i] : []);\n      if (next.has(i)) next.delete(i);\n      else next.add(i);\n      tls.current.forEach((tl, k) => (next.has(k) ? tl.play() : tl.reverse()));\n      return next;\n    });\n  };\n\n  return (\n    <div ref={root} className={cn(\"w-full divide-y divide-border rounded-2xl border border-border\", className)}>\n      {items.map((it, i) => (\n        <div key={it.title}>\n          <h3>\n            <button\n              type=\"button\"\n              id={`${id}-h${i}`}\n              aria-expanded={open.has(i)}\n              aria-controls={`${id}-p${i}`}\n              onClick={() => toggle(i)}\n              className=\"flex w-full items-center justify-between gap-4 px-4 py-3.5 text-left text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring\"\n            >\n              {it.title}\n              <ChevronDown data-chevron className=\"size-4 shrink-0 text-muted-foreground\" />\n            </button>\n          </h3>\n          <div data-panel id={`${id}-p${i}`} role=\"region\" aria-labelledby={`${id}-h${i}`} className=\"h-0 overflow-hidden\" inert={!open.has(i)}>\n            <div className=\"px-4 pb-4 text-sm leading-relaxed text-muted-foreground\">{it.content}</div>\n          </div>\n        </div>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "gsap",
+      "accordion",
+      "height auto",
+      "faq",
+      "toggle"
+    ],
+    "pageTypes": [
+      "landing",
+      "docs"
+    ]
+  }
+}

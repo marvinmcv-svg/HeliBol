@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-shader-scroll",
+  "type": "registry:component",
+  "title": "Shader on Scroll",
+  "description": "A full-screen fragment shader (raw WebGL) whose uniforms are scrubbed by ScrollTrigger: scrolling twists and zooms an fbm noise field and crossfades the palette panel by panel.",
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-shader-scroll.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-shader-scroll.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, type ReactNode, type RefObject } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(ScrollTrigger);\n\nexport interface GsapShaderScrollProps {\n  /** Text panels shown as you scroll; the shader morphs across them. */\n  panels: ReactNode[];\n  /** One colour pair per panel: [deep, bright]. */\n  palettes?: [string, string][];\n  scroller?: RefObject<HTMLElement | null>;\n  className?: string;\n}\n\nconst FRAG = `precision highp float;\nuniform vec2 uRes; uniform float uTime; uniform float uProgress;\nuniform vec3 uA; uniform vec3 uB;\nfloat h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}\nfloat n(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),u.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),u.x),u.y);}\nfloat fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p*=2.;a*=.5;}return v;}\nvoid main(){\n  vec2 uv=gl_FragCoord.xy/uRes; vec2 p=(uv-.5)*vec2(uRes.x/uRes.y,1.);\n  // scroll progress twists and zooms the domain; time keeps it alive\n  float t=uTime*.08+uProgress*3.;\n  float ang=uProgress*2.2; p*=mat2(cos(ang),-sin(ang),sin(ang),cos(ang));\n  p*=1.6+uProgress*1.4;\n  vec2 q=vec2(fbm(p+t),fbm(p+vec2(5.2,1.3)-t));\n  float f=fbm(p+2.*q);\n  vec3 col=mix(uA,uB,smoothstep(.25,.85,f));\n  col+=pow(f,4.)*.6;\n  col*=1.-.35*length(uv-.5);\n  gl_FragColor=vec4(col,1.);\n}`;\nconst VERT = \"attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}\";\n\nconst hex = (c: string) => {\n  const v = parseInt(c.replace(\"#\", \"\"), 16);\n  return [(v >> 16) / 255, ((v >> 8) & 255) / 255, (v & 255) / 255];\n};\n\nconst DEFAULT_PALETTES: [string, string][] = [[\"#1e1b4b\", \"#a78bfa\"], [\"#042f2e\", \"#5eead4\"], [\"#431407\", \"#fb923c\"], [\"#4a044e\", \"#f0abfc\"]];\n\n/**\n * A full-screen fragment shader (raw WebGL, ~1 KB) whose uniforms are scrubbed by ScrollTrigger:\n * scrolling twists and zooms the noise field and crossfades the palette panel by panel. Time keeps\n * it gently moving. Reduced motion: no time animation, palette still follows scroll.\n */\nexport function GsapShaderScroll({ panels, palettes = DEFAULT_PALETTES, scroller, className }: GsapShaderScrollProps) {\n  const reduced = useReducedMotion();\n  const section = useRef<HTMLElement>(null);\n  const canvas = useRef<HTMLCanvasElement>(null);\n\n  useEffect(() => {\n    const c = canvas.current, sec = section.current;\n    const gl = c?.getContext(\"webgl\", { antialias: false, alpha: false });\n    if (!c || !sec || !gl) return; // no WebGL: the CSS gradient fallback stays visible\n    const sh = (type: number, src: string) => { const s = gl.createShader(type)!; gl.shaderSource(s, src); gl.compileShader(s); return s; };\n    const prog = gl.createProgram()!;\n    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT));\n    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));\n    gl.linkProgram(prog);\n    gl.useProgram(prog);\n    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());\n    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);\n    const loc = gl.getAttribLocation(prog, \"p\");\n    gl.enableVertexAttribArray(loc);\n    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);\n    const u = (n: string) => gl.getUniformLocation(prog, n);\n    const uRes = u(\"uRes\"), uTime = u(\"uTime\"), uProg = u(\"uProgress\"), uA = u(\"uA\"), uB = u(\"uB\");\n\n    const cols = palettes.map(([a, b]) => [hex(a), hex(b)]);\n    const state = { progress: 0 };\n    const mix = (a: number[], b: number[], t: number) => a.map((v, i) => v + (b[i] - v) * t);\n\n    const resize = () => {\n      const dpr = Math.min(1.5, window.devicePixelRatio || 1);\n      c.width = c.clientWidth * dpr;\n      c.height = c.clientHeight * dpr;\n      gl.viewport(0, 0, c.width, c.height);\n    };\n    resize();\n    const ro = new ResizeObserver(resize);\n    ro.observe(c);\n\n    let raf = 0, visible = true;\n    const start = performance.now();\n    const draw = () => {\n      const seg = state.progress * (cols.length - 1);\n      const i = Math.min(cols.length - 2, Math.floor(seg)), f = seg - i;\n      gl.uniform2f(uRes, c.width, c.height);\n      gl.uniform1f(uTime, reduced ? 0 : (performance.now() - start) / 1000);\n      gl.uniform1f(uProg, state.progress);\n      gl.uniform3fv(uA, mix(cols[i][0], cols[i + 1][0], f));\n      gl.uniform3fv(uB, mix(cols[i][1], cols[i + 1][1], f));\n      gl.drawArrays(gl.TRIANGLES, 0, 3);\n    };\n    const loop = () => { draw(); raf = visible && !reduced ? requestAnimationFrame(loop) : 0; };\n    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible && !raf && !reduced) loop(); });\n    io.observe(sec);\n\n    const st = ScrollTrigger.create({\n      trigger: sec,\n      scroller: scroller?.current ?? undefined,\n      start: \"top top\",\n      end: \"bottom bottom\",\n      scrub: 0.8,\n      onUpdate: (self) => {\n        gsap.to(state, { progress: self.progress, duration: 0.6, ease: \"power2.out\", overwrite: true, onUpdate: () => reduced && draw() });\n      },\n    });\n    loop();\n    return () => { cancelAnimationFrame(raf); io.disconnect(); ro.disconnect(); st.kill(); gl.getExtension(\"WEBGL_lose_context\")?.loseContext(); };\n  }, [palettes, reduced, scroller]);\n\n  return (\n    <section ref={section} className={cn(\"relative\", className)} style={{ height: `${panels.length * 100}cqh` }}>\n      <canvas ref={canvas} aria-hidden className=\"sticky top-0 block h-[100cqh] w-full bg-[linear-gradient(135deg,#1e1b4b,#7c3aed)]\" />\n      <div className=\"absolute inset-0\">\n        {panels.map((p, i) => (\n          <div key={i} className=\"grid h-[100cqh] place-items-center p-8 text-center text-white\">{p}</div>\n        ))}\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "gsap",
+      "webgl",
+      "shader",
+      "scroll",
+      "storytelling"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

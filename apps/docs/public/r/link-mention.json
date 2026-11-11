@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "link-mention",
+  "type": "registry:component",
+  "title": "Inline Link Mention",
+  "description": "Notion-style inline mention pill inside running text that springs open a rich preview card (image, title, description, URL) on hover or keyboard focus.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/link-mention.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/link-mention.tsx",
+      "content": "\"use client\";\nimport { useId, useRef, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface LinkMentionProps {\n  href: string;\n  /** Label inside the pill. */\n  children: ReactNode;\n  /** Small icon/favicon for the pill (an emoji, letter or <img>). */\n  icon?: ReactNode;\n  /** Preview card content. */\n  title: string;\n  description?: string;\n  image?: string;\n  className?: string;\n}\n\n/**\n * Notion-style inline mention: a compact pill inside running text that opens a preview card on\n * hover or keyboard focus (short open delay, instant close), springing out of the pill.\n */\nexport function LinkMention({ href, children, icon, title, description, image, className }: LinkMentionProps) {\n  const reduced = useReducedMotion();\n  const [open, setOpen] = useState(false);\n  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);\n  const id = useId();\n  const show = () => { clearTimeout(timer.current); timer.current = setTimeout(() => setOpen(true), 180); };\n  const hide = () => { clearTimeout(timer.current); timer.current = setTimeout(() => setOpen(false), 80); };\n\n  return (\n    <span className=\"relative inline-block align-baseline\" onPointerEnter={show} onPointerLeave={hide}>\n      <a\n        href={href}\n        aria-describedby={open ? id : undefined}\n        onFocus={show}\n        onBlur={hide}\n        className={cn(\"inline-flex items-center gap-1 rounded-md bg-muted px-1.5 py-0.5 text-[0.92em] font-medium text-foreground underline decoration-border underline-offset-2 transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\", className)}\n      >\n        {icon && <span aria-hidden className=\"grid size-4 place-items-center overflow-hidden rounded text-[10px]\">{icon}</span>}\n        {children}\n      </a>\n      <AnimatePresence>\n        {open && (\n          <motion.span\n            id={id}\n            role=\"tooltip\"\n            initial={reduced ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.96, filter: \"blur(4px)\" }}\n            animate={{ opacity: 1, y: 0, scale: 1, filter: \"blur(0px)\" }}\n            exit={reduced ? { opacity: 0 } : { opacity: 0, y: 4, scale: 0.98 }}\n            transition={reduced ? { duration: 0.12 } : spring.snappy}\n            style={{ transformOrigin: \"top left\" }}\n            className=\"absolute left-0 top-full z-50 mt-2 block w-72 overflow-hidden rounded-xl border border-border bg-popover text-left text-popover-foreground shadow-xl\"\n          >\n            {image && <img src={image} alt=\"\" className=\"block h-32 w-full object-cover\" />}\n            <span className=\"block p-3\">\n              <span className=\"block text-sm font-semibold\">{title}</span>\n              {description && <span className=\"mt-1 block text-xs leading-relaxed text-muted-foreground\">{description}</span>}\n              <span className=\"mt-2 block truncate text-[11px] text-muted-foreground\">{href}</span>\n            </span>\n          </motion.span>\n        )}\n      </AnimatePresence>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "link",
+      "preview",
+      "mention",
+      "hover card",
+      "docs"
+    ],
+    "pageTypes": [
+      "docs",
+      "blog"
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "portfolio-ribbon",
+  "type": "registry:block",
+  "title": "Portfolio — 3D Ribbon",
+  "description": "Portfolio opener: a giant name behind a spinning 3D ribbon of selected work, an expandable floating nav on top and a rotating discipline word.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/three-image-ribbon.json",
+    "https://marvzkineticlibrary.vercel.app/r/nav-expandable.json",
+    "https://marvzkineticlibrary.vercel.app/r/text-smart-animate.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/portfolio-ribbon.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/portfolio-ribbon.tsx",
+      "content": "\"use client\";\nimport { ThreeImageRibbon } from \"@/components/kinetik/three-image-ribbon\";\nimport { NavExpandable } from \"@/components/kinetik/nav-expandable\";\nimport { TextSmartAnimate } from \"@/components/kinetik/text-smart-animate\";\n\nconst work = [\"/demo/photo-1.jpg\", \"/demo/photo-3.jpg\", \"/demo/photo-5.jpg\", \"/demo/photo-7.jpg\", \"/demo/photo-2.jpg\", \"/demo/photo-8.jpg\", \"/demo/photo-4.jpg\", \"/demo/photo-6.jpg\"];\n\n/** Portfolio opener: an expandable floating nav over a giant name, with selected work wrapped on a spinning 3D ribbon in front of it. */\nexport function PortfolioRibbon() {\n  return (\n    <section className=\"relative h-full min-h-[560px] overflow-hidden rounded-[2rem] bg-[#ece8df] text-zinc-900\">\n      <div className=\"absolute inset-x-0 top-4 z-20 flex justify-center\">\n        <NavExpandable\n          brand=\"Mara Lind\"\n          links={[{ label: \"Work\", href: \"#work\", description: \"34 projects\" }, { label: \"About\", href: \"#about\" }, { label: \"Contact\", href: \"#contact\", description: \"Available from March\" }]}\n        />\n      </div>\n      <div className=\"pointer-events-none absolute inset-0 grid place-items-center\">\n        <h1 className=\"text-center text-[clamp(3.5rem,14vw,11rem)] font-black uppercase leading-[0.8] tracking-tighter\">Mara<br />Lind</h1>\n      </div>\n      <div className=\"absolute inset-0\"><ThreeImageRibbon images={work} radius={2.6} height={1.05} /></div>\n      <div className=\"pointer-events-none absolute inset-x-0 bottom-6 flex items-end justify-between px-8 text-sm\">\n        <p className=\"max-w-[14rem] text-zinc-600\">Independent art director working on <TextSmartAnimate words={[\"brands\", \"books\", \"films\", \"spaces\"]} className=\"font-semibold text-zinc-900\" /></p>\n        <p className=\"text-zinc-500\">Drag or scroll the ribbon</p>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "portfolio",
+      "three.js",
+      "ribbon",
+      "hero",
+      "personal"
+    ],
+    "pageTypes": [
+      "portfolio"
+    ]
+  }
+}

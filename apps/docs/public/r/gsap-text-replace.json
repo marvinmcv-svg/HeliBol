@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-text-replace",
+  "type": "registry:component",
+  "title": "Text Replace",
+  "description": "Animated text replacement with GSAP's TextPlugin: each phrase is rewritten into the next, by character or by word, with a highlight sweeping behind it.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-text-replace.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-text-replace.tsx",
+      "content": "\"use client\";\nimport { useRef } from \"react\";\nimport gsap from \"gsap\";\nimport { TextPlugin } from \"gsap/TextPlugin\";\nimport { useGSAP } from \"@gsap/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(TextPlugin, useGSAP);\n\nexport interface GsapTextReplaceProps {\n  /** Phrases to replace in turn. */\n  phrases: string[];\n  /** \"char\" types character by character; \"word\" swaps word by word. */\n  mode?: \"char\" | \"word\";\n  /** Seconds each phrase holds. */\n  hold?: number;\n  className?: string;\n}\n\n/**\n * Animated text replacement with GSAP's TextPlugin: the current phrase is rewritten into the next one\n * (by character or by word) with a highlight sweeping behind it, on a repeating timeline.\n */\nexport function GsapTextReplace({ phrases, mode = \"char\", hold = 1.6, className }: GsapTextReplaceProps) {\n  const root = useRef<HTMLSpanElement>(null);\n  const text = useRef<HTMLSpanElement>(null);\n  const mark = useRef<HTMLSpanElement>(null);\n  const reduced = useReducedMotion();\n\n  useGSAP(\n    () => {\n      const el = text.current!;\n      el.textContent = phrases[0];\n      const tl = gsap.timeline({ repeat: -1 });\n      phrases.forEach((_, i) => {\n        const next = phrases[(i + 1) % phrases.length];\n        if (reduced) {\n          tl.to(el, { autoAlpha: 0, duration: 0.2, delay: hold }).set(el, { textContent: next }).to(el, { autoAlpha: 1, duration: 0.2 });\n          return;\n        }\n        tl.to(mark.current, { scaleX: 1, transformOrigin: \"left\", duration: 0.35, ease: \"power2.in\", delay: hold })\n          .to(el, { duration: mode === \"char\" ? Math.max(0.4, next.length * 0.035) : 0.6, text: { value: next, delimiter: mode === \"word\" ? \" \" : \"\" }, ease: \"none\" })\n          .to(mark.current, { scaleX: 0, transformOrigin: \"right\", duration: 0.35, ease: \"power2.out\" });\n      });\n    },\n    { scope: root, dependencies: [phrases.join(\"|\"), mode, hold, reduced], revertOnUpdate: true },\n  );\n\n  return (\n    <span ref={root} className={cn(\"relative inline-block\", className)}>\n      <span ref={mark} aria-hidden className=\"absolute -inset-x-1 inset-y-0 -z-10 scale-x-0 rounded bg-primary/20\" />\n      <span ref={text} aria-live=\"polite\">{phrases[0]}</span>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "gsap",
+      "text plugin",
+      "headline",
+      "typewriter",
+      "rotate"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

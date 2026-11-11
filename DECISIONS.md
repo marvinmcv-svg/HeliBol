@@ -41,3 +41,14 @@ Decisions made while executing `motion-library-master-plan.md`. Per Section 0.9,
 | 25 | **`DemoScroller` mounts its children only after its own element exists.** | Children's layout effects ran before the scroller's ref was attached, so every ScrollTrigger inside a preview silently bound to `window` (scroll demos looked frozen). |
 | 26 | **Thumbnail auto-fit:** the capture stage scrolls scroll demos to a set point (`thumbAt`, default 42%) and zooms small components to their painted bounding box (≤2.4×; full-bleed demos untouched). Denser gallery grid (3–4 columns) and a moving wall of every thumbnail on the home page. | The gallery "looked empty": small buttons sat in large black frames and scroll demos were captured before anything happened. |
 | 27 | **Capture Chrome runs with background throttling disabled** (`--disable-renderer-backgrounding` etc.) plus focus emulation. | CDP-created tabs in headless Chrome got ~4 animation frames/s, so animated thumbnails were shot before their animations had played (the particle text was blank). |
+
+## kinetik 2.2 (three.js + new sources)
+
+| # | Decision | Why |
+|---|---|---|
+| 28 | **Every three.js component renders through the existing `Canvas3DShell`** (imported as a sibling; the registry rewrites `../<slug>/<slug>` to `@/components/kinetik/<slug>` and lists it as a registry dependency). | One place handles DPR clamping, off-screen/hidden-tab pausing and the reduced-motion still frame, so 12 scenes don't each re-implement it. |
+| 29 | **No external 3D assets:** images reuse the procedural demo photos, coin faces are CanvasTextures, lighting is drei `Lightformer`s, shaders are inline GLSL. | Keeps every item copy-paste, offline-safe and license-free (same rule as decision 11/12). |
+| 30 | **The contract suite skips jsdom rendering for `engine: "r3f"`** (and `gsap-three-waypoints`); meta, source, prompt, deps and reduced-motion checks still run. | WebGL can't run in jsdom; the visual check is the docs build + preview. |
+| 31 | **Specs can declare `registryDeps`** (gen-meta), so composed items install their dependencies via the shadcn CLI. | Needed for the three.js collection depending on `canvas-3d-shell`. |
+| 32 | **"lunem" read as unlumen UI**, "motionsites" as motionsites.ai. Catalogs read with Firecrawl (names/tags only). The Mobbin MCP is connected but requires a paid Mobbin plan, so flows were chosen from the 2.0 roadmap gap (empty/error states, search). | Documented so the interpretation can be corrected. |
+| 33 | **GSAP ↔ three.js bridge pattern:** GSAP tweens a plain object, `useFrame` copies it to the camera. | GSAP never mutates three.js objects directly, so React/R3F stay the owner of the scene graph and scrub reversals are exact. |

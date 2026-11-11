@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-typing-placeholder",
+  "type": "registry:component",
+  "title": "Typing Placeholder Input",
+  "description": "A search field whose placeholder types out example queries, pauses and deletes them — and stops the moment you focus or type.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/input-typing-placeholder.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/input-typing-placeholder.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState, type InputHTMLAttributes } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface InputTypingPlaceholderProps extends Omit<InputHTMLAttributes<HTMLInputElement>, \"placeholder\"> {\n  /** Example queries typed and erased in turn inside the empty field. */\n  suggestions: string[];\n  /** Static prefix shown before the typed text, e.g. \"Try\". */\n  prefix?: string;\n  typeSpeed?: number;\n  pause?: number;\n}\n\n/**\n * An input whose placeholder types out example queries, pauses, and deletes them — like a person\n * demonstrating what to search. Stops as soon as the field has focus or a value. Reduced motion:\n * the suggestions rotate as whole words.\n */\nexport function InputTypingPlaceholder({ suggestions, prefix = \"Try\", typeSpeed = 55, pause = 1400, className, value, defaultValue, onFocus, onBlur, ...rest }: InputTypingPlaceholderProps) {\n  const reduced = useReducedMotion();\n  const [text, setText] = useState(\"\");\n  const [focused, setFocused] = useState(false);\n  const [hasValue, setHasValue] = useState(Boolean(value ?? defaultValue));\n  const idle = !focused && !hasValue && !value;\n\n  useEffect(() => {\n    if (!idle) return;\n    let i = 0, n = 0, deleting = false, t: ReturnType<typeof setTimeout>;\n    const tick = () => {\n      const word = suggestions[i];\n      if (reduced) {\n        setText(word);\n        i = (i + 1) % suggestions.length;\n        t = setTimeout(tick, pause + 800);\n        return;\n      }\n      n += deleting ? -1 : 1;\n      setText(word.slice(0, n));\n      if (!deleting && n === word.length) { deleting = true; t = setTimeout(tick, pause); return; }\n      if (deleting && n === 0) { deleting = false; i = (i + 1) % suggestions.length; t = setTimeout(tick, 300); return; }\n      t = setTimeout(tick, deleting ? typeSpeed / 2 : typeSpeed + Math.random() * 40);\n    };\n    tick();\n    return () => clearTimeout(t);\n  }, [idle, suggestions, reduced, typeSpeed, pause]);\n\n  return (\n    <div className={cn(\"relative\", className)}>\n      <input\n        {...rest}\n        value={value}\n        defaultValue={defaultValue}\n        // a real placeholder for assistive tech; the animated one is decorative\n        placeholder={`${prefix} “${suggestions[0]}”`}\n        onFocus={(e) => (setFocused(true), onFocus?.(e))}\n        onBlur={(e) => (setFocused(false), setHasValue(Boolean(e.currentTarget.value)), onBlur?.(e))}\n        onInput={(e) => setHasValue(Boolean(e.currentTarget.value))}\n        className=\"peer h-12 w-full rounded-2xl border border-border bg-background px-4 text-sm shadow-sm outline-none transition-shadow placeholder:text-transparent focus-visible:ring-2 focus-visible:ring-ring\"\n      />\n      {idle && (\n        <span aria-hidden className=\"pointer-events-none absolute inset-y-0 left-4 flex items-center text-sm text-muted-foreground\">\n          {prefix} “{text}\n          <span className=\"ml-px inline-block h-4 w-px animate-pulse bg-current motion-reduce:animate-none\" />”\n        </span>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "input",
+      "search",
+      "placeholder",
+      "typewriter",
+      "ai"
+    ],
+    "pageTypes": [
+      "landing",
+      "ai-app"
+    ]
+  }
+}

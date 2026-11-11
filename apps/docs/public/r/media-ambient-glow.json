@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "media-ambient-glow",
+  "type": "registry:component",
+  "title": "Ambient Glow Media",
+  "description": "YouTube-style ambient mode: the image or video is drawn into a tiny canvas behind itself, scaled and blurred, so its own colours spill around the frame.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/media-ambient-glow.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/media-ambient-glow.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, type ReactNode } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface MediaAmbientGlowProps {\n  /** An image URL or a playing <video> element's src. */\n  src: string;\n  kind?: \"image\" | \"video\";\n  /** Glow strength 0–1. */\n  intensity?: number;\n  className?: string;\n  children?: ReactNode;\n}\n\n/**\n * YouTube-style \"ambient mode\": the media is drawn into a tiny canvas behind itself, scaled up and\n * blurred, so its own colours spill around the frame. For video the glow resamples a few times per\n * second (cheap — a 32×18 canvas); images sample once.\n */\nexport function MediaAmbientGlow({ src, kind = \"image\", intensity = 0.8, className, children }: MediaAmbientGlowProps) {\n  const reduced = useReducedMotion();\n  const canvas = useRef<HTMLCanvasElement>(null);\n  const media = useRef<HTMLImageElement & HTMLVideoElement>(null);\n\n  useEffect(() => {\n    const c = canvas.current, m = media.current;\n    const ctx = c?.getContext(\"2d\");\n    if (!c || !m || !ctx) return;\n    const draw = () => {\n      try {\n        ctx.drawImage(m, 0, 0, c.width, c.height);\n      } catch {\n        /* not ready or cross-origin */\n      }\n    };\n    if (kind === \"image\") {\n      if ((m as HTMLImageElement).complete) draw();\n      m.addEventListener(\"load\", draw);\n      return () => m.removeEventListener(\"load\", draw);\n    }\n    // video: resample at ~6 fps; a crossfade via CSS transition smooths the steps\n    draw();\n    if (reduced) return;\n    const id = setInterval(draw, 160);\n    return () => clearInterval(id);\n  }, [src, kind, reduced]);\n\n  return (\n    <div className={cn(\"relative isolate\", className)}>\n      <canvas\n        ref={canvas}\n        width={32}\n        height={18}\n        aria-hidden\n        className=\"absolute inset-0 -z-10 size-full scale-110 blur-3xl saturate-150 transition-opacity duration-700\"\n        style={{ opacity: intensity }}\n      />\n      {kind === \"video\" ? (\n        <video ref={media} src={src} autoPlay={!reduced} muted loop playsInline crossOrigin=\"anonymous\" className=\"relative block size-full rounded-2xl object-cover\" />\n      ) : (\n        <img ref={media} src={src} alt=\"\" crossOrigin=\"anonymous\" className=\"relative block size-full rounded-2xl object-cover\" />\n      )}\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "video",
+      "ambient",
+      "glow",
+      "media",
+      "image"
+    ],
+    "pageTypes": [
+      "media",
+      "portfolio"
+    ]
+  }
+}

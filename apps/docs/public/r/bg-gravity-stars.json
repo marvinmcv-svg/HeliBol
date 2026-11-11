@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-gravity-stars",
+  "type": "registry:component",
+  "title": "Gravity Stars",
+  "description": "A starfield where the cursor is a gravity well: nearby stars curve toward it with a swirl, streak while moving, then spring home. Stars twinkle at rest.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-gravity-stars.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-gravity-stars.tsx",
+      "content": "\"use client\";\nimport { useMemo } from \"react\";\nimport { cn, useCanvas } from \"@/lib/kinetik/core\";\n\nexport interface BgGravityStarsProps {\n  count?: number;\n  /** Pull strength of the cursor \"black hole\". */\n  gravity?: number;\n  color?: string;\n  className?: string;\n}\n\ntype Star = { x: number; y: number; vx: number; vy: number; hx: number; hy: number; r: number; tw: number };\n\n/**\n * A starfield where the cursor is a gravity well: nearby stars curve toward it and orbit, then\n * spring back to their home when it leaves. Stars twinkle at rest.\n */\nexport function BgGravityStars({ count = 220, gravity = 1, color = \"255,255,255\", className }: BgGravityStarsProps) {\n  const stars = useMemo<Star[]>(() => [], []);\n  const size = useMemo(() => ({ w: 0, h: 0 }), []);\n  const ref = useCanvas(({ ctx, width, height, time, dt, pointer }) => {\n    // (re)seed when the count or the canvas size changes\n    if (stars.length !== count || size.w !== width || size.h !== height) {\n      size.w = width;\n      size.h = height;\n      stars.length = 0;\n      for (let i = 0; i < count; i++) {\n        const x = Math.random() * width, y = Math.random() * height;\n        stars.push({ x, y, vx: 0, vy: 0, hx: x, hy: y, r: Math.random() * 1.4 + 0.3, tw: Math.random() * 6 });\n      }\n    }\n    ctx.clearRect(0, 0, width, height);\n    const step = dt * 60;\n    for (const s of stars) {\n      if (pointer) {\n        const dx = pointer.x - s.x, dy = pointer.y - s.y;\n        const d2 = dx * dx + dy * dy + 400;\n        const f = (gravity * 900) / d2;\n        // pull plus a small tangential component so captured stars swirl instead of collapsing\n        s.vx += (dx * f - dy * f * 0.6) * 0.02 * step;\n        s.vy += (dy * f + dx * f * 0.6) * 0.02 * step;\n      }\n      // spring home + damping\n      s.vx += (s.hx - s.x) * 0.002 * step;\n      s.vy += (s.hy - s.y) * 0.002 * step;\n      s.vx *= 0.94;\n      s.vy *= 0.94;\n      s.x += s.vx * step;\n      s.y += s.vy * step;\n      const speed = Math.min(1, Math.hypot(s.vx, s.vy) / 4);\n      const alpha = 0.35 + 0.45 * (0.5 + 0.5 * Math.sin(time * 2 + s.tw)) + speed * 0.3;\n      ctx.strokeStyle = ctx.fillStyle = `rgba(${color},${Math.min(1, alpha)})`;\n      if (speed > 0.15) {\n        // motion streak\n        ctx.lineWidth = s.r;\n        ctx.beginPath();\n        ctx.moveTo(s.x, s.y);\n        ctx.lineTo(s.x - s.vx * 3, s.y - s.vy * 3);\n        ctx.stroke();\n      } else {\n        ctx.beginPath();\n        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);\n        ctx.fill();\n      }\n    }\n  });\n  return <canvas ref={ref} aria-hidden className={cn(\"absolute inset-0 size-full\", className)} />;\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "stars",
+      "canvas",
+      "gravity",
+      "interactive",
+      "space"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

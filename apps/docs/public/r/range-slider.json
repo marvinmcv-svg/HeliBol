@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "range-slider",
+  "type": "registry:component",
+  "title": "Range Slider with Histogram",
+  "description": "Dual-thumb range slider over a live histogram: bars inside the range light up, the active thumb grows with a value bubble, and thumbs can't cross.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/range-slider.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/range-slider.tsx",
+      "content": "\"use client\";\nimport { useId, useRef, useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface RangeSliderProps {\n  value: [number, number];\n  onChange: (v: [number, number]) => void;\n  min?: number;\n  max?: number;\n  step?: number;\n  /** Optional histogram (any length) drawn behind the track; bars inside the range light up. */\n  histogram?: number[];\n  label: string;\n  format?: (v: number) => string;\n  className?: string;\n}\n\n/**\n * Dual-thumb range slider with a live histogram: bars inside the range light up, the active thumb\n * grows and shows a value bubble, thumbs can't cross, and each thumb is a full ARIA slider.\n */\nexport function RangeSlider({ value, onChange, min = 0, max = 100, step = 1, histogram, label, format = String, className }: RangeSliderProps) {\n  const reduced = useReducedMotion();\n  const id = useId();\n  const track = useRef<HTMLDivElement>(null);\n  const [active, setActive] = useState<0 | 1 | null>(null);\n  const pct = (v: number) => ((v - min) / (max - min)) * 100;\n  const snap = (v: number) => Math.min(max, Math.max(min, Math.round((v - min) / step) * step + min));\n\n  const set = (i: 0 | 1, v: number) => {\n    const next: [number, number] = [...value];\n    next[i] = i === 0 ? Math.min(snap(v), value[1]) : Math.max(snap(v), value[0]);\n    if (next[0] !== value[0] || next[1] !== value[1]) onChange(next);\n  };\n  const fromPointer = (x: number) => {\n    const r = track.current!.getBoundingClientRect();\n    return min + ((x - r.left) / r.width) * (max - min);\n  };\n\n  return (\n    <div className={cn(\"w-full select-none\", className)}>\n      <div className=\"mb-3 flex items-baseline justify-between\">\n        <span id={`${id}-l`} className=\"text-sm font-medium\">{label}</span>\n        <span className=\"text-sm tabular-nums text-muted-foreground\">{format(value[0])} – {format(value[1])}</span>\n      </div>\n      {histogram && (\n        <div aria-hidden className=\"flex h-14 items-end gap-px px-2.5\">\n          {histogram.map((h, i) => {\n            const v = min + ((i + 0.5) / histogram.length) * (max - min);\n            const on = v >= value[0] && v <= value[1];\n            return <motion.span key={i} className=\"flex-1 rounded-t-sm\" initial={false} animate={{ backgroundColor: on ? \"var(--color-primary, #6366f1)\" : \"var(--color-muted, #e4e4e7)\", scaleY: on ? 1 : 0.85 }} transition={reduced ? { duration: 0 } : { duration: 0.25 }} style={{ height: `${(h / Math.max(...histogram)) * 100}%`, transformOrigin: \"bottom\" }} />;\n          })}\n        </div>\n      )}\n      <div\n        ref={track}\n        className=\"relative mx-2.5 h-6 touch-none\"\n        onPointerDown={(e) => {\n          const v = fromPointer(e.clientX);\n          const i: 0 | 1 = Math.abs(v - value[0]) <= Math.abs(v - value[1]) ? 0 : 1;\n          setActive(i);\n          set(i, v);\n          (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);\n          (e.currentTarget.querySelectorAll('[role=\"slider\"]')[i] as HTMLElement).focus();\n        }}\n        onPointerMove={(e) => active !== null && set(active, fromPointer(e.clientX))}\n        onPointerUp={() => setActive(null)}\n      >\n        <div className=\"absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-muted\" />\n        <div className=\"absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-primary\" style={{ left: `${pct(value[0])}%`, right: `${100 - pct(value[1])}%` }} />\n        {([0, 1] as const).map((i) => (\n          <div\n            key={i}\n            role=\"slider\"\n            tabIndex={0}\n            aria-label={`${label} ${i === 0 ? \"minimum\" : \"maximum\"}`}\n            aria-valuemin={i === 0 ? min : value[0]}\n            aria-valuemax={i === 0 ? value[1] : max}\n            aria-valuenow={value[i]}\n            aria-valuetext={format(value[i])}\n            onKeyDown={(e) => {\n              const big = step * 10;\n              const d = { ArrowRight: step, ArrowUp: step, ArrowLeft: -step, ArrowDown: -step, PageUp: big, PageDown: -big }[e.key];\n              if (d) { e.preventDefault(); set(i, value[i] + d); }\n              if (e.key === \"Home\") (e.preventDefault(), set(i, min));\n              if (e.key === \"End\") (e.preventDefault(), set(i, max));\n            }}\n            onFocus={() => setActive((a) => a ?? i)}\n            onBlur={() => setActive(null)}\n            className=\"absolute top-1/2 -ml-2.5 -mt-2.5 size-5 rounded-full outline-none\"\n            style={{ left: `${pct(value[i])}%` }}\n          >\n            <motion.span animate={{ scale: active === i && !reduced ? 1.25 : 1 }} transition={reduced ? { duration: 0 } : spring.bouncy} className=\"block size-full rounded-full border-2 border-primary bg-background shadow-md ring-ring [[role=slider]:focus-visible>&]:ring-2\" />\n            {active === i && (\n              <motion.span initial={reduced ? false : { opacity: 0, y: 4, scale: 0.8 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={spring.snappy} className=\"absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-0.5 text-xs font-medium tabular-nums text-background\">\n                {format(value[i])}\n              </motion.span>\n            )}\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "slider",
+      "range",
+      "filter",
+      "histogram",
+      "price"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "dashboard"
+    ]
+  }
+}

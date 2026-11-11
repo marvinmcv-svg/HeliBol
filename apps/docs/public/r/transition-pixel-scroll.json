@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "transition-pixel-scroll",
+  "type": "registry:component",
+  "title": "Pixel Scroll Transition",
+  "description": "A scroll-scrubbed pixel dissolve between two sections: squares fill in random order to cover the first, then clear in a new order to reveal the second.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/transition-pixel-scroll.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/transition-pixel-scroll.tsx",
+      "content": "\"use client\";\nimport { useEffect, useMemo, useRef, type ReactNode, type RefObject } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TransitionPixelScrollProps {\n  /** Section shown before the transition. */\n  from: ReactNode;\n  /** Section revealed by the pixels. */\n  to: ReactNode;\n  /** Pixel grid columns (rows follow the aspect ratio). */\n  columns?: number;\n  /** Pixel colour. */\n  color?: string;\n  scroller?: RefObject<HTMLElement | null>;\n  className?: string;\n}\n\n/**\n * Scroll-scrubbed pixel dissolve between two sections: as you scroll through the pinned area a grid of\n * squares fills in random order to cover the first section, then clears in a new random order to\n * reveal the second. Driven by scroll position only (no timers). Reduced motion: a simple crossfade.\n */\nexport function TransitionPixelScroll({ from, to, columns = 16, color = \"#18181b\", scroller, className }: TransitionPixelScrollProps) {\n  const reduced = useReducedMotion();\n  const section = useRef<HTMLElement>(null);\n  const grid = useRef<HTMLDivElement>(null);\n  const toLayer = useRef<HTMLDivElement>(null);\n  const rows = Math.round(columns * 0.62);\n  // two random orders: one for covering, one for uncovering\n  const orders = useMemo(() => {\n    const n = columns * rows;\n    const shuffle = () => {\n      const a = Array.from({ length: n }, (_, i) => i);\n      for (let i = n - 1; i > 0; i--) {\n        const j = Math.floor(Math.random() * (i + 1));\n        [a[i], a[j]] = [a[j], a[i]];\n      }\n      return a;\n    };\n    const rankIn = new Array(n), rankOut = new Array(n);\n    shuffle().forEach((cell, r) => (rankIn[cell] = r / n));\n    shuffle().forEach((cell, r) => (rankOut[cell] = r / n));\n    return { rankIn, rankOut };\n  }, [columns, rows]);\n\n  useEffect(() => {\n    const sec = section.current, g = grid.current, tl = toLayer.current;\n    if (!sec || !g || !tl) return;\n    const sc = scroller?.current ?? null;\n    const cells = [...g.children] as HTMLElement[];\n    let raf = 0;\n    const update = () => {\n      raf = 0;\n      const vh = sc ? sc.clientHeight : window.innerHeight;\n      const top = sec.getBoundingClientRect().top - (sc ? sc.getBoundingClientRect().top : 0);\n      const p = Math.max(0, Math.min(1, -top / (sec.offsetHeight - vh))); // 0..1 through the section\n      if (reduced) {\n        tl.style.opacity = String(p > 0.5 ? 1 : 0);\n        return;\n      }\n      const cover = Math.min(1, p / 0.45), uncover = Math.max(0, (p - 0.55) / 0.45);\n      tl.style.opacity = p >= 0.5 ? \"1\" : \"0\";\n      cells.forEach((c, i) => {\n        const on = uncover > 0 ? orders.rankOut[i] >= uncover : orders.rankIn[i] < cover;\n        c.style.opacity = on ? \"1\" : \"0\";\n      });\n    };\n    const target: HTMLElement | Window = sc ?? window;\n    const onScroll = () => (raf ||= requestAnimationFrame(update));\n    update();\n    target.addEventListener(\"scroll\", onScroll, { passive: true });\n    return () => { target.removeEventListener(\"scroll\", onScroll); cancelAnimationFrame(raf); };\n  }, [orders, reduced, scroller]);\n\n  return (\n    <section ref={section} className={cn(\"relative h-[300cqh]\", className)}>\n      <div className=\"sticky top-0 h-[100cqh] overflow-hidden\">\n        <div className=\"absolute inset-0\">{from}</div>\n        <div ref={toLayer} className=\"absolute inset-0 opacity-0\" style={{ transition: reduced ? \"opacity .4s\" : undefined }}>{to}</div>\n        <div ref={grid} aria-hidden className=\"pointer-events-none absolute inset-0 grid\" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)`, gridTemplateRows: `repeat(${rows}, 1fr)` }}>\n          {Array.from({ length: columns * rows }, (_, i) => (\n            <span key={i} className=\"opacity-0\" style={{ background: color, marginRight: -1, marginBottom: -1 }} />\n          ))}\n        </div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "transitions"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "pixel",
+      "scroll",
+      "transition",
+      "dissolve",
+      "storytelling"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

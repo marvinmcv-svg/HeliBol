@@ -10,7 +10,8 @@
  *
  * Usage (docs app running on :3100):
  *   REA_BIN="npx rea" node scripts/capture-thumbs.mjs [baseUrl] [--only id,id] [--missing]
- * Env: CHROME (browser binary), REA_BIN (default "npx -y rea-agents@latest"), CONCURRENCY (default 3).
+ * Env: CHROME (browser binary), REA_BIN (default "npx -y rea-agents@latest"), CONCURRENCY (default 3),
+ *      THUMB_ENGINE=cdp to skip REA and use Chrome's Page.captureScreenshot (no download needed).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -88,6 +89,18 @@ async function captureOne(id) {
       if (r.result?.result?.value) break;
     }
     await sleep(400);
+    if (process.env.THUMB_ENGINE === "cdp") {
+      // Fallback when REA can't be downloaded: Chrome's own screenshot over the same CDP session.
+      const shot = await s.send("Page.captureScreenshot", { format: "png" });
+      const png = path.join(out, `${id}.png`);
+      const buf = Buffer.from(shot.result.data, "base64");
+      fs.writeFileSync(png, buf);
+      execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", png, "-vf", "scale=800:-1:flags=lanczos", "-quality", "80", path.join(out, `${id}.webp`)]);
+      fs.rmSync(png);
+      const { createHash } = await import("node:crypto");
+      manifest[id] = { png_sha256: createHash("sha256").update(buf).digest("hex"), viewport: { width: W, height: H }, captured_at: new Date().toISOString(), provider: "cdp-page-capture" };
+      return true;
+    }
     const { code, stdout } = await run(REA[0], [...REA.slice(1), "capture-web-screenshot", CDP, target.id, "--allowed-origins", origin, "--format", "json"]);
     if (code !== 0) throw new Error(`REA exited ${code}: ${stdout.slice(0, 300)}`);
     const ev = JSON.parse(stdout);

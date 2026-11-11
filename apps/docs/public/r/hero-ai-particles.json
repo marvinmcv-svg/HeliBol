@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-ai-particles",
+  "type": "registry:block",
+  "title": "Hero — AI Particle Brain",
+  "description": "AI product hero: a particle cloud morphing between shapes behind the headline, a smart-animate capability word, and a prompt box whose placeholder types example requests.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/three-particle-morph.json",
+    "https://marvzkineticlibrary.vercel.app/r/text-smart-animate.json",
+    "https://marvzkineticlibrary.vercel.app/r/input-typing-placeholder.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-ai-particles.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/hero-ai-particles.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { ArrowRight } from \"lucide-react\";\nimport { ThreeParticleMorph, type MorphShape } from \"@/components/kinetik/three-particle-morph\";\nimport { TextSmartAnimate } from \"@/components/kinetik/text-smart-animate\";\nimport { InputTypingPlaceholder } from \"@/components/kinetik/input-typing-placeholder\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\n\nconst shapes: MorphShape[] = [\"sphere\", \"helix\", \"torus\", \"wave\"];\nconst captions = [\"Reasoning\", \"Memory\", \"Planning\", \"Acting\"];\n\n/** AI product hero: a particle \"brain\" morphing between shapes behind the headline, a typing prompt box and a capability ticker that follows the morph. */\nexport function HeroAiParticles() {\n  const reduced = useReducedMotion();\n  const [i, setI] = useState(0);\n  return (\n    <section className=\"relative h-full min-h-[560px] overflow-hidden rounded-[2rem] bg-[radial-gradient(ellipse_at_70%_40%,#1e1b4b,#030014_65%)] text-white\">\n      <div className=\"absolute inset-0 md:left-[35%]\">\n        <ThreeParticleMorph shapes={shapes} hold={3} colors={[\"#c4b5fd\", \"#22d3ee\"]} onShapeChange={setI} />\n      </div>\n      <div className=\"pointer-events-none absolute inset-0 bg-gradient-to-r from-[#030014] via-[#030014]/70 to-transparent md:via-transparent\" />\n      <div className=\"relative flex h-full max-w-xl flex-col justify-center gap-6 p-8 sm:p-12\">\n        <motion.span initial={{ opacity: 0, y: reduced ? 0 : 10 }} animate={{ opacity: 1, y: 0 }} className=\"w-fit rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-violet-200 backdrop-blur\">\n          ● Nomi 3 — now with long-term memory\n        </motion.span>\n        <h1 className=\"text-[clamp(2.4rem,5.5vw,4.2rem)] font-semibold leading-[1.02] tracking-tight\">\n          An agent that is<br />\n          <TextSmartAnimate words={captions} interval={3000} className=\"bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent\" />\n        </h1>\n        <p className=\"max-w-md text-white/60\">Give it a goal. It plans, remembers context across weeks, and acts in the tools you already use.</p>\n        <form onSubmit={(e) => e.preventDefault()} className=\"flex max-w-md items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-1.5 backdrop-blur [&_input]:border-0 [&_input]:bg-transparent [&_input]:text-white [&_input]:shadow-none\">\n          <InputTypingPlaceholder aria-label=\"Ask Nomi\" suggestions={[\"plan my launch week\", \"summarise yesterday's calls\", \"draft replies to my inbox\"]} prefix=\"Ask Nomi to\" className=\"flex-1\" />\n          <button type=\"submit\" aria-label=\"Send\" className=\"grid size-10 shrink-0 place-items-center rounded-xl bg-white text-black\"><ArrowRight className=\"size-4\" /></button>\n        </form>\n        <p className=\"text-xs text-white/40\" aria-live=\"polite\">Now visualising: {captions[i]}</p>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "hero",
+      "ai",
+      "particles",
+      "three.js",
+      "prompt"
+    ],
+    "pageTypes": [
+      "ai-app",
+      "landing"
+    ]
+  }
+}

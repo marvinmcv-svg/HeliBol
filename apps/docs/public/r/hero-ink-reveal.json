@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-ink-reveal",
+  "type": "registry:block",
+  "title": "Hero — Ink Reveal",
+  "description": "Editorial hero where the cursor paints blooming, wobbly ink blots that bleed colour into a monochrome photo; blots spread then slowly dry away. Click to spill more.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-ink-reveal.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/hero-ink-reveal.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef } from \"react\";\nimport { usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\n/**\n * Ink reveal hero: moving the cursor paints soft, blooming ink blots that reveal a second image\n * (colour) through the first (monochrome). Blots spread, then slowly dry away. The mask is a\n * canvas used as CSS mask-image via a data URL-free approach: the colour photo is drawn into the\n * canvas with \"source-in\" compositing.\n */\nexport function HeroInkReveal({ base = \"/demo/photo-2.jpg\", reveal = \"/demo/photo-2.jpg\" }: { base?: string; reveal?: string }) {\n  const reduced = useReducedMotion();\n  const touch = usePrefersTouch();\n  const wrap = useRef<HTMLDivElement>(null);\n  const canvas = useRef<HTMLCanvasElement>(null);\n\n  useEffect(() => {\n    const el = wrap.current, c = canvas.current;\n    const ctx = c?.getContext(\"2d\");\n    if (!el || !c || !ctx) return;\n    const img = new Image();\n    img.src = reveal;\n    const blots: { x: number; y: number; r: number; max: number; life: number }[] = [];\n    let w = 0, h = 0, raf = 0, last: { x: number; y: number } | null = null;\n    const dpr = Math.min(2, window.devicePixelRatio || 1);\n    const resize = () => { w = el.clientWidth; h = el.clientHeight; c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };\n    resize();\n    const ro = new ResizeObserver(resize);\n    ro.observe(el);\n\n    const add = (x: number, y: number, big = 1) => blots.push({ x: x + (Math.random() - 0.5) * 20, y: y + (Math.random() - 0.5) * 20, r: 4, max: (40 + Math.random() * 50) * big, life: 1 });\n    const move = (e: PointerEvent) => {\n      const r = el.getBoundingClientRect();\n      const p = { x: e.clientX - r.left, y: e.clientY - r.top };\n      const dist = last ? Math.hypot(p.x - last.x, p.y - last.y) : 999;\n      if (dist > 18) { add(p.x, p.y); last = p; }\n    };\n    const down = (e: PointerEvent) => { const r = el.getBoundingClientRect(); for (let i = 0; i < 6; i++) add(e.clientX - r.left, e.clientY - r.top, 1.8); };\n\n    const cover = (iw: number, ih: number) => { const s = Math.max(w / iw, h / ih); return [(w - iw * s) / 2, (h - ih * s) / 2, iw * s, ih * s] as const; };\n    const frame = () => {\n      ctx.clearRect(0, 0, w, h);\n      ctx.globalCompositeOperation = \"source-over\";\n      for (let i = blots.length - 1; i >= 0; i--) {\n        const b = blots[i];\n        b.r += (b.max - b.r) * 0.08; // bloom\n        b.life -= 0.0045; // dry\n        if (b.life <= 0) { blots.splice(i, 1); continue; }\n        const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);\n        g.addColorStop(0, `rgba(0,0,0,${Math.min(1, b.life * 1.4)})`);\n        g.addColorStop(0.7, `rgba(0,0,0,${b.life * 0.8})`);\n        g.addColorStop(1, \"rgba(0,0,0,0)\");\n        ctx.fillStyle = g;\n        ctx.beginPath();\n        // wobbly ink edge\n        for (let a = 0; a <= Math.PI * 2 + 0.01; a += Math.PI / 10) {\n          const rr = b.r * (0.85 + 0.15 * Math.sin(a * 3 + b.x));\n          ctx[a === 0 ? \"moveTo\" : \"lineTo\"](b.x + Math.cos(a) * rr, b.y + Math.sin(a) * rr);\n        }\n        ctx.fill();\n      }\n      if (img.complete && img.naturalWidth) {\n        ctx.globalCompositeOperation = \"source-in\";\n        ctx.drawImage(img, ...cover(img.naturalWidth, img.naturalHeight));\n      }\n      raf = requestAnimationFrame(frame);\n    };\n    if (!reduced && !touch) {\n      el.addEventListener(\"pointermove\", move);\n      el.addEventListener(\"pointerdown\", down);\n      raf = requestAnimationFrame(frame);\n    }\n    return () => { cancelAnimationFrame(raf); ro.disconnect(); el.removeEventListener(\"pointermove\", move); el.removeEventListener(\"pointerdown\", down); };\n  }, [reveal, reduced, touch]);\n\n  return (\n    <section ref={wrap} className=\"relative h-full min-h-[520px] overflow-hidden rounded-[2rem] bg-[#f3efe7] text-zinc-900\">\n      {/* base: monochrome. Under reduced motion / touch the colour image simply shows. */}\n      <img src={base} alt=\"\" className=\"absolute inset-0 size-full object-cover\" style={{ filter: reduced || touch ? \"none\" : \"grayscale(1) contrast(1.1) brightness(1.08)\" }} />\n      <canvas ref={canvas} aria-hidden className=\"pointer-events-none absolute inset-0 size-full\" />\n      <div className=\"pointer-events-none absolute inset-0 bg-gradient-to-r from-[#f3efe7] via-[#f3efe7]/70 to-transparent\" />\n      <div className=\"relative flex h-full max-w-xl flex-col justify-center p-8 sm:p-12\">\n        <p className=\"text-xs uppercase tracking-[0.3em] text-zinc-500\">Ink & Field — Studio</p>\n        <h1 className=\"mt-4 font-serif text-[clamp(2.6rem,6vw,4.6rem)] leading-[0.95] tracking-tight\">Colour is<br /><em className=\"text-violet-700\">earned.</em></h1>\n        <p className=\"mt-5 max-w-sm text-zinc-600\">Move across the image to bleed colour into it. Click to spill more.</p>\n        <a href=\"#work\" className=\"pointer-events-auto mt-8 w-fit rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white\">See the series</a>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "hero",
+      "ink",
+      "reveal",
+      "cursor",
+      "editorial"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "nav-gooey",
+  "type": "registry:component",
+  "title": "Gooey Tab Bar",
+  "description": "Tab bar whose active blob oozes between items: an SVG goo filter merges the blob with a slower trailing droplet so they stretch and pinch like liquid.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/nav-gooey.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/nav-gooey.tsx",
+      "content": "\"use client\";\nimport { useId, useState, type ReactNode } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface NavGooeyItem {\n  label: string;\n  icon: ReactNode;\n}\n\nexport interface NavGooeyProps {\n  items: NavGooeyItem[];\n  defaultIndex?: number;\n  onChange?: (index: number) => void;\n  className?: string;\n}\n\n/**\n * Tab bar whose active blob oozes between items: an SVG \"goo\" filter (blur + alpha threshold) merges\n * the moving blob with a trailing droplet, so they stretch and pinch like liquid.\n */\nexport function NavGooey({ items, defaultIndex = 0, onChange, className }: NavGooeyProps) {\n  const reduced = useReducedMotion();\n  const [active, setActive] = useState(defaultIndex);\n  const filterId = `goo-${useId().replace(/:/g, \"\")}`;\n  const pct = (i: number) => `${(i + 0.5) * (100 / items.length)}%`;\n\n  return (\n    <nav aria-label=\"Primary\" className={cn(\"relative rounded-full bg-zinc-900 p-2 text-zinc-400 shadow-xl\", className)}>\n      <svg aria-hidden className=\"absolute size-0\">\n        <filter id={filterId}>\n          <feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"7\" result=\"blur\" />\n          <feColorMatrix in=\"blur\" mode=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9\" result=\"goo\" />\n          <feComposite in=\"SourceGraphic\" in2=\"goo\" operator=\"atop\" />\n        </filter>\n      </svg>\n      {/* goo layer: blob + droplet, filtered together */}\n      <div aria-hidden className=\"pointer-events-none absolute inset-2\" style={{ filter: reduced ? undefined : `url(#${filterId})` }}>\n        <motion.span\n          className=\"absolute top-1/2 size-12 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500\"\n          animate={{ left: pct(active) }}\n          transition={reduced ? { duration: 0 } : { type: \"spring\", stiffness: 300, damping: 24 }}\n        />\n        <motion.span\n          className=\"absolute top-1/2 size-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500\"\n          animate={{ left: pct(active) }}\n          transition={reduced ? { duration: 0 } : { type: \"spring\", stiffness: 120, damping: 14 }}\n        />\n      </div>\n      <ul className=\"relative grid\" style={{ gridTemplateColumns: `repeat(${items.length}, 4rem)` }}>\n        {items.map((it, i) => (\n          <li key={it.label}>\n            <button\n              type=\"button\"\n              aria-label={it.label}\n              aria-current={i === active ? \"page\" : undefined}\n              onClick={() => (setActive(i), onChange?.(i))}\n              className={cn(\"grid h-12 w-16 place-items-center rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300\", i === active ? \"text-white\" : \"hover:text-zinc-200\")}\n            >\n              {it.icon}\n            </button>\n          </li>\n        ))}\n      </ul>\n    </nav>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "tab bar",
+      "gooey",
+      "svg filter",
+      "navigation",
+      "mobile"
+    ],
+    "pageTypes": [
+      "landing",
+      "dashboard"
+    ]
+  }
+}

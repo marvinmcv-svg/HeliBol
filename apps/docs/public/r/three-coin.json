@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "three-coin",
+  "type": "registry:component",
+  "title": "3D Coin Flip",
+  "description": "A metallic coin with canvas-drawn embossed faces. It flips on a spring with a little hop and tilts toward the pointer — fintech/rewards hero.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/canvas-3d-shell.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/three-coin.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/three-coin.tsx",
+      "content": "\"use client\";\nimport { useEffect, useMemo, useRef } from \"react\";\nimport { useFrame } from \"@react-three/fiber\";\nimport { Environment, Lightformer } from \"@react-three/drei\";\nimport * as THREE from \"three\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\nimport { Canvas3DShell } from \"@/components/kinetik/canvas-3d-shell\";\n\nexport interface ThreeCoinProps {\n  /** Short mark embossed on the front face (1–3 characters read best). */\n  front?: string;\n  /** Text on the back face. */\n  back?: string;\n  color?: string;\n  className?: string;\n  /** Increment to flip the coin (e.g. from a button). */\n  flipKey?: number;\n}\n\n/** Draws a face into a canvas texture: rim ring, ridged edge marks and the label. */\nfunction faceTexture(label: string, base: string, small: boolean) {\n  const size = 512;\n  const c = document.createElement(\"canvas\");\n  c.width = c.height = size;\n  const g = c.getContext(\"2d\")!;\n  const col = new THREE.Color(base);\n  const dark = `#${col.clone().multiplyScalar(0.55).getHexString()}`;\n  const light = `#${col.clone().lerp(new THREE.Color(\"#fff\"), 0.45).getHexString()}`;\n  const grad = g.createRadialGradient(size * 0.35, size * 0.3, 10, size / 2, size / 2, size / 2);\n  grad.addColorStop(0, light);\n  grad.addColorStop(1, `#${col.getHexString()}`);\n  g.fillStyle = grad;\n  g.fillRect(0, 0, size, size);\n  g.strokeStyle = dark;\n  g.lineWidth = 10;\n  g.beginPath();\n  g.arc(size / 2, size / 2, size * 0.41, 0, Math.PI * 2);\n  g.stroke();\n  for (let i = 0; i < 60; i++) {\n    const a = (i / 60) * Math.PI * 2;\n    g.beginPath();\n    g.moveTo(size / 2 + Math.cos(a) * size * 0.44, size / 2 + Math.sin(a) * size * 0.44);\n    g.lineTo(size / 2 + Math.cos(a) * size * 0.48, size / 2 + Math.sin(a) * size * 0.48);\n    g.lineWidth = 4;\n    g.stroke();\n  }\n  g.fillStyle = dark;\n  g.textAlign = \"center\";\n  g.textBaseline = \"middle\";\n  g.font = `800 ${small ? 64 : 200}px system-ui, sans-serif`;\n  g.fillText(label, size / 2, size / 2 + (small ? 0 : 10));\n  const t = new THREE.CanvasTexture(c);\n  t.colorSpace = THREE.SRGBColorSpace;\n  t.anisotropy = 8;\n  return t;\n}\n\nfunction Coin({ front, back, color, flipKey }: Required<Omit<ThreeCoinProps, \"className\">>) {\n  const reduced = useReducedMotion();\n  const mesh = useRef<THREE.Mesh>(null);\n  const materials = useMemo(() => {\n    const edge = new THREE.MeshStandardMaterial({ color, metalness: 1, roughness: 0.28 });\n    const f = new THREE.MeshStandardMaterial({ map: faceTexture(front, color, false), metalness: 0.9, roughness: 0.3 });\n    const b = new THREE.MeshStandardMaterial({ map: faceTexture(back, color, true), metalness: 0.9, roughness: 0.3 });\n    return [edge, f, b];\n  }, [front, back, color]);\n  useEffect(() => () => materials.forEach((m) => { m.map?.dispose(); m.dispose(); }), [materials]);\n\n  // Flip = add half-turns to a target and spring toward it; a little hop sells the toss.\n  const anim = useRef({ target: 0, current: 0, vel: 0, hop: 0 });\n  useEffect(() => {\n    if (!flipKey) return;\n    anim.current.target += Math.PI * 3;\n    anim.current.hop = 1;\n  }, [flipKey]);\n\n  useFrame((s, dt) => {\n    const m = mesh.current;\n    if (!m) return;\n    const a = anim.current;\n    if (reduced) { a.current = a.target; a.vel = 0; a.hop = 0; }\n    a.vel += (a.target - a.current) * 60 * dt;\n    a.vel *= Math.exp(-9 * dt);\n    a.current += a.vel * dt;\n    a.hop = Math.max(0, a.hop - dt * 1.6);\n    m.rotation.x = Math.PI / 2 + a.current + s.pointer.y * 0.25;\n    m.rotation.z = -s.pointer.x * 0.5 + (reduced ? 0 : Math.sin(s.clock.elapsedTime * 0.8) * 0.15);\n    m.position.y = Math.sin(a.hop * Math.PI) * 0.9;\n  });\n\n  return (\n    <mesh ref={mesh} material={materials} rotation={[Math.PI / 2, 0, 0]}>\n      {/* CylinderGeometry groups: 0 = side, 1 = top, 2 = bottom */}\n      <cylinderGeometry args={[1.25, 1.25, 0.16, 96]} />\n    </mesh>\n  );\n}\n\n/** A metallic 3D coin with canvas-drawn embossed faces. It flips with a spring and a hop, and tilts toward the pointer. */\nexport function ThreeCoin({ front = \"K\", back = \"KINETIK · 2026\", color = \"#d4a017\", className, flipKey = 0 }: ThreeCoinProps) {\n  return (\n    <Canvas3DShell className={className} camera={{ position: [0, 0, 5], fov: 40 }}>\n      <ambientLight intensity={0.4} />\n      <directionalLight position={[3, 4, 5]} intensity={2} />\n      <Coin front={front} back={back} color={color} flipKey={flipKey} />\n      <Environment resolution={256}>\n        <Lightformer intensity={5} position={[0, 5, -3]} scale={[10, 2, 1]} />\n        <Lightformer intensity={2} position={[-5, 1, 2]} rotation-y={Math.PI / 2} scale={[6, 2, 1]} />\n        <Lightformer intensity={2} color=\"#fde68a\" position={[5, -1, 2]} rotation-y={-Math.PI / 2} scale={[6, 2, 1]} />\n      </Environment>\n    </Canvas3DShell>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "three.js",
+      "coin",
+      "fintech",
+      "rewards",
+      "flip"
+    ],
+    "pageTypes": [
+      "landing",
+      "ecommerce"
+    ]
+  }
+}

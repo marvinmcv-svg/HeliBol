@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-flip-carousel",
+  "type": "registry:component",
+  "title": "Flip Carousel",
+  "description": "A carousel where DOM order is the truth: next/prev rotates the array and GSAP Flip animates every card from its old box to its new one — the centre slot is bigger, so cards grow as they pass through.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/gsap-flip-carousel.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/gsap-flip-carousel.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport gsap from \"gsap\";\nimport { Flip } from \"gsap/Flip\";\nimport { useGSAP } from \"@gsap/react\";\nimport { ArrowLeft, ArrowRight } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ngsap.registerPlugin(Flip, useGSAP);\n\nexport interface GsapFlipCarouselProps {\n  items: { image: string; title: string }[];\n  className?: string;\n}\n\n/**\n * A carousel where the DOM order is the truth: \"next\" moves the first card to the end, and GSAP Flip\n * animates every card from its old box to its new one — the centre slot is simply bigger, so cards\n * grow and shrink as they pass through it.\n */\nexport function GsapFlipCarousel({ items, className }: GsapFlipCarouselProps) {\n  const reduced = useReducedMotion();\n  const track = useRef<HTMLDivElement>(null);\n  const [order, setOrder] = useState(() => items.map((_, i) => i));\n  const pending = useRef<Flip.FlipState | null>(null);\n  const busy = useRef(false);\n\n  const shift = (d: 1 | -1) => {\n    if (busy.current || !track.current) return;\n    if (!reduced) pending.current = Flip.getState(track.current.children, { props: \"opacity\" });\n    setOrder((o) => (d > 0 ? [...o.slice(1), o[0]] : [o[o.length - 1], ...o.slice(0, -1)]));\n  };\n\n  // After React re-orders the DOM, play the Flip from the recorded state.\n  useGSAP(\n    () => {\n      const state = pending.current;\n      if (!state) return;\n      pending.current = null;\n      busy.current = true;\n      Flip.from(state, { duration: 0.7, ease: \"power3.inOut\", absolute: false, nested: true, onComplete: () => void (busy.current = false) });\n    },\n    { dependencies: [order], scope: track },\n  );\n\n  const center = Math.floor(items.length / 2);\n  return (\n    <div\n      className={cn(\"flex h-full flex-col items-center justify-center gap-5 overflow-hidden\", className)}\n      role=\"region\"\n      aria-roledescription=\"carousel\"\n      aria-label=\"Featured\"\n      tabIndex={0}\n      onKeyDown={(e) => (e.key === \"ArrowRight\" ? shift(1) : e.key === \"ArrowLeft\" ? shift(-1) : null)}\n    >\n      <div ref={track} className=\"flex items-center gap-3\">\n        {order.map((idx, pos) => {\n          const it = items[idx];\n          const isCenter = pos === center;\n          const dist = Math.abs(pos - center);\n          return (\n            <figure\n              key={idx}\n              aria-hidden={!isCenter}\n              className={cn(\"relative shrink-0 overflow-hidden rounded-2xl bg-muted shadow-lg\", isCenter ? \"h-64 w-48\" : dist === 1 ? \"h-44 w-28\" : \"h-32 w-16\")}\n              style={{ opacity: dist > 2 ? 0 : 1 - dist * 0.2 }}\n            >\n              <img src={it.image} alt=\"\" className=\"size-full object-cover\" draggable={false} />\n              {isCenter && <figcaption className=\"absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 p-3 text-sm font-medium text-white\">{it.title}</figcaption>}\n            </figure>\n          );\n        })}\n      </div>\n      <div className=\"flex gap-2\">\n        <button type=\"button\" aria-label=\"Previous\" onClick={() => shift(-1)} className=\"grid size-10 place-items-center rounded-full border border-border hover:bg-muted\"><ArrowLeft className=\"size-4\" /></button>\n        <button type=\"button\" aria-label=\"Next\" onClick={() => shift(1)} className=\"grid size-10 place-items-center rounded-full border border-border hover:bg-muted\"><ArrowRight className=\"size-4\" /></button>\n      </div>\n      <p className=\"sr-only\" aria-live=\"polite\">{items[order[center]].title}</p>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "gsap",
+    "tags": [
+      "gsap",
+      "flip",
+      "carousel",
+      "gallery",
+      "layout"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "ecommerce",
+      "media"
+    ]
+  }
+}

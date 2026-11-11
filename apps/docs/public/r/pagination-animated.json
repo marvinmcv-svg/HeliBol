@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination-animated",
+  "type": "registry:component",
+  "title": "Animated Pagination",
+  "description": "Pagination where the active pill slides between pages, numbers shuffle in and out as the window moves, and arrows nudge in their direction on press.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/pagination-animated.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/pagination-animated.tsx",
+      "content": "\"use client\";\nimport { useId } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ChevronLeft, ChevronRight } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface PaginationAnimatedProps {\n  page: number;\n  total: number;\n  onChange: (page: number) => void;\n  /** Pages shown either side of the current one. */\n  siblings?: number;\n  className?: string;\n}\n\nfunction range(page: number, total: number, siblings: number): (number | \"…\")[] {\n  const out: (number | \"…\")[] = [];\n  const lo = Math.max(2, page - siblings), hi = Math.min(total - 1, page + siblings);\n  out.push(1);\n  if (lo > 2) out.push(\"…\");\n  for (let i = lo; i <= hi; i++) out.push(i);\n  if (hi < total - 1) out.push(\"…\");\n  if (total > 1) out.push(total);\n  return out;\n}\n\n/**\n * Pagination where the active pill slides between page numbers (shared layout), numbers shuffle in\n * and out as the window moves, and the arrows nudge in their direction on press.\n */\nexport function PaginationAnimated({ page, total, onChange, siblings = 1, className }: PaginationAnimatedProps) {\n  const reduced = useReducedMotion();\n  const group = useId();\n  const items = range(page, total, siblings);\n  const t = reduced ? { duration: 0 } : spring.snappy;\n  const arrow = (d: -1 | 1) => (\n    <motion.button\n      type=\"button\"\n      aria-label={d < 0 ? \"Previous page\" : \"Next page\"}\n      disabled={d < 0 ? page <= 1 : page >= total}\n      onClick={() => onChange(page + d)}\n      whileTap={reduced ? undefined : { x: d * 3, scale: 0.9 }}\n      className=\"grid size-9 place-items-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n    >\n      {d < 0 ? <ChevronLeft className=\"size-4\" /> : <ChevronRight className=\"size-4\" />}\n    </motion.button>\n  );\n  return (\n    <nav aria-label=\"Pagination\" className={cn(\"flex items-center gap-1\", className)}>\n      {arrow(-1)}\n      <ul className=\"flex items-center gap-1\">\n        <AnimatePresence mode=\"popLayout\" initial={false}>\n          {items.map((p, i) => (\n            <motion.li\n              key={p === \"…\" ? `gap-${i}` : p}\n              layout={reduced ? false : \"position\"}\n              initial={{ opacity: 0, scale: 0.6 }}\n              animate={{ opacity: 1, scale: 1 }}\n              exit={{ opacity: 0, scale: 0.6 }}\n              transition={t}\n            >\n              {p === \"…\" ? (\n                <span className=\"grid size-9 place-items-center text-muted-foreground\" aria-hidden>…</span>\n              ) : (\n                <button\n                  type=\"button\"\n                  onClick={() => onChange(p)}\n                  aria-current={p === page ? \"page\" : undefined}\n                  aria-label={`Page ${p}`}\n                  className={cn(\"relative grid size-9 place-items-center rounded-lg text-sm tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\", p === page ? \"text-primary-foreground\" : \"hover:bg-muted\")}\n                >\n                  {p === page && <motion.span layoutId={`${group}-pill`} transition={reduced ? { duration: 0 } : spring.smooth} className=\"absolute inset-0 rounded-lg bg-primary\" />}\n                  <span className=\"relative\">{p}</span>\n                </button>\n              )}\n            </motion.li>\n          ))}\n        </AnimatePresence>\n      </ul>\n      {arrow(1)}\n    </nav>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "pagination",
+      "pages",
+      "navigation",
+      "table"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "blog",
+      "ecommerce"
+    ]
+  }
+}
