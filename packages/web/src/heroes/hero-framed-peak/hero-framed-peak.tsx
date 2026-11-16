@@ -1,34 +1,47 @@
 "use client";
 import { cn, useReducedMotion } from "@kinetik/core";
 
+const FONT = "https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap";
 const css = `
+.k-hfp{font-family:Nunito,ui-sans-serif,system-ui,sans-serif}
 .k-hfp .frame{stroke-dasharray:1400;stroke-dashoffset:1400;animation:k-hfp-draw 1.8s cubic-bezier(.65,0,.35,1) .2s forwards}
 @keyframes k-hfp-draw{to{stroke-dashoffset:0}}
 .k-hfp .title{animation:k-hfp-in 1s ease-out 1.1s both}
 @keyframes k-hfp-in{from{opacity:0;transform:translateY(8px)}}
 .k-hfp .far{animation:k-hfp-drift 18s ease-in-out infinite alternate}
 .k-hfp .near{animation:k-hfp-drift 12s ease-in-out infinite alternate-reverse}
-@keyframes k-hfp-drift{to{transform:translateX(-3%)}}
+@keyframes k-hfp-drift{to{transform:translateX(-2%)}}
 @media (prefers-reduced-motion:reduce){.k-hfp *{animation:none!important;stroke-dashoffset:0!important}}
 [data-reduce-motion] .k-hfp *{animation:none!important;stroke-dashoffset:0!important}`;
 
-/** Foundation/mission hero: a rounded alpine scene with parallax ridges, a tiny hiker climbing and a white frame that draws itself around the name. */
-export function HeroFramedPeak({ title = "Open Foundation", line = "Building an internet where people come before profits", className }: { title?: string; line?: string; className?: string }) {
+/** Foundation/mission hero: lavender nav, a rounded alpine photo card with a hiker climbing and a white square frame drawing itself around the name, then the mission copy. */
+export function HeroFramedPeak({ brand = "Prism", title = "Prism Foundation", className }: { brand?: string; title?: string; className?: string }) {
   const reduced = useReducedMotion();
   return (
-    <section className={cn("k-hfp bg-[#f6f5ff] px-4 pt-6 pb-10", className)}>
+    <section className={cn("k-hfp flex flex-col overflow-hidden bg-gradient-to-b from-[#f6f5ff] via-[#f8f7ff] to-white text-[#1b1340]", className)}>
+      <link rel="stylesheet" href={FONT} precedence="kinetik-font" />
       <style href="k-hfp" precedence="kinetik">{css}</style>
-      <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl bg-gradient-to-b from-[#3d6fd1] via-[#7ea3e6] to-[#cfe0f7]">
-        <svg viewBox="0 0 600 300" aria-hidden className="block h-auto w-full">
-          <path className="far" d="M-20 230 L60 170 L120 200 L210 120 L300 190 L380 140 L470 185 L560 130 L640 200 V300 H-20Z" fill="#dce7f7" />
-          <path className="near" d="M-20 300 L120 230 L240 160 L330 112 L420 175 L520 220 L640 250 V300Z" fill="#fff" />
-          <path className="near" d="M330 112 L360 150 L320 190 L290 160Z" fill="#e6eefb" />
-          <g transform={reduced ? "translate(255 160)" : undefined}>{!reduced && <animateMotion dur="14s" repeatCount="indefinite" path="M180 210 Q 260 150 330 118" />}<rect x="-2" y="-9" width="4" height="9" rx="1.5" fill="#1f2937" /><circle cy="-11" r="2" fill="#1f2937" /></g>
-          <rect className="frame" x="150" y="40" width="300" height="200" fill="none" stroke="#fff" strokeWidth="6" />
+      <nav className="flex items-center justify-between px-[6.3%] py-3 text-[12px] whitespace-nowrap">
+        <span className="flex items-center gap-6"><b className="text-[19px] font-extrabold tracking-tight text-[#6d4aff]">{brand}</b><span className="hidden gap-6 font-semibold lg:flex"><a href="#">Products ⌄</a><a href="#">{brand} for business</a><a href="#">Who we are ⌄</a><a href="#">Resources & support ⌄</a></span></span>
+        <span className="flex items-center gap-5 font-semibold"><a href="#" className="rounded-full bg-[#6d4aff] px-4 py-2 text-white">Create a free account</a><a href="#">Sign in</a></span>
+      </nav>
+      <div className="relative mx-[8.7%] mt-1 overflow-hidden rounded-[22px]">
+        <svg viewBox="0 0 1200 560" aria-hidden className="block h-auto w-full">
+          <defs><linearGradient id="k-hfp-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#3f6db8" /><stop offset=".6" stopColor="#7aa0d8" /><stop offset="1" stopColor="#b9cde9" /></linearGradient><linearGradient id="k-hfp-snow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ffffff" /><stop offset="1" stopColor="#d6e2f2" /></linearGradient></defs>
+          <rect width="1200" height="560" fill="url(#k-hfp-sky)" />
+          <path className="far" d="M-20 430 L90 400 L180 425 L300 380 L380 410 L470 395 L560 420 L1220 430 V560 H-20Z" fill="#dfe8f5" />
+          <path className="near" d="M-20 560 L150 500 L330 420 L470 330 L560 270 L640 300 L760 360 L900 420 L1060 470 L1220 500 V560Z" fill="url(#k-hfp-snow)" />
+          <path className="near" d="M560 270 L600 330 L540 420 L470 330Z" fill="#c9d7ea" opacity=".7" />
+          <path className="near" d="M640 300 L700 380 L880 520 L760 360Z" fill="#cbd8ea" opacity=".6" />
+          <g transform={reduced ? "translate(612 352)" : undefined}>{!reduced && <animateMotion dur="16s" repeatCount="indefinite" path="M540 470 Q 590 400 612 352 T 625 300" />}<rect x="-4" y="-24" width="9" height="22" rx="3" fill="#20252e" /><circle cy="-28" r="4.5" fill="#20252e" /><path d="M-6 -2 L-8 8 M4 -2 L6 8" stroke="#20252e" strokeWidth="3" /></g>
+          <rect className="frame" x="250" y="60" width="450" height="430" fill="none" stroke="#fff" strokeWidth="9" />
         </svg>
-        <h1 className="title absolute top-[22%] left-1/2 w-[46%] -translate-x-1/2 text-[clamp(1.6rem,5vw,3rem)] leading-[1] font-semibold tracking-tight text-white drop-shadow">{title}</h1>
+        <h1 className="title absolute top-[17%] left-[26%] text-[clamp(1.6rem,3.75vw,3.5rem)] leading-[1.02] font-extrabold tracking-[-.01em] text-white">{title.split(" ").map((w) => <span key={w} className="block">{w}</span>)}</h1>
       </div>
-      <p className="mx-auto mt-6 max-w-4xl px-2 text-lg text-[#3b2f8f]"><span className="text-[#6d5bd0]">{line.split(" ").slice(0, 4).join(" ")}</span> <b className="font-semibold">{line.split(" ").slice(4).join(" ")}</b></p>
+      <div className="mx-auto max-w-[46rem] flex-1 px-6 pt-[6%] pb-6">
+        <h2 className="text-[clamp(1.1rem,1.75vw,1.6rem)] font-normal text-[#5b4fc4]">Building an Internet <b className="font-semibold text-[#1b1340]">where people come before profits</b></h2>
+        <p className="mt-4 text-[13px] leading-relaxed text-[#3b3570]">{brand} was created to serve the world, and the non-profit {brand} Foundation ensures that this can never change. As {brand}'s primary shareholder, the foundation exercises its control to ensure that {brand} does not deviate from our mission to build a better internet that serves the interests of all of society.</p>
+      </div>
     </section>
   );
 }

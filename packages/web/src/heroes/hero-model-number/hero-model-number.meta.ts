@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-model-number",
   name: "Hero — Model Number",
-  description: "Product-glamour hero: a moody close-up of a machined frame with a pulsing red lamp, a huge model number sliding in and a looping promo strip.",
+  description: "Product-glamour hero: neon promo strip, a floating boxed header, and a moody machined e-bike close-up with a pulsing red lamp, a huge model number and a reserve line.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-pixel-logos",
   name: "Hero — Pixel Logos",
-  description: "Enterprise AI hero: hopping pixel-art mascots, a word-by-word headline and a ruled grid of customer logo cells that drifts sideways.",
+  description: "Enterprise-AI hero in a ruled grid: bordered cell nav, hopping pixel-art mascots, a word-by-word headline, a drifting row of tall logo cells and a strip of customer stories.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

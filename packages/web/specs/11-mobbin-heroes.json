@@ -7,7 +7,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Sports/performance hero: speed-blur streaks behind giant masked headline lines, a hard-edged CTA and a logo rail.",
+  "description": "Sports-performance hero: thin mono nav, a motion-blurred action photo with giant stacked uppercase lines, an orange split CTA, a logo strip and the intro statement below.",
   "tags": [
    "hero",
    "sports",
@@ -32,7 +32,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a sports-performance hero on #1c1917: five horizontal blurred gradient streaks (18–60px tall, blur 6–22px) race left→right on 1.3–3.2s linear loops behind a left-to-right dark scrim. Bottom-left H1 of three giant uppercase lines (clamp 2.6–6.5rem, line-height .86, tracking −.04em); each line sits in overflow:hidden and slides up from 105% with expo-out, staggered 80ms. Bottom-right: tiny paragraph and an orange (#ff4d1a) two-part CTA (label block + arrow square that nudges right on hover). Below, a light logo rail scrolling −50% over 22s. Reduced motion: everything static."
+  "prompt": "Recreate a sports-performance landing hero: thin mono uppercase nav (wordmark left, 5 links centre, orange 'Book a consultation ↗' right); a full-width motion-blurred action photo with blurred light streaks racing across; bottom-left three giant stacked uppercase lines (Inter Tight 500, ~9vw, leading .84, tracking −.045em) that slide up out of masks staggered 100ms; right column small paragraph + orange two-part CTA (label block + arrow square). Below: a light-grey logo strip marquee, then a white section with a mono eyebrow, a large centered statement and two small image blocks."
  },
  {
   "id": "hero-curved-collage",
@@ -44,7 +44,7 @@
   ],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "About/story hero: centered statement with a photo collage whose side tiles are cut by big sweeping curves and drift in on load.",
+  "description": "About-page hero: full nav with three CTAs, a bold centered headline and paragraph, and a photo collage whose side photos are carved by huge sweeping curves.",
   "tags": [
    "hero",
    "about",
@@ -70,7 +70,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build an 'our story' hero: white bg, centered bold H1 + paragraph that fade/blur in. Below, a 3-column collage (1fr 2.6fr 1fr): left tile with a 120px top-right radius offset down, a large center photo, and a right column of two stacked tiles with 90px bottom-left / top-left radii so the side tiles read as big sweeping curves. Tiles enter with Motion from x ±60, scale .94 → 1, staggered, expo-out. `images` prop with gradient fallbacks."
+  "prompt": "Recreate an about-page hero: full nav (logo, 3 dropdowns + 2 links, Log in, blue 'Get started free' pill, light-blue 'Request a demo' pill); bold centered H1 (~4.4vw) and a 3-line paragraph; below a photo collage — wide centre photo (58% width), a left photo with a 120px top-right radius, and right-edge photos carved by 140–170px curves (one near the top under the nav, one tall at the bottom). Tiles slide in from the sides with expo-out."
  },
  {
   "id": "hero-blueprint",
@@ -80,7 +80,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Architectural/AI-tool hero on a ruled editorial grid: line-art tower drawn stroke by stroke, a red sun popping behind it and a mono ticker.",
+  "description": "Architectural AI-agent hero on a ruled cream grid: heavy two-line headline, mono ticker, a line-drawn tower with a red sun dissolving into pixels, a shouty statement and a client row.",
   "tags": [
    "hero",
    "editorial",
@@ -107,7 +107,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build an architectural AI-tool hero on #f1efe8 with ruled 1px black/20 borders: top row = heavy uppercase H1 (2/3) + small description with orange mono 'Discover more →' (1/3); a mono ticker row of '◎' feature tags looping; bottom split = line-art tower SVG drawn with stroke-dashoffset (frame first, then floor lines staggered 80ms) with a red #ff4a1c sun that pops in with a back-out scale, and a black uppercase statement + bordered mono 'Learn more' button."
+  "prompt": "Recreate an architectural AI-agent hero on #f1efe6 inside a 1px ruled frame: top band = heavy 2-line uppercase H1 (Archivo 900) | description cell | 'Discover more →' mono cell, with a mono ◎ ticker under the description; main split = line-art tower SVG drawn with stroke-dashoffset (frame, floors, fins) over a red #ff4a1c sun that pops in, white pixel blocks blinking where they cross | heavy uppercase statement (~2.4vw), bordered mono 'Learn more →', a 'Clients ← →' bar and 5 logo cells; mono footnote row at the bottom."
  },
  {
   "id": "hero-nested-frames",
@@ -117,7 +117,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Manifesto hero: the copy sits in a glowing panel wrapped by concentric rounded frames that pulse outward in sequence.",
+  "description": "Manifesto hero: white nav bar over a deep-purple field where the copy sits in a glowing rounded panel wrapped by concentric frames that pulse outward.",
   "tags": [
    "hero",
    "manifesto",
@@ -142,7 +142,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a manifesto hero on #1a0f3d: a central panel (#2a1960, 28px radius, #7c5cff border) wrapped by three concentric frames inset −26/−52/−78px with radii growing 10px each and decreasing opacity. Frames pulse border colour + glow in sequence (4s, 250ms offsets). The panel's radial highlight drifts via an @property percentage. H1 + subtitle scale/blur in; a circular ↓ scroll cue bobs."
+  "prompt": "Recreate a manifesto hero: light nav bar (serif wordmark, dropdowns, Login, outlined 'Contact Sales', dark 'Get Started Free'); deep purple #1c0f45 field with a central rounded panel (28px radius, #6a4bff border, radial purple glow drifting via @property) wrapped by three concentric frames inset 38px apart that pulse in sequence. Centered H1 (~5.3vw, DM Sans 500), 2-line subtitle (~2.1vw) and a circled ↓ that bobs."
  },
  {
   "id": "hero-story-rail",
@@ -152,7 +152,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Customer-story hero: centered headline over an endless rail of tall photo cards with brand marks; hover pauses the rail and zooms the card.",
+  "description": "Customer-story hero on black: big two-line headline, two small pills, then an endless rail of tall photo cards with white brand marks — hover pauses it.",
   "tags": [
    "hero",
    "customer stories",
@@ -177,7 +177,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a customer-stories hero on black: centered H1, muted subtitle and two pill buttons (white solid + translucent). Below, an infinite rail of tall 192×240 rounded cards (photo or tinted radial fallback, 45% black overlay, brand mark centered, 'Visit site ›' at bottom) translating −50% over 40s. Hover pauses the rail and zooms the hovered photo 1.06 with expo-out."
+  "prompt": "Recreate a customer-stories hero on black: centered 2-line H1 (~5.4vw, semibold, −.04em), grey 2-line subtitle, two small pills (white 'Contact sales', dark 'Explore Enterprise'); then an endless rail of tall 3:4 photo cards (rounded-xl, 30% black overlay, white brand mark centered, 'Read story ›' at the bottom) starting offset off the left edge and translating −50% over 46s, pausing on hover; a one-line 'built their site with 0 developers' credit underneath."
  },
  {
   "id": "hero-wordmark-dashboard",
@@ -187,7 +187,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Product-launch hero: a giant condensed wordmark drops in letter by letter, then a violet stage rises with a live admin dashboard whose chart draws itself.",
+  "description": "Product-launch hero: a giant condensed wordmark drops in letter by letter, then a violet stage rises with a condensed tagline and a full store-admin mock whose chart draws itself.",
   "tags": [
    "hero",
    "launch",
@@ -213,7 +213,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a product-launch hero on #120b24: a giant condensed wordmark (font-black, scaleX .82, ~13vw) whose letters drop in from −60% with scaleY 1.4 and a back-out ease, staggered 60ms. Then a violet gradient stage rises 60px with a tagline, small subtitle and a white admin dashboard card (4 KPI tiles + an SVG line chart drawn with stroke-dashoffset) and a pulsing play button."
+  "prompt": "Recreate a product-launch hero: dark #140b26 top with a giant condensed wordmark (Anton, ~12.5vw, scaleX .72) whose letters drop in with back-out; then a violet gradient stage (with a soft diagonal shine) holding a condensed Oswald 300 tagline, small subtitle, frosted 'Learn more ↗' pill and an 85%-wide store-admin mock: dark top bar with search, sidebar nav, date/channel chips, a KPI row and a line chart drawn with stroke-dashoffset under a pulsing play button, then task chips."
  },
  {
   "id": "hero-spectrum-console",
@@ -223,7 +223,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Observability hero: email capture over a console mock flanked by equaliser-style log-volume bars that never stop moving.",
+  "description": "Observability hero: dark nav + announcement bar, spaced eyebrow, big headline, email capture with glowing CTA, and a logs dashboard rising between equaliser-style volume bars.",
   "tags": [
    "hero",
    "devtools",
@@ -248,7 +248,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build an observability hero on #0b0b14 with an indigo radial glow: wide-tracked eyebrow, gradient-clipped H1, inline email form (input + glowing indigo button). Below, a console mock that rises with a slight rotateX, flanked by two banks of 14 equaliser bars (scaleY .15↔1, durations .6–1.5s, negative delays) so log volume feels alive; console rows flash a highlight in sequence."
+  "prompt": "Recreate an observability hero on #0b0c1a: nav (logo, 6 links, Sign in, violet Sign up) and a rounded announcement bar; wide-tracked eyebrow, 2-line gradient-clipped H1 (~4.5vw), 2-line paragraph, email input + violet button with an offset ring, 'Start monitoring for free or book a demo'; at the bottom a logs dashboard (sidebar, panels, sparkline, a named cursor) rising with a violet glow, flanked by two banks of thin equaliser bars animating scaleY."
  },
  {
   "id": "hero-dusk-skyline",
@@ -258,7 +258,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Corporate hero: thin oversized type over a dusk city skyline that slowly pans while lit windows flicker on and off.",
+  "description": "Corporate hero: black utility bar and white nav over a dusk skyline (drawn placeholder or your photo) with thin oversized type, then a calm statement section below.",
   "tags": [
    "hero",
    "corporate",
@@ -283,7 +283,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a corporate hero: dusk sky gradient (slate → peach → dark) that slowly hue-shifts, a procedural SVG skyline (20 towers) panning −4% over 30s with lit windows twinkling on stepped 3–7s loops, a 25% black scrim, and a light-weight 6xl H1 that resolves from blur + wide letter-spacing, followed by a short paragraph."
+  "prompt": "Recreate a corporate identity hero: black utility bar (announcement, phone, chat, search, region), white nav (sunburst wordmark, 4 dropdowns, black 'Free trial', outlined 'Contact us', Login); a dusk skyline band (photo slot or procedural SVG: low towers left, dense towers + spire right, flickering windows, slow pan, horizon haze) with a light-weight 2-line H1 (~5.3vw) and a 4-line paragraph centered in white; then a white section with a light 2-line statement."
  },
  {
   "id": "hero-framed-peak",
@@ -293,7 +293,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Foundation/mission hero: a rounded alpine scene with parallax ridges, a tiny hiker climbing and a white frame that draws itself around the name.",
+  "description": "Foundation/mission hero: lavender nav, a rounded alpine photo card with a hiker climbing and a white square frame drawing itself around the name, then the mission copy.",
   "tags": [
    "hero",
    "mission",
@@ -318,7 +318,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a mission hero: inside a rounded-3xl blue sky card, two SVG mountain ridges drift in opposite directions (parallax), a tiny hiker walks up the main ridge via animateMotion, and a 6px white rectangle draws itself around the title (stroke-dashoffset 1400→0), after which the title fades in. Below the card, a two-tone purple line of copy."
+  "prompt": "Recreate a foundation/mission hero on lavender-white: nav (purple wordmark, 4 links, purple 'Create a free account' pill, Sign in); a rounded-[22px] alpine card (blue sky gradient, snowy ridges drifting in parallax, a hiker walking up via animateMotion) with a 9px white square frame drawn by stroke-dashoffset around the 2-line extra-bold title; below, a purple/indigo two-tone line and a short body paragraph."
  },
  {
   "id": "hero-pixel-logos",
@@ -328,7 +328,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Enterprise AI hero: hopping pixel-art mascots, a word-by-word headline and a ruled grid of customer logo cells that drifts sideways.",
+  "description": "Enterprise-AI hero in a ruled grid: bordered cell nav, hopping pixel-art mascots, a word-by-word headline, a drifting row of tall logo cells and a strip of customer stories.",
   "tags": [
    "hero",
    "enterprise",
@@ -354,7 +354,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build an enterprise-AI hero on #fbfaf7: three 8×6 pixel-art sprites (SVG rects, shape-rendering crispEdges) hop in sequence; H1 words rise in with a 35ms stagger. Beneath, a ruled row of 160×96 logo cells (border-r) drifting −50% over 24s."
+  "prompt": "Recreate an enterprise-AI hero in a ruled cream grid: cell nav (pixel logo cell, 7 links separated by rules, 'Start building ⌄', black 'Contact sales ›'); three hopping pixel-art sprites above a 3-line H1 (~3.9vw, medium, words rising staggered 35ms); a row of tall bordered logo cells drifting sideways; then a strip of customer-story cards (two small side cards + a wide centre image card with a mono tag)."
  },
  {
   "id": "hero-orb-clients",
@@ -366,7 +366,7 @@
   ],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Agency hero: a huge rotating conic orb bleeding in from the corner, chunky pill CTAs and client case cards that fan into place.",
+  "description": "Agency hero: wordmark and small nav, a soft coral orb glowing behind huge frosted pill CTAs, and a row of client case cards — each with a tiny site preview — fanning in.",
   "tags": [
    "hero",
    "agency",
@@ -392,7 +392,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build an agency hero on #e9e7e3: a 34rem conic-gradient orb (coral/peach/lilac) blurred and rotating via an @property angle, bleeding off the top-right. Header: wordmark + two oversized frosted pill CTAs with ↗ that hop on hover. Bottom: intro paragraph and 'Our clients', next to three case cards that fan in from x 80 / rotate 6°, each with a gradient art fill, mix-blend label, a + that rotates 135° on hover and a 'View case study' pill."
+  "prompt": "Recreate an agency hero on #e4e2df: light wordmark top-left, small uppercase nav with frosted 'Contact →' pill; a large coral/peach radial orb behind everything breathing slowly; intro paragraph + 'Our clients' at left; two oversized frosted pill CTAs ('Go big →', 'Capabilities deck ↗'); a row of 9:10 client cards (gradient + perspective grid art, site-preview card, black card cut off) fanning in from x 90 / 5°, each with a + that rotates 135° on hover and a pill button."
  },
  {
   "id": "hero-scribble-strike",
@@ -402,7 +402,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Studio hero: heavy uppercase statement over a cinematic still, where a hand-drawn red strike edits the last word and scribbled notes pop in.",
+  "description": "Studio hero: black top bar, a cinematic full-bleed still under a heavy cream uppercase statement whose last word gets a hand-drawn red strike and scribbled correction, a circled link and a red name band.",
   "tags": [
    "hero",
    "studio",
@@ -427,7 +427,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a studio hero over a cinematic still with a dark vertical scrim: centered heavy uppercase statement; the last word gets a red (#ef2b2b) hand-drawn strikethrough path drawn with stroke-dashoffset, then a small italic serif correction note pops in. A circled 'explore all work' link gets a hand-drawn red loop. Bottom: a red band with a giant black studio name marquee."
+  "prompt": "Recreate a studio hero: black top bar (italic heavy wordmark, serif '+ Menu'); a full-bleed cinematic still with a dark scrim; a 3-line heavy cream uppercase statement (Montserrat 800, ~4.5vw) whose last word gets a red #e42620 hand-drawn strike (stroke-dashoffset) and a Caveat 'above' correction; a Caveat 'explore all work' link circled by a red hand-drawn loop; a thin red band at the bottom with a giant italic black wordmark marquee."
  },
  {
   "id": "hero-red-portrait",
@@ -437,7 +437,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Digital-agency hero: a monochrome red portrait silhouette with projected blue light points drifting across it and a cyan serif wordmark wiping in.",
+  "description": "Digital-agency hero: a red-monochrome portrait (photo slot or CSS stand-in) with projected blue light points, a thin nav and a cyan condensed-serif wordmark + tagline wiping in at bottom left.",
   "tags": [
    "hero",
    "agency",
@@ -462,7 +462,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build an agency hero on saturated #e3231b: an abstract portrait built from dark radial-gradient ellipses (head, eyes, mouth) that slowly breathes, with 16 glowing blue (#3b5bff) light points drifting across it. Thin cyan (#7ad3e8) nav at top; bottom-left an outlined OPS/DES/DEV tag grid + serif wordmark, and a serif tagline that wipes in with clip-path, ending in a spinning ✳."
+  "prompt": "Recreate a digital-agency hero on saturated #f0241b: a red-monochrome portrait (photo slot with multiply, or soft SVG head/shoulders) with projected blue glowing light points drifting across the forehead; thin nav (cyan name, small mark, white centre links, cyan 'Let's talk'); bottom-left an outlined OPS/DES/DEV tag grid + condensed Instrument Serif wordmark and a big condensed serif tagline with a spinning ✳ and 'loco' superscript, both wiping in with clip-path."
  },
  {
   "id": "hero-dream-arches",
@@ -472,7 +472,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Studio hero: a surreal pastel room — arched windows onto drifting clouds, a floating pearl and rippling water — under a serif/sans headline.",
+  "description": "Studio hero: a surreal pastel room — a tall arch onto lavender hills, a doorway to the sky, a stair rising out of still water, rocks and a floating pearl — under an italic-serif + sans headline.",
   "tags": [
    "hero",
    "studio",
@@ -498,7 +498,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a surreal studio hero: pastel pink room with three arched windows (rounded-t-full) showing a blue→pink sky with drifting clouds, a lilac water strip with shimmering horizontal ripple lines, a floating iridescent pearl (radial gradient) and a rock. Centered kicker, italic serif 'Creating the' over a big sans 'unexpected', each resolving from blur; small white pill CTA."
+  "prompt": "Recreate a surreal studio hero: a pastel pink 3D-feeling room built from CSS — tall arch onto lavender hills, a sky doorway with drifting cloud, a small window, a stair rising out of still lilac water with shimmering ripples, rocks and a floating pearl; header (lowercase wordmark, Index/Projects/Contact, white ●● button); left-of-centre kicker, italic Instrument Serif 'Creating the' over a heavy tight sans 'unexpected', white 'View our work ↘' pill; footer with icon buttons, outlined pill and ©."
  },
  {
   "id": "hero-laurel-serif",
@@ -508,7 +508,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Quiet agency hero: a single serif line types itself in, laurel-wrapped awards pop in a grid, and a neon slab rises from the fold.",
+  "description": "Quiet agency hero: tiny letter-spaced wordmark, one serif line revealing per character, laurel-wrapped awards popping in, and a neon slab rising from the fold.",
   "tags": [
    "hero",
    "minimal",
@@ -534,7 +534,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a minimal agency hero on #f7f7f5: tiny letter-spaced wordmark + menu icon, a single centered serif headline revealed per character (translateY .25em + blur 4px, 28ms stagger), '7× Agency of the Year', a wrapped list of awards flanked by ❦ laurels popping in, and a neon green (#00e83a) rounded slab rising from the bottom edge."
+  "prompt": "Recreate a quiet agency hero on #f6f6f4: letter-spaced wordmark and = menu; one EB Garamond line (~4.6vw) revealing per character (translateY .25em + blur 4px, 28ms stagger) at ~45% height; tiny '7x Agency of the Year' and two rows of awards wrapped in SVG laurels popping in; a neon green #00e83a top-rounded slab rising from the bottom edge (66% wide)."
  },
  {
   "id": "hero-converging-strings",
@@ -544,7 +544,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Branding-agency hero: dozens of hand-strung lines fan down from the top edge and converge behind the team area, swaying like tensioned string.",
+  "description": "Branding-agency hero: a grayscale studio where dozens of taut strings fan down from the ceiling onto the team (photo slot or silhouettes), under a huge indented statement.",
   "tags": [
    "hero",
    "branding",
@@ -569,7 +569,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a branding-agency hero on #f2f2f0: city labels in the corners, a large paragraph-style H1 with an inline wiggling ✺ after 'magic'. Behind it, two groups of thin black quadratic strings fan down from the top edge and converge at a focal band, drawing in with stroke-dashoffset and swaying with skewX ±2.5° on 7s/9s alternate loops; a row of rounded silhouettes rises at the bottom."
+  "prompt": "Recreate a branding-agency hero: grayscale studio wall; city labels in the corners; a huge 3-line statement (~5.5vw, tracking −.055em) with the first line indented 24.5% and a wiggling ✺ after 'magic'; dozens of thin strings fanning from the ceiling to the heads of a team (photo slot or silhouettes) drawn in with stroke-dashoffset and swaying with skewX ±1.5°."
  },
  {
   "id": "hero-pocket-device",
@@ -581,7 +581,7 @@
   ],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Hardware hero: split card with a serif two-liner; a handheld terminal swings upright and its screen counts up a sale while contactless rings pulse.",
+  "description": "Hardware hero: two-tier commerce nav with a hardware icon strip, then a soft grey split card with a NEW badge, serif two-liner, pill CTAs and a handheld terminal swinging upright to ring up a sale.",
   "tags": [
    "hero",
    "hardware",
@@ -607,7 +607,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a hardware hero: white page with a light-grey split card. Left: black 'NEW' badge + product name, serif two-line H1, outline 'Learn more' and black 'Buy now' pills. Right: a CSS handheld terminal that springs from rotateX 50°/rotateZ −18° to −8°, its screen counting a sale from $0 to the target with ease-out cubic over 1.4s, and contactless rings pulsing below."
+  "prompt": "Recreate a hardware hero: commerce nav (square logo, 5 links, Sign in, Support, icons) and a centred strip of 10 hardware icons with labels; a soft grey rounded split card — left: black NEW badge + product, Newsreader serif 2-line H1 (~4.1vw), outlined 'Learn more' and black 'Buy now' pills; right: lighter panel where a handheld terminal springs upright (rotateX 50° → 0, rotateZ −10°) and counts a sale up while contactless rings pulse."
  },
  {
   "id": "hero-fold-open",
@@ -619,7 +619,7 @@
   ],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Foldable-device hero: centered launch copy, then the device unfolds on its hinge in 3D, revealing a photo panel and an app grid.",
+  "description": "Foldable-device launch hero on soft grey: centered title, two lines of copy, pre-order note and pill CTAs, then the device unfolds on its hinge in 3D between two hands, revealing a photo memory and a widget/app grid.",
   "tags": [
    "hero",
    "foldable",
@@ -645,7 +645,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a foldable-phone launch hero on #f5f5f7: centered semibold H1, grey subtitle, black + outline pill CTAs entering staggered. Below, a two-panel device in perspective(1200px): the left panel (photo memory card) unfolds from rotateY 110° to 0 around its right edge over 1.6s expo-out, revealing the right panel's widget + app-icon grid."
+  "prompt": "Recreate a foldable-phone launch hero on #f5f5f7: centered semibold H1, 2-line grey subtitle, small pre-order note, black + outlined pill CTAs; then the device held between two hands: the left panel (photo memory) unfolds from rotateY 115° to a slight V, revealing the right panel's weather widget and app grid."
  },
  {
   "id": "hero-halo-event",
@@ -655,7 +655,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Keynote/event hero: a luminous iridescent halo grows out of a blue field and keeps rotating, with a one-line announcement and single pill CTA.",
+  "description": "Keynote/event hero: slim global nav over a sky-blue field where a glassy orb with an iridescent rotating rim glows above a one-line announcement and a single pill CTA.",
   "tags": [
    "hero",
    "event",
@@ -680,7 +680,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a keynote hero on a blue vertical gradient: a halo made of a conic gradient (pink/gold/mint/blue/violet) masked into a ring with radial-gradient mask, duplicated sharp + heavily blurred, rotating via an @property angle, around a breathing white core. The halo grows in from scale .6 + blur 20px; one-line semibold announcement and a white pill CTA follow."
+  "prompt": "Recreate a keynote/event hero: slim centered global nav on white; a sky-blue gradient field with a glassy radial orb whose thin iridescent conic rim (masked ring, @property angle) rotates with a soft blurred halo, growing in from scale .6 + blur; a 2-line semibold announcement and a white 'Watch the event' pill."
  },
  {
   "id": "hero-launch-timeline",
@@ -692,7 +692,7 @@
   ],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Release-notes hero: a storefront preview whose banner swaps as a vertical schedule timeline ticks through each planned launch.",
+  "description": "Release-notes hero on warm beige: edition wordmark and roman-numeral index at left, a storefront preview whose banner swaps as a vertical schedule timeline ticks through each launch.",
   "tags": [
    "hero",
    "release",
@@ -718,7 +718,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a release-notes hero on #ddd9cf: left vertical index of sections with roman numerals (current one underlined), bold H1 + serif subtitle, a storefront preview card with a 'Scheduled' chip whose banner crossfades (scale 1.04→1) every 2.6s, and a vertical timeline of date chips where the active node fills and its chip goes full opacity."
+  "prompt": "Recreate a release-notes hero on beige #dcd8cc: top bar (Editions wordmark + season, Editions ⌄, Search, 'Start for free' pill) with a torn-paper strip top-right; left column: bold 'The Ren///ssance Edition' and a roman-numeral section index; centre: bold H1, serif subtitle, 'Get notified ＋', a storefront preview with a 'Rollouts / New Years Sale · Scheduled' chip whose banner crossfades; right: a vertical timeline line with date chips that activate in turn."
  },
  {
   "id": "hero-paper-sketch",
@@ -728,7 +728,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Device hero in a warm cinematic frame: a tilted paper-like tablet sketches an engraving stroke by stroke while serif copy and features rise.",
+  "description": "Device hero in a rounded cinematic frame: a large tilted paper-like tablet sketches an engraving stroke by stroke beside a hand, under a frosted nav pill, with serif copy and three features along the bottom.",
   "tags": [
    "hero",
    "device",
@@ -754,7 +754,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a device hero in a rounded warm-dark cinematic frame with a frosted nav pill and orange 'ORDER NOW': a tilted orange-bezel tablet whose paper screen draws an engraving-like stack of contour paths (stroke-dashoffset, staggered 180ms) and gently sways. Bottom gradient: serif H1 with an italic word and three feature columns rising in."
+  "prompt": "Recreate a device hero inside a rounded warm-dark cinematic frame: logo badge top-left, frosted nav pill with orange 'ORDER NOW' top-right; a large tilted orange-bezel paper tablet whose screen draws an engraving (contour paths + horizon lines via stroke-dashoffset) and gently sways; bottom gradient with a 2-line Instrument Serif H1 (italic 'paper-like') and three icon features."
  },
  {
   "id": "hero-model-number",
@@ -764,7 +764,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Product-glamour hero: a moody close-up of a machined frame with a pulsing red lamp, a huge model number sliding in and a looping promo strip.",
+  "description": "Product-glamour hero: neon promo strip, a floating boxed header, and a moody machined e-bike close-up with a pulsing red lamp, a huge model number and a reserve line.",
   "tags": [
    "hero",
    "product",
@@ -790,7 +790,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a product-glamour hero: neon-yellow promo strip with a looping mono message; a dark radial studio scene with thick gradient-stroked SVG frame tubes and a red tail-lamp that pulses with a drop-shadow glow; the scene settles from scale 1.15/−3°. A huge light-weight model number slides in bottom-left; blurb + bordered ↗ 'Explore' right; 'Reserve now' bottom-right."
+  "prompt": "Recreate an e-bike glamour hero: neon-yellow promo strip with a dismiss ✕; a dark radial studio scene of a machined bike (SVG wheel, gradient tubes, saddle, a red tail-lamp pulsing with drop-shadow) settling from scale 1.12; a boxed translucent header (≡ wordmark bag) floating top-centre; a huge light model number (~19vw) sliding in bottom-left; blurb + boxed ↗ Explore at right; 'Reserve now for €150' bottom-right."
  },
  {
   "id": "hero-prism-arc",
@@ -800,7 +800,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Creative-AI hero: centered statement above a half-dome window of slowly rotating prismatic light with sliding crystal facets.",
+  "description": "Creative-AI hero on soft grey: minimal nav, a light two-line headline, copy with bold keywords and a big pill CTA, above a half-dome window of rotating prismatic crystal light.",
   "tags": [
    "hero",
    "ai",
@@ -826,7 +826,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a creative-AI hero on #efefef: centered H1, subtitle and a big dark pill CTA. Below, a half-dome window (aspect 2/1, rounded-t-full) filled with a conic gradient anchored at the bottom centre that rotates via @property, with four white mix-blend-overlay facet beams sliding/rotating, rising 40% on load."
+  "prompt": "Recreate a creative-AI hero on #f0f0f0: nav (mark left; API, Pricing, Documentation, black 'Start Building' pill right); light 2-line H1 (~4.5vw), 3-line paragraph with bold keywords, big black pill CTA; a half-dome window (45% wide, rounded-t-full) filled with a rotating conic prism gradient and sliding overlay facets, rising on load; a 'Get Help' pill bottom-right."
  },
  {
   "id": "hero-token-prompt",
@@ -862,7 +862,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build an enterprise-AI hero on #f6f4ef with halftone dot fields masked to fade from both sides: two-tone H1, subtitle, lavender CTA, then a prompt card that types a sentence character by character and drops coloured inline chips (icon + label) with a pop. 'New suggestion' swaps to the next prompt and restarts typing; mono trust line beneath."
+  "prompt": "Recreate an enterprise-AI hero on #f6f4ef: bordered floating nav card (logo, 4 links, Login, 'Start for free', dark 'Contact us →'); halftone dot fields fading in from both sides; a ruled centre column with a 2-line H1 (second line muted), subtitle, lavender CTA, a prompt card that types a sentence and drops coloured inline chips (aria-live), 'New suggestion' to shuffle, a mono trust line, and a bottom 'Built by the team from / Backed by' logo row."
  },
  {
   "id": "hero-slot-rows",
@@ -874,7 +874,7 @@
   ],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Capability hero: \"AI that\" on the left; on the right a ruled stack of huge phrases rolls upward like a slot reel, the centred row in full ink.",
+  "description": "Capability hero: pill-menu header, \"AI that\" in a ruled left column, a slot-reel of huge phrases that springs up one row at a time (current row in full ink), and a drifting \"Trusted by\" logo row.",
   "tags": [
    "hero",
    "ai",
@@ -900,7 +900,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a capability hero on white with hairline rules: left column 'AI that' + black pill CTA; right column a mask-faded reel of 84px rows of huge phrases that springs up one row every 1.8s; the centred row is full ink, neighbours zinc-400, others zinc-200."
+  "prompt": "Recreate a capability hero: square pixel logo, a dark centered pill (☰ Menu ● 35%) and 'Get started' pill; 'How It Works' label; a ruled split — left 26% column with 'AI that' (~5.6vw) and a small CTA; right a reel of huge phrases (~6.2vw) in 3 visible rows that springs up one row every 2.4s (first after 5s) with the top row in full ink, then mid-grey, then light grey; a 'Trusted By' row of grey logo tiles drifting with edge fades."
  },
  {
   "id": "hero-multiplayer-canvas",
@@ -910,7 +910,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "AI site-builder hero on a design canvas: selection frame with handles, website thumbnails at the edges, live multiplayer cursors and a glowing prompt bar.",
+  "description": "AI site-builder hero on a design canvas: product nav, a violet selection frame with handles, site thumbnails bleeding off both edges, wandering multiplayer cursors, a light display headline and a rainbow-ringed prompt bar.",
   "tags": [
    "hero",
    "ai",
@@ -936,7 +936,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build an AI site-builder hero on a #ebeae6 design canvas: a violet selection frame with corner handles, six website thumbnails sliding in from the left/right edges, two named multiplayer cursors wandering on 7–8s keyframe paths, a social-proof pill, serif H1, and a prompt bar wrapped in an animated rainbow gradient border with a '✦ Generate' button."
+  "prompt": "Recreate an AI site-builder hero on #ebeae6: nav (logo, 5 links, black 'Start for free', violet 'Launch →'); a violet selection frame with corner handles bleeding website thumbnails off both edges; two named multiplayer cursors wandering; social-proof pill with avatars; a 2-line display H1 (~6vw, −.035em) and paragraph; 'Shuffle' and '1,400+ Components' chips on the frame edge; below, a prompt bar with an animated rainbow border and '✦ Generate', a red guide line and 'Take it for a spin with an example'."
  },
  {
   "id": "hero-notebook-windows",
@@ -946,7 +946,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Data-platform hero on dotted paper: italic serif meets heavy sans with a sparkle accent, then three product windows rise and overlap.",
+  "description": "Data-platform hero on dotted pink paper: news ticker, centered-logo nav, italic serif + heavy sans headline with a sparkle, handle-framed CTAs and three product windows rising and overlapping at the fold.",
   "tags": [
    "hero",
    "data",
@@ -972,7 +972,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a data-platform hero on pink dotted paper (#f6eeed + radial dot grid): a mono news tape looping, italic serif line with a three-ray coral sparkle, heavy sans second line, subtitle, two buttons (one with a soft halo). Three product windows (SQL cell, bar chart, chat answer) rise from 80px with slight rotation and overlap, centre one on top."
+  "prompt": "Recreate a data-platform hero on pink dotted paper: mono news ticker; nav with the wordmark centred among links and a handle-framed 'Get started'; italic Instrument Serif line with a three-ray coral sparkle over a heavy Plus Jakarta Sans line; 3-line paragraph; handle-framed coral CTA + white 'Request a demo'; three product windows (SQL notebook, chat answer, data app) with mono labels rising and overlapping at the fold."
  },
  {
   "id": "hero-giant-wordmark",
@@ -982,7 +982,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Brand hero inverted: a white rounded card holds the serif pitch and link columns, while a colossal serif wordmark rises letter by letter out of the sky below.",
+  "description": "Brand hero inverted: a tall white card with rounded bottom holds the serif pitch, CTA, link columns and a small mark + copyright, while a colossal serif wordmark rises letter by letter out of a pale sky below.",
   "tags": [
    "hero",
    "brand",
@@ -1007,7 +1007,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build an inverted brand hero: a white card with 32px bottom radius holds a serif H1 with an italic second line, a black CTA and three link columns; below, on a pale-blue sky gradient that slowly shifts, a colossal white serif wordmark (≈26vw) rises letter by letter from 70% with 80ms stagger."
+  "prompt": "Recreate an inverted brand hero: a tall white card with 36px bottom radius holding a Newsreader 2-line H1 (italic second line), black 'Get started', three link columns and a spinning ✿ mark with mono copyright; below on a pale blue gradient, a colossal white serif wordmark (~30vw) rising letter by letter from 60% with 80ms stagger."
  },
  {
   "id": "hero-sunset-stripes",
@@ -1017,7 +1017,7 @@
   "deps": [],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Closing/CTA-style hero: plain centered statement with underlined text links, sitting on stacked sunset stripes that sweep in from alternating sides while a pixel cat strolls along.",
+  "description": "Closing-statement hero on cream: bordered-pill nav, a careers banner card, a plain centered statement with underlined text links, and a pixel cat on stacked sunset stripes that sweep in from alternating sides.",
   "tags": [
    "hero",
    "cta",
@@ -1043,7 +1043,7 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a closing-statement hero on #fff8e7: centered H1, two underlined text links with orange › that nudge on hover; then a pixel cat sprite that hops (steps) while walking across, standing on six stacked stripes (cream → yellow → amber → orange → red-orange → red) that sweep in from alternating sides, staggered 90ms."
+  "prompt": "Recreate a closing-statement hero on cream #fff8e8: pixel logo + links + two beige pill links with orange ›; a wide careers banner photo card ('secure, private AI.', 'View open roles ›') slowly panning; a centered statement (~3.9vw), two underlined links with orange ›; a pixel lying-cat sprite bobbing; six stacked sunset stripes (cream → yellow → amber → orange → red-orange → red) sweeping in from alternating sides, staggered 90ms."
  },
  {
   "id": "hero-feature-carousel",
@@ -1055,7 +1055,7 @@
   ],
   "priority": "P2",
   "previewHeight": 520,
-  "description": "Feature-led hero: condensed uppercase headline with arrow controls driving a spring-physics card slider that also auto-advances.",
+  "description": "Feature-led video-AI hero: announcement strip and nav, a condensed uppercase headline with gradient pill and big round arrows that drive a spring-physics card slider (auto-advances), and an enterprise banner pill.",
   "tags": [
    "hero",
    "ai",
@@ -1081,6 +1081,6 @@
     "Size/position the section."
    ]
   ],
-  "prompt": "Build a feature-led hero on #ececec: condensed uppercase H1 (font-black, scaleX .86), a mint gradient pill, and two big round arrow buttons that move a card track by one (78% wide cards + 12px gap) with spring physics; the track auto-advances every 3.2s and pauses on hover. Each card: coloured illustration panel + tag + title. Bottom: a pill banner with a CTA."
+  "prompt": "Recreate a video-AI hero on #ececec: lavender survey strip, white nav (bold wordmark, 5 dropdowns, Talk to Sales, grey Login, black Sign Up); left: Anton 2-line uppercase H1, mint→lime gradient pill, big round ← → buttons; right: a spring-physics track of feature cards (58% wide; tinted illustration panel e.g. two faces + scissors bubble; tag + title) that auto-advances every 5s and pauses on hover; bottom: a white pill banner with a green CTA."
  }
 ]

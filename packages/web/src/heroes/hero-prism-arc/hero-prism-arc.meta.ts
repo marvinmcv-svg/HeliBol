@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-prism-arc",
   name: "Hero — Prism Arc",
-  description: "Creative-AI hero: centered statement above a half-dome window of slowly rotating prismatic light with sliding crystal facets.",
+  description: "Creative-AI hero on soft grey: minimal nav, a light two-line headline, copy with bold keywords and a big pill CTA, above a half-dome window of rotating prismatic crystal light.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

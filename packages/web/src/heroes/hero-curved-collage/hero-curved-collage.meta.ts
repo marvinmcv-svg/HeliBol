@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-curved-collage",
   name: "Hero — Curved Collage",
-  description: "About/story hero: centered statement with a photo collage whose side tiles are cut by big sweeping curves and drift in on load.",
+  description: "About-page hero: full nav with three CTAs, a bold centered headline and paragraph, and a photo collage whose side photos are carved by huge sweeping curves.",
   category: "heroes",
   platforms: ["web"],
   engine: "motion",

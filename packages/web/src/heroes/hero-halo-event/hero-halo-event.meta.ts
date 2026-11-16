@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-halo-event",
   name: "Hero — Halo Event",
-  description: "Keynote/event hero: a luminous iridescent halo grows out of a blue field and keeps rotating, with a one-line announcement and single pill CTA.",
+  description: "Keynote/event hero: slim global nav over a sky-blue field where a glassy orb with an iridescent rotating rim glows above a one-line announcement and a single pill CTA.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

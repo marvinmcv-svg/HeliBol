@@ -1,31 +1,40 @@
 "use client";
 import { cn } from "@kinetik/core";
 
+const FONT = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap";
 const css = `
+.k-hsu{font-family:Inter,ui-sans-serif,system-ui,sans-serif}
 .k-hsu .stripe{animation:k-hsu-slide 1.1s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(.2s + var(--i)*90ms)}
 @keyframes k-hsu-slide{from{transform:translateX(var(--from))}}
-.k-hsu .cat{animation:k-hsu-cat 1.2s steps(2) infinite,k-hsu-walk 14s linear infinite alternate}
-@keyframes k-hsu-cat{50%{transform:translateY(-3px)}}
-@keyframes k-hsu-walk{from{margin-left:10%}to{margin-left:80%}}
+.k-hsu .cat{animation:k-hsu-cat 1.2s steps(2) infinite}
+@keyframes k-hsu-cat{50%{transform:translateY(-4px)}}
 .k-hsu .lnk span{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
 .k-hsu .lnk:hover span{transform:translateX(4px)}
+.k-hsu .pan{animation:k-hsu-pan 14s ease-in-out infinite alternate}
+@keyframes k-hsu-pan{to{background-position:100% 50%}}
 @media (prefers-reduced-motion:reduce){.k-hsu *{animation:none!important}}
 [data-reduce-motion] .k-hsu *{animation:none!important}`;
 
-const stripes = ["#fbe7b5", "#ffd400", "#ffaf00", "#ff8205", "#fa500f", "#e10500"];
-const cat = ["1000001", "1100011", "1111111", "1011101", "1111111", "0111110"];
+const stripes = ["#fbe8b8", "#ffd800", "#ffaf00", "#ff8205", "#fa500f", "#e10500"];
+const cat = ["0000000001001", "0000000001111", "1000000011111", "1000000011011", "1100111111111", "0111111111110", "0111111111110", "0110000000110"];
 
-/** Closing/CTA-style hero: plain centered statement with underlined text links, sitting on stacked sunset stripes that sweep in from alternating sides while a pixel cat strolls along. */
-export function HeroSunsetStripes({ title = "The next chapter of AI is yours.", links = ["Start building", "Talk to an expert"], className }: { title?: string; links?: string[]; className?: string }) {
+/** Closing-statement hero on cream: bordered-pill nav, a careers banner card, a plain centered statement with underlined text links, and a pixel cat on stacked sunset stripes that sweep in from alternating sides. */
+export function HeroSunsetStripes({ title = "The next chapter of AI is yours.", links = ["Start building with Mistro AI", "Talk to an expert"], className }: { title?: string; links?: string[]; className?: string }) {
   return (
-    <section className={cn("k-hsu overflow-hidden bg-[#fff8e7] pt-14 text-center text-[#1e1e1e]", className)}>
+    <section className={cn("k-hsu flex flex-col overflow-hidden bg-[#fff8e8] text-[#1e1e1e]", className)}>
+      <link rel="stylesheet" href={FONT} precedence="kinetik-font" />
       <style href="k-hsu" precedence="kinetik">{css}</style>
-      <h1 className="px-6 text-4xl tracking-tight sm:text-5xl">{title}</h1>
-      <div className="mt-6 flex justify-center gap-8 text-sm">
-        {links.map((l) => <a key={l} href="#" className="lnk border-b border-current pb-1">{l} <span className="inline-block text-[#fa500f]">›</span></a>)}
+      <nav className="flex items-center justify-between px-[8.7%] py-4 text-[12px]"><svg aria-hidden viewBox="0 0 7 5" className="w-7" shapeRendering="crispEdges">{["1000001", "1101011", "1111111", "1010101", "1000001"].flatMap((r, y) => [...r].map((v, x) => v === "1" && <rect key={`${x}${y}`} x={x} y={y} width="1" height="1" fill={stripes[y + 1]} />))}</svg><span className="flex items-center gap-7"><a href="#">Products</a><a href="#">Solutions</a><a href="#">Research</a><a href="#">Resources</a><a href="#">Company</a><a href="#" className="bg-[#f5ead2] px-2.5 py-1">Try the API <span className="text-[#fa500f]">›</span></a><a href="#" className="bg-[#f5ead2] px-2.5 py-1">Talk to sales <span className="text-[#fa500f]">›</span></a></span></nav>
+      <div className="pan relative mx-[8.7%] flex h-[20%] min-h-24 items-end justify-between overflow-hidden px-[3%] pb-[2%] text-white" style={{ background: "linear-gradient(100deg,#3a2414,#8a5a2c 40%,#c98a3c 60%,#4a2c16)", backgroundSize: "160% 100%" }}>
+        <div><p className="-mt-2 text-[clamp(1.2rem,2.6vw,2.4rem)] leading-none tracking-tight">secure, private AI.</p><p className="mt-3 max-w-xs text-[11px]">Now seeking: Insatiably curious AI enthusiasts with an entrepreneurial spirit.</p></div>
+        <a href="#" className="border-b border-white/70 pb-1 text-[11px]">View open roles <span className="text-[#ffaf00]">›</span></a>
       </div>
-      <svg aria-hidden viewBox="0 0 7 6" className="cat mt-10 block h-8 w-10" shapeRendering="crispEdges">{cat.flatMap((r, y) => [...r].map((v, x) => (v === "1" ? <rect key={`${x}${y}`} x={x} y={y} width="1" height="1" fill="#111" /> : null)))}</svg>
-      <div aria-hidden>{stripes.map((c, i) => <div key={c} className="stripe h-7" style={{ background: c, ["--i" as string]: i, ["--from" as string]: i % 2 ? "100%" : "-100%" }} />)}</div>
+      <div className="flex flex-1 flex-col items-center justify-end pt-[5%]">
+        <h1 className="px-6 text-center text-[clamp(2rem,3.9vw,3.7rem)] tracking-[-.02em]">{title}</h1>
+        <div className="mt-[2.5%] flex gap-5 text-[13px]">{links.map((l) => <a key={l} href="#" className="lnk border-b border-current pb-1.5">{l} <span className="ml-2 inline-block text-[#fa500f]">›</span></a>)}</div>
+        <svg aria-hidden viewBox="0 0 13 8" className="cat mt-[3.5%] block h-[clamp(2rem,4.6vw,4.4rem)]" shapeRendering="crispEdges">{cat.flatMap((r, y) => [...r].map((v, x) => (v === "1" ? <rect key={`${x}${y}`} x={x} y={y} width="1" height="1" fill="#111" /> : null)))}<rect x="9" y="3" width="1" height="1" fill="#fff8e8" /><rect x="11" y="3" width="1" height="1" fill="#fff8e8" /><rect x="3" y="5" width="7" height="1" fill="#fff8e8" /></svg>
+      </div>
+      <div aria-hidden>{stripes.map((c, i) => <div key={c} className="stripe h-[clamp(1.2rem,3.3vw,3rem)]" style={{ background: c, ["--i" as string]: i, ["--from" as string]: i % 2 ? "100%" : "-100%" }} />)}</div>
     </section>
   );
 }

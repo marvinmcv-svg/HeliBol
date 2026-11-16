@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-wordmark-dashboard",
   name: "Hero — Wordmark + Dashboard",
-  description: "Product-launch hero: a giant condensed wordmark drops in letter by letter, then a violet stage rises with a live admin dashboard whose chart draws itself.",
+  description: "Product-launch hero: a giant condensed wordmark drops in letter by letter, then a violet stage rises with a condensed tagline and a full store-admin mock whose chart draws itself.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

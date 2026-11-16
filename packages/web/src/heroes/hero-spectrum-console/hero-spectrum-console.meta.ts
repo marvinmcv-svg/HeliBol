@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-spectrum-console",
   name: "Hero — Spectrum Console",
-  description: "Observability hero: email capture over a console mock flanked by equaliser-style log-volume bars that never stop moving.",
+  description: "Observability hero: dark nav + announcement bar, spaced eyebrow, big headline, email capture with glowing CTA, and a logs dashboard rising between equaliser-style volume bars.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

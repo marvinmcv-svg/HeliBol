@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-story-rail",
   name: "Hero — Story Rail",
-  description: "Customer-story hero: centered headline over an endless rail of tall photo cards with brand marks; hover pauses the rail and zooms the card.",
+  description: "Customer-story hero on black: big two-line headline, two small pills, then an endless rail of tall photo cards with white brand marks — hover pauses it.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

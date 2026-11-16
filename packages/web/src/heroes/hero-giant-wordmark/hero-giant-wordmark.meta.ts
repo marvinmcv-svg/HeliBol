@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-giant-wordmark",
   name: "Hero — Giant Wordmark",
-  description: "Brand hero inverted: a white rounded card holds the serif pitch and link columns, while a colossal serif wordmark rises letter by letter out of the sky below.",
+  description: "Brand hero inverted: a tall white card with rounded bottom holds the serif pitch, CTA, link columns and a small mark + copyright, while a colossal serif wordmark rises letter by letter out of a pale sky below.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

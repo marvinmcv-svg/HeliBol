@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-orb-clients",
   name: "Hero — Orb + Client Cards",
-  description: "Agency hero: a huge rotating conic orb bleeding in from the corner, chunky pill CTAs and client case cards that fan into place.",
+  description: "Agency hero: wordmark and small nav, a soft coral orb glowing behind huge frosted pill CTAs, and a row of client case cards — each with a tiny site preview — fanning in.",
   category: "heroes",
   platforms: ["web"],
   engine: "motion",

@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-laurel-serif",
   name: "Hero — Laurel Serif",
-  description: "Quiet agency hero: a single serif line types itself in, laurel-wrapped awards pop in a grid, and a neon slab rises from the fold.",
+  description: "Quiet agency hero: tiny letter-spaced wordmark, one serif line revealing per character, laurel-wrapped awards popping in, and a neon slab rising from the fold.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

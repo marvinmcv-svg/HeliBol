@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-nested-frames",
   name: "Hero — Nested Frames",
-  description: "Manifesto hero: the copy sits in a glowing panel wrapped by concentric rounded frames that pulse outward in sequence.",
+  description: "Manifesto hero: white nav bar over a deep-purple field where the copy sits in a glowing rounded panel wrapped by concentric frames that pulse outward.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

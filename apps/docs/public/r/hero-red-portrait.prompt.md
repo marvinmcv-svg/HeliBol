@@ -2,10 +2,10 @@ You are given a task to integrate a component from the **kinetik** motion librar
 
 # Hero — Red Portrait (`hero-red-portrait`)
 
-Digital-agency hero: a monochrome red portrait silhouette with projected blue light points drifting across it and a cyan serif wordmark wiping in.
+Digital-agency hero: a red-monochrome portrait (photo slot or CSS stand-in) with projected blue light points, a thin nav and a cyan condensed-serif wordmark + tagline wiping in at bottom left.
 
 ## What it should do
-Build an agency hero on saturated #e3231b: an abstract portrait built from dark radial-gradient ellipses (head, eyes, mouth) that slowly breathes, with 16 glowing blue (#3b5bff) light points drifting across it. Thin cyan (#7ad3e8) nav at top; bottom-left an outlined OPS/DES/DEV tag grid + serif wordmark, and a serif tagline that wipes in with clip-path, ending in a spinning ✳.
+Recreate a digital-agency hero on saturated #f0241b: a red-monochrome portrait (photo slot with multiply, or soft SVG head/shoulders) with projected blue glowing light points drifting across the forehead; thin nav (cyan name, small mark, white centre links, cyan 'Let's talk'); bottom-left an outlined OPS/DES/DEV tag grid + condensed Instrument Serif wordmark and a big condensed serif tagline with a spinning ✳ and 'loco' superscript, both wiping in with clip-path.
 
 ## Project requirements
 - React 19 + TypeScript, Tailwind CSS v4, shadcn/ui-style CSS variables (`background`, `foreground`, `muted`, `muted-foreground`, `border`, `card`, `primary`, `ring`). If the project lacks shadcn, set it up first (`npx shadcn@latest init`).
@@ -26,42 +26,59 @@ Build an agency hero on saturated #e3231b: an abstract portrait built from dark 
 "use client";
 import { cn } from "@/lib/kinetik/core";
 
+const FONT = "https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400&display=swap";
 const css = `
+.k-hrp{font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+.k-hrp .serif{font-family:"Instrument Serif",ui-serif,Georgia,serif}
 .k-hrp .dot{animation:k-hrp-drift var(--s) ease-in-out infinite alternate;animation-delay:var(--d)}
-@keyframes k-hrp-drift{to{transform:translate(var(--x),var(--y));opacity:.35}}
-.k-hrp .face{animation:k-hrp-breathe 7s ease-in-out infinite alternate}
-@keyframes k-hrp-breathe{to{transform:scale(1.04)}}
-.k-hrp .star{animation:k-hrp-spin 10s linear infinite}
+@keyframes k-hrp-drift{to{transform:translate(var(--x),var(--y));opacity:.3}}
+.k-hrp .face{animation:k-hrp-breathe 8s ease-in-out infinite alternate}
+@keyframes k-hrp-breathe{to{transform:scale(1.035)}}
+.k-hrp .star{display:inline-block;animation:k-hrp-spin 10s linear infinite}
 @keyframes k-hrp-spin{to{transform:rotate(360deg)}}
-.k-hrp .in{animation:k-hrp-in 1.2s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d,0s)}
-@keyframes k-hrp-in{from{opacity:0;clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.k-hrp .in{animation:k-hrp-in 1.3s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d,0s)}
+@keyframes k-hrp-in{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 @media (prefers-reduced-motion:reduce){.k-hrp *{animation:none!important}}
 [data-reduce-motion] .k-hrp *{animation:none!important}`;
 
-const dots = Array.from({ length: 16 }, (_, i) => ({ l: 38 + ((i * 17) % 26), t: 6 + ((i * 23) % 40), x: `${((i % 5) - 2) * 6}px`, y: `${((i % 3) - 1) * 8}px`, s: `${3 + (i % 4)}s`, d: `${-(i % 5)}s` }));
+const dots = [[38, 4], [42, 3], [44, 7], [47, 10], [52, 9], [55, 11], [57, 8], [50, 14], [48, 18], [46, 21], [45, 24], [53, 13], [56, 12], [59, 10]].map(([l, t], i) => ({ l, t, x: `${((i % 5) - 2) * 5}px`, y: `${((i % 3) - 1) * 6}px`, s: `${3 + (i % 4)}s`, d: `${-(i % 5)}s` }));
 
-/** Digital-agency hero: a monochrome red portrait silhouette with projected blue light points drifting across it and a cyan serif wordmark wiping in. */
-export function HeroRedPortrait({ name = "Locomoto", tagline = "Digital-first Design Agency", tags = ["OPS", "DES", "DEV"], className }: { name?: string; tagline?: string; tags?: string[]; className?: string }) {
+/** Digital-agency hero: a red-monochrome portrait (photo slot or CSS stand-in) with projected blue light points, a thin nav and a cyan condensed-serif wordmark + tagline wiping in at bottom left. */
+export function HeroRedPortrait({ name = "Locomoto", tagline = "Digital-first Design Agency", tags = ["OPS", "DES", "DEV"], image, className }: { name?: string; tagline?: string; tags?: string[]; image?: string; className?: string }) {
   return (
-    <section className={cn("k-hrp relative isolate flex min-h-[460px] flex-col justify-between overflow-hidden bg-[#e3231b] p-6 text-[#7ad3e8]", className)}>
+    <section className={cn("k-hrp relative isolate flex min-h-[460px] flex-col justify-between overflow-hidden bg-[#f0241b] px-[2.6%] pt-4 pb-[1.5%] text-[#78c7dd]", className)}>
+      <link rel="stylesheet" href={FONT} precedence="kinetik-font" />
       <style href="k-hrp" precedence="kinetik">{css}</style>
       <div aria-hidden className="face absolute inset-0 -z-10">
-        <div className="absolute top-[-20%] left-1/2 h-[140%] w-[46%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(ellipse_at_50%_40%,#c81a14_0,#7a0b08_55%,transparent_72%)]" />
-        <div className="absolute top-[36%] left-[41%] h-[6%] w-[7%] rounded-[50%] bg-[#4a0505]/70 blur-[2px]" />
-        <div className="absolute top-[36%] right-[41%] h-[6%] w-[7%] rounded-[50%] bg-[#4a0505]/70 blur-[2px]" />
-        <div className="absolute top-[64%] left-1/2 h-[5%] w-[12%] -translate-x-1/2 rounded-[50%] bg-[#5c0806]/80 blur-[3px]" />
-        {dots.map((d, i) => <span key={i} className="dot absolute size-1.5 rounded-full bg-[#3b5bff] shadow-[0_0_8px_2px_#3b5bffaa]" style={{ left: `${d.l}%`, top: `${d.t}%`, ["--x" as string]: d.x, ["--y" as string]: d.y, ["--s" as string]: d.s, ["--d" as string]: d.d }} />)}
+        {image ? <div className="absolute inset-0 bg-cover bg-center mix-blend-multiply grayscale" style={{ backgroundImage: `url(${image})` }} /> : (
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 size-full">
+            <defs>
+              <radialGradient id="k-hrp-skin" cx="50%" cy="42%" r="55%"><stop offset="0" stopColor="#c3150e" /><stop offset=".55" stopColor="#8e0b07" /><stop offset="1" stopColor="#3b0302" /></radialGradient>
+              <radialGradient id="k-hrp-hair" cx="50%" cy="35%" r="60%"><stop offset=".5" stopColor="#5a0503" /><stop offset="1" stopColor="#2a0201" stopOpacity="0" /></radialGradient>
+              <filter id="k-hrp-soft"><feGaussianBlur stdDeviation="14" /></filter>
+            </defs>
+            <ellipse cx="720" cy="380" rx="360" ry="560" fill="url(#k-hrp-hair)" filter="url(#k-hrp-soft)" />
+            <path d="M470 960 C 500 760, 560 700, 620 670 L 820 670 C 880 700, 940 760, 970 960Z" fill="#6d0805" filter="url(#k-hrp-soft)" />
+            <ellipse cx="720" cy="380" rx="215" ry="300" fill="url(#k-hrp-skin)" filter="url(#k-hrp-soft)" />
+            <g fill="#3a0302" opacity=".55" filter="url(#k-hrp-soft)">
+              <ellipse cx="640" cy="350" rx="48" ry="20" /><ellipse cx="800" cy="350" rx="48" ry="20" />
+              <path d="M705 370 L 690 470 Q 720 490 750 470 L 735 370Z" opacity=".5" />
+              <ellipse cx="720" cy="560" rx="55" ry="18" />
+            </g>
+          </svg>
+        )}
+        {dots.map((d, i) => <span key={i} className="dot absolute size-[5px] rounded-full bg-[#4b6bff] shadow-[0_0_10px_3px_#3d5cffcc]" style={{ left: `${d.l}%`, top: `${d.t}%`, ["--x" as string]: d.x, ["--y" as string]: d.y, ["--s" as string]: d.s, ["--d" as string]: d.d }} />)}
       </div>
-      <nav className="flex justify-between text-xs"><span>{name}®</span><span className="hidden sm:inline">Work, Agency, Careers, Store</span><a href="#">Let's talk</a></nav>
-      <div>
-        <div className="in flex items-end gap-3" style={{ ["--d" as string]: ".2s" }}>
-          <span aria-hidden className="grid grid-cols-2 border border-current text-[9px] leading-none font-semibold">
+      <nav className="flex items-center justify-between text-[clamp(.8rem,1.15vw,1.1rem)]"><span className="flex items-center gap-[10vw]"><span>{name}®</span><span aria-hidden className="text-white/80">⁂</span></span><span className="text-white">Work, Agency, Careers, Store</span><a href="#">Let's talk</a></nav>
+      <div className="serif">
+        <div className="in flex items-end gap-2" style={{ ["--d" as string]: ".2s" }}>
+          <span aria-hidden className="grid grid-cols-2 border border-current font-sans text-[clamp(.55rem,.85vw,.8rem)] leading-none">
             <span className="row-span-2 grid place-items-center border-r border-current px-1.5">{tags[0]}</span>
-            {tags.slice(1).map((t) => <span key={t} className="border-b border-current px-1.5 py-1 last:border-b-0">{t}</span>)}
+            {tags.slice(1).map((t) => <span key={t} className="border-b border-current px-1.5 py-0.5 last:border-b-0">{t}</span>)}
           </span>
-          <span className="font-serif text-3xl leading-none">{name}®</span>
+          <span className="text-[clamp(2.2rem,5vw,4.8rem)] leading-[.8] tracking-[-.02em] [transform:scaleX(.86)] origin-left">{name}<sup className="text-[.4em]">®</sup></span>
         </div>
-        <h1 className="in mt-1 font-serif text-[clamp(1.8rem,5vw,3rem)] leading-none" style={{ ["--d" as string]: ".45s" }}>{tagline}<span aria-hidden className="star ml-2 inline-block">✳</span></h1>
+        <h1 className="in text-[clamp(2.4rem,5.4vw,5.1rem)] leading-[1] tracking-[-.025em] [transform:scaleX(.86)] origin-left" style={{ ["--d" as string]: ".45s" }}>{tagline}<span aria-hidden className="star ml-1">✳</span><sup aria-hidden className="ml-1 text-[.45em] underline">loco</sup></h1>
       </div>
     </section>
   );

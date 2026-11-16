@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-dusk-skyline",
   name: "Hero — Dusk Skyline",
-  description: "Corporate hero: thin oversized type over a dusk city skyline that slowly pans while lit windows flicker on and off.",
+  description: "Corporate hero: black utility bar and white nav over a dusk skyline (drawn placeholder or your photo) with thin oversized type, then a calm statement section below.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

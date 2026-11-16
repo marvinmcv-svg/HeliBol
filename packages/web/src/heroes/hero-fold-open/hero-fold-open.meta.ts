@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-fold-open",
   name: "Hero — Fold Open",
-  description: "Foldable-device hero: centered launch copy, then the device unfolds on its hinge in 3D, revealing a photo panel and an app grid.",
+  description: "Foldable-device launch hero on soft grey: centered title, two lines of copy, pre-order note and pill CTAs, then the device unfolds on its hinge in 3D between two hands, revealing a photo memory and a widget/app grid.",
   category: "heroes",
   platforms: ["web"],
   engine: "motion",

@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-notebook-windows",
   name: "Hero — Notebook Windows",
-  description: "Data-platform hero on dotted paper: italic serif meets heavy sans with a sparkle accent, then three product windows rise and overlap.",
+  description: "Data-platform hero on dotted pink paper: news ticker, centered-logo nav, italic serif + heavy sans headline with a sparkle, handle-framed CTAs and three product windows rising and overlapping at the fold.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

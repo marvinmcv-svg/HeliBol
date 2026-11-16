@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-feature-carousel",
   name: "Hero — Feature Carousel",
-  description: "Feature-led hero: condensed uppercase headline with arrow controls driving a spring-physics card slider that also auto-advances.",
+  description: "Feature-led video-AI hero: announcement strip and nav, a condensed uppercase headline with gradient pill and big round arrows that drive a spring-physics card slider (auto-advances), and an enterprise banner pill.",
   category: "heroes",
   platforms: ["web"],
   engine: "motion",

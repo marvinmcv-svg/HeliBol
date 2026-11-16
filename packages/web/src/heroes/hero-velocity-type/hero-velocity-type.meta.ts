@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-velocity-type",
   name: "Hero — Velocity Type",
-  description: "Sports/performance hero: speed-blur streaks behind giant masked headline lines, a hard-edged CTA and a logo rail.",
+  description: "Sports-performance hero: thin mono nav, a motion-blurred action photo with giant stacked uppercase lines, an orange split CTA, a logo strip and the intro statement below.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",

@@ -2,10 +2,10 @@ You are given a task to integrate a component from the **kinetik** motion librar
 
 # Hero — Scribble Strike (`hero-scribble-strike`)
 
-Studio hero: heavy uppercase statement over a cinematic still, where a hand-drawn red strike edits the last word and scribbled notes pop in.
+Studio hero: black top bar, a cinematic full-bleed still under a heavy cream uppercase statement whose last word gets a hand-drawn red strike and scribbled correction, a circled link and a red name band.
 
 ## What it should do
-Build a studio hero over a cinematic still with a dark vertical scrim: centered heavy uppercase statement; the last word gets a red (#ef2b2b) hand-drawn strikethrough path drawn with stroke-dashoffset, then a small italic serif correction note pops in. A circled 'explore all work' link gets a hand-drawn red loop. Bottom: a red band with a giant black studio name marquee.
+Recreate a studio hero: black top bar (italic heavy wordmark, serif '+ Menu'); a full-bleed cinematic still with a dark scrim; a 3-line heavy cream uppercase statement (Montserrat 800, ~4.5vw) whose last word gets a red #e42620 hand-drawn strike (stroke-dashoffset) and a Caveat 'above' correction; a Caveat 'explore all work' link circled by a red hand-drawn loop; a thin red band at the bottom with a giant italic black wordmark marquee.
 
 ## Project requirements
 - React 19 + TypeScript, Tailwind CSS v4, shadcn/ui-style CSS variables (`background`, `foreground`, `muted`, `muted-foreground`, `border`, `card`, `primary`, `ring`). If the project lacks shadcn, set it up first (`npx shadcn@latest init`).
@@ -26,7 +26,10 @@ Build a studio hero over a cinematic still with a dark vertical scrim: centered 
 "use client";
 import { cn } from "@/lib/kinetik/core";
 
+const FONT = "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;1,900&family=Caveat:wght@500&family=Cormorant+Garamond:wght@500&display=swap";
 const css = `
+.k-hss{font-family:Montserrat,ui-sans-serif,system-ui,sans-serif}
+.k-hss .hand{font-family:Caveat,cursive}
 .k-hss .ink{stroke-dasharray:var(--l);stroke-dashoffset:var(--l);animation:k-hss-ink var(--t,.6s) cubic-bezier(.65,0,.35,1) forwards;animation-delay:var(--d)}
 @keyframes k-hss-ink{to{stroke-dashoffset:0}}
 .k-hss .note{animation:k-hss-note .4s ease-out both;animation-delay:var(--d)}
@@ -38,31 +41,35 @@ const css = `
 @media (prefers-reduced-motion:reduce){.k-hss *{animation:none!important;stroke-dashoffset:0!important}}
 [data-reduce-motion] .k-hss *{animation:none!important;stroke-dashoffset:0!important}`;
 
-/** Studio hero: heavy uppercase statement over a cinematic still, where a hand-drawn red strike edits the last word and scribbled notes pop in. */
-export function HeroScribbleStrike({ lead = "Where fresh ideas meet flawless execution. See the work that sets us", struck = "apart", note = "above", image, studio = "Freshcut", className }: { lead?: string; struck?: string; note?: string; image?: string; studio?: string; className?: string }) {
+/** Studio hero: black top bar, a cinematic full-bleed still under a heavy cream uppercase statement whose last word gets a hand-drawn red strike and scribbled correction, a circled link and a red name band. */
+export function HeroScribbleStrike({ lead = "Where fresh ideas meet flawless execution. See the work that sets us", struck = "apart", note = "above", image, studio = "freshcut", className }: { lead?: string; struck?: string; note?: string; image?: string; studio?: string; className?: string }) {
   return (
-    <section className={cn("k-hss relative isolate flex flex-col overflow-hidden bg-zinc-900 text-[#f4ecdf]", className)}>
+    <section className={cn("k-hss relative isolate flex flex-col overflow-hidden bg-[#141414] text-[#f3e7d3]", className)}>
+      <link rel="stylesheet" href={FONT} precedence="kinetik-font" />
       <style href="k-hss" precedence="kinetik">{css}</style>
-      <div aria-hidden className="bg absolute inset-0 -z-10" style={{ background: image ? `center/cover url(${image})` : "radial-gradient(ellipse at 50% 80%,#7f1d1d,#1c1917 60%)" }} />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-black/60 via-black/30 to-black/70" />
-      <div className="flex-1 px-6 pt-12 text-center">
-        <h1 className="mx-auto max-w-3xl text-[clamp(1.8rem,5vw,3.4rem)] leading-[1.02] font-black tracking-tight uppercase">
-          {lead}{" "}
-          <span className="relative inline-block">
-            <del className="no-underline">{struck}</del>.
-            <svg aria-hidden viewBox="0 0 200 40" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-[-6%] top-[30%] h-[45%] w-[112%]">
-              <path className="ink" style={{ ["--l" as string]: 260, ["--d" as string]: ".8s" }} d="M4 26 C40 18 80 24 110 16 S170 22 196 12" fill="none" stroke="#ef2b2b" strokeWidth="6" strokeLinecap="round" />
-            </svg>
-            <span className="note absolute -right-2 -bottom-6 font-serif text-sm font-normal normal-case italic" style={{ ["--d" as string]: "1.3s" }}><ins className="no-underline">{note}</ins></span>
-          </span>
-        </h1>
-        <a href="#" className="relative mt-16 inline-block px-4 py-1 font-serif text-sm italic">
-          explore all work
-          <svg aria-hidden viewBox="0 0 160 40" className="absolute inset-0 size-full overflow-visible"><path className="ink" style={{ ["--l" as string]: 420, ["--d" as string]: "1.5s", ["--t" as string]: "1s" }} d="M150 12 C120 -2 30 0 10 14 S40 40 90 36 S160 28 140 8" fill="none" stroke="#ef2b2b" strokeWidth="2" /></svg>
-        </a>
+      <header className="flex items-center justify-between bg-[#141414] px-[1.4%] py-3"><span className="text-[22px] font-black tracking-tight text-[#8b8b8b] italic">{studio}</span><a href="#" className="text-[13px] tracking-wide text-[#8b8b8b] uppercase" style={{ fontFamily: '"Cormorant Garamond",serif' }}>+ Menu</a></header>
+      <div className="relative flex-1">
+        <div aria-hidden className="bg absolute inset-0 -z-10" style={{ background: image ? `center/cover url(${image})` : "linear-gradient(180deg,#3d3833 0%,#6e5a4c 32%,#2b2724 60%,#1a1816 100%)" }} />
+        <div aria-hidden className="absolute inset-0 -z-10 bg-black/35" />
+        <div className="px-[7.5%] pt-[4%] text-center">
+          <h1 className="mx-auto text-[clamp(1.8rem,4.55vw,4.3rem)] leading-[1.03] font-extrabold tracking-[-.02em] uppercase">
+            {lead}{" "}
+            <span className="relative inline-block">
+              <del className="no-underline">{struck}</del>.
+              <svg aria-hidden viewBox="0 0 200 40" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-[-4%] top-[42%] h-[30%] w-[108%]">
+                <path className="ink" style={{ ["--l" as string]: 230, ["--d" as string]: ".8s" }} d="M3 22 C 50 16, 120 20, 198 14" fill="none" stroke="#e42620" strokeWidth="7" strokeLinecap="round" />
+              </svg>
+              <span className="note hand absolute right-0 -bottom-[38%] text-[clamp(.9rem,1.6vw,1.6rem)] font-medium normal-case tracking-normal text-[#f3e7d3]" style={{ ["--d" as string]: "1.3s" }}><ins className="no-underline">{note}</ins></span>
+            </span>
+          </h1>
+          <a href="#" className="hand relative mx-auto mt-[9%] block w-fit px-5 py-1 text-[clamp(.8rem,1.1vw,1.05rem)]">
+            explore all work
+            <svg aria-hidden viewBox="0 0 160 40" preserveAspectRatio="none" className="absolute inset-0 size-full overflow-visible"><path className="ink" style={{ ["--l" as string]: 420, ["--d" as string]: "1.5s", ["--t" as string]: "1s" }} d="M150 12 C120 -2 30 0 8 16 S40 40 90 36 S162 28 140 8" fill="none" stroke="#e42620" strokeWidth="2" /></svg>
+          </a>
+        </div>
       </div>
-      <div aria-hidden className="mt-10 overflow-hidden bg-[#ef2b2b] text-black">
-        <div className="band flex w-max text-[5rem] leading-[.8] font-black tracking-tighter whitespace-nowrap uppercase">{Array.from({ length: 6 }, (_, i) => <span key={i} className="px-6">{studio}</span>)}</div>
+      <div aria-hidden className="h-[4.2%] min-h-6 overflow-hidden bg-[#e42620] text-black">
+        <div className="band flex w-max translate-y-[-30%] text-[clamp(5rem,13vw,12rem)] leading-[.8] font-black tracking-[-.04em] whitespace-nowrap italic">{Array.from({ length: 6 }, (_, i) => <span key={i} className="px-[3vw]">{studio}</span>)}</div>
       </div>
     </section>
   );

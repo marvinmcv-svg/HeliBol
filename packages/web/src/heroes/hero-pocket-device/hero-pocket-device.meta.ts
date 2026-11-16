@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-pocket-device",
   name: "Hero — Pocket Device",
-  description: "Hardware hero: split card with a serif two-liner; a handheld terminal swings upright and its screen counts up a sale while contactless rings pulse.",
+  description: "Hardware hero: two-tier commerce nav with a hardware icon strip, then a soft grey split card with a NEW badge, serif two-liner, pill CTAs and a handheld terminal swinging upright to ring up a sale.",
   category: "heroes",
   platforms: ["web"],
   engine: "motion",

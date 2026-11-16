@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-slot-rows",
   name: "Hero — Slot Rows",
-  description: "Capability hero: \"AI that\" on the left; on the right a ruled stack of huge phrases rolls upward like a slot reel, the centred row in full ink.",
+  description: "Capability hero: pill-menu header, \"AI that\" in a ruled left column, a slot-reel of huge phrases that springs up one row at a time (current row in full ink), and a drifting \"Trusted by\" logo row.",
   category: "heroes",
   platforms: ["web"],
   engine: "motion",

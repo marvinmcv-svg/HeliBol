@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-launch-timeline",
   name: "Hero — Launch Timeline",
-  description: "Release-notes hero: a storefront preview whose banner swaps as a vertical schedule timeline ticks through each planned launch.",
+  description: "Release-notes hero on warm beige: edition wordmark and roman-numeral index at left, a storefront preview whose banner swaps as a vertical schedule timeline ticks through each launch.",
   category: "heroes",
   platforms: ["web"],
   engine: "motion",

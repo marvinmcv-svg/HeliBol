@@ -3,7 +3,7 @@ import type { ComponentMeta } from "../../types";
 export const meta: ComponentMeta = {
   id: "hero-dream-arches",
   name: "Hero — Dream Arches",
-  description: "Studio hero: a surreal pastel room — arched windows onto drifting clouds, a floating pearl and rippling water — under a serif/sans headline.",
+  description: "Studio hero: a surreal pastel room — a tall arch onto lavender hills, a doorway to the sky, a stair rising out of still water, rocks and a floating pearl — under an italic-serif + sans headline.",
   category: "heroes",
   platforms: ["web"],
   engine: "css",
