@@ -4,7 +4,7 @@
 
 ![kinetik home](docs/media/home.jpg)
 
-> **New in 2.2 — 30 Mobbin heroes:** 30 hero sections, each modelled on a different standout hero found with the Mobbin MCP (Performance Lab, Heron AI, Framer, Better Stack, Locomotive, Unseen Studio, Relume, Hex, VanMoof and more), rebuilt as original, animated, reduced-motion-safe components with no two alike — editorial grids, slot reels, foldable 3D devices, iridescent halos, multiplayer canvases, hand-drawn strikes. Browse them at `/components?q=hero`; each meta links its Mobbin reference.
+> **New in 2.2 — 30 Mobbin heroes:** 30 hero sections, each modelled on a different standout hero found with the Mobbin MCP (Performance Lab, Heron AI, Framer, Better Stack, Locomotive, Unseen Studio, Relume, Hex, VanMoof and more), rebuilt as original, animated, reduced-motion-safe components with no two alike — editorial grids, slot reels, foldable 3D devices, iridescent halos, multiplayer canvases, hand-drawn strikes. Browse them at `/components/heroes`; each meta links its Mobbin reference.
 >
 > **New in 2.1 — the GSAP collection:** 29 components built from the techniques in GSAP's Demo Hub (scraped with Firecrawl): scrubbed Flip bento, Observer slides, infinite drag slider, MorphSVG, MotionPath waypoints, Physics2D confetti, CustomWiggle, particle text and more. Browse them at `/components?engine=gsap`.
 >
