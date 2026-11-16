@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-slot-rows",
+  "type": "registry:component",
+  "title": "Hero — Slot Rows",
+  "description": "Capability hero: \"AI that\" on the left; on the right a ruled stack of huge phrases rolls upward like a slot reel, the centred row in full ink.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-slot-rows.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/hero-slot-rows.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\n/** Capability hero: \"AI that\" on the left; on the right a ruled stack of huge phrases rolls upward like a slot reel, the centred row in full ink. */\nexport function HeroSlotRows({ lead = \"AI that\", phrases = [\"Writes copy\", \"Makes videos\", \"Stays on-brand\", \"Creates images\", \"Ships campaigns\", \"Learns your voice\"], className }: { lead?: string; phrases?: string[]; className?: string }) {\n  const reduced = useReducedMotion();\n  const [i, setI] = useState(1);\n  useEffect(() => {\n    if (reduced) return;\n    const t = setInterval(() => setI((k) => (k + 1) % phrases.length), 1800);\n    return () => clearInterval(t);\n  }, [reduced, phrases.length]);\n  const ROW = 84;\n  return (\n    <section className={cn(\"grid overflow-hidden border-y border-zinc-200 bg-white text-zinc-900 md:grid-cols-[1fr_2.6fr]\", className)}>\n      <div className=\"flex flex-col justify-between border-zinc-200 p-6 md:border-r\">\n        <h1 className=\"text-5xl font-medium tracking-tight\">{lead}<span className=\"sr-only\"> {phrases.join(\", \")}</span></h1>\n        <a href=\"#\" className=\"mt-10 w-fit rounded-full bg-black px-4 py-2 text-xs text-white\">Get started</a>\n      </div>\n      <div aria-hidden className=\"relative h-[252px] self-center overflow-hidden [mask-image:linear-gradient(transparent,#000_20%,#000_80%,transparent)]\">\n        <motion.ul animate={{ y: -(i - 1) * ROW }} transition={reduced ? { duration: 0 } : spring.smooth} className=\"absolute inset-x-0 top-0\">\n          {phrases.map((p, k) => (\n            <li key={p} style={{ height: ROW }} className={cn(\"flex items-center border-b border-zinc-200 px-6 text-[clamp(2rem,6vw,3.6rem)] font-medium tracking-tight transition-colors duration-500\", k === i ? \"text-zinc-900\" : Math.abs(k - i) === 1 ? \"text-zinc-400\" : \"text-zinc-200\")}>{p}</li>\n          ))}\n        </motion.ul>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "hero",
+      "ai",
+      "slot",
+      "rotating words",
+      "rows",
+      "minimal"
+    ],
+    "pageTypes": [
+      "ai-app",
+      "landing"
+    ]
+  }
+}

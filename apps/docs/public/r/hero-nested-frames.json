@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-nested-frames",
+  "type": "registry:component",
+  "title": "Hero — Nested Frames",
+  "description": "Manifesto hero: the copy sits in a glowing panel wrapped by concentric rounded frames that pulse outward in sequence.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-nested-frames.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/hero-nested-frames.tsx",
+      "content": "\"use client\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nconst css = `\n.k-hnf .frame{position:absolute;border:1.5px solid #6d4aff;border-radius:calc(28px + var(--i)*10px);inset:calc(var(--i)*-26px);opacity:calc(1 - var(--i)*.18);animation:k-hnf-pulse 4s ease-in-out infinite;animation-delay:calc(var(--i)*.25s)}\n@keyframes k-hnf-pulse{50%{border-color:#b9a6ff;box-shadow:0 0 24px #6d4aff55}}\n.k-hnf .glow{background:radial-gradient(circle at var(--x,40%) 30%,#6b4ec2 0,transparent 55%);animation:k-hnf-glow 9s ease-in-out infinite alternate}\n@property --x{syntax:\"<percentage>\";initial-value:40%;inherits:false}\n@keyframes k-hnf-glow{to{--x:62%}}\n.k-hnf .in{animation:k-hnf-in 1s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d,0s)}\n@keyframes k-hnf-in{from{opacity:0;transform:scale(.96);filter:blur(8px)}}\n.k-hnf .bob{animation:k-hnf-bob 1.8s ease-in-out infinite}\n@keyframes k-hnf-bob{50%{transform:translateY(5px)}}\n@media (prefers-reduced-motion:reduce){.k-hnf *{animation:none!important}}\n[data-reduce-motion] .k-hnf *{animation:none!important}`;\n\n/** Manifesto hero: the copy sits in a glowing panel wrapped by concentric rounded frames that pulse outward in sequence. */\nexport function HeroNestedFrames({ title = \"We believe in builders\", subtitle = \"People who set out to create and lead change — through new companies, products, services, brands or communities.\", className }: { title?: string; subtitle?: string; className?: string }) {\n  return (\n    <section className={cn(\"k-hnf relative grid place-items-center overflow-hidden bg-[#1a0f3d] px-14 py-16 text-white\", className)}>\n      <style href=\"k-hnf\" precedence=\"kinetik\">{css}</style>\n      <div className=\"relative w-full max-w-3xl\">\n        {[3, 2, 1].map((i) => <span key={i} aria-hidden className=\"frame\" style={{ [\"--i\" as string]: i }} />)}\n        <div className=\"glow relative rounded-[28px] border-[1.5px] border-[#7c5cff] bg-[#2a1960] px-6 py-16 text-center\">\n          <h1 className=\"in text-4xl font-medium tracking-tight sm:text-5xl\">{title}</h1>\n          <p className=\"in mx-auto mt-4 max-w-lg text-white/75\" style={{ [\"--d\" as string]: \".15s\" }}>{subtitle}</p>\n          <a href=\"#more\" aria-label=\"Scroll down\" className=\"bob mx-auto mt-7 grid size-8 place-items-center rounded-full border border-white/60 text-sm\">↓</a>\n        </div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "hero",
+      "manifesto",
+      "concentric",
+      "frames",
+      "glow",
+      "purple"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

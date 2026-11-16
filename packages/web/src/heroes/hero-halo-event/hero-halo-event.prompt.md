@@ -1,0 +1,1 @@
+Build a keynote hero on a blue vertical gradient: a halo made of a conic gradient (pink/gold/mint/blue/violet) masked into a ring with radial-gradient mask, duplicated sharp + heavily blurred, rotating via an @property angle, around a breathing white core. The halo grows in from scale .6 + blur 20px; one-line semibold announcement and a white pill CTA follow.

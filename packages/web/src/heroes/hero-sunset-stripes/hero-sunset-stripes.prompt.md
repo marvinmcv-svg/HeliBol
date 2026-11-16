@@ -1,0 +1,1 @@
+Build a closing-statement hero on #fff8e7: centered H1, two underlined text links with orange › that nudge on hover; then a pixel cat sprite that hops (steps) while walking across, standing on six stacked stripes (cream → yellow → amber → orange → red-orange → red) that sweep in from alternating sides, staggered 90ms.

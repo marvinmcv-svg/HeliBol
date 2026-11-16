@@ -1,0 +1,1 @@
+Build a corporate hero: dusk sky gradient (slate → peach → dark) that slowly hue-shifts, a procedural SVG skyline (20 towers) panning −4% over 30s with lit windows twinkling on stepped 3–7s loops, a 25% black scrim, and a light-weight 6xl H1 that resolves from blur + wide letter-spacing, followed by a short paragraph.

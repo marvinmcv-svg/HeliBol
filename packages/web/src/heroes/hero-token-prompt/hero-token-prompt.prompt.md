@@ -1,0 +1,1 @@
+Build an enterprise-AI hero on #f6f4ef with halftone dot fields masked to fade from both sides: two-tone H1, subtitle, lavender CTA, then a prompt card that types a sentence character by character and drops coloured inline chips (icon + label) with a pop. 'New suggestion' swaps to the next prompt and restarts typing; mono trust line beneath.

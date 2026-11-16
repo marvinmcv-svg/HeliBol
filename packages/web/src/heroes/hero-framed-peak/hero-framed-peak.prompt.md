@@ -1,0 +1,1 @@
+Build a mission hero: inside a rounded-3xl blue sky card, two SVG mountain ridges drift in opposite directions (parallax), a tiny hiker walks up the main ridge via animateMotion, and a 6px white rectangle draws itself around the title (stroke-dashoffset 1400→0), after which the title fades in. Below the card, a two-tone purple line of copy.

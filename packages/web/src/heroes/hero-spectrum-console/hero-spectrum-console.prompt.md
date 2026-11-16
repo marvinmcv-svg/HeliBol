@@ -1,0 +1,1 @@
+Build an observability hero on #0b0b14 with an indigo radial glow: wide-tracked eyebrow, gradient-clipped H1, inline email form (input + glowing indigo button). Below, a console mock that rises with a slight rotateX, flanked by two banks of 14 equaliser bars (scaleY .15↔1, durations .6–1.5s, negative delays) so log volume feels alive; console rows flash a highlight in sequence.

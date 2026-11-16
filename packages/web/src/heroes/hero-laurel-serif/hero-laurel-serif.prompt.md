@@ -1,0 +1,1 @@
+Build a minimal agency hero on #f7f7f5: tiny letter-spaced wordmark + menu icon, a single centered serif headline revealed per character (translateY .25em + blur 4px, 28ms stagger), '7× Agency of the Year', a wrapped list of awards flanked by ❦ laurels popping in, and a neon green (#00e83a) rounded slab rising from the bottom edge.

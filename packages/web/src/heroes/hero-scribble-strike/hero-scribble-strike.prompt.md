@@ -1,0 +1,1 @@
+Build a studio hero over a cinematic still with a dark vertical scrim: centered heavy uppercase statement; the last word gets a red (#ef2b2b) hand-drawn strikethrough path drawn with stroke-dashoffset, then a small italic serif correction note pops in. A circled 'explore all work' link gets a hand-drawn red loop. Bottom: a red band with a giant black studio name marquee.

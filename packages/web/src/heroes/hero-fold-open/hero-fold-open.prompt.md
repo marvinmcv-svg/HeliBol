@@ -1,0 +1,1 @@
+Build a foldable-phone launch hero on #f5f5f7: centered semibold H1, grey subtitle, black + outline pill CTAs entering staggered. Below, a two-panel device in perspective(1200px): the left panel (photo memory card) unfolds from rotateY 110° to 0 around its right edge over 1.6s expo-out, revealing the right panel's widget + app-icon grid.

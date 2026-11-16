@@ -1,0 +1,1086 @@
+[
+ {
+  "id": "hero-velocity-type",
+  "name": "Hero — Velocity Type",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Sports/performance hero: speed-blur streaks behind giant masked headline lines, a hard-edged CTA and a logo rail.",
+  "tags": [
+   "hero",
+   "sports",
+   "condensed",
+   "mask reveal",
+   "streaks",
+   "logo marquee"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — The Performance Lab hero (mobbin.com/sites/sections/abf8940e-4964-4058-8cc8-4ab89f147c70)"
+  ],
+  "a11y": "Real h1 built from masked lines; the logo rail duplicates are aria-hidden; streaks, reveals and marquee stop under reduced motion.",
+  "perf": "Five blurred streaks and one marquee, all transform-only CSS keyframes.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a sports-performance hero on #1c1917: five horizontal blurred gradient streaks (18–60px tall, blur 6–22px) race left→right on 1.3–3.2s linear loops behind a left-to-right dark scrim. Bottom-left H1 of three giant uppercase lines (clamp 2.6–6.5rem, line-height .86, tracking −.04em); each line sits in overflow:hidden and slides up from 105% with expo-out, staggered 80ms. Bottom-right: tiny paragraph and an orange (#ff4d1a) two-part CTA (label block + arrow square that nudges right on hover). Below, a light logo rail scrolling −50% over 22s. Reduced motion: everything static."
+ },
+ {
+  "id": "hero-curved-collage",
+  "name": "Hero — Curved Collage",
+  "category": "heroes",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "About/story hero: centered statement with a photo collage whose side tiles are cut by big sweeping curves and drift in on load.",
+  "tags": [
+   "hero",
+   "about",
+   "story",
+   "collage",
+   "curved mask",
+   "photos"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "Mobbin — Maze hero (mobbin.com/sites/sections/c41293fe-5b7a-4a8a-981c-8ca4ef5f8c05)"
+  ],
+  "a11y": "Real h1 and paragraph; collage tiles are decorative and aria-hidden; without reduced motion they slide in, otherwise they render in place.",
+  "perf": "Four background-image tiles animated once with Motion transforms.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build an 'our story' hero: white bg, centered bold H1 + paragraph that fade/blur in. Below, a 3-column collage (1fr 2.6fr 1fr): left tile with a 120px top-right radius offset down, a large center photo, and a right column of two stacked tiles with 90px bottom-left / top-left radii so the side tiles read as big sweeping curves. Tiles enter with Motion from x ±60, scale .94 → 1, staggered, expo-out. `images` prop with gradient fallbacks."
+ },
+ {
+  "id": "hero-blueprint",
+  "name": "Hero — Blueprint Grid",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Architectural/AI-tool hero on a ruled editorial grid: line-art tower drawn stroke by stroke, a red sun popping behind it and a mono ticker.",
+  "tags": [
+   "hero",
+   "editorial",
+   "grid",
+   "line art",
+   "path draw",
+   "ticker",
+   "architecture"
+  ],
+  "pageTypes": [
+   "landing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "Mobbin — Heron AI hero (mobbin.com/sites/sections/d9f918f2-ab01-4524-981b-8a66efb735f4)"
+  ],
+  "a11y": "Heading and statement are real text; the SVG drawing is aria-hidden; reduced motion shows the finished drawing with no ticker.",
+  "perf": "SVG stroke-dashoffset draws (~15 paths) run once; one ticker loop.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build an architectural AI-tool hero on #f1efe8 with ruled 1px black/20 borders: top row = heavy uppercase H1 (2/3) + small description with orange mono 'Discover more →' (1/3); a mono ticker row of '◎' feature tags looping; bottom split = line-art tower SVG drawn with stroke-dashoffset (frame first, then floor lines staggered 80ms) with a red #ff4a1c sun that pops in with a back-out scale, and a black uppercase statement + bordered mono 'Learn more' button."
+ },
+ {
+  "id": "hero-nested-frames",
+  "name": "Hero — Nested Frames",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Manifesto hero: the copy sits in a glowing panel wrapped by concentric rounded frames that pulse outward in sequence.",
+  "tags": [
+   "hero",
+   "manifesto",
+   "concentric",
+   "frames",
+   "glow",
+   "purple"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Mixpanel hero (mobbin.com/sites/sections/d703e7fa-cd28-4f67-867d-c35986886af1)"
+  ],
+  "a11y": "Real h1; frames are aria-hidden; scroll cue is a labelled link; all pulses stop under reduced motion.",
+  "perf": "Three bordered divs with box-shadow pulses plus one @property gradient shift.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a manifesto hero on #1a0f3d: a central panel (#2a1960, 28px radius, #7c5cff border) wrapped by three concentric frames inset −26/−52/−78px with radii growing 10px each and decreasing opacity. Frames pulse border colour + glow in sequence (4s, 250ms offsets). The panel's radial highlight drifts via an @property percentage. H1 + subtitle scale/blur in; a circular ↓ scroll cue bobs."
+ },
+ {
+  "id": "hero-story-rail",
+  "name": "Hero — Story Rail",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Customer-story hero: centered headline over an endless rail of tall photo cards with brand marks; hover pauses the rail and zooms the card.",
+  "tags": [
+   "hero",
+   "customer stories",
+   "marquee",
+   "cards",
+   "dark",
+   "logos"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Framer hero (mobbin.com/sites/sections/da1010c9-012b-4eab-b45a-01019e33f955)"
+  ],
+  "a11y": "Duplicate rail items are aria-hidden and removed from tab order; hover pauses motion; reduced motion turns the rail into a static, scrollable row.",
+  "perf": "Single translateX loop on one list; image zoom only on hover.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a customer-stories hero on black: centered H1, muted subtitle and two pill buttons (white solid + translucent). Below, an infinite rail of tall 192×240 rounded cards (photo or tinted radial fallback, 45% black overlay, brand mark centered, 'Visit site ›' at bottom) translating −50% over 40s. Hover pauses the rail and zooms the hovered photo 1.06 with expo-out."
+ },
+ {
+  "id": "hero-wordmark-dashboard",
+  "name": "Hero — Wordmark + Dashboard",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Product-launch hero: a giant condensed wordmark drops in letter by letter, then a violet stage rises with a live admin dashboard whose chart draws itself.",
+  "tags": [
+   "hero",
+   "launch",
+   "wordmark",
+   "dashboard",
+   "chart",
+   "product"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard"
+  ],
+  "inspiration": [
+   "Mobbin — Shopify Editions hero (mobbin.com/sites/sections/82b3e7d8-f568-45a0-bed6-6da9b11f4634)"
+  ],
+  "a11y": "h1 has aria-label with the full word, letters aria-hidden; mock dashboard is aria-hidden; reduced motion shows the final state.",
+  "perf": "Per-letter CSS transforms and one SVG line draw.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a product-launch hero on #120b24: a giant condensed wordmark (font-black, scaleX .82, ~13vw) whose letters drop in from −60% with scaleY 1.4 and a back-out ease, staggered 60ms. Then a violet gradient stage rises 60px with a tagline, small subtitle and a white admin dashboard card (4 KPI tiles + an SVG line chart drawn with stroke-dashoffset) and a pulsing play button."
+ },
+ {
+  "id": "hero-spectrum-console",
+  "name": "Hero — Spectrum Console",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Observability hero: email capture over a console mock flanked by equaliser-style log-volume bars that never stop moving.",
+  "tags": [
+   "hero",
+   "devtools",
+   "observability",
+   "equalizer",
+   "email capture",
+   "dark"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Better Stack hero (mobbin.com/sites/sections/dbde8590-32d4-4b40-a374-65e121d2624d)"
+  ],
+  "a11y": "Labelled email input and real button; bars and console are aria-hidden; reduced motion freezes bars and highlights.",
+  "perf": "28 scaleY bars on compositor-only keyframes; one console row highlight loop.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build an observability hero on #0b0b14 with an indigo radial glow: wide-tracked eyebrow, gradient-clipped H1, inline email form (input + glowing indigo button). Below, a console mock that rises with a slight rotateX, flanked by two banks of 14 equaliser bars (scaleY .15↔1, durations .6–1.5s, negative delays) so log volume feels alive; console rows flash a highlight in sequence."
+ },
+ {
+  "id": "hero-dusk-skyline",
+  "name": "Hero — Dusk Skyline",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Corporate hero: thin oversized type over a dusk city skyline that slowly pans while lit windows flicker on and off.",
+  "tags": [
+   "hero",
+   "corporate",
+   "skyline",
+   "city",
+   "twinkle",
+   "thin type"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Okta hero (mobbin.com/sites/sections/5e71206c-b8c4-4e6d-a122-a8bb332a11fd)"
+  ],
+  "a11y": "Real h1 + paragraph; skyline SVG is aria-hidden; reduced motion stops the pan, sky shift and twinkle.",
+  "perf": "SVG rects with opacity step animations; one slow transform pan.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a corporate hero: dusk sky gradient (slate → peach → dark) that slowly hue-shifts, a procedural SVG skyline (20 towers) panning −4% over 30s with lit windows twinkling on stepped 3–7s loops, a 25% black scrim, and a light-weight 6xl H1 that resolves from blur + wide letter-spacing, followed by a short paragraph."
+ },
+ {
+  "id": "hero-framed-peak",
+  "name": "Hero — Framed Peak",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Foundation/mission hero: a rounded alpine scene with parallax ridges, a tiny hiker climbing and a white frame that draws itself around the name.",
+  "tags": [
+   "hero",
+   "mission",
+   "mountain",
+   "frame",
+   "path draw",
+   "parallax"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Proton hero (mobbin.com/sites/sections/956e25ca-0763-4b15-9ff1-8300cd706f4c)"
+  ],
+  "a11y": "Real h1 inside the scene; SVG is aria-hidden; reduced motion places the hiker statically and shows the frame drawn.",
+  "perf": "Two transform loops, one stroke draw, one SMIL animateMotion.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a mission hero: inside a rounded-3xl blue sky card, two SVG mountain ridges drift in opposite directions (parallax), a tiny hiker walks up the main ridge via animateMotion, and a 6px white rectangle draws itself around the title (stroke-dashoffset 1400→0), after which the title fades in. Below the card, a two-tone purple line of copy."
+ },
+ {
+  "id": "hero-pixel-logos",
+  "name": "Hero — Pixel Logos",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Enterprise AI hero: hopping pixel-art mascots, a word-by-word headline and a ruled grid of customer logo cells that drifts sideways.",
+  "tags": [
+   "hero",
+   "enterprise",
+   "pixel art",
+   "logo grid",
+   "marquee",
+   "ai"
+  ],
+  "pageTypes": [
+   "landing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "Mobbin — Mistral AI hero (mobbin.com/sites/sections/e6e87f69-8f6e-42cd-adb6-99a06f281082)"
+  ],
+  "a11y": "Words are spans inside a real h1; sprites and duplicate cells aria-hidden; reduced motion stops hops, word rise and cell drift.",
+  "perf": "Three tiny crisp-edged SVG sprites; one marquee.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build an enterprise-AI hero on #fbfaf7: three 8×6 pixel-art sprites (SVG rects, shape-rendering crispEdges) hop in sequence; H1 words rise in with a 35ms stagger. Beneath, a ruled row of 160×96 logo cells (border-r) drifting −50% over 24s."
+ },
+ {
+  "id": "hero-orb-clients",
+  "name": "Hero — Orb + Client Cards",
+  "category": "heroes",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Agency hero: a huge rotating conic orb bleeding in from the corner, chunky pill CTAs and client case cards that fan into place.",
+  "tags": [
+   "hero",
+   "agency",
+   "orb",
+   "conic gradient",
+   "case studies",
+   "cards"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — OFF+BRAND hero (mobbin.com/sites/sections/0b70740a-eb7a-415b-b48d-09d66ce3ec38)"
+  ],
+  "a11y": "Intro copy is the h1; cards are list items with real links; reduced motion stops the orb and skips card entrance.",
+  "perf": "One blurred conic orb animating an @property angle; three Motion entrances.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build an agency hero on #e9e7e3: a 34rem conic-gradient orb (coral/peach/lilac) blurred and rotating via an @property angle, bleeding off the top-right. Header: wordmark + two oversized frosted pill CTAs with ↗ that hop on hover. Bottom: intro paragraph and 'Our clients', next to three case cards that fan in from x 80 / rotate 6°, each with a gradient art fill, mix-blend label, a + that rotates 135° on hover and a 'View case study' pill."
+ },
+ {
+  "id": "hero-scribble-strike",
+  "name": "Hero — Scribble Strike",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Studio hero: heavy uppercase statement over a cinematic still, where a hand-drawn red strike edits the last word and scribbled notes pop in.",
+  "tags": [
+   "hero",
+   "studio",
+   "hand-drawn",
+   "strikethrough",
+   "marquee",
+   "cinematic"
+  ],
+  "pageTypes": [
+   "portfolio"
+  ],
+  "inspiration": [
+   "Mobbin — Freshman hero (mobbin.com/sites/sections/efd2c199-fe77-4b3a-971a-0ec6bdeb686b)"
+  ],
+  "a11y": "Struck word uses <del> and the note <ins> so screen readers get the edit; band is aria-hidden; reduced motion shows final ink.",
+  "perf": "SVG stroke draws run once; background zoom + band are transform loops.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a studio hero over a cinematic still with a dark vertical scrim: centered heavy uppercase statement; the last word gets a red (#ef2b2b) hand-drawn strikethrough path drawn with stroke-dashoffset, then a small italic serif correction note pops in. A circled 'explore all work' link gets a hand-drawn red loop. Bottom: a red band with a giant black studio name marquee."
+ },
+ {
+  "id": "hero-red-portrait",
+  "name": "Hero — Red Portrait",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Digital-agency hero: a monochrome red portrait silhouette with projected blue light points drifting across it and a cyan serif wordmark wiping in.",
+  "tags": [
+   "hero",
+   "agency",
+   "portrait",
+   "duotone",
+   "serif",
+   "light dots"
+  ],
+  "pageTypes": [
+   "portfolio"
+  ],
+  "inspiration": [
+   "Mobbin — Locomotive hero (mobbin.com/sites/sections/6a2f519f-af72-4525-a6ca-2ef3457bdf63)"
+  ],
+  "a11y": "Real h1 tagline; the face is decorative CSS and aria-hidden; reduced motion stops drift, breathing and the spinning asterisk.",
+  "perf": "CSS radial shapes + 16 glowing dots with transform loops.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build an agency hero on saturated #e3231b: an abstract portrait built from dark radial-gradient ellipses (head, eyes, mouth) that slowly breathes, with 16 glowing blue (#3b5bff) light points drifting across it. Thin cyan (#7ad3e8) nav at top; bottom-left an outlined OPS/DES/DEV tag grid + serif wordmark, and a serif tagline that wipes in with clip-path, ending in a spinning ✳."
+ },
+ {
+  "id": "hero-dream-arches",
+  "name": "Hero — Dream Arches",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Studio hero: a surreal pastel room — arched windows onto drifting clouds, a floating pearl and rippling water — under a serif/sans headline.",
+  "tags": [
+   "hero",
+   "studio",
+   "surreal",
+   "pastel",
+   "serif",
+   "3d look"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Unseen Studio hero (mobbin.com/sites/sections/1bdc4e01-2f7e-4e09-9aa1-27f02c13bcbe)"
+  ],
+  "a11y": "Real h1 with serif and sans spans; scene is aria-hidden; reduced motion freezes clouds, ripples and the pearl.",
+  "perf": "All CSS shapes; a handful of transform loops.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a surreal studio hero: pastel pink room with three arched windows (rounded-t-full) showing a blue→pink sky with drifting clouds, a lilac water strip with shimmering horizontal ripple lines, a floating iridescent pearl (radial gradient) and a rock. Centered kicker, italic serif 'Creating the' over a big sans 'unexpected', each resolving from blur; small white pill CTA."
+ },
+ {
+  "id": "hero-laurel-serif",
+  "name": "Hero — Laurel Serif",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Quiet agency hero: a single serif line types itself in, laurel-wrapped awards pop in a grid, and a neon slab rises from the fold.",
+  "tags": [
+   "hero",
+   "minimal",
+   "serif",
+   "awards",
+   "agency",
+   "neon"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — COLLINS hero (mobbin.com/sites/sections/502039fb-c2b0-4f44-9d7e-2cd8b67c05ca)"
+  ],
+  "a11y": "h1 carries aria-label with letters aria-hidden; awards are a list; reduced motion shows everything at rest.",
+  "perf": "Per-character CSS reveal; one slab transform.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a minimal agency hero on #f7f7f5: tiny letter-spaced wordmark + menu icon, a single centered serif headline revealed per character (translateY .25em + blur 4px, 28ms stagger), '7× Agency of the Year', a wrapped list of awards flanked by ❦ laurels popping in, and a neon green (#00e83a) rounded slab rising from the bottom edge."
+ },
+ {
+  "id": "hero-converging-strings",
+  "name": "Hero — Converging Strings",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Branding-agency hero: dozens of hand-strung lines fan down from the top edge and converge behind the team area, swaying like tensioned string.",
+  "tags": [
+   "hero",
+   "branding",
+   "lines",
+   "strings",
+   "grayscale",
+   "agency"
+  ],
+  "pageTypes": [
+   "portfolio"
+  ],
+  "inspiration": [
+   "Mobbin — Büro hero (mobbin.com/sites/sections/42aaad97-8c45-41d3-be1e-c4b9b9654332)"
+  ],
+  "a11y": "Real h1 paragraph; SVG and silhouettes aria-hidden; reduced motion shows drawn, still strings.",
+  "perf": "~22 SVG quadratic paths drawn once; two group skew loops.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a branding-agency hero on #f2f2f0: city labels in the corners, a large paragraph-style H1 with an inline wiggling ✺ after 'magic'. Behind it, two groups of thin black quadratic strings fan down from the top edge and converge at a focal band, drawing in with stroke-dashoffset and swaying with skewX ±2.5° on 7s/9s alternate loops; a row of rounded silhouettes rises at the bottom."
+ },
+ {
+  "id": "hero-pocket-device",
+  "name": "Hero — Pocket Device",
+  "category": "heroes",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Hardware hero: split card with a serif two-liner; a handheld terminal swings upright and its screen counts up a sale while contactless rings pulse.",
+  "tags": [
+   "hero",
+   "hardware",
+   "device",
+   "payments",
+   "serif",
+   "count up"
+  ],
+  "pageTypes": [
+   "landing",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "Mobbin — Square hero (mobbin.com/sites/sections/394464f3-29b7-4d8c-8ebc-06b1b4315db0)"
+  ],
+  "a11y": "Real h1 and links; device aria-hidden; reduced motion shows the final total and no ring pulse.",
+  "perf": "One Motion spring, one rAF count-up that stops at the target.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a hardware hero: white page with a light-grey split card. Left: black 'NEW' badge + product name, serif two-line H1, outline 'Learn more' and black 'Buy now' pills. Right: a CSS handheld terminal that springs from rotateX 50°/rotateZ −18° to −8°, its screen counting a sale from $0 to the target with ease-out cubic over 1.4s, and contactless rings pulsing below."
+ },
+ {
+  "id": "hero-fold-open",
+  "name": "Hero — Fold Open",
+  "category": "heroes",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Foldable-device hero: centered launch copy, then the device unfolds on its hinge in 3D, revealing a photo panel and an app grid.",
+  "tags": [
+   "hero",
+   "foldable",
+   "3d",
+   "device",
+   "launch",
+   "hinge"
+  ],
+  "pageTypes": [
+   "landing",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "Mobbin — Apple hero (mobbin.com/sites/sections/1821ad0f-876c-4aeb-b42a-508e791d98a3)"
+  ],
+  "a11y": "Real h1 and links; device is aria-hidden; reduced motion renders it already open.",
+  "perf": "One rotateY transform with preserve-3d.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a foldable-phone launch hero on #f5f5f7: centered semibold H1, grey subtitle, black + outline pill CTAs entering staggered. Below, a two-panel device in perspective(1200px): the left panel (photo memory card) unfolds from rotateY 110° to 0 around its right edge over 1.6s expo-out, revealing the right panel's widget + app-icon grid."
+ },
+ {
+  "id": "hero-halo-event",
+  "name": "Hero — Halo Event",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Keynote/event hero: a luminous iridescent halo grows out of a blue field and keeps rotating, with a one-line announcement and single pill CTA.",
+  "tags": [
+   "hero",
+   "event",
+   "keynote",
+   "iridescent",
+   "ring",
+   "glow"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Apple hero (mobbin.com/sites/sections/a422ddf7-b4db-410a-8778-1fbbf965f0a4)"
+  ],
+  "a11y": "Real h1 and link; halo aria-hidden; reduced motion freezes the ring.",
+  "perf": "Masked conic gradient animating an @property angle; two blur layers.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a keynote hero on a blue vertical gradient: a halo made of a conic gradient (pink/gold/mint/blue/violet) masked into a ring with radial-gradient mask, duplicated sharp + heavily blurred, rotating via an @property angle, around a breathing white core. The halo grows in from scale .6 + blur 20px; one-line semibold announcement and a white pill CTA follow."
+ },
+ {
+  "id": "hero-launch-timeline",
+  "name": "Hero — Launch Timeline",
+  "category": "heroes",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Release-notes hero: a storefront preview whose banner swaps as a vertical schedule timeline ticks through each planned launch.",
+  "tags": [
+   "hero",
+   "release",
+   "schedule",
+   "timeline",
+   "store preview",
+   "a/b"
+  ],
+  "pageTypes": [
+   "landing",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "Mobbin — Shopify Editions hero (mobbin.com/sites/sections/33c68013-8b30-48d6-a59e-a68f1162bbc6)"
+  ],
+  "a11y": "Schedule is an ordered list; banner text is real; reduced motion stops the auto-advance.",
+  "perf": "One interval; AnimatePresence crossfade of a single banner.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a release-notes hero on #ddd9cf: left vertical index of sections with roman numerals (current one underlined), bold H1 + serif subtitle, a storefront preview card with a 'Scheduled' chip whose banner crossfades (scale 1.04→1) every 2.6s, and a vertical timeline of date chips where the active node fills and its chip goes full opacity."
+ },
+ {
+  "id": "hero-paper-sketch",
+  "name": "Hero — Paper Sketch",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Device hero in a warm cinematic frame: a tilted paper-like tablet sketches an engraving stroke by stroke while serif copy and features rise.",
+  "tags": [
+   "hero",
+   "device",
+   "e-ink",
+   "sketch",
+   "cinematic",
+   "features"
+  ],
+  "pageTypes": [
+   "landing",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "Mobbin — Daylight hero (mobbin.com/sites/sections/b9729ea8-5d0f-4cd1-bd67-77d6f9d835e0)"
+  ],
+  "a11y": "Real h1 and feature copy; tablet aria-hidden; reduced motion shows the finished sketch.",
+  "perf": "~14 stroke draws once; one slow tilt loop.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a device hero in a rounded warm-dark cinematic frame with a frosted nav pill and orange 'ORDER NOW': a tilted orange-bezel tablet whose paper screen draws an engraving-like stack of contour paths (stroke-dashoffset, staggered 180ms) and gently sways. Bottom gradient: serif H1 with an italic word and three feature columns rising in."
+ },
+ {
+  "id": "hero-model-number",
+  "name": "Hero — Model Number",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Product-glamour hero: a moody close-up of a machined frame with a pulsing red lamp, a huge model number sliding in and a looping promo strip.",
+  "tags": [
+   "hero",
+   "product",
+   "glamour",
+   "dark",
+   "promo bar",
+   "bike"
+  ],
+  "pageTypes": [
+   "ecommerce",
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — VanMoof hero (mobbin.com/sites/sections/33eaa6a1-4089-4d0c-9f7b-0c9cf0b30b62)"
+  ],
+  "a11y": "Real h1 (model number); promo copy is readable once (duplicates aria-hidden); reduced motion freezes lamp and strip.",
+  "perf": "One SVG scene, a drop-shadow pulse and a marquee.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a product-glamour hero: neon-yellow promo strip with a looping mono message; a dark radial studio scene with thick gradient-stroked SVG frame tubes and a red tail-lamp that pulses with a drop-shadow glow; the scene settles from scale 1.15/−3°. A huge light-weight model number slides in bottom-left; blurb + bordered ↗ 'Explore' right; 'Reserve now' bottom-right."
+ },
+ {
+  "id": "hero-prism-arc",
+  "name": "Hero — Prism Arc",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Creative-AI hero: centered statement above a half-dome window of slowly rotating prismatic light with sliding crystal facets.",
+  "tags": [
+   "hero",
+   "ai",
+   "prism",
+   "iridescent",
+   "dome",
+   "creative"
+  ],
+  "pageTypes": [
+   "ai-app",
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Luma AI hero (mobbin.com/sites/sections/01659bf8-ecc3-4aba-92d1-89f8e3c78668)"
+  ],
+  "a11y": "Real h1 and CTA; dome aria-hidden; reduced motion freezes rotation and facets.",
+  "perf": "Conic gradient animating an @property angle; four overlay facets.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a creative-AI hero on #efefef: centered H1, subtitle and a big dark pill CTA. Below, a half-dome window (aspect 2/1, rounded-t-full) filled with a conic gradient anchored at the bottom centre that rotates via @property, with four white mix-blend-overlay facet beams sliding/rotating, rising 40% on load."
+ },
+ {
+  "id": "hero-token-prompt",
+  "name": "Hero — Token Prompt",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Enterprise-AI hero: halftone dot fields frame a prompt box that types itself, dropping in coloured data chips; \"New suggestion\" shuffles prompts.",
+  "tags": [
+   "hero",
+   "ai",
+   "prompt",
+   "typing",
+   "chips",
+   "halftone"
+  ],
+  "pageTypes": [
+   "ai-app",
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Zaro hero (mobbin.com/sites/sections/1504b865-76c3-4681-8079-da52475e6e58)"
+  ],
+  "a11y": "Prompt text is in an aria-live region; buttons are labelled; reduced motion shows the full prompt instantly.",
+  "perf": "One 38ms interval while typing; static halftone backgrounds.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build an enterprise-AI hero on #f6f4ef with halftone dot fields masked to fade from both sides: two-tone H1, subtitle, lavender CTA, then a prompt card that types a sentence character by character and drops coloured inline chips (icon + label) with a pop. 'New suggestion' swaps to the next prompt and restarts typing; mono trust line beneath."
+ },
+ {
+  "id": "hero-slot-rows",
+  "name": "Hero — Slot Rows",
+  "category": "heroes",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Capability hero: \"AI that\" on the left; on the right a ruled stack of huge phrases rolls upward like a slot reel, the centred row in full ink.",
+  "tags": [
+   "hero",
+   "ai",
+   "slot",
+   "rotating words",
+   "rows",
+   "minimal"
+  ],
+  "pageTypes": [
+   "ai-app",
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Fourmula AI hero (mobbin.com/sites/sections/fb01406e-5120-4a8c-b80e-421743ec1fe1)"
+  ],
+  "a11y": "h1 includes all phrases in an sr-only span; the reel is aria-hidden; reduced motion stops the reel.",
+  "perf": "One spring-driven translateY on a short list.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a capability hero on white with hairline rules: left column 'AI that' + black pill CTA; right column a mask-faded reel of 84px rows of huge phrases that springs up one row every 1.8s; the centred row is full ink, neighbours zinc-400, others zinc-200."
+ },
+ {
+  "id": "hero-multiplayer-canvas",
+  "name": "Hero — Multiplayer Canvas",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "AI site-builder hero on a design canvas: selection frame with handles, website thumbnails at the edges, live multiplayer cursors and a glowing prompt bar.",
+  "tags": [
+   "hero",
+   "ai",
+   "canvas",
+   "cursors",
+   "multiplayer",
+   "prompt"
+  ],
+  "pageTypes": [
+   "ai-app",
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Relume hero (mobbin.com/sites/sections/1364f3d6-53a9-47e6-8961-c8abd80766ae)"
+  ],
+  "a11y": "Labelled input, real button and h1; canvas chrome, cursors and thumbnails aria-hidden; reduced motion freezes them.",
+  "perf": "Two cursor transform loops, one gradient-position loop.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build an AI site-builder hero on a #ebeae6 design canvas: a violet selection frame with corner handles, six website thumbnails sliding in from the left/right edges, two named multiplayer cursors wandering on 7–8s keyframe paths, a social-proof pill, serif H1, and a prompt bar wrapped in an animated rainbow gradient border with a '✦ Generate' button."
+ },
+ {
+  "id": "hero-notebook-windows",
+  "name": "Hero — Notebook Windows",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Data-platform hero on dotted paper: italic serif meets heavy sans with a sparkle accent, then three product windows rise and overlap.",
+  "tags": [
+   "hero",
+   "data",
+   "notebook",
+   "windows",
+   "serif",
+   "dotted"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard"
+  ],
+  "inspiration": [
+   "Mobbin — Hex hero (mobbin.com/sites/sections/244a3027-1e39-4c49-af30-126271204c62)"
+  ],
+  "a11y": "Real h1 with serif + sans spans; windows aria-hidden; reduced motion shows windows in place.",
+  "perf": "Three window entrances and one tape marquee.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a data-platform hero on pink dotted paper (#f6eeed + radial dot grid): a mono news tape looping, italic serif line with a three-ray coral sparkle, heavy sans second line, subtitle, two buttons (one with a soft halo). Three product windows (SQL cell, bar chart, chat answer) rise from 80px with slight rotation and overlap, centre one on top."
+ },
+ {
+  "id": "hero-giant-wordmark",
+  "name": "Hero — Giant Wordmark",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Brand hero inverted: a white rounded card holds the serif pitch and link columns, while a colossal serif wordmark rises letter by letter out of the sky below.",
+  "tags": [
+   "hero",
+   "brand",
+   "wordmark",
+   "serif",
+   "sky",
+   "inverted"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "Mobbin — Lassie hero (mobbin.com/sites/sections/b8d17593-6d42-40f6-ac71-88c5f0b8a12c)"
+  ],
+  "a11y": "h1 is the serif pitch; wordmark has aria-label with letters aria-hidden; reduced motion stops letter rise and sky drift.",
+  "perf": "Per-letter CSS transforms; background-position loop.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build an inverted brand hero: a white card with 32px bottom radius holds a serif H1 with an italic second line, a black CTA and three link columns; below, on a pale-blue sky gradient that slowly shifts, a colossal white serif wordmark (≈26vw) rises letter by letter from 70% with 80ms stagger."
+ },
+ {
+  "id": "hero-sunset-stripes",
+  "name": "Hero — Sunset Stripes",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Closing/CTA-style hero: plain centered statement with underlined text links, sitting on stacked sunset stripes that sweep in from alternating sides while a pixel cat strolls along.",
+  "tags": [
+   "hero",
+   "cta",
+   "stripes",
+   "pixel art",
+   "sunset",
+   "minimal"
+  ],
+  "pageTypes": [
+   "landing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "Mobbin — Mistral AI hero (mobbin.com/sites/sections/4138dfbe-7a6d-4659-9b80-f02e84406cdf)"
+  ],
+  "a11y": "Real h1 and links; stripes and cat aria-hidden; reduced motion stops the sweep and walk.",
+  "perf": "Six stripe transforms once; one tiny sprite loop.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a closing-statement hero on #fff8e7: centered H1, two underlined text links with orange › that nudge on hover; then a pixel cat sprite that hops (steps) while walking across, standing on six stacked stripes (cream → yellow → amber → orange → red-orange → red) that sweep in from alternating sides, staggered 90ms."
+ },
+ {
+  "id": "hero-feature-carousel",
+  "name": "Hero — Feature Carousel",
+  "category": "heroes",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 520,
+  "description": "Feature-led hero: condensed uppercase headline with arrow controls driving a spring-physics card slider that also auto-advances.",
+  "tags": [
+   "hero",
+   "ai",
+   "video",
+   "carousel",
+   "slider",
+   "condensed"
+  ],
+  "pageTypes": [
+   "landing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "Mobbin — VEED hero (mobbin.com/sites/sections/601cbc8b-0e7e-42b5-8d6f-3c5b73d23313)"
+  ],
+  "a11y": "Arrow buttons are labelled; off-screen cards are aria-hidden; hover pauses auto-advance; reduced motion disables autoplay and snaps.",
+  "perf": "One spring translateX on the track; interval paused on hover.",
+  "props": [
+   [
+    "className",
+    "string",
+    "",
+    "Size/position the section."
+   ]
+  ],
+  "prompt": "Build a feature-led hero on #ececec: condensed uppercase H1 (font-black, scaleX .86), a mint gradient pill, and two big round arrow buttons that move a card track by one (78% wide cards + 12px gap) with spring physics; the track auto-advances every 3.2s and pauses on hover. Each card: coloured illustration panel + tag + title. Bottom: a pill banner with a CTA."
+ }
+]

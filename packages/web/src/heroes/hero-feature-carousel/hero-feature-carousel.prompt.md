@@ -1,0 +1,1 @@
+Build a feature-led hero on #ececec: condensed uppercase H1 (font-black, scaleX .86), a mint gradient pill, and two big round arrow buttons that move a card track by one (78% wide cards + 12px gap) with spring physics; the track auto-advances every 3.2s and pauses on hover. Each card: coloured illustration panel + tag + title. Bottom: a pill banner with a CTA.

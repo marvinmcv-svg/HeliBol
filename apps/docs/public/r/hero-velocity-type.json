@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-velocity-type",
+  "type": "registry:component",
+  "title": "Hero — Velocity Type",
+  "description": "Sports/performance hero: speed-blur streaks behind giant masked headline lines, a hard-edged CTA and a logo rail.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-velocity-type.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/hero-velocity-type.tsx",
+      "content": "\"use client\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nconst css = `\n.k-hvt{--accent:#ff4d1a}\n.k-hvt .streak{position:absolute;height:var(--h);top:var(--t);left:-60%;width:60%;border-radius:999px;background:linear-gradient(90deg,transparent,var(--c),transparent);filter:blur(var(--b));animation:k-hvt-streak var(--s) linear infinite;animation-delay:var(--d)}\n@keyframes k-hvt-streak{to{transform:translateX(280%)}}\n.k-hvt .line{display:block;overflow:hidden}\n.k-hvt .line>span{display:block;animation:k-hvt-up .9s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d)}\n@keyframes k-hvt-up{from{transform:translateY(105%)}}\n.k-hvt .fade{animation:k-hvt-fade .8s ease-out both;animation-delay:var(--d)}\n@keyframes k-hvt-fade{from{opacity:0;transform:translateY(12px)}}\n.k-hvt .logos{animation:k-hvt-marquee 22s linear infinite}\n@keyframes k-hvt-marquee{to{transform:translateX(-50%)}}\n@media (prefers-reduced-motion:reduce){.k-hvt *{animation:none!important}}\n[data-reduce-motion] .k-hvt *{animation:none!important}`;\n\nconst streaks = [\n  { t: \"18%\", h: \"38px\", c: \"#3f6212\", b: \"18px\", s: \"2.6s\", d: \"0s\" },\n  { t: \"34%\", h: \"14px\", c: \"#d9f99d\", b: \"8px\", s: \"1.7s\", d: \"-.6s\" },\n  { t: \"52%\", h: \"60px\", c: \"#57534e\", b: \"22px\", s: \"3.2s\", d: \"-1.4s\" },\n  { t: \"66%\", h: \"10px\", c: \"#fafaf9\", b: \"6px\", s: \"1.3s\", d: \"-.2s\" },\n  { t: \"78%\", h: \"44px\", c: \"#365314\", b: \"20px\", s: \"2.2s\", d: \"-1s\" },\n];\n\n/** Sports/performance hero: speed-blur streaks behind giant masked headline lines, a hard-edged CTA and a logo rail. */\nexport function HeroVelocityType({ lines = [\"Unlock\", \"next level\", \"performance\"], logos = [\"NORTHSIDE FC\", \"VOLT\", \"TENNIS CLUB\", \"ARCTIC\", \"HALFTIME\", \"PRO LEAGUE\"], className }: { lines?: string[]; logos?: string[]; className?: string }) {\n  return (\n    <section className={cn(\"k-hvt relative isolate flex flex-col overflow-hidden bg-[#1c1917] text-white\", className)}>\n      <style href=\"k-hvt\" precedence=\"kinetik\">{css}</style>\n      <div aria-hidden className=\"absolute inset-0 -z-10 overflow-hidden\">\n        {streaks.map((s, i) => <span key={i} className=\"streak\" style={{ [\"--t\" as string]: s.t, [\"--h\" as string]: s.h, [\"--c\" as string]: s.c, [\"--b\" as string]: s.b, [\"--s\" as string]: s.s, [\"--d\" as string]: s.d }} />)}\n        <div className=\"absolute inset-0 bg-gradient-to-r from-[#1c1917] via-[#1c1917]/70 to-transparent\" />\n      </div>\n      <div className=\"flex flex-1 flex-wrap items-end justify-between gap-8 px-6 pt-14 pb-8 sm:px-10\">\n        <h1 className=\"text-[clamp(2.6rem,9vw,6.5rem)] leading-[.86] font-bold tracking-[-.04em] uppercase\">\n          {lines.map((l, i) => <span key={l} className=\"line\"><span style={{ [\"--d\" as string]: `${0.08 * i}s` }}>{l}</span></span>)}\n        </h1>\n        <div className=\"fade max-w-56 pb-2\" style={{ [\"--d\" as string]: \".45s\" }}>\n          <p className=\"text-xs leading-relaxed text-white/70\">Elite diagnostics, personalised training and advanced therapy — whether you go pro or just get started.</p>\n          <a href=\"#\" className=\"mt-5 inline-flex text-[11px] font-semibold tracking-widest uppercase\">\n            <span className=\"bg-[var(--accent)] px-4 py-3\">Unlock your potential</span>\n            <span className=\"ml-px grid w-10 place-items-center bg-[var(--accent)] transition-transform hover:translate-x-1\">→</span>\n          </a>\n        </div>\n      </div>\n      <div className=\"overflow-hidden border-t border-black/10 bg-[#f5f5f4] py-4 text-zinc-900\">\n        <div className=\"logos flex w-max gap-14 pr-14 text-sm font-black tracking-tight\">\n          {[...logos, ...logos].map((l, i) => <span key={i} aria-hidden={i >= logos.length}>{l}</span>)}\n        </div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "hero",
+      "sports",
+      "condensed",
+      "mask reveal",
+      "streaks",
+      "logo marquee"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

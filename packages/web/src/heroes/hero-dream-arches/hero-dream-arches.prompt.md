@@ -1,0 +1,1 @@
+Build a surreal studio hero: pastel pink room with three arched windows (rounded-t-full) showing a blue→pink sky with drifting clouds, a lilac water strip with shimmering horizontal ripple lines, a floating iridescent pearl (radial gradient) and a rock. Centered kicker, italic serif 'Creating the' over a big sans 'unexpected', each resolving from blur; small white pill CTA.

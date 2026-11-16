@@ -1,0 +1,1 @@
+Build a data-platform hero on pink dotted paper (#f6eeed + radial dot grid): a mono news tape looping, italic serif line with a three-ray coral sparkle, heavy sans second line, subtitle, two buttons (one with a soft halo). Three product windows (SQL cell, bar chart, chat answer) rise from 80px with slight rotation and overlap, centre one on top.

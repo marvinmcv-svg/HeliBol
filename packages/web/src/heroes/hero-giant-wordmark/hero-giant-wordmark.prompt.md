@@ -1,0 +1,1 @@
+Build an inverted brand hero: a white card with 32px bottom radius holds a serif H1 with an italic second line, a black CTA and three link columns; below, on a pale-blue sky gradient that slowly shifts, a colossal white serif wordmark (≈26vw) rises letter by letter from 70% with 80ms stagger.

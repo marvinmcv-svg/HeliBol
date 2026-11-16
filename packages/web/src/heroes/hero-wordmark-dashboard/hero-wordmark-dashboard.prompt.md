@@ -1,0 +1,1 @@
+Build a product-launch hero on #120b24: a giant condensed wordmark (font-black, scaleX .82, ~13vw) whose letters drop in from −60% with scaleY 1.4 and a back-out ease, staggered 60ms. Then a violet gradient stage rises 60px with a tagline, small subtitle and a white admin dashboard card (4 KPI tiles + an SVG line chart drawn with stroke-dashoffset) and a pulsing play button.

@@ -1,0 +1,1 @@
+Build a hardware hero: white page with a light-grey split card. Left: black 'NEW' badge + product name, serif two-line H1, outline 'Learn more' and black 'Buy now' pills. Right: a CSS handheld terminal that springs from rotateX 50°/rotateZ −18° to −8°, its screen counting a sale from $0 to the target with ease-out cubic over 1.4s, and contactless rings pulsing below.

@@ -1,0 +1,1 @@
+Build a device hero in a rounded warm-dark cinematic frame with a frosted nav pill and orange 'ORDER NOW': a tilted orange-bezel tablet whose paper screen draws an engraving-like stack of contour paths (stroke-dashoffset, staggered 180ms) and gently sways. Bottom gradient: serif H1 with an italic word and three feature columns rising in.

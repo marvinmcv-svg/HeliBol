@@ -1,0 +1,1 @@
+Build an agency hero on saturated #e3231b: an abstract portrait built from dark radial-gradient ellipses (head, eyes, mouth) that slowly breathes, with 16 glowing blue (#3b5bff) light points drifting across it. Thin cyan (#7ad3e8) nav at top; bottom-left an outlined OPS/DES/DEV tag grid + serif wordmark, and a serif tagline that wipes in with clip-path, ending in a spinning ✳.

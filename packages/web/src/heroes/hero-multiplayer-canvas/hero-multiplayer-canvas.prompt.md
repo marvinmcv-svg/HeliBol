@@ -1,0 +1,1 @@
+Build an AI site-builder hero on a #ebeae6 design canvas: a violet selection frame with corner handles, six website thumbnails sliding in from the left/right edges, two named multiplayer cursors wandering on 7–8s keyframe paths, a social-proof pill, serif H1, and a prompt bar wrapped in an animated rainbow gradient border with a '✦ Generate' button.

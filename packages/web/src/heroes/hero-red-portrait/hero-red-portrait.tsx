@@ -1,0 +1,43 @@
+"use client";
+import { cn } from "@kinetik/core";
+
+const css = `
+.k-hrp .dot{animation:k-hrp-drift var(--s) ease-in-out infinite alternate;animation-delay:var(--d)}
+@keyframes k-hrp-drift{to{transform:translate(var(--x),var(--y));opacity:.35}}
+.k-hrp .face{animation:k-hrp-breathe 7s ease-in-out infinite alternate}
+@keyframes k-hrp-breathe{to{transform:scale(1.04)}}
+.k-hrp .star{animation:k-hrp-spin 10s linear infinite}
+@keyframes k-hrp-spin{to{transform:rotate(360deg)}}
+.k-hrp .in{animation:k-hrp-in 1.2s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d,0s)}
+@keyframes k-hrp-in{from{opacity:0;clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){.k-hrp *{animation:none!important}}
+[data-reduce-motion] .k-hrp *{animation:none!important}`;
+
+const dots = Array.from({ length: 16 }, (_, i) => ({ l: 38 + ((i * 17) % 26), t: 6 + ((i * 23) % 40), x: `${((i % 5) - 2) * 6}px`, y: `${((i % 3) - 1) * 8}px`, s: `${3 + (i % 4)}s`, d: `${-(i % 5)}s` }));
+
+/** Digital-agency hero: a monochrome red portrait silhouette with projected blue light points drifting across it and a cyan serif wordmark wiping in. */
+export function HeroRedPortrait({ name = "Locomoto", tagline = "Digital-first Design Agency", tags = ["OPS", "DES", "DEV"], className }: { name?: string; tagline?: string; tags?: string[]; className?: string }) {
+  return (
+    <section className={cn("k-hrp relative isolate flex min-h-[460px] flex-col justify-between overflow-hidden bg-[#e3231b] p-6 text-[#7ad3e8]", className)}>
+      <style href="k-hrp" precedence="kinetik">{css}</style>
+      <div aria-hidden className="face absolute inset-0 -z-10">
+        <div className="absolute top-[-20%] left-1/2 h-[140%] w-[46%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(ellipse_at_50%_40%,#c81a14_0,#7a0b08_55%,transparent_72%)]" />
+        <div className="absolute top-[36%] left-[41%] h-[6%] w-[7%] rounded-[50%] bg-[#4a0505]/70 blur-[2px]" />
+        <div className="absolute top-[36%] right-[41%] h-[6%] w-[7%] rounded-[50%] bg-[#4a0505]/70 blur-[2px]" />
+        <div className="absolute top-[64%] left-1/2 h-[5%] w-[12%] -translate-x-1/2 rounded-[50%] bg-[#5c0806]/80 blur-[3px]" />
+        {dots.map((d, i) => <span key={i} className="dot absolute size-1.5 rounded-full bg-[#3b5bff] shadow-[0_0_8px_2px_#3b5bffaa]" style={{ left: `${d.l}%`, top: `${d.t}%`, ["--x" as string]: d.x, ["--y" as string]: d.y, ["--s" as string]: d.s, ["--d" as string]: d.d }} />)}
+      </div>
+      <nav className="flex justify-between text-xs"><span>{name}®</span><span className="hidden sm:inline">Work, Agency, Careers, Store</span><a href="#">Let's talk</a></nav>
+      <div>
+        <div className="in flex items-end gap-3" style={{ ["--d" as string]: ".2s" }}>
+          <span aria-hidden className="grid grid-cols-2 border border-current text-[9px] leading-none font-semibold">
+            <span className="row-span-2 grid place-items-center border-r border-current px-1.5">{tags[0]}</span>
+            {tags.slice(1).map((t) => <span key={t} className="border-b border-current px-1.5 py-1 last:border-b-0">{t}</span>)}
+          </span>
+          <span className="font-serif text-3xl leading-none">{name}®</span>
+        </div>
+        <h1 className="in mt-1 font-serif text-[clamp(1.8rem,5vw,3rem)] leading-none" style={{ ["--d" as string]: ".45s" }}>{tagline}<span aria-hidden className="star ml-2 inline-block">✳</span></h1>
+      </div>
+    </section>
+  );
+}

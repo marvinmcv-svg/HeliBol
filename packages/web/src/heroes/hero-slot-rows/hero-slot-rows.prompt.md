@@ -1,0 +1,1 @@
+Build a capability hero on white with hairline rules: left column 'AI that' + black pill CTA; right column a mask-faded reel of 84px rows of huge phrases that springs up one row every 1.8s; the centred row is full ink, neighbours zinc-400, others zinc-200.

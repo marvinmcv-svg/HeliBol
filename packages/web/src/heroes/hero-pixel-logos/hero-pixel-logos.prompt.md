@@ -1,0 +1,1 @@
+Build an enterprise-AI hero on #fbfaf7: three 8×6 pixel-art sprites (SVG rects, shape-rendering crispEdges) hop in sequence; H1 words rise in with a 35ms stagger. Beneath, a ruled row of 160×96 logo cells (border-r) drifting −50% over 24s.

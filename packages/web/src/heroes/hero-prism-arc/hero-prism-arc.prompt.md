@@ -1,0 +1,1 @@
+Build a creative-AI hero on #efefef: centered H1, subtitle and a big dark pill CTA. Below, a half-dome window (aspect 2/1, rounded-t-full) filled with a conic gradient anchored at the bottom centre that rotates via @property, with four white mix-blend-overlay facet beams sliding/rotating, rising 40% on load.

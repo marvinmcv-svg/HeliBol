@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-feature-carousel",
+  "type": "registry:component",
+  "title": "Hero — Feature Carousel",
+  "description": "Feature-led hero: condensed uppercase headline with arrow controls driving a spring-physics card slider that also auto-advances.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-feature-carousel.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/hero-feature-carousel.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\nimport { spring } from \"@/lib/kinetik/tokens\";\n\ntype Feature = { tag: string; title: string; tone: string; art: string };\nconst defaults: Feature[] = [\n  { tag: \"Magic cut\", title: \"Replace hours of editing with a single click\", tone: \"bg-[#e6fbcf]\", art: \"✂\" },\n  { tag: \"Text to speech\", title: \"Turn written content into natural voiceovers\", tone: \"bg-[#e9e6ff]\", art: \"♪\" },\n  { tag: \"Auto subtitles\", title: \"Accurate captions in 100+ languages\", tone: \"bg-[#fff1c7]\", art: \"Aa\" },\n  { tag: \"Eye contact\", title: \"Look into the lens, even when you read\", tone: \"bg-[#d9f3ff]\", art: \"◉\" },\n];\n\n/** Feature-led hero: condensed uppercase headline with arrow controls driving a spring-physics card slider that also auto-advances. */\nexport function HeroFeatureCarousel({ title = \"Streamline video with AI editing\", features = defaults, className }: { title?: string; features?: Feature[]; className?: string }) {\n  const reduced = useReducedMotion();\n  const [i, setI] = useState(0);\n  const [paused, setPaused] = useState(false);\n  const go = (d: number) => setI((k) => (k + d + features.length) % features.length);\n  useEffect(() => {\n    if (reduced || paused) return;\n    const t = setInterval(() => setI((k) => (k + 1) % features.length), 3200);\n    return () => clearInterval(t);\n  }, [reduced, paused, features.length]);\n  return (\n    <section className={cn(\"overflow-hidden bg-[#ececec] p-6 text-[#111]\", className)} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>\n      <div className=\"grid gap-6 md:grid-cols-[1fr_1.7fr]\">\n        <div className=\"flex flex-col justify-between\">\n          <div>\n            <h1 className=\"text-[clamp(2.2rem,5vw,3.4rem)] leading-[.92] font-black tracking-[-.03em] uppercase [transform:scaleX(.86)] origin-left\">{title}</h1>\n            <a href=\"#\" className=\"mt-5 inline-block rounded-full bg-gradient-to-r from-[#7cf2a8] to-[#b5f36d] px-4 py-2 text-xs font-medium\">Explore all AI features</a>\n          </div>\n          <div className=\"mt-8 flex gap-3\">\n            <button type=\"button\" aria-label=\"Previous feature\" onClick={() => go(-1)} className=\"grid size-14 place-items-center rounded-full bg-white text-xl transition-transform hover:-translate-x-0.5 active:scale-95\">←</button>\n            <button type=\"button\" aria-label=\"Next feature\" onClick={() => go(1)} className=\"grid size-14 place-items-center rounded-full bg-white text-xl transition-transform hover:translate-x-0.5 active:scale-95\">→</button>\n          </div>\n        </div>\n        <div className=\"overflow-hidden\" aria-roledescription=\"carousel\">\n          <motion.ul animate={{ x: `calc(${-i} * (78% + 12px))` }} transition={reduced ? { duration: 0 } : spring.smooth} className=\"flex gap-3\">\n            {features.map((f, k) => (\n              <li key={f.tag} aria-hidden={k !== i} className=\"w-[78%] shrink-0 overflow-hidden rounded-2xl bg-white\">\n                <div className={cn(\"grid h-36 place-items-center text-5xl\", f.tone)}><span className=\"grid size-20 place-items-center rounded-2xl bg-[#222] text-3xl text-white shadow-lg\">{f.art}</span></div>\n                <div className=\"p-5\"><p className=\"text-[10px] font-bold tracking-widest uppercase\">{f.tag}</p><p className=\"mt-3 text-xl leading-tight\">{f.title}</p></div>\n              </li>\n            ))}\n          </motion.ul>\n        </div>\n      </div>\n      <div className=\"mx-auto mt-6 flex max-w-xl items-center justify-between rounded-full bg-white px-5 py-2 text-sm\">Create videos 8× faster with Enterprise<a href=\"#\" className=\"rounded-full bg-[#b5f36d] px-3 py-1.5 text-xs\">Talk to sales</a></div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "hero",
+      "ai",
+      "video",
+      "carousel",
+      "slider",
+      "condensed"
+    ],
+    "pageTypes": [
+      "landing",
+      "ai-app"
+    ]
+  }
+}

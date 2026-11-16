@@ -1,0 +1,1 @@
+Build a customer-stories hero on black: centered H1, muted subtitle and two pill buttons (white solid + translucent). Below, an infinite rail of tall 192×240 rounded cards (photo or tinted radial fallback, 45% black overlay, brand mark centered, 'Visit site ›' at bottom) translating −50% over 40s. Hover pauses the rail and zooms the hovered photo 1.06 with expo-out.

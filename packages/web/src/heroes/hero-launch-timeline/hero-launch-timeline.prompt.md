@@ -1,0 +1,1 @@
+Build a release-notes hero on #ddd9cf: left vertical index of sections with roman numerals (current one underlined), bold H1 + serif subtitle, a storefront preview card with a 'Scheduled' chip whose banner crossfades (scale 1.04→1) every 2.6s, and a vertical timeline of date chips where the active node fills and its chip goes full opacity.

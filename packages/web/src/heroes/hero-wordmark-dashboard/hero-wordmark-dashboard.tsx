@@ -1,0 +1,37 @@
+"use client";
+import { cn } from "@kinetik/core";
+
+const css = `
+.k-hwd .ch{display:inline-block;animation:k-hwd-drop .9s cubic-bezier(.34,1.56,.64,1) both;animation-delay:calc(var(--i)*60ms)}
+@keyframes k-hwd-drop{from{opacity:0;transform:translateY(-60%) scaleY(1.4)}}
+.k-hwd .panel{animation:k-hwd-panel 1.1s cubic-bezier(.16,1,.3,1) .5s both}
+@keyframes k-hwd-panel{from{opacity:0;transform:translateY(60px)}}
+.k-hwd .line{stroke-dasharray:600;stroke-dashoffset:600;animation:k-hwd-line 2.2s ease-out 1.2s forwards}
+@keyframes k-hwd-line{to{stroke-dashoffset:0}}
+.k-hwd .play{animation:k-hwd-ping 2.4s ease-out infinite 2s}
+@keyframes k-hwd-ping{0%{box-shadow:0 0 0 0 #fff8}100%{box-shadow:0 0 0 18px #fff0}}
+@media (prefers-reduced-motion:reduce){.k-hwd *{animation:none!important;stroke-dashoffset:0!important}}
+[data-reduce-motion] .k-hwd *{animation:none!important;stroke-dashoffset:0!important}`;
+
+/** Product-launch hero: a giant condensed wordmark drops in letter by letter, then a violet stage rises with a live admin dashboard whose chart draws itself. */
+export function HeroWordmarkDashboard({ word = "COPILOT", tagline = "A smarter, more powerful copilot", className }: { word?: string; tagline?: string; className?: string }) {
+  return (
+    <section className={cn("k-hwd overflow-hidden bg-[#120b24] pt-10 text-white", className)}>
+      <style href="k-hwd" precedence="kinetik">{css}</style>
+      <h1 aria-label={word} className="text-center text-[clamp(3rem,13vw,7.5rem)] leading-none font-black tracking-[-.06em] [transform:scaleX(.82)]">
+        {[...word].map((c, i) => <span key={i} aria-hidden className="ch" style={{ ["--i" as string]: i }}>{c}</span>)}
+      </h1>
+      <div className="panel mx-3 mt-6 rounded-t-2xl bg-gradient-to-b from-[#9b6bff] to-[#6d3cf0] px-6 pt-8 text-center">
+        <p className="text-2xl font-semibold tracking-tight">{tagline}</p>
+        <p className="mx-auto mt-1 max-w-sm text-xs text-white/75">Multi-step reasoning that digs deeper and suggests strategies from your store's own data.</p>
+        <div aria-hidden className="relative mx-auto mt-6 max-w-2xl overflow-hidden rounded-t-xl bg-white p-4 text-left text-zinc-800 shadow-2xl">
+          <div className="flex gap-3 text-[10px]">
+            {[["Sessions", "195,567"], ["Total sales", "$189,657"], ["Orders", "2,978"], ["Conversion", "3.65%"]].map(([k, v]) => <div key={k} className="flex-1 rounded-md border border-zinc-200 p-2"><p className="text-zinc-500">{k}</p><p className="text-sm font-semibold">{v}</p></div>)}
+          </div>
+          <svg viewBox="0 0 400 90" className="mt-3 h-24 w-full"><path className="line" d="M0 60 C30 20 50 70 80 45 S130 15 160 50 S210 80 240 40 S300 10 330 55 S380 30 400 35" fill="none" stroke="#38bdf8" strokeWidth="2.5" /></svg>
+          <span className="play absolute top-1/2 left-1/2 grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-zinc-700/80 text-white">▶</span>
+        </div>
+      </div>
+    </section>
+  );
+}

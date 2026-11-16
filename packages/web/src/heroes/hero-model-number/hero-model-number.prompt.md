@@ -1,0 +1,1 @@
+Build a product-glamour hero: neon-yellow promo strip with a looping mono message; a dark radial studio scene with thick gradient-stroked SVG frame tubes and a red tail-lamp that pulses with a drop-shadow glow; the scene settles from scale 1.15/−3°. A huge light-weight model number slides in bottom-left; blurb + bordered ↗ 'Explore' right; 'Reserve now' bottom-right.
