@@ -1,0 +1,1 @@
+Build a scroll text mask: sticky viewport with the photo underneath and an SVG 'sheet' (background-coloured rect masked by a big text knockout) on top; scale the SVG from 1 to 42 around a point inside a letter as scroll progresses 0→.75, also scale the photo 1.35→1, fade the sheet out late as a safety net and fade the follow-up content in.

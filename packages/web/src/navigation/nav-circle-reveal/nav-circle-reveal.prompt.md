@@ -1,0 +1,1 @@
+Build a circle-reveal menu with Motion: measure the button centre, animate a full-screen nav's clipPath from circle(0% at btn) to circle(150% at btn) with ease [.76,0,.24,1]; link text rises from y:110% inside overflow-hidden lines with stagger; hovering shows that link's image (multiply blend) crossfading; exit reverses.

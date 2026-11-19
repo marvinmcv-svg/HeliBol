@@ -1,0 +1,1 @@
+Build a tear-off ticket: a top card with perforation notches, a dotted perforation line, and a stub that drags on y with elastic bottom; rotate the stub with y (hinged at the top-left), fade in the perforation gap, and if offset > 110 animate y far down (ease-in) as if falling. Provide a button alternative.

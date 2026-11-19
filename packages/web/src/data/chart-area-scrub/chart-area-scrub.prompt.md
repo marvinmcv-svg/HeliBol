@@ -1,0 +1,1 @@
+Build a scrubbable area chart in SVG + Motion: build a smooth cubic path through the points and an area path; draw the line with pathLength when in view; on pointer move pick the nearest x, clip a bright copy of the line to that x (dimming the rest), show a dashed crosshair and dot, and roll the big number via AnimatePresence.

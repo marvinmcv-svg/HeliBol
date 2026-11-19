@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cursor-context-label",
+  "type": "registry:component",
+  "title": "Context Label Cursor",
+  "description": "A cursor that reads the room: over elements marked data-cursor=\"View\" (or Drag, Play…) the dot morphs into a pill showing that label in the element's colour; elsewhere it's a small difference-blend dot.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/cursor-context-label.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/cursor-context-label.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion, useMotionValue, useSpring } from \"motion/react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface CursorContextLabelProps {\n  children: ReactNode;\n  className?: string;\n}\n\n/**\n * A cursor that reads the room: over elements marked `data-cursor=\"View\"` (or \"Drag\", \"Play\",\n * \"Open ↗\"…) the dot morphs into a pill showing that label, takes the element's\n * `data-cursor-color`, and shrinks back to a dot elsewhere. Uses difference blending on plain\n * text so it stays visible on any background. Pointer devices only.\n */\nexport function CursorContextLabel({ children, className }: CursorContextLabelProps) {\n  const reduced = useReducedMotion();\n  const touch = usePrefersTouch();\n  const area = useRef<HTMLDivElement>(null);\n  const [label, setLabel] = useState<string | null>(null);\n  const [color, setColor] = useState<string | null>(null);\n  const [inside, setInside] = useState(false);\n  const x = useMotionValue(0), y = useMotionValue(0);\n  const cfg = reduced ? { stiffness: 5000, damping: 200 } : { stiffness: 520, damping: 38, mass: 0.5 };\n  const sx = useSpring(x, cfg), sy = useSpring(y, cfg);\n\n  useEffect(() => {\n    const el = area.current;\n    if (!el || touch) return;\n    const move = (e: PointerEvent) => {\n      const r = el.getBoundingClientRect();\n      x.set(e.clientX - r.left);\n      y.set(e.clientY - r.top);\n      const t = (e.target as HTMLElement).closest<HTMLElement>(\"[data-cursor]\");\n      setLabel(t?.dataset.cursor ?? null);\n      setColor(t?.dataset.cursorColor ?? null);\n    };\n    const enter = () => setInside(true);\n    const leave = () => (setInside(false), setLabel(null));\n    el.addEventListener(\"pointermove\", move);\n    el.addEventListener(\"pointerenter\", enter);\n    el.addEventListener(\"pointerleave\", leave);\n    return () => { el.removeEventListener(\"pointermove\", move); el.removeEventListener(\"pointerenter\", enter); el.removeEventListener(\"pointerleave\", leave); };\n  }, [touch, x, y]);\n\n  return (\n    <div ref={area} className={cn(\"relative\", !touch && \"cursor-none [&_*]:cursor-none\", className)}>\n      {children}\n      {!touch && (\n        <motion.div aria-hidden className=\"pointer-events-none absolute left-0 top-0 z-50\" style={{ x: sx, y: sy }}>\n          <motion.div\n            className={cn(\"flex -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden whitespace-nowrap rounded-full text-xs font-semibold\", !color && \"bg-white text-black mix-blend-difference\")}\n            style={color ? { background: color, color: \"#000\" } : undefined}\n            animate={{ width: label ? Math.max(64, label.length * 8 + 28) : 12, height: label ? 64 : 12, opacity: inside ? 1 : 0 }}\n            transition={reduced ? { duration: 0 } : { type: \"spring\", stiffness: 420, damping: 30 }}\n          >\n            <AnimatePresence mode=\"popLayout\">\n              {label && (\n                <motion.span key={label} initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.6 }} transition={{ duration: 0.15 }}>\n                  {label}\n                </motion.span>\n              )}\n            </AnimatePresence>\n          </motion.div>\n        </motion.div>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "cursor",
+      "label",
+      "portfolio",
+      "hover",
+      "agency"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

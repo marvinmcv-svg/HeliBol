@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-magnetic-letters",
+  "type": "registry:component",
+  "title": "Magnetic Letters",
+  "description": "Every letter is a tiny spring: near the cursor letters are pushed away (or pulled in), tilt and gain weight, then spring back with a soft wobble when it leaves.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-magnetic-letters.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-magnetic-letters.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef } from \"react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextMagneticLettersProps {\n  text: string;\n  /** Pixels within which letters react. */\n  radius?: number;\n  /** Positive pushes letters away from the pointer, negative pulls them in. */\n  strength?: number;\n  className?: string;\n}\n\n/**\n * Every letter is a tiny spring: near the cursor letters are pushed away (or pulled in), tilt and\n * gain weight, then spring back with a soft wobble when the cursor leaves. One rAF loop for all\n * letters, transforms only.\n */\nexport function TextMagneticLetters({ text, radius = 140, strength = 1, className }: TextMagneticLettersProps) {\n  const reduced = useReducedMotion();\n  const touch = usePrefersTouch();\n  const root = useRef<HTMLSpanElement>(null);\n\n  useEffect(() => {\n    const el = root.current;\n    if (!el || reduced || touch) return;\n    const letters = [...el.querySelectorAll<HTMLSpanElement>(\"[data-l]\")];\n    const st = letters.map(() => ({ x: 0, y: 0, vx: 0, vy: 0, w: 0 }));\n    let centers: { x: number; y: number }[] = [];\n    let pointer: { x: number; y: number } | null = null;\n    let raf = 0;\n    const measure = () => (centers = letters.map((l) => {\n      const r = l.getBoundingClientRect();\n      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };\n    }));\n    const tick = () => {\n      let moving = false;\n      letters.forEach((l, i) => {\n        const s = st[i];\n        let tx = 0, ty = 0, tw = 0;\n        if (pointer) {\n          const dx = centers[i].x - pointer.x, dy = centers[i].y - pointer.y;\n          const d = Math.hypot(dx, dy);\n          if (d < radius) {\n            const f = (1 - d / radius) ** 2;\n            tx = (dx / (d || 1)) * f * 28 * strength;\n            ty = (dy / (d || 1)) * f * 28 * strength;\n            tw = f;\n          }\n        }\n        // spring toward target (stiffness .12, damping .78)\n        s.vx = (s.vx + (tx - s.x) * 0.12) * 0.78;\n        s.vy = (s.vy + (ty - s.y) * 0.12) * 0.78;\n        s.x += s.vx;\n        s.y += s.vy;\n        s.w += (tw - s.w) * 0.15;\n        if (Math.abs(s.vx) + Math.abs(s.vy) + Math.abs(tw - s.w) > 0.01) moving = true;\n        l.style.transform = `translate(${s.x.toFixed(2)}px, ${s.y.toFixed(2)}px) rotate(${(s.x * 0.6).toFixed(2)}deg)`;\n        l.style.fontVariationSettings = `\"wght\" ${Math.round(400 + s.w * 400)}`;\n      });\n      raf = moving || pointer ? requestAnimationFrame(tick) : 0;\n    };\n    const move = (e: PointerEvent) => {\n      pointer = { x: e.clientX, y: e.clientY };\n      if (!raf) raf = requestAnimationFrame(tick);\n    };\n    const leave = () => {\n      pointer = null;\n      if (!raf) raf = requestAnimationFrame(tick);\n    };\n    measure();\n    const host = el.parentElement ?? el;\n    host.addEventListener(\"pointermove\", move);\n    host.addEventListener(\"pointerleave\", leave);\n    window.addEventListener(\"resize\", measure);\n    window.addEventListener(\"scroll\", measure, true);\n    return () => {\n      cancelAnimationFrame(raf);\n      host.removeEventListener(\"pointermove\", move);\n      host.removeEventListener(\"pointerleave\", leave);\n      window.removeEventListener(\"resize\", measure);\n      window.removeEventListener(\"scroll\", measure, true);\n    };\n  }, [radius, strength, reduced, touch, text]);\n\n  return (\n    <span ref={root} aria-label={text} className={cn(\"inline-block\", className)}>\n      {[...text].map((ch, i) => (\n        <span key={i} data-l aria-hidden className=\"inline-block will-change-transform\" style={{ whiteSpace: \"pre\" }}>\n          {ch}\n        </span>\n      ))}\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "premium",
+      "text",
+      "cursor",
+      "spring",
+      "variable font",
+      "interactive"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

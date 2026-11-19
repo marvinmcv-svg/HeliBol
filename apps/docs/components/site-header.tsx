@@ -13,6 +13,7 @@ import { useSaved } from "@/lib/saved";
 
 const nav = [
   { href: "/components", label: "Components" },
+  { href: "/premium", label: "✦ Premium" },
   { href: "/blocks", label: "Blocks" },
   { href: "/templates", label: "Templates" },
   { href: "/flows", label: "Flows" },

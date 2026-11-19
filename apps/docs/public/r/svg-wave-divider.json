@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "svg-wave-divider",
+  "type": "registry:component",
+  "title": "Wave Divider",
+  "description": "Section divider of stacked ocean waves: each layer is a seamless wave tile drifting at its own speed and direction, back layers paler and slower, giving parallax depth between sections.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/svg-wave-divider.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/svg-wave-divider.tsx",
+      "content": "\"use client\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface SvgWaveDividerProps {\n  /** Colours of the layers, back to front. The last should match the next section's background. */\n  colors?: string[];\n  /** Height in px. */\n  height?: number;\n  /** Flip vertically (for the top of a section). */\n  flip?: boolean;\n  className?: string;\n}\n\n/**\n * Section divider of stacked ocean waves: each layer is a seamless SVG wave tile drifting at its own\n * speed and direction (SMIL translate loops), back layers paler and slower, giving parallax depth\n * between two sections. Static waves under reduced motion.\n */\nexport function SvgWaveDivider({ colors = [\"#c4b5fd\", \"#a78bfa\", \"#8b5cf6\", \"var(--color-background, #fff)\"], height = 120, flip = false, className }: SvgWaveDividerProps) {\n  const reduced = useReducedMotion();\n  const n = colors.length;\n  return (\n    <div aria-hidden className={cn(\"relative w-full overflow-hidden leading-[0]\", flip && \"-scale-y-100\", className)} style={{ height }}>\n      <svg viewBox=\"0 0 1200 120\" preserveAspectRatio=\"none\" className=\"absolute inset-0 size-full\">\n        {colors.map((c, i) => {\n          const amp = 14 + i * 4;\n          const y = 30 + i * 18;\n          const d = `M0 ${y} C 150 ${y - amp}, 450 ${y + amp}, 600 ${y} S 1050 ${y - amp}, 1200 ${y} S 1650 ${y + amp}, 1800 ${y} S 2250 ${y - amp}, 2400 ${y} V 120 H 0 Z`;\n          const dur = 10 + (n - i) * 4;\n          return (\n            <g key={i} opacity={i === n - 1 ? 1 : 0.5 + (i / n) * 0.4}>\n              <path d={d} fill={c} />\n              {!reduced && <animateTransform attributeName=\"transform\" type=\"translate\" from={i % 2 ? \"-1200 0\" : \"0 0\"} to={i % 2 ? \"0 0\" : \"-1200 0\"} dur={`${dur}s`} repeatCount=\"indefinite\" />}\n            </g>\n          );\n        })}\n      </svg>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "svg"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "premium",
+      "divider",
+      "waves",
+      "section",
+      "svg",
+      "ocean"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

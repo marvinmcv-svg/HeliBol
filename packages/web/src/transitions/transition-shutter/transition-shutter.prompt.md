@@ -1,0 +1,1 @@
+Build a shutter transition: on navigate, render N full-width blades that scaleY 0→1 from the top with stagger; when the last closes, swap the page and animate the blades scaleY 1→0 toward the bottom in reverse order; flash the target label on the closed shutter.

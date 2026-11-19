@@ -4,7 +4,7 @@ import type { ComponentMeta } from "@web/types";
 import { getContent, SITE_URL } from "@/lib/content";
 import { added, newIds } from "@/lib/registry.generated";
 import { highlight } from "@/lib/highlight";
-import { categoryName, pageTypes } from "@/lib/taxonomy";
+import { categoryName, isPremium, pageTypes } from "@/lib/taxonomy";
 import { CodeTabs } from "./code-tabs";
 import { CopyButton } from "./copy-button";
 import { InstallTabs } from "./install-tabs";
@@ -51,6 +51,7 @@ export async function ItemDetail({
               <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{meta.priority}</span>
               <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{meta.platforms.join(" + ")}</span>
               {meta.status !== "stable" && <span className="rounded-md bg-brand/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand">{meta.status}</span>}
+              {isPremium(meta) && <Link href="/premium" className="rounded-md bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-950">✦ Premium</Link>}
               {newIds.includes(meta.id) && <span className="rounded-md bg-brand px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">New</span>}
               {added[meta.id] && <span className="text-[11px] text-muted-foreground">Added {added[meta.id]}</span>}
             </div>

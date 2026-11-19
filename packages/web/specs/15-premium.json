@@ -1,0 +1,1591 @@
+[
+ {
+  "id": "text-ink-bleed",
+  "name": "Ink Bleed Headline",
+  "category": "text",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "A headline that bleeds onto the page like ink on wet paper: SVG turbulence displacement and blur decay to zero while words fade up in sequence, leaving perfectly crisp type.",
+  "tags": [
+   "premium",
+   "text",
+   "ink",
+   "editorial",
+   "svg filter",
+   "headline"
+  ],
+  "pageTypes": [
+   "landing",
+   "blog",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "The heading keeps its full text as aria-label; animated words are aria-hidden. Reduced motion: crisp text, no filter.",
+  "perf": "Filter attributes updated for ~2 s only; filter removed once settled.",
+  "props": [
+   [
+    "text",
+    "string",
+    "",
+    "Headline."
+   ],
+   [
+    "as",
+    "'h1' | 'h2' | 'h3' | 'p'",
+    "'h2'",
+    "Element."
+   ],
+   [
+    "duration",
+    "number",
+    "1.8",
+    "Seconds to settle."
+   ]
+  ],
+  "prompt": "Build an ink-bleed headline: an SVG filter (feTurbulence fractalNoise \u2192 feDisplacementMap \u2192 feGaussianBlur) applied to the text; on entering view animate a 0\u21921 progress with Motion's animate(), setting displacement scale (60\u21920) and blur (6\u21920) imperatively, while each word fades and rises with a per-word offset. Remove the filter at 1. Replays on re-entry."
+ },
+ {
+  "id": "text-magnetic-letters",
+  "name": "Magnetic Letters",
+  "category": "text",
+  "engine": "js",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "Every letter is a tiny spring: near the cursor letters are pushed away (or pulled in), tilt and gain weight, then spring back with a soft wobble when it leaves.",
+  "tags": [
+   "premium",
+   "text",
+   "cursor",
+   "spring",
+   "variable font",
+   "interactive"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "aria-label holds the full text; letters are aria-hidden. Off on touch and reduced motion.",
+  "perf": "One rAF loop for all letters that stops when everything settles; transforms + font-variation only.",
+  "props": [
+   [
+    "text",
+    "string",
+    "",
+    "Text."
+   ],
+   [
+    "radius",
+    "number",
+    "140",
+    "Influence radius px."
+   ],
+   [
+    "strength",
+    "number",
+    "1",
+    "Positive pushes, negative pulls."
+   ]
+  ],
+  "prompt": "Build magnetic letters: split text into inline-block spans, cache their centres, and on pointermove run a rAF loop where each letter's target offset = direction away from the pointer \u00d7 (1 \u2212 d/radius)\u00b2 \u00d7 28 \u00d7 strength; integrate a damped spring (stiffness .12, damping .78), rotate by x\u00b70.6\u00b0, and raise font weight with influence (variable font). Stop the loop when settled."
+ },
+ {
+  "id": "text-liquid-fill",
+  "name": "Liquid Fill Text",
+  "category": "text",
+  "engine": "svg",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Outlined letters as glass vessels: two offset waves slosh inside the type (SVG clip to the text) and rise to a level you control \u2014 loaders, counters, scroll progress.",
+  "tags": [
+   "premium",
+   "text",
+   "liquid",
+   "wave",
+   "progress",
+   "loader"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=img with an aria-label that includes the percentage. Reduced motion: still waves, level jumps.",
+  "perf": "Pure SVG: two SMIL translate loops and one CSS transform transition.",
+  "props": [
+   [
+    "text",
+    "string",
+    "",
+    "Word to fill."
+   ],
+   [
+    "level",
+    "number",
+    "60",
+    "0\u2013100 fill level."
+   ],
+   [
+    "color",
+    "string",
+    "'#38bdf8'",
+    "Front wave."
+   ],
+   [
+    "colorBack",
+    "string",
+    "'#818cf8'",
+    "Back wave."
+   ]
+  ],
+  "prompt": "Build liquid-fill text in SVG: a clipPath of the text; inside it a group translated by (100 \u2212 level) that contains two seamless wave paths (period 50, tile 200) looping horizontally in opposite directions with animateTransform; draw an outlined copy of the text on top. Ease level changes with a CSS transition."
+ },
+ {
+  "id": "button-directional-fill",
+  "name": "Directional Fill Button",
+  "category": "buttons",
+  "engine": "css",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "Hover fill that knows where you came from: a circle grows from the exact entry point and shrinks back toward the exit point. Pure CSS transitions driven by two custom properties.",
+  "tags": [
+   "premium",
+   "button",
+   "hover",
+   "fill",
+   "cta",
+   "micro-interaction"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Real button; same fill on keyboard focus. Reduced motion: instant colour swap.",
+  "perf": "Two CSS variables written on enter/leave; transform transition only.",
+  "props": [
+   [
+    "fill",
+    "string",
+    "'currentColor'",
+    "Fill colour."
+   ],
+   [
+    "fillText",
+    "string",
+    "background",
+    "Text colour when filled."
+   ]
+  ],
+  "prompt": "Build a directional-fill button: on pointerenter/leave write --x/--y (pointer position inside the button); an absolutely positioned 8 px circle at (--x, --y) scales from 0 to 90 on :hover/:focus-visible with a .5 s expo-out transition, behind the label; text colour transitions to the fill-text colour."
+ },
+ {
+  "id": "button-particle-dissolve",
+  "name": "Particle Dissolve Button",
+  "category": "buttons",
+  "engine": "canvas",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "On click the button disintegrates: it's sampled into ~600 particles that drift away like sand in the wind (a left-to-right sweep), then a success pill springs in where it stood.",
+  "tags": [
+   "premium",
+   "button",
+   "particles",
+   "thanos",
+   "success",
+   "canvas"
+  ],
+  "pageTypes": [
+   "landing",
+   "social"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Success state is role=status; button disabled during the effect. Reduced motion: direct swap to success.",
+  "perf": "Canvas only exists for ~2 s; particle count capped.",
+  "props": [
+   [
+    "onAction",
+    "() => Promise<void> | void",
+    "",
+    "Run before dissolving."
+   ],
+   [
+    "doneLabel",
+    "string",
+    "'Sent'",
+    "Success text."
+   ],
+   [
+    "color",
+    "string",
+    "button bg",
+    "Particle colour."
+   ]
+  ],
+  "prompt": "Build a particle-dissolve button: on click, measure the button, hide it, and draw ~650 particles sampled inside its pill shape on an oversized canvas; each particle starts moving after a delay proportional to its x (sweep), accelerates right and up with jitter and fades. When all are gone, show a success pill with a bouncy spring."
+ },
+ {
+  "id": "card-lens-zoom",
+  "name": "Lens Zoom Card",
+  "category": "cards",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "Product-photo magnifier: a glass lens springs after the cursor and shows the image magnified underneath, with a refraction rim; scroll over the lens to change zoom; press-and-drag on touch.",
+  "tags": [
+   "premium",
+   "magnifier",
+   "zoom",
+   "product",
+   "ecommerce",
+   "image"
+  ],
+  "pageTypes": [
+   "ecommerce",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "The image keeps its alt; the lens is aria-hidden decoration. Reduced motion: lens follows without spring.",
+  "perf": "Background-position on one element driven by motion values (no re-render per move).",
+  "props": [
+   [
+    "image",
+    "string",
+    "",
+    "Image URL."
+   ],
+   [
+    "alt",
+    "string",
+    "",
+    "Alt text."
+   ],
+   [
+    "zoom",
+    "number",
+    "2.5",
+    "Initial magnification."
+   ],
+   [
+    "size",
+    "number",
+    "160",
+    "Lens diameter."
+   ]
+  ],
+  "prompt": "Build a lens zoom: a container with an image; a circular element following the pointer through a spring whose background is the same image at zoom\u00d7 size, positioned so the point under the cursor sits in the lens centre (bg position = \u2212(x\u00b7zoom \u2212 size/2)). Pop in/out with a spring, wheel adjusts zoom 1.5\u20135, show the zoom readout."
+ },
+ {
+  "id": "card-ticket-tear",
+  "name": "Tear-off Ticket",
+  "category": "cards",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "A boarding-pass ticket whose stub you drag down to tear along the perforation: it hinges and rotates as you pull, then drops away with gravity past the threshold.",
+  "tags": [
+   "premium",
+   "ticket",
+   "drag",
+   "boarding pass",
+   "event",
+   "playful"
+  ],
+  "pageTypes": [
+   "ecommerce",
+   "onboarding"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "A visible \u201cTear stub\u201d button provides the same action; result announced via aria-live. Reduced motion: stub disappears without the fall.",
+  "perf": "One draggable element; transforms only.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Ticket body."
+   ],
+   [
+    "stub",
+    "ReactNode",
+    "",
+    "Tear-off part."
+   ],
+   [
+    "onTear",
+    "() => void",
+    "",
+    "Callback."
+   ]
+  ],
+  "prompt": "Build a tear-off ticket: a top card with perforation notches, a dotted perforation line, and a stub that drags on y with elastic bottom; rotate the stub with y (hinged at the top-left), fade in the perforation gap, and if offset > 110 animate y far down (ease-in) as if falling. Provide a button alternative."
+ },
+ {
+  "id": "bg-caustics",
+  "name": "Water Caustics",
+  "category": "backgrounds",
+  "engine": "canvas",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "Pool-floor caustics in a ~1 KB fragment shader: iterated light focusing in two layers, a deep-to-shallow gradient and a ripple that follows the pointer.",
+  "tags": [
+   "premium",
+   "water",
+   "shader",
+   "webgl",
+   "caustics",
+   "summer"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Decorative canvas behind real content. Reduced motion: one still frame. CSS gradient fallback without WebGL.",
+  "perf": "Fullscreen triangle, DPR \u2264 1.5, paused off-screen and in background tabs.",
+  "props": [
+   [
+    "deep",
+    "string",
+    "'#04364a'",
+    "Water colour."
+   ],
+   [
+    "light",
+    "string",
+    "'#a5f3fc'",
+    "Caustic colour."
+   ],
+   [
+    "speed",
+    "number",
+    "1",
+    "Time scale."
+   ]
+  ],
+  "prompt": "Build a caustics background with raw WebGL: fullscreen triangle; fragment shader computes the classic iterated caustic (5 iterations of trig feedback) at two scales, adds a pointer ripple sin(d\u00b740 \u2212 4t)\u00b7e^(\u22126d) to the UVs, mixes a deep\u2192shallow gradient and adds the light colour. rAF only while visible."
+ },
+ {
+  "id": "bg-silk-lines",
+  "name": "Silk Lines",
+  "category": "backgrounds",
+  "engine": "canvas",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "Dozens of thin strands flowing like one ribbon of silk: each line is a sum of slow sine waves offset by its index, so the bundle twists, folds and catches light; the pointer bends the fabric.",
+  "tags": [
+   "premium",
+   "lines",
+   "silk",
+   "canvas",
+   "flow",
+   "hero"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Decorative canvas. Reduced motion: still frame.",
+  "perf": "~46 strokes per frame with additive blending; paused off-screen.",
+  "props": [
+   [
+    "lines",
+    "number",
+    "46",
+    "Strands."
+   ],
+   [
+    "colors",
+    "[string, string]",
+    "pink \u2192 blue",
+    "6-digit hex gradient."
+   ],
+   [
+    "width",
+    "number",
+    "1.1",
+    "Stroke width."
+   ]
+  ],
+  "prompt": "Build silk lines on canvas: for each strand k (0..1) draw a polyline across the width where y = centre + sin(u\u00b73.2 + t\u00b7.35 + k\u00b72.4)\u00b7(0.5 \u2212 k)\u00b7H\u00b7.38 (the twist) + small flow waves + a Gaussian bump toward the pointer; horizontal gradient stroke fading at both ends, alpha peaking in the middle strands, 'lighter' compositing."
+ },
+ {
+  "id": "cursor-smoke-trail",
+  "name": "Smoke Trail Cursor",
+  "category": "cursor",
+  "engine": "canvas",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "A soft glowing smoke trail: the pointer emits puffs that inherit its velocity, rise, swirl on a noise field, expand and fade; additive blending makes overlaps bloom.",
+  "tags": [
+   "premium",
+   "cursor",
+   "smoke",
+   "trail",
+   "canvas",
+   "glow"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Decorative and contained to its area; pointer-only. Reduced motion: no trail.",
+  "perf": "Puffs capped at 420; paused off-screen.",
+  "props": [
+   [
+    "colors",
+    "string[]",
+    "violet, cyan, pink",
+    "Puff colours (6-digit hex)."
+   ]
+  ],
+  "prompt": "Build a smoke trail on canvas: on each frame emit puffs along the segment between the last and current pointer positions (more when fast), each with velocity = pointer velocity \u00d7 .15 plus upward drift; add a swirl from sin/cos of position and time, damp, grow radius, fade life; draw radial gradients with 'lighter' compositing."
+ },
+ {
+  "id": "cursor-context-label",
+  "name": "Context Label Cursor",
+  "category": "cursor",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "A cursor that reads the room: over elements marked data-cursor=\"View\" (or Drag, Play\u2026) the dot morphs into a pill showing that label in the element's colour; elsewhere it's a small difference-blend dot.",
+  "tags": [
+   "premium",
+   "cursor",
+   "label",
+   "portfolio",
+   "hover",
+   "agency"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Native cursor is hidden only on fine pointers inside the area; every target is still a real link/button with its own name. Off on touch.",
+  "perf": "Spring motion values; label swaps only when the hovered target changes.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Area content with data-cursor targets."
+   ]
+  ],
+  "prompt": "Build a contextual cursor: inside a container hide the native cursor, track the pointer into springy motion values, find the closest [data-cursor] ancestor of the event target and morph a dot (12 px, mix-blend-difference) into a pill sized to the label with data-cursor-color as background; crossfade labels."
+ },
+ {
+  "id": "scroll-zoom-parallax",
+  "name": "Zoom Parallax",
+  "category": "scroll",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 440,
+  "description": "A collage of seven photos pinned in place; as you scroll every tile scales up around the centre at its own rate, so the outer images fly past the edges and the centre photo fills the screen.",
+  "tags": [
+   "premium",
+   "scroll",
+   "zoom",
+   "parallax",
+   "gallery",
+   "storytelling"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Images are decorative; reduced motion shows a static grid instead.",
+  "perf": "Seven transforms driven by one scroll progress.",
+  "props": [
+   [
+    "images",
+    "string[]",
+    "",
+    "Seven images; the first is the centre."
+   ],
+   [
+    "container",
+    "RefObject<HTMLElement>",
+    "",
+    "Custom scroller."
+   ]
+  ],
+  "prompt": "Build zoom parallax with Motion: a 300vh section with a sticky viewport containing 7 absolutely positioned full-size layers; each layer holds one photo at a fixed % position/size and scales from 1 to its own factor (4\u20139) with useTransform(scrollYProgress), so the centre image (scale 4) ends full-screen."
+ },
+ {
+  "id": "scroll-text-mask",
+  "name": "Scroll Text Mask",
+  "category": "scroll",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 440,
+  "description": "Giant knockout type as a window: the photo shows only through the letters, then scroll scales the type ~40\u00d7 from inside a letter until the image fills the screen and the next content fades in.",
+  "tags": [
+   "premium",
+   "scroll",
+   "mask",
+   "typography",
+   "reveal",
+   "hero"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "The word is available as sr-only text; reduced motion shows the image with the content on top.",
+  "perf": "One SVG mask scaled with a transform; sheet fades as a fallback.",
+  "props": [
+   [
+    "text",
+    "string",
+    "",
+    "Mask word."
+   ],
+   [
+    "image",
+    "string",
+    "",
+    "Photo."
+   ],
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Content after the reveal."
+   ],
+   [
+    "container",
+    "RefObject<HTMLElement>",
+    "",
+    "Custom scroller."
+   ]
+  ],
+  "prompt": "Build a scroll text mask: sticky viewport with the photo underneath and an SVG 'sheet' (background-coloured rect masked by a big text knockout) on top; scale the SVG from 1 to 42 around a point inside a letter as scroll progresses 0\u2192.75, also scale the photo 1.35\u21921, fade the sheet out late as a safety net and fade the follow-up content in."
+ },
+ {
+  "id": "image-accordion",
+  "name": "Image Accordion",
+  "category": "layout",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Tall photo panels where the active one expands (flex-grow spring) to tell its story while the others collapse to slim strips with vertical titles. Stacks vertically on phones.",
+  "tags": [
+   "premium",
+   "accordion",
+   "gallery",
+   "images",
+   "expand",
+   "travel"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio",
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "tablist/tab/tabpanel roles with roving tabindex and arrow keys; mouse hover, focus or tap selects. Reduced motion: instant.",
+  "perf": "flex-grow and image scale/saturation springs; content mounts only for the active panel.",
+  "props": [
+   [
+    "items",
+    "{ image, title, kicker?, body? }[]",
+    "",
+    "Panels."
+   ],
+   [
+    "defaultIndex",
+    "number",
+    "0",
+    "Initially open."
+   ]
+  ],
+  "prompt": "Build an image accordion with Motion: a flex row of buttons (tabs); animate flexGrow to 5 for the active one and 1 for others, scale/desaturate inactive images, show vertical titles on collapsed panels and fade/rise the active panel's kicker/title/body after a short delay. Arrow keys move selection."
+ },
+ {
+  "id": "sortable-grid",
+  "name": "Sortable Grid",
+  "category": "layout",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "iOS home-screen reordering in a 2D grid: drag a tile, it lifts and tilts, and the others slide out of the way as you pass over their slots; full keyboard pick-up/move/drop.",
+  "tags": [
+   "premium",
+   "drag",
+   "reorder",
+   "grid",
+   "icons",
+   "sortable"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "settings"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "listbox/option roles; Space picks up/drops, arrows move, Esc cancels; every move is announced. Reduced motion: no lift/tilt.",
+  "perf": "Layout springs only on moved tiles; nearest-slot search on drag.",
+  "props": [
+   [
+    "items",
+    "{ id, label, content }[]",
+    "",
+    "Tiles."
+   ],
+   [
+    "columns",
+    "number",
+    "4",
+    "Grid columns."
+   ],
+   [
+    "onReorder",
+    "(ids) => void",
+    "",
+    "After a drop."
+   ]
+  ],
+  "prompt": "Build a sortable grid with Motion: tiles are motion.div with layout and drag (dragSnapToOrigin, no momentum); on drag find the nearest tile centre to the pointer and move the dragged item to that index (layout keeps it under the pointer); whileDrag lifts (scale 1.12, rotate \u22123\u00b0, shadow). Add keyboard pick-up/move/drop with aria-live messages."
+ },
+ {
+  "id": "nav-circle-reveal",
+  "name": "Circle Reveal Menu",
+  "category": "navigation",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Full-screen menu that pours out of the menu button: a clip-path circle expands from the button's centre, huge links rise from behind a mask with stagger, and hovering a link cross-fades its preview image.",
+  "tags": [
+   "premium",
+   "menu",
+   "fullscreen",
+   "clip-path",
+   "agency",
+   "navigation"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Toggle with aria-expanded; Esc closes and returns focus; links are real anchors. Reduced motion: fade.",
+  "perf": "clip-path animation on one layer; images mount on hover only.",
+  "props": [
+   [
+    "links",
+    "{ label, href, image? }[]",
+    "",
+    "Menu links."
+   ],
+   [
+    "footer",
+    "string",
+    "",
+    "Footer text."
+   ],
+   [
+    "defaultOpen",
+    "boolean",
+    "false",
+    "Start open."
+   ]
+  ],
+  "prompt": "Build a circle-reveal menu with Motion: measure the button centre, animate a full-screen nav's clipPath from circle(0% at btn) to circle(150% at btn) with ease [.76,0,.24,1]; link text rises from y:110% inside overflow-hidden lines with stagger; hovering shows that link's image (multiply blend) crossfading; exit reverses."
+ },
+ {
+  "id": "nav-morph-tabbar",
+  "name": "Morphing Tab Bar",
+  "category": "navigation",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 300,
+  "description": "Mobile tab bar where the active tab grows into a coloured pill that reveals its label: the pill slides (shared layout) and changes colour, the label unfurls, the icon hops.",
+  "tags": [
+   "premium",
+   "tab bar",
+   "mobile",
+   "navigation",
+   "pill",
+   "bottom nav"
+  ],
+  "pageTypes": [
+   "social",
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Buttons with aria-label and aria-current. Reduced motion: instant.",
+  "perf": "layoutId pill + width animation on one label.",
+  "props": [
+   [
+    "tabs",
+    "{ label, icon, color? }[]",
+    "",
+    "Tabs."
+   ],
+   [
+    "defaultIndex",
+    "number",
+    "0",
+    "Active tab."
+   ],
+   [
+    "onChange",
+    "(i) => void",
+    "",
+    "Callback."
+   ]
+  ],
+  "prompt": "Build a morphing tab bar: dark rounded container of buttons with layout; the active button renders a layoutId pill with its own colour and an AnimatePresence label that animates width 0\u2192auto; the icon is keyed by active state so it hops (spring y \u22126\u21920) on select."
+ },
+ {
+  "id": "sheet-stack",
+  "name": "Stacked Sheets",
+  "category": "overlays",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 460,
+  "description": "iOS-style stacked sheets: each new sheet slides up while the layers beneath scale back, dim and round their corners; drag a sheet down (or Esc) to dismiss and everything springs forward.",
+  "tags": [
+   "premium",
+   "sheet",
+   "modal",
+   "ios",
+   "stack",
+   "drawer"
+  ],
+  "pageTypes": [
+   "settings",
+   "social"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Top sheet is an aria-modal dialog that receives focus; lower layers are aria-hidden; Esc and the grabber button close. Reduced motion: no drag, fades.",
+  "perf": "Transforms and a brightness filter per layer.",
+  "props": [
+   [
+    "sheets",
+    "{ id, title, content }[]",
+    "",
+    "Open sheets."
+   ],
+   [
+    "onClose",
+    "(id) => void",
+    "",
+    "Dismiss handler."
+   ],
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Page underneath."
+   ]
+  ],
+  "prompt": "Build stacked sheets with Motion: the page and each sheet animate scale (1 \u2212 .06\u00b7above), y (\u221210\u00b7above), rounded corners and brightness based on how many sheets are above them; new sheets enter from y:100%; the top sheet drags on y with elastic bottom and closes past 120 px or a fast flick."
+ },
+ {
+  "id": "spotlight-tour",
+  "name": "Spotlight Product Tour",
+  "category": "overlays",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Product tour: a dimmed overlay with a rounded cut-out that glides between targets, a pulse ring, and a tooltip card that flips above/below to stay in view.",
+  "tags": [
+   "premium",
+   "onboarding",
+   "tour",
+   "spotlight",
+   "walkthrough",
+   "coachmark"
+  ],
+  "pageTypes": [
+   "onboarding",
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Card is an aria-modal dialog that takes focus each step; arrow keys/Enter step, Esc ends. Reduced motion: no glide or pulse.",
+  "perf": "SVG mask with one animated rect; measures targets on step and resize.",
+  "props": [
+   [
+    "steps",
+    "{ target, title, body }[]",
+    "",
+    "Selectors + copy."
+   ],
+   [
+    "root",
+    "RefObject<HTMLElement>",
+    "",
+    "Tour container."
+   ],
+   [
+    "open",
+    "boolean",
+    "",
+    "Visible."
+   ],
+   [
+    "onClose",
+    "() => void",
+    "",
+    "End handler."
+   ]
+  ],
+  "prompt": "Build a spotlight tour: an SVG overlay whose mask has a white full rect and a black rounded rect animated (spring) to the current target's bounds + 8 px; a ring with a ping animation sits on top; a card positioned under or above the target (flip if no room) shows step n/total, copy, dot progress and Skip/Next."
+ },
+ {
+  "id": "loader-liquid",
+  "name": "Liquid Orb Loader",
+  "category": "loaders",
+  "engine": "svg",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "A glass orb filling with liquid: two counter-moving waves rise to the value with a soft ease, bubbles drift up, and the percentage flips contrast as the liquid passes behind it. Indeterminate mode bobs.",
+  "tags": [
+   "premium",
+   "loader",
+   "progress",
+   "liquid",
+   "orb",
+   "upload"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "onboarding"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=progressbar with valuenow (omitted when indeterminate). Reduced motion: still surface.",
+  "perf": "SVG only: SMIL loops, one CSS transform transition.",
+  "props": [
+   [
+    "value",
+    "number",
+    "",
+    "0\u2013100; omit for indeterminate."
+   ],
+   [
+    "size",
+    "number",
+    "140",
+    "Diameter."
+   ],
+   [
+    "color",
+    "string",
+    "'#8b5cf6'",
+    "Liquid colour."
+   ],
+   [
+    "label",
+    "string",
+    "'Loading'",
+    "Accessible label."
+   ]
+  ],
+  "prompt": "Build a liquid orb loader in SVG: a circle clip containing a group translated to (100 \u2212 value) with two seamless wave paths looping in opposite directions (animateTransform), rising bubbles (animate cy/opacity), a glass highlight gradient on top and a mix-blend-difference percentage in the centre."
+ },
+ {
+  "id": "loader-comet-ring",
+  "name": "Comet Ring Loader",
+  "category": "loaders",
+  "engine": "css",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 300,
+  "description": "A comet chasing its tail: a conic-gradient ring masked to a thin band whose start angle is an animatable @property, plus a blurred glow copy, gently breathing. Zero JS.",
+  "tags": [
+   "premium",
+   "loader",
+   "spinner",
+   "conic",
+   "glow",
+   "css"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "ai-app"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=status with label. Reduced motion slows to a calm 4 s turn (loaders must still show activity).",
+  "perf": "Single @property animation on two elements; no JS.",
+  "props": [
+   [
+    "size",
+    "number",
+    "64",
+    "Diameter."
+   ],
+   [
+    "thickness",
+    "number",
+    "5",
+    "Ring thickness."
+   ],
+   [
+    "colors",
+    "[string, string]",
+    "cyan \u2192 purple",
+    "Head and tail."
+   ],
+   [
+    "label",
+    "string",
+    "'Loading'",
+    "Accessible label."
+   ]
+  ],
+  "prompt": "Build a comet ring loader in CSS: register --angle with @property, animate it 0\u2192360deg; ring background = conic-gradient(from var(--angle), transparent, tail colour \u2192 head colour \u2192 white tip), masked with a radial-gradient to a band of `thickness`; add a blurred duplicate for glow and a subtle scale breathe."
+ },
+ {
+  "id": "media-slice-slider",
+  "name": "Slice Transition Slider",
+  "category": "media",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Editorial slider whose transition cuts the incoming photo into vertical slices that drop in with a staggered, alternating direction; the caption and title rise line by line.",
+  "tags": [
+   "premium",
+   "slider",
+   "carousel",
+   "slices",
+   "editorial",
+   "hero"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio",
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Carousel region with arrow keys, labelled buttons, aria-live title, autoplay paused on hover/focus and disabled under reduced motion (crossfade).",
+  "perf": "N slices each with one transform; previous image stays underneath.",
+  "props": [
+   [
+    "slides",
+    "{ image, title, caption? }[]",
+    "",
+    "Slides."
+   ],
+   [
+    "slices",
+    "number",
+    "6",
+    "Slice count."
+   ],
+   [
+    "autoplay",
+    "number",
+    "4500",
+    "ms; 0 = off."
+   ]
+  ],
+  "prompt": "Build a slice slider: render the previous image full-size, then the new image as N flex slices each showing its portion (img width N\u00d7100%, left \u2212k\u00d7100%); animate odd slices from y:\u2212100% and even from +100% with stagger (ease [.76,0,.24,1]); caption/title lines rise from y:110% after a delay."
+ },
+ {
+  "id": "chart-area-scrub",
+  "name": "Scrubbable Area Chart",
+  "category": "data",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 360,
+  "description": "Stock-app area chart: the line draws in when visible, the gradient fill fades up, and scrubbing snaps a crosshair to the nearest point while the headline value rolls and the delta updates.",
+  "tags": [
+   "premium",
+   "chart",
+   "finance",
+   "area",
+   "scrub",
+   "dashboard"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "The plot is a keyboard slider (arrow keys) with value text; values are real text. Reduced motion: no draw-in or rolling.",
+  "perf": "Precomputed smooth path; one clip rect animates on scrub.",
+  "props": [
+   [
+    "data",
+    "{ label, value }[]",
+    "",
+    "Series."
+   ],
+   [
+    "format",
+    "(v) => string",
+    "toLocaleString",
+    "Readout format."
+   ],
+   [
+    "color",
+    "string",
+    "'#22c55e'",
+    "Line colour."
+   ],
+   [
+    "title",
+    "string",
+    "'Revenue'",
+    "Label."
+   ]
+  ],
+  "prompt": "Build a scrubbable area chart in SVG + Motion: build a smooth cubic path through the points and an area path; draw the line with pathLength when in view; on pointer move pick the nearest x, clip a bright copy of the line to that x (dimming the rest), show a dashed crosshair and dot, and roll the big number via AnimatePresence."
+ },
+ {
+  "id": "chart-radial-bars",
+  "name": "Radial Bar Chart",
+  "category": "data",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 360,
+  "description": "Concentric gauge-shaped radial bars: rings sweep in one after another when visible; hovering or focusing a ring brightens it, dims the others and swaps the centre readout.",
+  "tags": [
+   "premium",
+   "chart",
+   "radial",
+   "gauge",
+   "rings",
+   "kpi"
+  ],
+  "pageTypes": [
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "A legend of buttons doubles as the accessible value list and focus target. Reduced motion: static rings.",
+  "perf": "pathLength per ring; hover only toggles opacity/stroke.",
+  "props": [
+   [
+    "data",
+    "{ label, value, color }[]",
+    "",
+    "Rings, outer first."
+   ],
+   [
+    "max",
+    "number",
+    "100",
+    "Value for a full sweep."
+   ],
+   [
+    "size",
+    "number",
+    "240",
+    "Size px."
+   ],
+   [
+    "centerLabel",
+    "string",
+    "'Total'",
+    "Centre caption."
+   ]
+  ],
+  "prompt": "Build radial bars: for each item an arc from 135\u00b0 sweeping 270\u00b0\u00b7value/max (track + value path, round caps), radius decreasing per ring; animate pathLength with a stagger when in view; hovering/focusing a ring (or its legend button) dims the others, thickens it with a glow and shows its value in the centre."
+ },
+ {
+  "id": "svg-signature",
+  "name": "Handwritten Signature",
+  "category": "svg",
+  "engine": "svg",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "A signature that writes itself: each stroke draws at a speed proportional to its length, with pen-lift pauses between strokes and a slight ink swell at the end. Starts when visible.",
+  "tags": [
+   "premium",
+   "signature",
+   "handwriting",
+   "svg",
+   "draw",
+   "contract"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=img with a descriptive label. Reduced motion: shown fully drawn.",
+  "perf": "CSS dash-offset transitions only; lengths measured once.",
+  "props": [
+   [
+    "paths",
+    "string[]",
+    "built-in signature",
+    "Pen strokes in order."
+   ],
+   [
+    "viewBox",
+    "string",
+    "'0 0 320 130'",
+    "SVG viewBox."
+   ],
+   [
+    "speed",
+    "number",
+    "420",
+    "Units per second."
+   ],
+   [
+    "strokeWidth",
+    "number",
+    "3.2",
+    "Pen width."
+   ]
+  ],
+  "prompt": "Build a self-writing signature: measure each path's getTotalLength, set strokeDasharray/offset to that length, and when in view transition dashoffset to 0 with duration = length/speed and a delay = cumulative previous durations + 0.12 s pen lift; finish with a tiny stroke-width swell."
+ },
+ {
+  "id": "svg-wave-divider",
+  "name": "Wave Divider",
+  "category": "svg",
+  "engine": "svg",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Section divider of stacked ocean waves: each layer is a seamless wave tile drifting at its own speed and direction, back layers paler and slower, giving parallax depth between sections.",
+  "tags": [
+   "premium",
+   "divider",
+   "waves",
+   "section",
+   "svg",
+   "ocean"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "aria-hidden decoration. Reduced motion: static waves.",
+  "perf": "SVG SMIL translate loops; no JS per frame.",
+  "props": [
+   [
+    "colors",
+    "string[]",
+    "violet ramp \u2192 background",
+    "Layer colours, back to front."
+   ],
+   [
+    "height",
+    "number",
+    "120",
+    "Height px."
+   ],
+   [
+    "flip",
+    "boolean",
+    "false",
+    "Flip vertically."
+   ]
+  ],
+  "prompt": "Build a wave divider: an SVG with preserveAspectRatio=none; each layer is a path made of smooth S-curves with period 1200 spanning 2400 units, filled with its colour, and translated -1200\u21920 (alternating direction) with animateTransform at a layer-specific duration; last layer matches the next section's background."
+ },
+ {
+  "id": "transition-shutter",
+  "name": "Shutter Transition",
+  "category": "transitions",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Page transition with venetian shutters: blades close top-to-bottom, the page swaps while covered (its name flashes), then blades open bottom-to-top with a stagger.",
+  "tags": [
+   "premium",
+   "page transition",
+   "shutter",
+   "blinds",
+   "route",
+   "agency"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Nav buttons have aria-current; content swap is instant for AT. Reduced motion: quick crossfade.",
+  "perf": "N blades \u00d7 scaleY; page swapped once under cover.",
+  "props": [
+   [
+    "pages",
+    "{ key, label, content }[]",
+    "",
+    "Pages."
+   ],
+   [
+    "blades",
+    "number",
+    "7",
+    "Blade count."
+   ],
+   [
+    "color",
+    "string",
+    "'#0a0a0a'",
+    "Blade colour."
+   ]
+  ],
+  "prompt": "Build a shutter transition: on navigate, render N full-width blades that scaleY 0\u21921 from the top with stagger; when the last closes, swap the page and animate the blades scaleY 1\u21920 toward the bottom in reverse order; flash the target label on the closed shutter."
+ },
+ {
+  "id": "transition-zoom-portal",
+  "name": "Zoom Portal Transition",
+  "category": "transitions",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Cards that become pages: clicking a card zooms its image (shared layout) to fill the view while the other cards fall back and blur, then the article rises in. Back reverses into the card.",
+  "tags": [
+   "premium",
+   "shared element",
+   "zoom",
+   "page transition",
+   "article",
+   "cards"
+  ],
+  "pageTypes": [
+   "blog",
+   "portfolio",
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "The page is a focusable article; Esc/Back return focus to the originating card; background cards aria-hidden while open. Reduced motion: instant swap.",
+  "perf": "layoutId on image and title only.",
+  "props": [
+   [
+    "items",
+    "{ id, title, kicker?, image, page }[]",
+    "",
+    "Cards and their pages."
+   ]
+  ],
+  "prompt": "Build a zoom portal with Motion: cards with motion.img and title sharing layoutIds with a full-screen article's hero image and heading; open = render the article (AnimatePresence) so the image flies to the hero; the grid behind scales to .92, blurs and dims; content rises after .35 s; Back/Esc reverse."
+ },
+ {
+  "id": "three-metaballs",
+  "name": "Liquid Metaballs",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Glossy liquid metaballs (marching cubes) drift on looping paths and merge like lava-lamp wax; an extra blob follows the pointer so you can pull the liquid around. Colours blend where blobs meet.",
+  "tags": [
+   "premium",
+   "three.js",
+   "metaballs",
+   "liquid",
+   "blob",
+   "hero"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Canvas is decorative. Reduced motion: frozen blobs, no pointer blob, still frame.",
+  "perf": "drei MarchingCubes at resolution 56 (lower on mobile); paused off-screen.",
+  "props": [
+   [
+    "colors",
+    "string[]",
+    "5 candy colours",
+    "One blob per colour."
+   ],
+   [
+    "resolution",
+    "number",
+    "56",
+    "Grid resolution."
+   ]
+  ],
+  "prompt": "Build liquid metaballs with React Three Fiber + drei MarchingCubes (enableColors, physical clearcoat material with vertexColors); each MarchingCube moves on a Lissajous path in useFrame; add one more that lerps toward the pointer; light with Environment Lightformers.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "three-hologram",
+  "name": "Hologram",
+  "category": "3d",
+  "engine": "r3f",
+  "deps": [
+   "three",
+   "@react-three/fiber",
+   "@react-three/drei"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Sci-fi hologram: a fresnel-rim shader with scrolling scanlines, flicker and occasional horizontal glitch slices, additive-blended over a projector cone. Knot, head, ring or crystal.",
+  "tags": [
+   "premium",
+   "three.js",
+   "hologram",
+   "shader",
+   "sci-fi",
+   "glitch"
+  ],
+  "pageTypes": [
+   "landing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Canvas is decorative. Reduced motion: no glitch, still frame.",
+  "perf": "One ShaderMaterial; additive, no depth write.",
+  "props": [
+   [
+    "shape",
+    "'knot' | 'head' | 'ring' | 'crystal'",
+    "'knot'",
+    "Geometry."
+   ],
+   [
+    "color",
+    "string",
+    "'#22d3ee'",
+    "Hologram colour."
+   ]
+  ],
+  "prompt": "Build a hologram in R3F: ShaderMaterial with vertex glitch (random horizontal offset for thin y-bands in brief bursts) and a fragment of fresnel \u00d7 scanlines (fract(y\u00b722 \u2212 t\u00b71.6)) \u00d7 flicker, additive blending, double-sided; add a ring and an open cone for the projector; slow spin with pointer tilt.",
+  "registryDeps": [
+   "canvas-3d-shell"
+  ]
+ },
+ {
+  "id": "ai-image-generate",
+  "name": "AI Image Generation",
+  "category": "ai",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 440,
+  "description": "Diffusion-style generation preview: coloured noise resolves to the final image through decaying blur and noise while a scan light sweeps, a step counter and progress ring tick up, and the prompt types out.",
+  "tags": [
+   "premium",
+   "ai",
+   "image generation",
+   "diffusion",
+   "progress",
+   "creative"
+  ],
+  "pageTypes": [
+   "ai-app"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Progress announced via aria-live; final image gets the prompt as alt text. Reduced motion: shows the result immediately.",
+  "perf": "64\u00d764 noise canvas scaled up; CSS filters on one image.",
+  "props": [
+   [
+    "image",
+    "string",
+    "",
+    "Final image."
+   ],
+   [
+    "prompt",
+    "string",
+    "",
+    "Prompt text."
+   ],
+   [
+    "duration",
+    "number",
+    "4.5",
+    "Seconds."
+   ],
+   [
+    "runKey",
+    "number",
+    "0",
+    "Increment to rerun."
+   ]
+  ],
+  "prompt": "Build an image-generation preview: a square frame with the final image under CSS blur (28 \u2192 0 px), saturation and scale easing with progress; a tiny canvas of random coloured noise (pixelated, overlay blend) fading out; a moving light band; a step counter with a progress ring; typewriter prompt. Drive it with rAF or real progress events."
+ },
+ {
+  "id": "ai-diff-review",
+  "name": "AI Diff Review",
+  "category": "ai",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "An agent's proposed edit streaming in: diff lines appear one by one with a cursor, additions flash green and deletions strike through, then each hunk gets Accept / Reject and collapses into a verdict chip.",
+  "tags": [
+   "premium",
+   "ai",
+   "code",
+   "diff",
+   "review",
+   "agent"
+  ],
+  "pageTypes": [
+   "ai-app",
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Each hunk is a labelled section; status announced via aria-live; real buttons. Reduced motion: all lines shown at once.",
+  "perf": "One timeout per line while streaming; height collapse on decision.",
+  "props": [
+   [
+    "hunks",
+    "{ id, file, summary, lines }[]",
+    "",
+    "Proposed changes."
+   ],
+   [
+    "speed",
+    "number",
+    "70",
+    "ms per line."
+   ],
+   [
+    "onDecision",
+    "(id, accepted) => void",
+    "",
+    "Callback."
+   ]
+  ],
+  "prompt": "Build an AI diff review: stream lines across hunks with a timer; each line enters with a green flash (add) or fade (del with line-through), a block cursor sits on the last line; when a hunk completes show Accept/Reject; on decision collapse the body (height \u2192 0) and show an Accepted/Rejected chip in the header."
+ }
+]

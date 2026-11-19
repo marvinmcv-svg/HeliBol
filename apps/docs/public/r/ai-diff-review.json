@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-diff-review",
+  "type": "registry:component",
+  "title": "AI Diff Review",
+  "description": "An agent's proposed edit streaming in: diff lines appear one by one with a cursor, additions flash green and deletions strike through, then each hunk gets Accept / Reject and collapses into a verdict chip.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/ai-diff-review.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/ai-diff-review.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check, FileCode2, X } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface DiffLine {\n  type: \"ctx\" | \"add\" | \"del\";\n  text: string;\n}\n\nexport interface DiffHunk {\n  id: string;\n  file: string;\n  summary: string;\n  lines: DiffLine[];\n}\n\nexport interface AiDiffReviewProps {\n  hunks: DiffHunk[];\n  /** ms between streamed lines. */\n  speed?: number;\n  onDecision?: (id: string, accepted: boolean) => void;\n  className?: string;\n}\n\n/**\n * An AI agent's proposed edit, streaming in: diff lines appear one by one with a cursor, additions\n * flash green and deletions strike through, then each hunk gets Accept / Reject — accepted hunks\n * collapse into a green chip, rejected ones fold away. Live region announces progress.\n */\nexport function AiDiffReview({ hunks, speed = 70, onDecision, className }: AiDiffReviewProps) {\n  const reduced = useReducedMotion();\n  const total = hunks.reduce((s, h) => s + h.lines.length, 0);\n  const [shown, setShown] = useState(reduced ? total : 0);\n  const [decided, setDecided] = useState<Record<string, boolean>>({});\n\n  useEffect(() => {\n    if (reduced) return setShown(total);\n    if (shown >= total) return;\n    const id = setTimeout(() => setShown((n) => n + 1), speed);\n    return () => clearTimeout(id);\n  }, [shown, total, speed, reduced]);\n\n  let offset = 0;\n  const decide = (id: string, ok: boolean) => (setDecided((d) => ({ ...d, [id]: ok })), onDecision?.(id, ok));\n\n  return (\n    <div className={cn(\"w-full space-y-3 font-mono text-[12.5px]\", className)}>\n      <p className=\"sr-only\" aria-live=\"polite\">{shown < total ? \"Agent is writing changes\" : \"Changes ready for review\"}</p>\n      {hunks.map((h) => {\n        const start = offset;\n        offset += h.lines.length;\n        const visible = Math.max(0, Math.min(h.lines.length, shown - start));\n        const complete = visible === h.lines.length;\n        const verdict = decided[h.id];\n        if (visible === 0) return null;\n        return (\n          <motion.section key={h.id} layout={!reduced} initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className=\"overflow-hidden rounded-2xl border border-border bg-card\" aria-label={`${h.file}: ${h.summary}`}>\n            <header className=\"flex items-center gap-2 border-b border-border bg-muted/40 px-3 py-2 font-sans text-xs\">\n              <FileCode2 className=\"size-3.5 text-muted-foreground\" />\n              <span className=\"font-medium\">{h.file}</span>\n              <span className=\"truncate text-muted-foreground\">— {h.summary}</span>\n              {verdict !== undefined && (\n                <motion.span initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className={cn(\"ml-auto rounded-full px-2 py-0.5 text-[11px] font-semibold\", verdict ? \"bg-emerald-500/15 text-emerald-600 dark:text-emerald-400\" : \"bg-muted text-muted-foreground\")}>\n                  {verdict ? \"Accepted\" : \"Rejected\"}\n                </motion.span>\n              )}\n            </header>\n            <AnimatePresence initial={false}>\n              {verdict === undefined && (\n                <motion.div exit={reduced ? { opacity: 0 } : { height: 0, opacity: 0 }} transition={{ duration: 0.3 }}>\n                  <pre className=\"overflow-x-auto py-2\">\n                    {h.lines.slice(0, visible).map((l, i) => (\n                      <motion.div\n                        key={i}\n                        initial={reduced ? false : l.type === \"add\" ? { backgroundColor: \"rgb(34 197 94 / .45)\" } : { opacity: 0 }}\n                        animate={{ opacity: 1, backgroundColor: l.type === \"add\" ? \"rgb(34 197 94 / .12)\" : l.type === \"del\" ? \"rgb(244 63 94 / .1)\" : \"rgb(0 0 0 / 0)\" }}\n                        transition={{ duration: 0.5 }}\n                        className={cn(\"flex px-3\", l.type === \"del\" && \"text-rose-500 line-through decoration-rose-500/50\", l.type === \"add\" && \"text-emerald-600 dark:text-emerald-400\")}\n                      >\n                        <span className=\"w-5 shrink-0 select-none text-muted-foreground\">{l.type === \"add\" ? \"+\" : l.type === \"del\" ? \"−\" : \" \"}</span>\n                        <span className=\"whitespace-pre\">{l.text}</span>\n                        {i === visible - 1 && !complete && <span className=\"ml-0.5 inline-block w-2 animate-pulse bg-foreground/70 motion-reduce:animate-none\" />}\n                      </motion.div>\n                    ))}\n                  </pre>\n                  {complete && (\n                    <motion.div initial={reduced ? false : { opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} className=\"flex justify-end gap-2 border-t border-border px-3 py-2 font-sans\">\n                      <button type=\"button\" onClick={() => decide(h.id, false)} className=\"inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs text-muted-foreground hover:bg-muted hover:text-foreground\"><X className=\"size-3.5\" /> Reject</button>\n                      <button type=\"button\" onClick={() => decide(h.id, true)} className=\"inline-flex items-center gap-1 rounded-lg bg-foreground px-2.5 py-1 text-xs font-medium text-background\"><Check className=\"size-3.5\" /> Accept</button>\n                    </motion.div>\n                  )}\n                </motion.div>\n              )}\n            </AnimatePresence>\n          </motion.section>\n        );\n      })}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "ai",
+      "code",
+      "diff",
+      "review",
+      "agent"
+    ],
+    "pageTypes": [
+      "ai-app",
+      "dashboard"
+    ]
+  }
+}

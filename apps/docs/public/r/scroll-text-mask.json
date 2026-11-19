@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-text-mask",
+  "type": "registry:component",
+  "title": "Scroll Text Mask",
+  "description": "Giant knockout type as a window: the photo shows only through the letters, then scroll scales the type ~40× from inside a letter until the image fills the screen and the next content fades in.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/scroll-text-mask.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/scroll-text-mask.tsx",
+      "content": "\"use client\";\nimport { useId, useRef, type ReactNode, type RefObject } from \"react\";\nimport { motion, useScroll, useTransform } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ScrollTextMaskProps {\n  /** Word(s) the image shows through. Short and heavy works best. */\n  text: string;\n  image: string;\n  /** Content revealed after the mask opens. */\n  children?: ReactNode;\n  container?: RefObject<HTMLElement | null>;\n  className?: string;\n}\n\n/**\n * Giant knockout type as a window: the photo shows only through the letters, then as you scroll the\n * type scales up ~40× from a point inside a letter until the image fills the screen and the\n * follow-up content fades in. The mask is real SVG text, so it stays crisp at any scale.\n */\nexport function ScrollTextMask({ text, image, children, container, className }: ScrollTextMaskProps) {\n  const reduced = useReducedMotion();\n  const ref = useRef<HTMLDivElement>(null);\n  const maskId = `kn-tm-${useId().replace(/:/g, \"\")}`;\n  const { scrollYProgress: p } = useScroll({ target: ref, container, offset: [\"start start\", \"end end\"] });\n  const scale = useTransform(p, [0, 0.75], [1, 42], { clamp: true });\n  const imgScale = useTransform(p, [0, 0.75], [1.35, 1]);\n  const after = useTransform(p, [0.7, 0.9], [0, 1]);\n  const veil = useTransform(p, [0, 0.6], [1, 0]);\n  // safety net: if the zoom origin lands between letters, the sheet still fades away\n  const sheet = useTransform(p, [0.55, 0.78], [1, 0]);\n\n  if (reduced)\n    return (\n      <div className={cn(\"relative h-[100cqh] overflow-hidden\", className)}>\n        <img src={image} alt=\"\" className=\"size-full object-cover\" />\n        <div className=\"absolute inset-0 grid place-items-center bg-black/40 p-6 text-white\">{children ?? <h3 className=\"text-5xl font-black\">{text}</h3>}</div>\n      </div>\n    );\n\n  return (\n    <div ref={ref} className={cn(\"relative h-[280cqh]\", className)}>\n      <div className=\"sticky top-0 h-[100cqh] overflow-hidden bg-background\">\n        <div className=\"absolute inset-0\">\n          <motion.img src={image} alt=\"\" className=\"absolute inset-0 size-full object-cover\" style={{ scale: imgScale }} />\n        </div>\n        {/* mask: background-coloured sheet with the word cut out, scaled from a point inside the first letter */}\n        <motion.svg aria-hidden viewBox=\"0 0 1000 600\" preserveAspectRatio=\"xMidYMid slice\" className=\"absolute inset-0 size-full\" style={{ scale, opacity: sheet, transformOrigin: \"47% 52%\" }}>\n          <defs>\n            <mask id={maskId}>\n              <rect width=\"1000\" height=\"600\" fill=\"white\" />\n              <text x=\"500\" y=\"375\" textAnchor=\"middle\" fontSize=\"300\" fontWeight=\"900\" letterSpacing=\"-14\" fill=\"black\" fontFamily=\"inherit\">{text}</text>\n            </mask>\n          </defs>\n          <rect width=\"1000\" height=\"600\" mask={`url(#${maskId})`} className=\"fill-background\" />\n        </motion.svg>\n        <motion.p style={{ opacity: veil }} className=\"absolute inset-x-0 bottom-8 text-center text-xs uppercase tracking-[0.3em] text-muted-foreground\">Scroll to step inside</motion.p>\n        <motion.div style={{ opacity: after }} className=\"absolute inset-0 grid place-items-center bg-black/35 p-6 text-center text-white\">\n          {children}\n        </motion.div>\n      </div>\n      <span className=\"sr-only\">{text}</span>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "scroll",
+      "mask",
+      "typography",
+      "reveal",
+      "hero"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

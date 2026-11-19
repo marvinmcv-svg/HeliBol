@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const page = (path: string, lastModified?: string, priority = 0.6) => ({ url: `${SITE_URL}${path}`, lastModified: lastModified ? new Date(lastModified) : undefined, priority });
   return [
     page("/", undefined, 1),
-    ...["/components", "/blocks", "/templates", "/flows", "/playground", "/docs", "/changelog"].map((p) => page(p, undefined, 0.9)),
+    ...["/components", "/premium", "/blocks", "/templates", "/flows", "/playground", "/docs", "/changelog"].map((p) => page(p, undefined, 0.9)),
     ...categories.filter((c) => components.some((m) => m.category === c.id)).map((c) => page(`/components/${c.id}`, undefined, 0.8)),
     ...components.map((m) => page(`/components/${m.category}/${m.id}`, added[m.id])),
     ...blocks.map((m) => page(`/blocks/${m.id}`, added[m.id])),

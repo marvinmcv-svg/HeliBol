@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loader-liquid",
+  "type": "registry:component",
+  "title": "Liquid Orb Loader",
+  "description": "A glass orb filling with liquid: two counter-moving waves rise to the value with a soft ease, bubbles drift up, and the percentage flips contrast as the liquid passes behind it. Indeterminate mode bobs.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/loader-liquid.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/loader-liquid.tsx",
+      "content": "\"use client\";\nimport { useId } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface LoaderLiquidProps {\n  /** 0–100. Omit for an indeterminate slosh. */\n  value?: number;\n  size?: number;\n  color?: string;\n  label?: string;\n  className?: string;\n}\n\n/**\n * A glass orb filling with liquid: two counter-moving waves (SVG paths with SMIL loops) rise to the\n * value with a soft ease, bubbles drift up, and the number sits on top with a contrast flip where the\n * liquid passes behind it. Indeterminate mode bobs half full.\n */\nexport function LoaderLiquid({ value, size = 140, color = \"#8b5cf6\", label = \"Loading\", className }: LoaderLiquidProps) {\n  const reduced = useReducedMotion();\n  const id = `ll-${useId().replace(/:/g, \"\")}`;\n  const v = value === undefined ? 50 : Math.max(0, Math.min(100, value));\n  const level = 100 - v; // y of the surface in a 0–100 viewBox\n  const wave = \"M0 4 Q 12.5 0 25 4 T 50 4 T 75 4 T 100 4 T 125 4 T 150 4 T 175 4 T 200 4 V 120 H 0 Z\";\n  return (\n    <div\n      role=\"progressbar\"\n      aria-label={label}\n      aria-valuemin={0}\n      aria-valuemax={100}\n      aria-valuenow={value === undefined ? undefined : Math.round(v)}\n      className={cn(\"relative inline-grid place-items-center\", className)}\n      style={{ width: size, height: size }}\n    >\n      <svg viewBox=\"0 0 100 100\" className=\"absolute inset-0 size-full\" aria-hidden>\n        <defs>\n          <clipPath id={id}><circle cx=\"50\" cy=\"50\" r=\"46\" /></clipPath>\n          <radialGradient id={`${id}-g`} cx=\"35%\" cy=\"30%\" r=\"70%\"><stop offset=\"0\" stopColor=\"#fff\" stopOpacity=\".35\" /><stop offset=\"1\" stopColor=\"#fff\" stopOpacity=\"0\" /></radialGradient>\n        </defs>\n        <circle cx=\"50\" cy=\"50\" r=\"48\" fill=\"none\" stroke={color} strokeOpacity=\".35\" strokeWidth=\"2\" />\n        <g clipPath={`url(#${id})`}>\n          <g style={{ transform: `translateY(${level}px)`, transition: reduced ? undefined : \"transform 1s cubic-bezier(.22,1,.36,1)\" }}>\n            <g>\n            <g opacity=\".5\">\n              <path d={wave} fill={color} />\n              {!reduced && <animateTransform attributeName=\"transform\" type=\"translate\" from=\"-100 0\" to=\"0 0\" dur=\"3.2s\" repeatCount=\"indefinite\" />}\n            </g>\n            <g>\n              <path d={wave} fill={color} transform=\"translate(0 3)\" />\n              {!reduced && <animateTransform attributeName=\"transform\" type=\"translate\" from=\"0 0\" to=\"-100 0\" dur=\"2s\" repeatCount=\"indefinite\" />}\n            </g>\n              {value === undefined && !reduced && <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0 -4;0 4;0 -4\" dur=\"2.4s\" repeatCount=\"indefinite\" />}\n            </g>\n          </g>\n          {!reduced &&\n            [18, 42, 64, 80].map((x, i) => (\n              <circle key={x} cx={x} cy=\"100\" r={1 + (i % 2)} fill=\"#fff\" opacity=\".55\">\n                <animate attributeName=\"cy\" from=\"100\" to={String(Math.max(level, 20))} dur={`${2 + i * 0.6}s`} begin={`${i * 0.5}s`} repeatCount=\"indefinite\" />\n                <animate attributeName=\"opacity\" values=\".6;0\" dur={`${2 + i * 0.6}s`} begin={`${i * 0.5}s`} repeatCount=\"indefinite\" />\n              </circle>\n            ))}\n        </g>\n        <circle cx=\"50\" cy=\"50\" r=\"46\" fill={`url(#${id}-g)`} />\n      </svg>\n      {value !== undefined && (\n        <span className=\"relative text-2xl font-semibold tabular-nums mix-blend-difference text-white\">{Math.round(v)}%</span>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "loaders"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "premium",
+      "loader",
+      "progress",
+      "liquid",
+      "orb",
+      "upload"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "onboarding"
+    ]
+  }
+}

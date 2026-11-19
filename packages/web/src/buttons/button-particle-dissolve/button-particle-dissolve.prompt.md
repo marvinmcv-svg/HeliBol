@@ -1,0 +1,1 @@
+Build a particle-dissolve button: on click, measure the button, hide it, and draw ~650 particles sampled inside its pill shape on an oversized canvas; each particle starts moving after a delay proportional to its x (sweep), accelerates right and up with jitter and fades. When all are gone, show a success pill with a bouncy spring.

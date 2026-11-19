@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "three-metaballs",
+  "type": "registry:component",
+  "title": "Liquid Metaballs",
+  "description": "Glossy liquid metaballs (marching cubes) drift on looping paths and merge like lava-lamp wax; an extra blob follows the pointer so you can pull the liquid around. Colours blend where blobs meet.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/canvas-3d-shell.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/three-metaballs.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/three-metaballs.tsx",
+      "content": "\"use client\";\nimport { useMemo, useRef } from \"react\";\nimport { useFrame } from \"@react-three/fiber\";\nimport { Environment, Lightformer, MarchingCube, MarchingCubes } from \"@react-three/drei\";\nimport * as THREE from \"three\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\nimport { Canvas3DShell } from \"@/components/kinetik/canvas-3d-shell\";\n\nexport interface ThreeMetaballsProps {\n  /** Colours of the blobs; one blob per colour (plus the pointer blob). */\n  colors?: string[];\n  /** Marching-cubes grid resolution (quality vs. cost). */\n  resolution?: number;\n  className?: string;\n}\n\nconst DEFAULT_COLORS = [\"#a78bfa\", \"#f472b6\", \"#22d3ee\", \"#facc15\", \"#34d399\"];\n\nfunction Blob({ color, i, n, reduced }: { color: string; i: number; n: number; reduced: boolean }) {\n  const ref = useRef<THREE.Group>(null);\n  const c = useMemo(() => new THREE.Color(color), [color]);\n  useFrame(({ clock }) => {\n    if (!ref.current) return;\n    const t = reduced ? i : clock.elapsedTime * 0.45 + (i / n) * Math.PI * 2;\n    ref.current.position.set(Math.sin(t * 1.1 + i) * 0.42, Math.cos(t * 0.9 + i * 2) * 0.32, Math.sin(t * 0.7 + i * 3) * 0.25);\n  });\n  return <MarchingCube ref={ref} strength={0.5} subtract={12} color={c} />;\n}\n\nfunction PointerBlob() {\n  const ref = useRef<THREE.Group>(null);\n  const v = useRef(new THREE.Vector3());\n  const white = useMemo(() => new THREE.Color(\"#ffffff\"), []);\n  useFrame(({ pointer }) => {\n    if (!ref.current) return;\n    v.current.set(pointer.x * 0.55, pointer.y * 0.4, 0.15);\n    ref.current.position.lerp(v.current, 0.12);\n  });\n  return <MarchingCube ref={ref} strength={0.45} subtract={12} color={white} />;\n}\n\n/**\n * Liquid metaballs (marching cubes via drei): glossy blobs drift on looping paths and merge into one\n * another like lava-lamp wax; an extra blob follows the pointer so you can pull the liquid around.\n * Vertex colours blend where blobs meet. Lazy-load; pauses off-screen.\n */\nexport function ThreeMetaballs({ colors = DEFAULT_COLORS, resolution = 56, className }: ThreeMetaballsProps) {\n  const reduced = useReducedMotion();\n  return (\n    <Canvas3DShell className={className} maxDpr={1.75} camera={{ position: [0, 0, 3.2], fov: 45 }}>\n      <ambientLight intensity={0.6} />\n      <directionalLight position={[2, 3, 4]} intensity={2} />\n      <MarchingCubes resolution={resolution} maxPolyCount={22000} enableUvs={false} enableColors scale={2.2}>\n        <meshPhysicalMaterial vertexColors roughness={0.12} clearcoat={1} clearcoatRoughness={0.05} metalness={0.1} />\n        {colors.map((c, i) => <Blob key={i} color={c} i={i} n={colors.length} reduced={reduced} />)}\n        {!reduced && <PointerBlob />}\n      </MarchingCubes>\n      <Environment resolution={256}>\n        <Lightformer intensity={4} position={[0, 4, 3]} scale={[8, 3, 1]} />\n        <Lightformer intensity={2} color=\"#c4b5fd\" position={[-4, 0, 2]} rotation-y={Math.PI / 2} scale={[6, 4, 1]} />\n        <Lightformer intensity={2} color=\"#67e8f9\" position={[4, -1, 2]} rotation-y={-Math.PI / 2} scale={[6, 4, 1]} />\n      </Environment>\n    </Canvas3DShell>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "premium",
+      "three.js",
+      "metaballs",
+      "liquid",
+      "blob",
+      "hero"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

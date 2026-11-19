@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 import { cn } from "@kinetik/core";
 import type { ComponentMeta } from "@web/types";
 import { blocks, components, flows, newIds } from "@/lib/registry.generated";
-import { categories } from "@/lib/taxonomy";
+import { categories, isPremium } from "@/lib/taxonomy";
 import { useSaved } from "@/lib/saved";
 
 const newSet = new Set(newIds);
@@ -56,6 +56,7 @@ export function Sidebar() {
       <nav aria-label="Library" className="space-y-0.5">
         {link("/components", "All components", count(components.length))}
         {link("/components?sort=newest", "What's new", count(newIds.length, "text-brand"))}
+        {link("/premium", "✦ Premium", count([...components, ...blocks].filter(isPremium).length, "text-amber-500"))}
         {link("/blocks", "Blocks", count(blocks.length))}
         {link("/templates", "Templates")}
         {link("/flows", "Mobile flows", count(flows.length))}

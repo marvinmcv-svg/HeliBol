@@ -1,0 +1,1 @@
+Build stacked sheets with Motion: the page and each sheet animate scale (1 − .06·above), y (−10·above), rounded corners and brightness based on how many sheets are above them; new sheets enter from y:100%; the top sheet drags on y with elastic bottom and closes past 120 px or a fast flick.

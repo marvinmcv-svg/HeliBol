@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "transition-shutter",
+  "type": "registry:component",
+  "title": "Shutter Transition",
+  "description": "Page transition with venetian shutters: blades close top-to-bottom, the page swaps while covered (its name flashes), then blades open bottom-to-top with a stagger.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/transition-shutter.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/transition-shutter.tsx",
+      "content": "\"use client\";\nimport { useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TransitionShutterProps {\n  /** Pages to switch between; the key decides which is shown. */\n  pages: { key: string; label: string; content: ReactNode }[];\n  /** Number of shutter blades. */\n  blades?: number;\n  color?: string;\n  className?: string;\n}\n\n/**\n * Page transition with venetian shutters: blades close top-to-bottom (scaleY from the top), the page\n * swaps while covered, then blades open bottom-to-top with a stagger, revealing the new page. The\n * route name flashes on the closed shutter. Reduced motion: a quick crossfade.\n */\nexport function TransitionShutter({ pages, blades = 7, color = \"#0a0a0a\", className }: TransitionShutterProps) {\n  const reduced = useReducedMotion();\n  const [current, setCurrent] = useState(pages[0].key);\n  const [shown, setShown] = useState(pages[0].key);\n  const [phase, setPhase] = useState<\"idle\" | \"closing\" | \"opening\">(\"idle\");\n  const busy = phase !== \"idle\";\n  const ease = [0.76, 0, 0.24, 1] as const;\n\n  const go = (key: string) => {\n    if (busy || key === current) return;\n    setCurrent(key);\n    if (reduced) return setShown(key);\n    setPhase(\"closing\");\n  };\n  const page = pages.find((p) => p.key === shown)!;\n\n  return (\n    <div className={cn(\"relative flex h-full flex-col overflow-hidden\", className)}>\n      <nav aria-label=\"Pages\" className=\"relative z-30 flex gap-1 border-b border-border bg-background/80 p-2 backdrop-blur\">\n        {pages.map((p) => (\n          <button key={p.key} type=\"button\" aria-current={p.key === current ? \"page\" : undefined} onClick={() => go(p.key)} className={cn(\"rounded-lg px-3 py-1.5 text-sm transition-colors\", p.key === current ? \"bg-foreground text-background\" : \"text-muted-foreground hover:text-foreground\")}>\n            {p.label}\n          </button>\n        ))}\n      </nav>\n      <div className=\"relative flex-1\">\n        <AnimatePresence mode=\"wait\" initial={false}>\n          <motion.div key={shown} className=\"absolute inset-0 overflow-auto\" initial={reduced ? { opacity: 0 } : false} animate={{ opacity: 1 }} exit={reduced ? { opacity: 0 } : undefined} transition={{ duration: 0.2 }}>\n            {page.content}\n          </motion.div>\n        </AnimatePresence>\n        {busy && (\n          <div aria-hidden className=\"pointer-events-none absolute inset-0 z-20 flex flex-col\">\n            {Array.from({ length: blades }, (_, i) => (\n              <motion.div\n                key={i}\n                className=\"flex-1\"\n                style={{ background: color, transformOrigin: phase === \"closing\" ? \"top\" : \"bottom\" }}\n                initial={{ scaleY: phase === \"closing\" ? 0 : 1.02 }}\n                animate={{ scaleY: phase === \"closing\" ? 1.02 : 0 }}\n                transition={{ duration: 0.45, ease, delay: (phase === \"closing\" ? i : blades - 1 - i) * 0.045 }}\n                onAnimationComplete={() => {\n                  if (i !== (phase === \"closing\" ? blades - 1 : 0)) return;\n                  if (phase === \"closing\") (setShown(current), setPhase(\"opening\"));\n                  else setPhase(\"idle\");\n                }}\n              />\n            ))}\n            <motion.p\n              className=\"absolute inset-0 grid place-items-center text-4xl font-semibold tracking-tight text-white\"\n              initial={{ opacity: 0 }}\n              animate={{ opacity: phase === \"closing\" ? [0, 0, 1] : 0 }}\n              transition={{ duration: phase === \"closing\" ? 0.7 : 0.15 }}\n            >\n              {pages.find((p) => p.key === current)?.label}\n            </motion.p>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "transitions"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "page transition",
+      "shutter",
+      "blinds",
+      "route",
+      "agency"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "nav-morph-tabbar",
+  "type": "registry:component",
+  "title": "Morphing Tab Bar",
+  "description": "Mobile tab bar where the active tab grows into a coloured pill that reveals its label: the pill slides (shared layout) and changes colour, the label unfurls, the icon hops.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/nav-morph-tabbar.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/nav-morph-tabbar.tsx",
+      "content": "\"use client\";\nimport { useId, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface NavMorphTab {\n  label: string;\n  icon: ReactNode;\n  /** Accent for the active pill. */\n  color?: string;\n}\n\nexport interface NavMorphTabbarProps {\n  tabs: NavMorphTab[];\n  defaultIndex?: number;\n  onChange?: (i: number) => void;\n  className?: string;\n}\n\n/**\n * Mobile tab bar where the active tab grows into a coloured pill that reveals its label: the pill\n * slides (shared layout) and changes colour, the label unfurls letter-width by width, inactive icons\n * stay compact, and the icon does a little hop on select.\n */\nexport function NavMorphTabbar({ tabs, defaultIndex = 0, onChange, className }: NavMorphTabbarProps) {\n  const reduced = useReducedMotion();\n  const group = useId();\n  const [active, setActive] = useState(defaultIndex);\n  const t = reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 480, damping: 34 };\n  return (\n    <nav aria-label=\"Tabs\" className={cn(\"inline-flex items-center gap-1 rounded-full bg-zinc-900 p-1.5 shadow-2xl\", className)}>\n      {tabs.map((tab, i) => {\n        const on = i === active;\n        return (\n          <motion.button\n            key={tab.label}\n            layout\n            transition={t}\n            type=\"button\"\n            aria-current={on ? \"page\" : undefined}\n            aria-label={tab.label}\n            onClick={() => (setActive(i), onChange?.(i))}\n            className={cn(\"relative flex h-11 items-center gap-2 rounded-full px-3.5 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-white/60\", on ? \"text-zinc-950\" : \"text-zinc-400 hover:text-zinc-100\")}\n          >\n            {on && <motion.span layoutId={`${group}-pill`} transition={t} className=\"absolute inset-0 rounded-full\" style={{ background: tab.color ?? \"#fff\" }} />}\n            <motion.span key={on ? \"on\" : \"off\"} layout=\"position\" className=\"relative grid size-5 place-items-center\" initial={on && !reduced ? { y: -6 } : false} animate={{ y: 0 }} transition={{ type: \"spring\", stiffness: 600, damping: 12 }}>\n              {tab.icon}\n            </motion.span>\n            <AnimatePresence initial={false}>\n              {on && (\n                <motion.span\n                  key=\"label\"\n                  className=\"relative overflow-hidden whitespace-nowrap\"\n                  initial={reduced ? { opacity: 0 } : { width: 0, opacity: 0 }}\n                  animate={{ width: \"auto\", opacity: 1 }}\n                  exit={reduced ? { opacity: 0 } : { width: 0, opacity: 0 }}\n                  transition={t}\n                >\n                  {tab.label}\n                </motion.span>\n              )}\n            </AnimatePresence>\n          </motion.button>\n        );\n      })}\n    </nav>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "tab bar",
+      "mobile",
+      "navigation",
+      "pill",
+      "bottom nav"
+    ],
+    "pageTypes": [
+      "social",
+      "dashboard"
+    ]
+  }
+}

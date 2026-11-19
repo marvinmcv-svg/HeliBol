@@ -1,0 +1,1 @@
+Build a directional-fill button: on pointerenter/leave write --x/--y (pointer position inside the button); an absolutely positioned 8 px circle at (--x, --y) scales from 0 to 90 on :hover/:focus-visible with a .5 s expo-out transition, behind the label; text colour transitions to the fill-text colour.

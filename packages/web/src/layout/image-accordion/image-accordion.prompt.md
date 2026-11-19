@@ -1,0 +1,1 @@
+Build an image accordion with Motion: a flex row of buttons (tabs); animate flexGrow to 5 for the active one and 1 for others, scale/desaturate inactive images, show vertical titles on collapsed panels and fade/rise the active panel's kicker/title/body after a short delay. Arrow keys move selection.

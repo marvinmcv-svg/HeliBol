@@ -1,0 +1,1 @@
+Build a morphing tab bar: dark rounded container of buttons with layout; the active button renders a layoutId pill with its own colour and an AnimatePresence label that animates width 0→auto; the icon is keyed by active state so it hops (spring y −6→0) on select.

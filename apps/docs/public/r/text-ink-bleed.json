@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-ink-bleed",
+  "type": "registry:component",
+  "title": "Ink Bleed Headline",
+  "description": "A headline that bleeds onto the page like ink on wet paper: SVG turbulence displacement and blur decay to zero while words fade up in sequence, leaving perfectly crisp type.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-ink-bleed.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-ink-bleed.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { animate } from \"motion/react\";\nimport { cn, useInView, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextInkBleedProps {\n  text: string;\n  as?: \"h1\" | \"h2\" | \"h3\" | \"p\";\n  /** Seconds for the ink to settle. */\n  duration?: number;\n  className?: string;\n}\n\n/**\n * Headline that bleeds onto the page like ink on wet paper: an SVG turbulence displacement plus\n * blur both decay to zero while letters fade up word by word, leaving perfectly crisp type.\n * Replays when it re-enters the viewport.\n */\nexport function TextInkBleed({ text, as: Tag = \"h2\", duration = 1.8, className }: TextInkBleedProps) {\n  const reduced = useReducedMotion();\n  const id = `ink-${useId().replace(/:/g, \"\")}`;\n  const ref = useRef<HTMLElement>(null);\n  const disp = useRef<SVGFEDisplacementMapElement>(null);\n  const blur = useRef<SVGFEGaussianBlurElement>(null);\n  const inView = useInView(ref, { once: false, amount: 0.4 });\n  const [p, setP] = useState(reduced ? 1 : 0);\n\n  useEffect(() => {\n    if (reduced) return setP(1);\n    if (!inView) return setP(0);\n    const ctl = animate(0, 1, {\n      duration,\n      ease: [0.16, 1, 0.3, 1],\n      onUpdate: (v) => {\n        setP(v);\n        disp.current?.setAttribute(\"scale\", String((1 - v) * 60));\n        blur.current?.setAttribute(\"stdDeviation\", String((1 - v) * 6));\n      },\n    });\n    return () => ctl.stop();\n  }, [inView, reduced, duration]);\n\n  const words = text.split(\" \");\n  return (\n    <Tag ref={ref as never} className={cn(\"relative\", className)} aria-label={text}>\n      <svg aria-hidden className=\"absolute size-0\">\n        <filter id={id} x=\"-20%\" y=\"-40%\" width=\"140%\" height=\"180%\">\n          <feTurbulence type=\"fractalNoise\" baseFrequency=\"0.035\" numOctaves=\"3\" seed=\"4\" result=\"noise\" />\n          <feDisplacementMap ref={disp} in=\"SourceGraphic\" in2=\"noise\" scale=\"60\" xChannelSelector=\"R\" yChannelSelector=\"G\" result=\"d\" />\n          <feGaussianBlur ref={blur} in=\"d\" stdDeviation=\"6\" />\n        </filter>\n      </svg>\n      <span aria-hidden style={{ filter: p < 0.999 ? `url(#${id})` : undefined }} className=\"inline\">\n        {words.map((w, i) => {\n          const local = Math.min(1, Math.max(0, p * 1.6 - (i / words.length) * 0.6));\n          return (\n            <span key={i} className=\"inline-block whitespace-pre\" style={{ opacity: local, transform: `translateY(${(1 - local) * 0.25}em)` }}>\n              {w}\n              {i < words.length - 1 ? \" \" : \"\"}\n            </span>\n          );\n        })}\n      </span>\n    </Tag>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "text",
+      "ink",
+      "editorial",
+      "svg filter",
+      "headline"
+    ],
+    "pageTypes": [
+      "landing",
+      "blog",
+      "portfolio"
+    ]
+  }
+}

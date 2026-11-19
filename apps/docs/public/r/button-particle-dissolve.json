@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-particle-dissolve",
+  "type": "registry:component",
+  "title": "Particle Dissolve Button",
+  "description": "On click the button disintegrates: it's sampled into ~600 particles that drift away like sand in the wind (a left-to-right sweep), then a success pill springs in where it stood.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-particle-dissolve.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-particle-dissolve.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ButtonParticleDissolveProps {\n  children: ReactNode;\n  /** Resolve when the action succeeds; the button stays dissolved into its success state. */\n  onAction?: () => Promise<void> | void;\n  doneLabel?: string;\n  /** Particle colour; defaults to the button's background. */\n  color?: string;\n  className?: string;\n}\n\n/**\n * On click the button disintegrates: it's sampled into ~600 particles on a canvas that drift away\n * like sand in the wind (left to right sweep), then a success pill springs in where it stood.\n */\nexport function ButtonParticleDissolve({ children, onAction, doneLabel = \"Sent\", color, className }: ButtonParticleDissolveProps) {\n  const reduced = useReducedMotion();\n  const btn = useRef<HTMLButtonElement>(null);\n  const canvas = useRef<HTMLCanvasElement>(null);\n  const [phase, setPhase] = useState<\"idle\" | \"dissolving\" | \"done\">(\"idle\");\n\n  const run = async () => {\n    if (phase !== \"idle\") return;\n    await onAction?.();\n    if (reduced) return setPhase(\"done\");\n    setPhase(\"dissolving\");\n  };\n\n  useEffect(() => {\n    if (phase !== \"dissolving\") return;\n    const b = btn.current, c = canvas.current;\n    const ctx = c?.getContext(\"2d\");\n    if (!b || !c || !ctx) return setPhase(\"done\");\n    const r = b.getBoundingClientRect();\n    const pad = 120;\n    const dpr = Math.min(2, devicePixelRatio || 1);\n    c.width = (r.width + pad * 2) * dpr;\n    c.height = (r.height + pad * 2) * dpr;\n    c.style.width = `${r.width + pad * 2}px`;\n    c.style.height = `${r.height + pad * 2}px`;\n    ctx.scale(dpr, dpr);\n    const fill = color ?? getComputedStyle(b).backgroundColor;\n    const radius = r.height / 2;\n    // sample points inside the pill shape\n    const parts: { x: number; y: number; vx: number; vy: number; delay: number; life: number; s: number }[] = [];\n    for (let i = 0; i < 650; i++) {\n      const x = Math.random() * r.width, y = Math.random() * r.height;\n      const cx = Math.min(Math.max(x, radius), r.width - radius);\n      if (Math.hypot(x - cx, y - radius) > radius) continue;\n      parts.push({ x: x + pad, y: y + pad, vx: 0, vy: 0, delay: (x / r.width) * 0.45 + Math.random() * 0.12, life: 1, s: 1 + Math.random() * 2.2 });\n    }\n    const t0 = performance.now();\n    let raf = 0;\n    const frame = (now: number) => {\n      const t = (now - t0) / 1000;\n      ctx.clearRect(0, 0, c.width, c.height);\n      ctx.fillStyle = fill;\n      let alive = 0;\n      for (const p of parts) {\n        if (t > p.delay) {\n          p.vx += 0.18 + Math.random() * 0.12;\n          p.vy += (Math.random() - 0.62) * 0.35;\n          p.x += p.vx;\n          p.y += p.vy;\n          p.life -= 0.018;\n        }\n        if (p.life <= 0) continue;\n        alive++;\n        ctx.globalAlpha = Math.max(0, p.life);\n        ctx.fillRect(p.x, p.y, p.s, p.s);\n      }\n      if (alive && t < 3) raf = requestAnimationFrame(frame);\n      else setPhase(\"done\");\n    };\n    raf = requestAnimationFrame(frame);\n    return () => cancelAnimationFrame(raf);\n  }, [phase, color]);\n\n  return (\n    <span className={cn(\"relative inline-grid place-items-center\", className)}>\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        {phase === \"done\" ? (\n          <motion.span\n            key=\"done\"\n            role=\"status\"\n            initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.6 }}\n            animate={{ opacity: 1, scale: 1 }}\n            transition={spring.bouncy}\n            className=\"inline-flex h-11 items-center gap-2 rounded-full bg-emerald-500 px-5 text-sm font-semibold text-white\"\n          >\n            <Check className=\"size-4\" strokeWidth={3} /> {doneLabel}\n          </motion.span>\n        ) : (\n          <button\n            key=\"btn\"\n            ref={btn}\n            type=\"button\"\n            onClick={run}\n            disabled={phase === \"dissolving\"}\n            className={cn(\"inline-flex h-11 items-center gap-2 rounded-full bg-foreground px-6 text-sm font-semibold text-background transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\", phase === \"dissolving\" && \"opacity-0\")}\n          >\n            {children}\n          </button>\n        )}\n      </AnimatePresence>\n      {phase === \"dissolving\" && <canvas ref={canvas} aria-hidden className=\"pointer-events-none absolute\" style={{ left: -120, top: -120 }} />}\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "premium",
+      "button",
+      "particles",
+      "thanos",
+      "success",
+      "canvas"
+    ],
+    "pageTypes": [
+      "landing",
+      "social"
+    ]
+  }
+}

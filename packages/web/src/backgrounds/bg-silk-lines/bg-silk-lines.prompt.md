@@ -1,0 +1,1 @@
+Build silk lines on canvas: for each strand k (0..1) draw a polyline across the width where y = centre + sin(u·3.2 + t·.35 + k·2.4)·(0.5 − k)·H·.38 (the twist) + small flow waves + a Gaussian bump toward the pointer; horizontal gradient stroke fading at both ends, alpha peaking in the middle strands, 'lighter' compositing.

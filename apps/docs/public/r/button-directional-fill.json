@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-directional-fill",
+  "type": "registry:component",
+  "title": "Directional Fill Button",
+  "description": "Hover fill that knows where you came from: a circle grows from the exact entry point and shrinks back toward the exit point. Pure CSS transitions driven by two custom properties.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-directional-fill.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-directional-fill.tsx",
+      "content": "\"use client\";\nimport { useRef, type ButtonHTMLAttributes, type ReactNode } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ButtonDirectionalFillProps extends ButtonHTMLAttributes<HTMLButtonElement> {\n  children: ReactNode;\n  /** Fill colour (any CSS colour). */\n  fill?: string;\n  /** Text colour while filled. */\n  fillText?: string;\n}\n\n/**\n * Hover fill that knows where you came from: a circle grows from the exact entry point and, on\n * leave, shrinks back toward the exit point. Pure CSS transitions driven by two custom properties.\n */\nexport function ButtonDirectionalFill({ children, className, fill = \"currentColor\", fillText = \"var(--color-background, #fff)\", style, ...rest }: ButtonDirectionalFillProps) {\n  const ref = useRef<HTMLButtonElement>(null);\n  const reduced = useReducedMotion();\n  const setOrigin = (e: React.PointerEvent) => {\n    const el = ref.current;\n    if (!el) return;\n    const r = el.getBoundingClientRect();\n    el.style.setProperty(\"--x\", `${e.clientX - r.left}px`);\n    el.style.setProperty(\"--y\", `${e.clientY - r.top}px`);\n  };\n  return (\n    <button\n      ref={ref}\n      {...rest}\n      onPointerEnter={(e) => (setOrigin(e), rest.onPointerEnter?.(e))}\n      onPointerLeave={(e) => (setOrigin(e), rest.onPointerLeave?.(e))}\n      style={{ ...style, [\"--fill\" as string]: fill, [\"--fill-text\" as string]: fillText }}\n      className={cn(\n        \"group/df relative isolate inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full border border-current px-7 text-sm font-semibold transition-colors duration-300 hover:text-[var(--fill-text)] focus-visible:text-[var(--fill-text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\",\n        className,\n      )}\n    >\n      <span\n        aria-hidden\n        className={cn(\n          \"absolute -z-10 size-2 -translate-x-1/2 -translate-y-1/2 scale-0 rounded-full bg-[var(--fill)] group-hover/df:scale-[90] group-focus-visible/df:scale-[90]\",\n          reduced ? \"transition-none\" : \"transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)]\",\n        )}\n        style={{ left: \"var(--x, 50%)\", top: \"var(--y, 50%)\" }}\n      />\n      {children}\n    </button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "premium",
+      "button",
+      "hover",
+      "fill",
+      "cta",
+      "micro-interaction"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

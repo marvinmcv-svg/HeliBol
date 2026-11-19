@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "image-accordion",
+  "type": "registry:component",
+  "title": "Image Accordion",
+  "description": "Tall photo panels where the active one expands (flex-grow spring) to tell its story while the others collapse to slim strips with vertical titles. Stacks vertically on phones.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/image-accordion.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/image-accordion.tsx",
+      "content": "\"use client\";\nimport { useId, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ImageAccordionItem {\n  image: string;\n  title: string;\n  kicker?: string;\n  body?: string;\n}\n\nexport interface ImageAccordionProps {\n  items: ImageAccordionItem[];\n  defaultIndex?: number;\n  className?: string;\n}\n\n/**\n * Interactive image accordion: tall panels where the active one expands (flex-grow spring) to show\n * its photo and story while the others collapse to slim strips with vertical titles. Hover, focus\n * or tap to switch; arrow keys move between panels. Stacks vertically on narrow screens.\n */\nexport function ImageAccordion({ items, defaultIndex = 0, className }: ImageAccordionProps) {\n  const reduced = useReducedMotion();\n  const id = useId();\n  const [active, setActive] = useState(defaultIndex);\n  const t = reduced ? { duration: 0 } : spring.smooth;\n  return (\n    <div role=\"tablist\" aria-orientation=\"horizontal\" className={cn(\"flex h-full flex-col gap-2 sm:flex-row\", className)}>\n      {items.map((it, i) => {\n        const on = i === active;\n        return (\n          <motion.button\n            key={it.title}\n            id={`${id}-t${i}`}\n            role=\"tab\"\n            type=\"button\"\n            aria-selected={on}\n            aria-controls={`${id}-p${i}`}\n            tabIndex={on ? 0 : -1}\n            onPointerEnter={(e) => e.pointerType === \"mouse\" && setActive(i)}\n            onFocus={() => setActive(i)}\n            onClick={() => setActive(i)}\n            onKeyDown={(e) => {\n              const d = e.key === \"ArrowRight\" || e.key === \"ArrowDown\" ? 1 : e.key === \"ArrowLeft\" || e.key === \"ArrowUp\" ? -1 : 0;\n              if (!d) return;\n              e.preventDefault();\n              const n = (i + d + items.length) % items.length;\n              setActive(n);\n              (document.getElementById(`${id}-t${n}`) as HTMLElement | null)?.focus();\n            }}\n            animate={{ flexGrow: on ? 5 : 1 }}\n            transition={t}\n            className=\"relative min-h-16 min-w-0 basis-0 overflow-hidden rounded-3xl text-left text-white outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:min-h-0 sm:min-w-16\"\n          >\n            <motion.img src={it.image} alt=\"\" className=\"absolute inset-0 size-full object-cover\" animate={{ scale: on ? 1 : 1.25, filter: on ? \"saturate(1)\" : \"saturate(.4) brightness(.7)\" }} transition={reduced ? { duration: 0 } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }} />\n            <span className=\"absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent\" />\n            <AnimatePresence initial={false}>\n              {!on && (\n                <motion.span key=\"v\" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className=\"absolute bottom-5 left-1/2 hidden -translate-x-1/2 whitespace-nowrap text-sm font-semibold [writing-mode:vertical-rl] rotate-180 sm:block\">\n                  {it.title}\n                </motion.span>\n              )}\n            </AnimatePresence>\n            <AnimatePresence initial={false}>\n              {on && (\n                <motion.div\n                  key=\"c\"\n                  id={`${id}-p${i}`}\n                  role=\"tabpanel\"\n                  aria-labelledby={`${id}-t${i}`}\n                  initial={reduced ? { opacity: 0 } : { opacity: 0, y: 24 }}\n                  animate={{ opacity: 1, y: 0, transition: { ...t, delay: reduced ? 0 : 0.15 } }}\n                  exit={{ opacity: 0, transition: { duration: 0.1 } }}\n                  className=\"absolute inset-x-0 bottom-0 p-6\"\n                >\n                  {it.kicker && <p className=\"text-[10px] uppercase tracking-[0.3em] text-white/70\">{it.kicker}</p>}\n                  <p className=\"mt-1 text-2xl font-semibold tracking-tight\">{it.title}</p>\n                  {it.body && <p className=\"mt-1 max-w-sm text-sm text-white/75\">{it.body}</p>}\n                </motion.div>\n              )}\n            </AnimatePresence>\n            {!on && <span className=\"absolute inset-x-0 bottom-0 p-4 text-sm font-semibold sm:hidden\">{it.title}</span>}\n          </motion.button>\n        );\n      })}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "accordion",
+      "gallery",
+      "images",
+      "expand",
+      "travel"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio",
+      "media"
+    ]
+  }
+}

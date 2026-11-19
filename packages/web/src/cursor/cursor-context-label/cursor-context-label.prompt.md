@@ -1,0 +1,1 @@
+Build a contextual cursor: inside a container hide the native cursor, track the pointer into springy motion values, find the closest [data-cursor] ancestor of the event target and morph a dot (12 px, mix-blend-difference) into a pill sized to the label with data-cursor-color as background; crossfade labels.

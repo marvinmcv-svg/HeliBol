@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-zoom-parallax",
+  "type": "registry:component",
+  "title": "Zoom Parallax",
+  "description": "A collage of seven photos pinned in place; as you scroll every tile scales up around the centre at its own rate, so the outer images fly past the edges and the centre photo fills the screen.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/scroll-zoom-parallax.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/scroll-zoom-parallax.tsx",
+      "content": "\"use client\";\nimport { useRef, type RefObject } from \"react\";\nimport { motion, useScroll, useTransform, type MotionValue } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ScrollZoomParallaxProps {\n  /** Exactly 7 images: the first is the centre hero that ends up full-screen. */\n  images: string[];\n  container?: RefObject<HTMLElement | null>;\n  className?: string;\n}\n\n// position & size (in % of the viewport) of each tile in the collage; index 0 = centre\nconst TILES = [\n  { top: 37.5, left: 37.5, w: 25, h: 25, s: 4 },\n  { top: 12, left: 41, w: 35, h: 23, s: 5 },\n  { top: 28, left: 12, w: 22, h: 40, s: 6 },\n  { top: 39, left: 66, w: 21, h: 25, s: 5 },\n  { top: 66, left: 40, w: 22, h: 22, s: 6 },\n  { top: 66, left: 15, w: 23, h: 20, s: 8 },\n  { top: 67, left: 65, w: 15, h: 18, s: 9 },\n];\n\nfunction Tile({ src, i, p }: { src: string; i: number; p: MotionValue<number> }) {\n  const t = TILES[i];\n  const scale = useTransform(p, [0, 1], [1, t.s]);\n  return (\n    <motion.div className=\"absolute inset-0 flex items-center justify-center\" style={{ scale }}>\n      <div className=\"absolute overflow-hidden rounded-xl\" style={{ top: `${t.top}%`, left: `${t.left}%`, width: `${t.w}%`, height: `${t.h}%` }}>\n        <img src={src} alt=\"\" className=\"size-full object-cover\" />\n      </div>\n    </motion.div>\n  );\n}\n\n/**\n * \"Zoom parallax\": a collage of seven photos pinned in place; as you scroll, every tile scales up\n * around the viewport centre at a different rate, so the outer images fly past the edges while the\n * centre photo grows to fill the screen. Seven transforms, no layout work.\n */\nexport function ScrollZoomParallax({ images, container, className }: ScrollZoomParallaxProps) {\n  const reduced = useReducedMotion();\n  const ref = useRef<HTMLDivElement>(null);\n  const { scrollYProgress } = useScroll({ target: ref, container, offset: [\"start start\", \"end end\"] });\n\n  if (reduced)\n    return (\n      <div className={cn(\"grid grid-cols-2 gap-3 p-4 sm:grid-cols-3\", className)}>\n        {images.slice(0, 7).map((s, i) => <img key={i} src={s} alt=\"\" className={cn(\"w-full rounded-xl object-cover\", i === 0 ? \"col-span-full aspect-video\" : \"aspect-square\")} />)}\n      </div>\n    );\n\n  return (\n    <div ref={ref} className={cn(\"relative h-[300cqh]\", className)}>\n      <div className=\"sticky top-0 h-[100cqh] overflow-hidden\">\n        {images.slice(0, 7).map((src, i) => <Tile key={i} src={src} i={i} p={scrollYProgress} />)}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "scroll"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "scroll",
+      "zoom",
+      "parallax",
+      "gallery",
+      "storytelling"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

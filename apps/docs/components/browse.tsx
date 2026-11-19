@@ -4,7 +4,7 @@ import { ArrowDownUp, Search, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@kinetik/core";
 import type { ComponentMeta, Engine, PageType } from "@web/types";
 import { added, newIds } from "@/lib/registry.generated";
-import { categories, engines, pageTypes } from "@/lib/taxonomy";
+import { categories, engines, isPremium, pageTypes } from "@/lib/taxonomy";
 import { ComponentCard } from "./component-card";
 
 function Chip({ active, onClick, children, count }: { active: boolean; onClick: () => void; children: ReactNode; count?: number }) {
@@ -63,6 +63,7 @@ export function Browse({
   const [sort, setSort] = useState<Sort>("featured");
   const [shown, setShown] = useState(PAGE);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [premiumOnly, setPremiumOnly] = useState(false);
   const ready = useRef(false);
 
   // Read deep links once (/components?engine=gsap&sort=newest&q=scroll …).
@@ -74,6 +75,7 @@ export function Browse({
     if (p && items.some((i) => i.pageTypes.includes(p as PageType))) setPage(p as PageType);
     const c = sp.get("cat");
     if (c && !initialCategory && items.some((i) => i.category === c)) setCat(c);
+    if (sp.get("collection") === "premium") setPremiumOnly(true);
     const s = sp.get("sort");
     if (s === "newest" || s === "az") setSort(s);
     const qq = sp.get("q");
@@ -90,12 +92,14 @@ export function Browse({
     if (engine) sp.set("engine", engine);
     if (page) sp.set("page", page);
     if (sort !== "featured") sp.set("sort", sort);
+    if (premiumOnly) sp.set("collection", "premium");
     const qs = sp.toString();
     window.history.replaceState(window.history.state, "", qs ? `?${qs}` : window.location.pathname);
     setShown(PAGE);
-  }, [q, cat, engine, page, sort, initialCategory]);
+  }, [q, cat, engine, page, sort, premiumOnly, initialCategory]);
 
   const matches = (m: ComponentMeta, skip?: "cat" | "engine" | "page") => {
+    if (premiumOnly && !isPremium(m)) return false;
     if (skip !== "cat" && cat && m.category !== cat) return false;
     if (skip !== "engine" && engine && m.engine !== engine) return false;
     if (skip !== "page" && page && !m.pageTypes.includes(page)) return false;
@@ -111,7 +115,7 @@ export function Browse({
     if (sort === "az") out.sort((a, b) => a.name.localeCompare(b.name));
     return out;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, q, cat, engine, page, sort]);
+  }, [items, q, cat, engine, page, sort, premiumOnly]);
 
   // Facet counts: how many results each chip would give with the other filters applied.
   const count = (skip: "cat" | "engine" | "page", pred: (m: ComponentMeta) => boolean) => items.filter((m) => pred(m) && matches(m, skip)).length;
@@ -119,7 +123,7 @@ export function Browse({
   const usedPages = Array.from(new Set(items.flatMap((i) => i.pageTypes)));
   const usedCats = categories.filter((c) => items.some((i) => i.category === c.id));
   const activeFacets = (engine ? 1 : 0) + (page ? 1 : 0);
-  const anyFilter = q || (cat && !initialCategory) || engine || page;
+  const anyFilter = q || (cat && !initialCategory) || engine || page || premiumOnly;
 
   // Load more as the sentinel approaches the viewport.
   const sentinel = useRef<HTMLDivElement>(null);
@@ -155,6 +159,18 @@ export function Browse({
               {SORTS.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
             </select>
           </label>
+          <button
+            type="button"
+            onClick={() => setPremiumOnly((p) => !p)}
+            aria-pressed={premiumOnly}
+            className={cn(
+              "inline-flex h-10 items-center gap-1.5 rounded-xl border px-3 text-sm font-medium transition-colors",
+              premiumOnly ? "border-amber-400 bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 text-amber-950" : "border-border bg-card text-muted-foreground hover:text-foreground",
+            )}
+          >
+            ✦ Premium
+            <span className={cn("tabular-nums text-xs", premiumOnly ? "text-amber-900/70" : "text-muted-foreground/60")}>{items.filter(isPremium).length}</span>
+          </button>
           <button
             type="button"
             onClick={() => setFiltersOpen((o) => !o)}
@@ -212,6 +228,7 @@ export function Browse({
                 setCat(initialCategory ?? null);
                 setEngine(null);
                 setPage(null);
+                setPremiumOnly(false);
               }}
               className="inline-flex items-center gap-1 hover:text-foreground"
             >
@@ -234,7 +251,7 @@ export function Browse({
             const k = kindOf?.(m) ?? kind;
             return (
               <div key={m.id} className="[animation:k-fadein_.3s_ease_both]">
-                <ComponentCard meta={m} href={hrefFor(m, k)} size={k === "block" ? "lg" : k === "flow" ? "phone" : "md"} isNew={newSet.has(m.id)} />
+                <ComponentCard meta={m} href={hrefFor(m, k)} size={k === "block" ? "lg" : k === "flow" ? "phone" : "md"} isNew={newSet.has(m.id)} premium={isPremium(m)} />
               </div>
             );
           })}

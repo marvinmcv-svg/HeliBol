@@ -1,0 +1,1 @@
+Build zoom parallax with Motion: a 300vh section with a sticky viewport containing 7 absolutely positioned full-size layers; each layer holds one photo at a fixed % position/size and scales from 1 to its own factor (4–9) with useTransform(scrollYProgress), so the centre image (scale 4) ends full-screen.

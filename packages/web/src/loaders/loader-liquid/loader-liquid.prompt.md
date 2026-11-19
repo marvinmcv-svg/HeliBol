@@ -1,0 +1,1 @@
+Build a liquid orb loader in SVG: a circle clip containing a group translated to (100 − value) with two seamless wave paths looping in opposite directions (animateTransform), rising bubbles (animate cy/opacity), a glass highlight gradient on top and a mix-blend-difference percentage in the centre.

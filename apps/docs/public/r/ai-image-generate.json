@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-image-generate",
+  "type": "registry:component",
+  "title": "AI Image Generation",
+  "description": "Diffusion-style generation preview: coloured noise resolves to the final image through decaying blur and noise while a scan light sweeps, a step counter and progress ring tick up, and the prompt types out.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/ai-image-generate.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/ai-image-generate.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Sparkles } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface AiImageGenerateProps {\n  /** Final image URL (\"generated\" result). */\n  image: string;\n  prompt: string;\n  /** Seconds the fake diffusion takes. */\n  duration?: number;\n  /** Increment to regenerate. */\n  runKey?: number;\n  className?: string;\n}\n\n/**\n * Diffusion-style generation preview: the frame starts as coloured noise, a scanning light sweeps\n * down while the image resolves from heavy blur + pixelation + noise to sharp, a step counter and\n * progress ring tick up, and the prompt types out underneath. Replace the timer with your real\n * progress events.\n */\nexport function AiImageGenerate({ image, prompt, duration = 4.5, runKey = 0, className }: AiImageGenerateProps) {\n  const reduced = useReducedMotion();\n  const [p, setP] = useState(reduced ? 1 : 0);\n  const noise = useRef<HTMLCanvasElement>(null);\n\n  useEffect(() => {\n    if (reduced) return setP(1);\n    setP(0);\n    const t0 = performance.now();\n    let raf = 0;\n    const tick = (now: number) => {\n      const v = Math.min(1, (now - t0) / 1000 / duration);\n      setP(v);\n      const c = noise.current;\n      const ctx = c?.getContext(\"2d\");\n      if (c && ctx && v < 1) {\n        const img = ctx.createImageData(c.width, c.height);\n        for (let i = 0; i < img.data.length; i += 4) {\n          const n = Math.random() * 255;\n          img.data[i] = n * (0.6 + Math.random() * 0.4);\n          img.data[i + 1] = n * 0.5;\n          img.data[i + 2] = n;\n          img.data[i + 3] = 255;\n        }\n        ctx.putImageData(img, 0, 0);\n      }\n      if (v < 1) raf = requestAnimationFrame(tick);\n    };\n    raf = requestAnimationFrame(tick);\n    return () => cancelAnimationFrame(raf);\n  }, [runKey, duration, reduced]);\n\n  const e = 1 - (1 - p) ** 2.4; // ease-out progress for the visuals\n  const steps = Math.round(p * 30);\n  const done = p >= 1;\n  const typed = prompt.slice(0, Math.ceil(Math.min(1, p * 3) * prompt.length));\n\n  return (\n    <figure className={cn(\"w-full max-w-sm\", className)}>\n      <div className=\"relative aspect-square overflow-hidden rounded-3xl bg-zinc-900 shadow-2xl\">\n        <img\n          src={image}\n          alt={done ? prompt : \"\"}\n          className=\"absolute inset-0 size-full object-cover\"\n          style={{ filter: `blur(${(1 - e) * 28}px) saturate(${0.4 + e * 0.6}) contrast(${1.3 - e * 0.3})`, transform: `scale(${1.15 - e * 0.15})` }}\n        />\n        <canvas ref={noise} width={64} height={64} aria-hidden className=\"absolute inset-0 size-full [image-rendering:pixelated] mix-blend-overlay\" style={{ opacity: Math.max(0, 1 - e * 1.3) * 0.9 }} />\n        {!done && !reduced && (\n          <motion.span aria-hidden className=\"absolute inset-x-0 h-24 bg-gradient-to-b from-transparent via-white/25 to-transparent\" animate={{ top: [\"-25%\", \"110%\"] }} transition={{ duration: 1.4, repeat: Infinity, ease: \"linear\" }} />\n        )}\n        <div className=\"absolute left-3 top-3 flex items-center gap-2 rounded-full bg-black/50 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur\" aria-live=\"polite\">\n          <svg viewBox=\"0 0 20 20\" className=\"size-4 -rotate-90\" aria-hidden>\n            <circle cx=\"10\" cy=\"10\" r=\"8\" fill=\"none\" stroke=\"rgb(255 255 255 / .25)\" strokeWidth=\"2.5\" />\n            <circle cx=\"10\" cy=\"10\" r=\"8\" fill=\"none\" stroke=\"white\" strokeWidth=\"2.5\" strokeLinecap=\"round\" pathLength={1} strokeDasharray=\"1\" strokeDashoffset={1 - p} />\n          </svg>\n          {done ? \"Done\" : `Step ${steps}/30`}\n        </div>\n        <AnimatePresence>\n          {done && !reduced && <motion.span aria-hidden initial={{ opacity: 0.8 }} animate={{ opacity: 0 }} transition={{ duration: 0.8 }} className=\"absolute inset-0 bg-white\" />}\n        </AnimatePresence>\n      </div>\n      <figcaption className=\"mt-3 flex items-start gap-2 text-sm\">\n        <Sparkles className=\"mt-0.5 size-4 shrink-0 text-violet-400\" />\n        <span className=\"text-muted-foreground\">\n          {typed}\n          {!done && <span className=\"ml-0.5 inline-block h-3.5 w-px animate-pulse bg-current align-middle motion-reduce:animate-none\" />}\n        </span>\n      </figcaption>\n    </figure>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "ai",
+      "image generation",
+      "diffusion",
+      "progress",
+      "creative"
+    ],
+    "pageTypes": [
+      "ai-app"
+    ]
+  }
+}

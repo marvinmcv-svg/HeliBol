@@ -1,0 +1,1 @@
+Build magnetic letters: split text into inline-block spans, cache their centres, and on pointermove run a rAF loop where each letter's target offset = direction away from the pointer × (1 − d/radius)² × 28 × strength; integrate a damped spring (stiffness .12, damping .78), rotate by x·0.6°, and raise font weight with influence (variable font). Stop the loop when settled.

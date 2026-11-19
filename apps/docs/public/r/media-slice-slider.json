@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "media-slice-slider",
+  "type": "registry:component",
+  "title": "Slice Transition Slider",
+  "description": "Editorial slider whose transition cuts the incoming photo into vertical slices that drop in with a staggered, alternating direction; the caption and title rise line by line.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/media-slice-slider.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/media-slice-slider.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ArrowLeft, ArrowRight } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface MediaSliceSliderProps {\n  slides: { image: string; title: string; caption?: string }[];\n  /** Number of vertical slices in the transition. */\n  slices?: number;\n  /** Autoplay interval in ms (0 = off). Pauses on hover/focus. */\n  autoplay?: number;\n  className?: string;\n}\n\n/**\n * Editorial slider whose transition cuts the incoming photo into vertical slices that drop in with a\n * staggered, alternating direction (odd slices from above, even from below) over the outgoing one;\n * the title rises line by line. Arrow keys, buttons and autoplay that pauses on hover.\n */\nexport function MediaSliceSlider({ slides, slices = 6, autoplay = 4500, className }: MediaSliceSliderProps) {\n  const reduced = useReducedMotion();\n  const [i, setI] = useState(0);\n  const [prev, setPrev] = useState<number | null>(null);\n  const [dir, setDir] = useState(1);\n  const [paused, setPaused] = useState(false);\n  const busy = useRef(false);\n\n  const go = (d: 1 | -1) => {\n    if (busy.current) return;\n    busy.current = true;\n    setDir(d);\n    setPrev(i);\n    setI((n) => (n + d + slides.length) % slides.length);\n    setTimeout(() => (busy.current = false), reduced ? 0 : 900);\n  };\n  useEffect(() => {\n    if (!autoplay || paused || reduced) return;\n    const id = setTimeout(() => go(1), autoplay);\n    return () => clearTimeout(id);\n  });\n\n  const s = slides[i];\n  return (\n    <div\n      role=\"region\"\n      aria-roledescription=\"carousel\"\n      aria-label=\"Featured stories\"\n      tabIndex={0}\n      onKeyDown={(e) => (e.key === \"ArrowRight\" ? go(1) : e.key === \"ArrowLeft\" ? go(-1) : null)}\n      onPointerEnter={() => setPaused(true)}\n      onPointerLeave={() => setPaused(false)}\n      onFocus={() => setPaused(true)}\n      onBlur={() => setPaused(false)}\n      className={cn(\"relative h-full overflow-hidden rounded-3xl bg-black text-white outline-none focus-visible:ring-2 focus-visible:ring-ring\", className)}\n    >\n      {prev !== null && <img src={slides[prev].image} alt=\"\" className=\"absolute inset-0 size-full object-cover\" />}\n      <div key={i} className=\"absolute inset-0 flex\">\n        {Array.from({ length: slices }, (_, k) => (\n          <motion.div\n            key={k}\n            className=\"relative h-full flex-1 overflow-hidden\"\n            initial={reduced || prev === null ? { opacity: prev === null ? 1 : 0 } : { y: (k % 2 ? -1 : 1) * 100 * dir + \"%\" }}\n            animate={{ y: \"0%\", opacity: 1 }}\n            transition={reduced ? { duration: 0.3 } : { duration: 0.85, ease: [0.76, 0, 0.24, 1], delay: (dir > 0 ? k : slices - 1 - k) * 0.05 }}\n          >\n            <img src={s.image} alt=\"\" className=\"absolute top-0 h-full max-w-none object-cover\" style={{ width: `${slices * 100}%`, left: `${-k * 100}%` }} />\n          </motion.div>\n        ))}\n      </div>\n      <div className=\"absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent\" />\n      <div className=\"absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6\">\n        <div aria-live=\"polite\" className=\"min-w-0\">\n          <AnimatePresence mode=\"wait\" initial={false}>\n            <motion.div key={i} initial=\"h\" animate=\"s\" exit=\"x\" variants={{ s: { transition: { staggerChildren: 0.08, delayChildren: reduced ? 0 : 0.35 } } }}>\n              {[s.caption, s.title].filter(Boolean).map((line, n) => (\n                <div key={n} className=\"overflow-hidden\">\n                  <motion.p\n                    variants={{ h: { y: reduced ? 0 : \"110%\", opacity: reduced ? 0 : 1 }, s: { y: 0, opacity: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }, x: { opacity: 0, transition: { duration: 0.2 } } }}\n                    className={n === 0 && s.caption ? \"text-[10px] uppercase tracking-[0.3em] text-white/70\" : \"text-3xl font-semibold tracking-tight\"}\n                  >\n                    {line}\n                  </motion.p>\n                </div>\n              ))}\n            </motion.div>\n          </AnimatePresence>\n        </div>\n        <div className=\"flex shrink-0 items-center gap-2\">\n          <span className=\"mr-2 text-xs tabular-nums text-white/70\">{String(i + 1).padStart(2, \"0\")} / {String(slides.length).padStart(2, \"0\")}</span>\n          <button type=\"button\" onClick={() => go(-1)} aria-label=\"Previous\" className=\"grid size-10 place-items-center rounded-full border border-white/30 backdrop-blur hover:bg-white/15\"><ArrowLeft className=\"size-4\" /></button>\n          <button type=\"button\" onClick={() => go(1)} aria-label=\"Next\" className=\"grid size-10 place-items-center rounded-full border border-white/30 backdrop-blur hover:bg-white/15\"><ArrowRight className=\"size-4\" /></button>\n        </div>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "slider",
+      "carousel",
+      "slices",
+      "editorial",
+      "hero"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio",
+      "media"
+    ]
+  }
+}

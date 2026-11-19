@@ -1,0 +1,1 @@
+Build a spotlight tour: an SVG overlay whose mask has a white full rect and a black rounded rect animated (spring) to the current target's bounds + 8 px; a ring with a ping animation sits on top; a card positioned under or above the target (flip if no room) shows step n/total, copy, dot progress and Skip/Next.

@@ -53,3 +53,17 @@ export const pageTypes: Record<PageType, string> = {
   social: "Social",
   media: "Media",
 };
+
+/**
+ * Premium collection: every item tagged "premium" plus a curated set of the library's most
+ * crafted existing pieces (three.js scenes, signature GSAP work, hero blocks and templates).
+ */
+const curatedPremium = new Set([
+  "canvas-3d-shell", "three-particle-morph", "three-sphere-gallery", "three-glass-shape", "three-shader-blob", "three-galaxy",
+  "three-orbit-sphere", "three-wave-terrain", "three-image-ribbon", "three-coin", "three-tunnel", "three-instanced-grid",
+  "three-floating-shapes", "gsap-three-waypoints", "gsap-bento-scrub", "gsap-particle-text", "gsap-mask-expand",
+  "gsap-shader-scroll", "gsap-flip-carousel", "card-holo", "card-swipe-deck", "dynamic-island", "text-morph",
+  "text-smart-animate", "bg-shader", "hero-globe", "orbital-image-wheel", "kanban-board",
+  "hero-ai-particles", "hero-liquid-glass", "hero-ink-reveal", "portfolio-ribbon", "template-saas", "template-ai-startup", "template-portfolio",
+]);
+export const isPremium = (m: { id: string; tags: string[] }) => m.tags.includes("premium") || curatedPremium.has(m.id);

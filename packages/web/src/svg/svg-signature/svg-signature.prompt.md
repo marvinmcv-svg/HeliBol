@@ -1,0 +1,1 @@
+Build a self-writing signature: measure each path's getTotalLength, set strokeDasharray/offset to that length, and when in view transition dashoffset to 0 with duration = length/speed and a delay = cumulative previous durations + 0.12 s pen lift; finish with a tiny stroke-width swell.

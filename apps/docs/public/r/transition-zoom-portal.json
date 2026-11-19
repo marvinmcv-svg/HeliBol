@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "transition-zoom-portal",
+  "type": "registry:component",
+  "title": "Zoom Portal Transition",
+  "description": "Cards that become pages: clicking a card zooms its image (shared layout) to fill the view while the other cards fall back and blur, then the article rises in. Back reverses into the card.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/transition-zoom-portal.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/transition-zoom-portal.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, LayoutGroup, motion } from \"motion/react\";\nimport { ArrowLeft } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface PortalItem {\n  id: string;\n  title: string;\n  kicker?: string;\n  image: string;\n  /** Full page content shown after zooming in. */\n  page: ReactNode;\n}\n\nexport interface TransitionZoomPortalProps {\n  items: PortalItem[];\n  className?: string;\n}\n\n/**\n * Cards that become pages: clicking a card zooms its image (shared layout) to fill the viewport\n * while the other cards fall back and blur, then the article content rises in beneath the hero.\n * Back (or Esc) reverses the zoom into the original card. Focus moves to the page and back.\n */\nexport function TransitionZoomPortal({ items, className }: TransitionZoomPortalProps) {\n  const reduced = useReducedMotion();\n  const [open, setOpen] = useState<string | null>(null);\n  const lastCard = useRef<HTMLButtonElement | null>(null);\n  const pageRef = useRef<HTMLDivElement>(null);\n  const item = items.find((i) => i.id === open);\n  const t = reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 220, damping: 30 };\n\n  useEffect(() => {\n    if (!open) return lastCard.current?.focus();\n    pageRef.current?.focus();\n    const k = (e: KeyboardEvent) => e.key === \"Escape\" && setOpen(null);\n    document.addEventListener(\"keydown\", k);\n    return () => document.removeEventListener(\"keydown\", k);\n  }, [open]);\n\n  return (\n    <LayoutGroup>\n      <div className={cn(\"relative h-full overflow-hidden\", className)}>\n        <motion.ul\n          className=\"grid h-full grid-cols-3 gap-3 p-4\"\n          animate={open && !reduced ? { scale: 0.92, filter: \"blur(6px)\", opacity: 0.4 } : { scale: 1, filter: \"blur(0px)\", opacity: 1 }}\n          transition={{ duration: reduced ? 0 : 0.5, ease: [0.22, 1, 0.36, 1] }}\n          aria-hidden={!!open}\n        >\n          {items.map((it) => (\n            <li key={it.id} className=\"relative\">\n              <button\n                type=\"button\"\n                onClick={(e) => ((lastCard.current = e.currentTarget), setOpen(it.id))}\n                className=\"group relative block size-full overflow-hidden rounded-2xl text-left outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                {open !== it.id && <motion.img layoutId={`zp-img-${it.id}`} transition={t} src={it.image} alt=\"\" className=\"absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105\" style={{ borderRadius: 16 }} />}\n                <span className=\"absolute inset-0 bg-gradient-to-t from-black/70 to-transparent\" />\n                <span className=\"absolute inset-x-0 bottom-0 p-4 text-white\">\n                  {it.kicker && <span className=\"block text-[10px] uppercase tracking-[0.3em] text-white/70\">{it.kicker}</span>}\n                  <motion.span layoutId={`zp-title-${it.id}`} transition={t} className=\"block text-lg font-semibold leading-tight\">{it.title}</motion.span>\n                </span>\n              </button>\n            </li>\n          ))}\n        </motion.ul>\n        <AnimatePresence>\n          {item && (\n            <motion.article ref={pageRef} tabIndex={-1} aria-label={item.title} className=\"absolute inset-0 z-10 overflow-y-auto bg-background outline-none\" initial={{ backgroundColor: \"rgb(0 0 0 / 0)\" }} animate={{ backgroundColor: \"var(--color-background)\" }} exit={{ opacity: 0, transition: { duration: reduced ? 0 : 0.3, delay: reduced ? 0 : 0.1 } }}>\n              <div className=\"relative h-[60%] min-h-56\">\n                <motion.img layoutId={`zp-img-${item.id}`} transition={t} src={item.image} alt=\"\" className=\"absolute inset-0 size-full object-cover\" style={{ borderRadius: 0 }} />\n                <span className=\"absolute inset-0 bg-gradient-to-t from-black/70 to-transparent\" />\n                <button type=\"button\" onClick={() => setOpen(null)} className=\"absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-black/40 px-3 py-1.5 text-sm text-white backdrop-blur hover:bg-black/60\">\n                  <ArrowLeft className=\"size-4\" /> Back\n                </button>\n                <motion.h2 layoutId={`zp-title-${item.id}`} transition={t} className=\"absolute bottom-5 left-6 text-4xl font-semibold tracking-tight text-white\">{item.title}</motion.h2>\n              </div>\n              <motion.div initial={reduced ? { opacity: 0 } : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0, transition: { delay: reduced ? 0 : 0.35, duration: 0.5 } }} exit={{ opacity: 0, transition: { duration: 0.15 } }} className=\"mx-auto max-w-xl p-6 text-sm leading-relaxed text-muted-foreground\">\n                {item.page}\n              </motion.div>\n            </motion.article>\n          )}\n        </AnimatePresence>\n      </div>\n    </LayoutGroup>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "transitions"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "shared element",
+      "zoom",
+      "page transition",
+      "article",
+      "cards"
+    ],
+    "pageTypes": [
+      "blog",
+      "portfolio",
+      "media"
+    ]
+  }
+}

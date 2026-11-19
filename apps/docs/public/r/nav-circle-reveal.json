@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "nav-circle-reveal",
+  "type": "registry:component",
+  "title": "Circle Reveal Menu",
+  "description": "Full-screen menu that pours out of the menu button: a clip-path circle expands from the button's centre, huge links rise from behind a mask with stagger, and hovering a link cross-fades its preview image.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/nav-circle-reveal.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/nav-circle-reveal.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface NavCircleRevealLink {\n  label: string;\n  href: string;\n  image?: string;\n}\n\nexport interface NavCircleRevealProps {\n  links: NavCircleRevealLink[];\n  /** Small print in the menu footer. */\n  footer?: string;\n  /** Start open (for previews). */\n  defaultOpen?: boolean;\n  className?: string;\n}\n\n/**\n * Full-screen menu that pours out of the menu button: a clip-path circle expands from the button's\n * centre, huge links rise in from behind a mask with stagger, and hovering a link cross-fades its\n * preview image behind the list. Closing reverses into the button. Esc closes and focus returns.\n */\nexport function NavCircleReveal({ links, footer = \"hello@studio.com\", defaultOpen = false, className }: NavCircleRevealProps) {\n  const reduced = useReducedMotion();\n  const [open, setOpen] = useState(defaultOpen);\n  const [hover, setHover] = useState<number | null>(null);\n  const [origin, setOrigin] = useState(\"calc(100% - 40px) 40px\");\n  const btn = useRef<HTMLButtonElement>(null);\n  const root = useRef<HTMLDivElement>(null);\n\n  useEffect(() => {\n    if (!open) return;\n    const k = (e: KeyboardEvent) => e.key === \"Escape\" && (setOpen(false), btn.current?.focus());\n    document.addEventListener(\"keydown\", k);\n    return () => document.removeEventListener(\"keydown\", k);\n  }, [open]);\n\n  const toggle = () => {\n    const b = btn.current?.getBoundingClientRect(), r = root.current?.getBoundingClientRect();\n    if (b && r) setOrigin(`${b.left - r.left + b.width / 2}px ${b.top - r.top + b.height / 2}px`);\n    setOpen((o) => !o);\n  };\n  const ease = [0.76, 0, 0.24, 1] as const;\n\n  return (\n    <div ref={root} className={cn(\"relative h-full w-full overflow-hidden\", className)}>\n      <AnimatePresence>\n        {open && (\n          <motion.nav\n            aria-label=\"Main\"\n            initial={reduced ? { opacity: 0 } : { clipPath: `circle(0% at ${origin})` }}\n            animate={reduced ? { opacity: 1 } : { clipPath: `circle(150% at ${origin})` }}\n            exit={reduced ? { opacity: 0 } : { clipPath: `circle(0% at ${origin})`, transition: { duration: 0.6, ease, delay: 0.15 } }}\n            transition={{ duration: reduced ? 0.15 : 0.8, ease }}\n            className=\"absolute inset-0 z-20 flex flex-col justify-between bg-[#e8ff5a] p-8 text-zinc-900\"\n          >\n            <AnimatePresence>\n              {hover !== null && links[hover]?.image && (\n                <motion.img key={hover} src={links[hover].image} alt=\"\" initial={{ opacity: 0, scale: 1.08 }} animate={{ opacity: 0.35, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.45 }} className=\"pointer-events-none absolute right-8 top-1/2 hidden h-2/3 -translate-y-1/2 rounded-2xl object-cover mix-blend-multiply sm:block sm:w-2/5\" />\n              )}\n            </AnimatePresence>\n            <ul className=\"relative mt-10 space-y-1\">\n              {links.map((l, i) => (\n                <li key={l.href} className=\"overflow-hidden\">\n                  <motion.a\n                    href={l.href}\n                    onClick={() => setOpen(false)}\n                    onPointerEnter={() => setHover(i)}\n                    onPointerLeave={() => setHover(null)}\n                    onFocus={() => setHover(i)}\n                    initial={reduced ? { opacity: 0 } : { y: \"110%\" }}\n                    animate={reduced ? { opacity: 1 } : { y: 0 }}\n                    exit={reduced ? { opacity: 0 } : { y: \"110%\", transition: { duration: 0.35, ease, delay: (links.length - i) * 0.03 } }}\n                    transition={{ duration: reduced ? 0.15 : 0.7, ease, delay: reduced ? 0 : 0.25 + i * 0.06 }}\n                    className=\"group flex items-baseline gap-4 text-[clamp(2.4rem,8vw,4.5rem)] font-semibold leading-[1.05] tracking-tight outline-none\"\n                  >\n                    <span className=\"text-xs font-medium tabular-nums opacity-50\">0{i + 1}</span>\n                    <span className=\"transition-transform duration-300 group-hover:translate-x-3 group-focus-visible:translate-x-3 group-focus-visible:underline motion-reduce:transition-none\">{l.label}</span>\n                  </motion.a>\n                </li>\n              ))}\n            </ul>\n            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: reduced ? 0 : 0.6 } }} exit={{ opacity: 0 }} className=\"relative text-sm\">{footer}</motion.p>\n          </motion.nav>\n        )}\n      </AnimatePresence>\n      <button\n        ref={btn}\n        type=\"button\"\n        onClick={toggle}\n        aria-expanded={open}\n        className={cn(\"absolute right-5 top-5 z-30 flex h-11 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors\", open ? \"bg-zinc-900 text-[#e8ff5a]\" : \"bg-foreground text-background\")}\n      >\n        {open ? \"Close\" : \"Menu\"}\n        <span aria-hidden className=\"relative block h-2.5 w-4\">\n          <motion.span className=\"absolute left-0 h-0.5 w-full rounded bg-current\" animate={open ? { top: \"40%\", rotate: 45 } : { top: \"0%\", rotate: 0 }} transition={{ duration: reduced ? 0 : 0.3 }} />\n          <motion.span className=\"absolute left-0 h-0.5 w-full rounded bg-current\" animate={open ? { top: \"40%\", rotate: -45 } : { top: \"80%\", rotate: 0 }} transition={{ duration: reduced ? 0 : 0.3 }} />\n        </span>\n      </button>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "menu",
+      "fullscreen",
+      "clip-path",
+      "agency",
+      "navigation"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "landing"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Build liquid metaballs with React Three Fiber + drei MarchingCubes (enableColors, physical clearcoat material with vertexColors); each MarchingCube moves on a Lissajous path in useFrame; add one more that lerps toward the pointer; light with Environment Lightformers.

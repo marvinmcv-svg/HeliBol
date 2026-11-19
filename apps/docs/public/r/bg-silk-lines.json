@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-silk-lines",
+  "type": "registry:component",
+  "title": "Silk Lines",
+  "description": "Dozens of thin strands flowing like one ribbon of silk: each line is a sum of slow sine waves offset by its index, so the bundle twists, folds and catches light; the pointer bends the fabric.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-silk-lines.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-silk-lines.tsx",
+      "content": "\"use client\";\nimport { cn, useCanvas } from \"@/lib/kinetik/core\";\n\nexport interface BgSilkLinesProps {\n  /** Number of strands. */\n  lines?: number;\n  /** Gradient across strands (6-digit hex). */\n  colors?: [string, string];\n  /** Strand thickness in px. */\n  width?: number;\n  className?: string;\n}\n\n/**\n * Dozens of thin strands drawn as one flowing ribbon of silk: each line is a sum of slow sine\n * waves offset by its index, so the bundle twists, folds and catches light; the pointer gently\n * bends the fabric toward it. Canvas 2D, paused off-screen.\n */\nexport function BgSilkLines({ lines = 46, colors = [\"#f0abfc\", \"#60a5fa\"], width = 1.1, className }: BgSilkLinesProps) {\n  const ref = useCanvas(({ ctx, width: W, height: H, time, pointer }) => {\n    ctx.clearRect(0, 0, W, H);\n    ctx.lineWidth = width;\n    ctx.globalCompositeOperation = \"lighter\";\n    const steps = Math.ceil(W / 8);\n    const bend = pointer ? (pointer.y / H - 0.5) * 0.9 : 0;\n    const bx = pointer ? pointer.x / W : 0.5;\n    for (let i = 0; i < lines; i++) {\n      const k = i / (lines - 1);\n      const grad = ctx.createLinearGradient(0, 0, W, 0);\n      grad.addColorStop(0, `${colors[0]}00`);\n      grad.addColorStop(0.3, `${colors[0]}`);\n      grad.addColorStop(0.7, `${colors[1]}`);\n      grad.addColorStop(1, `${colors[1]}00`);\n      ctx.strokeStyle = grad;\n      ctx.globalAlpha = 0.18 + 0.5 * Math.sin(k * Math.PI) ** 2;\n      ctx.beginPath();\n      for (let s = 0; s <= steps; s++) {\n        const x = (s / steps) * W;\n        const u = x / W;\n        // twist: phase shifts with index so strands cross and fold like fabric\n        const twist = Math.sin(u * 3.2 + time * 0.35 + k * 2.4) * (0.5 - k) * H * 0.38;\n        const flow = Math.sin(u * 5.5 - time * 0.6 + k * 0.6) * H * 0.06;\n        const pull = bend * H * 0.3 * Math.exp(-((u - bx) ** 2) * 10);\n        const y = H * 0.5 + twist + flow + pull + Math.sin(u * 1.4 + time * 0.2) * H * 0.12;\n        if (s === 0) ctx.moveTo(x, y);\n        else ctx.lineTo(x, y);\n      }\n      ctx.stroke();\n    }\n    ctx.globalAlpha = 1;\n    ctx.globalCompositeOperation = \"source-over\";\n  });\n  return <canvas ref={ref} aria-hidden className={cn(\"absolute inset-0 size-full\", className)} />;\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "premium",
+      "lines",
+      "silk",
+      "canvas",
+      "flow",
+      "hero"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

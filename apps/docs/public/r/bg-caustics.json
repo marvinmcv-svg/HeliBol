@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bg-caustics",
+  "type": "registry:component",
+  "title": "Water Caustics",
+  "description": "Pool-floor caustics in a ~1 KB fragment shader: iterated light focusing in two layers, a deep-to-shallow gradient and a ripple that follows the pointer.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/bg-caustics.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/bg-caustics.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, type ReactNode } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface BgCausticsProps {\n  children?: ReactNode;\n  /** Deep water colour. */\n  deep?: string;\n  /** Light colour of the caustic lines. */\n  light?: string;\n  speed?: number;\n  className?: string;\n}\n\nconst FRAG = `precision highp float;\nuniform vec2 uRes; uniform float uTime; uniform vec2 uPointer; uniform vec3 uDeep; uniform vec3 uLight;\n// classic iterated caustic: light focusing through a moving water surface\nfloat caustic(vec2 uv, float t){\n  vec2 p = mod(uv * 6.2831, 6.2831) - 250.0;\n  vec2 i = p; float c = 1.0; float inten = .005;\n  for (int n = 0; n < 5; n++) {\n    float tt = t * (1.0 - (3.5 / float(n + 1)));\n    i = p + vec2(cos(tt - i.x) + sin(tt + i.y), sin(tt - i.y) + cos(tt + i.x));\n    c += 1.0 / length(vec2(p.x / (sin(i.x + tt) / inten), p.y / (cos(i.y + tt) / inten)));\n  }\n  c /= 5.0; c = 1.17 - pow(c, 1.4);\n  return pow(abs(c), 8.0);\n}\nvoid main(){\n  vec2 uv = gl_FragCoord.xy / uRes; vec2 asp = vec2(uRes.x / uRes.y, 1.0);\n  vec2 q = uv * asp * .55;\n  // ripple pushed by the pointer\n  float d = distance(uv * asp, uPointer * asp);\n  q += .02 * sin(d * 40.0 - uTime * 4.0) * exp(-d * 6.0);\n  float c = caustic(q, uTime * .5) + .5 * caustic(q * 1.7 + .3, uTime * .35);\n  vec3 col = mix(uDeep, uDeep * 1.6, uv.y);\n  col += uLight * clamp(c, 0.0, 1.2) * .8;\n  col *= .85 + .15 * smoothstep(1.2, .2, length((uv - .5) * asp));\n  gl_FragColor = vec4(col, 1.0);\n}`;\nconst VERT = \"attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}\";\nconst hex = (c: string) => { const v = parseInt(c.slice(1), 16); return [(v >> 16) / 255, ((v >> 8) & 255) / 255, (v & 255) / 255]; };\n\n/**\n * Pool-floor caustics in a ~1 KB fragment shader: iterated light focusing in two layers, a deep-to-\n * shallow gradient, and a ripple that follows the pointer. Pauses off-screen; reduced motion\n * renders one still frame. Falls back to a CSS gradient without WebGL.\n */\nexport function BgCaustics({ children, deep = \"#04364a\", light = \"#a5f3fc\", speed = 1, className }: BgCausticsProps) {\n  const reduced = useReducedMotion();\n  const canvas = useRef<HTMLCanvasElement>(null);\n  useEffect(() => {\n    const c = canvas.current;\n    const gl = c?.getContext(\"webgl\", { antialias: false });\n    if (!c || !gl) return;\n    const sh = (t: number, s: string) => { const x = gl.createShader(t)!; gl.shaderSource(x, s); gl.compileShader(x); return x; };\n    const prog = gl.createProgram()!;\n    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT));\n    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));\n    gl.bindAttribLocation(prog, 0, \"p\");\n    gl.linkProgram(prog);\n    gl.useProgram(prog);\n    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());\n    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);\n    gl.enableVertexAttribArray(0);\n    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);\n    const u = (n: string) => gl.getUniformLocation(prog, n);\n    gl.uniform3fv(u(\"uDeep\"), hex(deep));\n    gl.uniform3fv(u(\"uLight\"), hex(light));\n    const pointer = [0.5, 0.5], target = [0.5, 0.5];\n    const resize = () => {\n      const dpr = Math.min(1.5, devicePixelRatio || 1);\n      c.width = c.clientWidth * dpr;\n      c.height = c.clientHeight * dpr;\n      gl.viewport(0, 0, c.width, c.height);\n    };\n    const ro = new ResizeObserver(resize);\n    ro.observe(c);\n    resize();\n    const host = c.parentElement!;\n    const move = (e: PointerEvent) => { const r = c.getBoundingClientRect(); target[0] = (e.clientX - r.left) / r.width; target[1] = 1 - (e.clientY - r.top) / r.height; };\n    host.addEventListener(\"pointermove\", move);\n    let raf = 0, visible = true;\n    const t0 = performance.now();\n    const draw = () => {\n      pointer[0] += (target[0] - pointer[0]) * 0.08;\n      pointer[1] += (target[1] - pointer[1]) * 0.08;\n      gl.uniform2f(u(\"uRes\"), c.width, c.height);\n      gl.uniform1f(u(\"uTime\"), reduced ? 3 : ((performance.now() - t0) / 1000) * speed);\n      gl.uniform2f(u(\"uPointer\"), pointer[0], pointer[1]);\n      gl.drawArrays(gl.TRIANGLES, 0, 3);\n    };\n    const loop = () => { draw(); raf = visible && !reduced && !document.hidden ? requestAnimationFrame(loop) : 0; };\n    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible && !raf) loop(); });\n    io.observe(c);\n    loop();\n    return () => { cancelAnimationFrame(raf); io.disconnect(); ro.disconnect(); host.removeEventListener(\"pointermove\", move); gl.getExtension(\"WEBGL_lose_context\")?.loseContext(); };\n  }, [deep, light, speed, reduced]);\n\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)} style={{ background: `linear-gradient(to top, ${deep}, #0e7490)` }}>\n      <canvas ref={canvas} aria-hidden className=\"absolute inset-0 -z-10 size-full\" />\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "backgrounds"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "premium",
+      "water",
+      "shader",
+      "webgl",
+      "caustics",
+      "summer"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

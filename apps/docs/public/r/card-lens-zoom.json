@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-lens-zoom",
+  "type": "registry:component",
+  "title": "Lens Zoom Card",
+  "description": "Product-photo magnifier: a glass lens springs after the cursor and shows the image magnified underneath, with a refraction rim; scroll over the lens to change zoom; press-and-drag on touch.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-lens-zoom.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-lens-zoom.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { motion, useMotionValue, useSpring, useTransform } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface CardLensZoomProps {\n  image: string;\n  alt: string;\n  /** Magnification inside the lens. */\n  zoom?: number;\n  /** Lens diameter in px. */\n  size?: number;\n  className?: string;\n}\n\n/**\n * Product-photo magnifier: a glass lens springs after the cursor and shows the image at `zoom`×\n * underneath it, with a subtle refraction rim. Scroll wheel over the lens changes the zoom.\n * Touch: press and drag. Reduced motion: lens follows without spring.\n */\nexport function CardLensZoom({ image, alt, zoom: initialZoom = 2.5, size = 160, className }: CardLensZoomProps) {\n  const reduced = useReducedMotion();\n  const box = useRef<HTMLDivElement>(null);\n  const [active, setActive] = useState(false);\n  const [zoom, setZoom] = useState(initialZoom);\n  const [dims, setDims] = useState({ w: 1, h: 1 });\n  const x = useMotionValue(0), y = useMotionValue(0);\n  const cfg = reduced ? { stiffness: 2000, damping: 100 } : { stiffness: 380, damping: 32, mass: 0.6 };\n  const sx = useSpring(x, cfg), sy = useSpring(y, cfg);\n  const bgX = useTransform(sx, (v) => `${-(v * zoom - size / 2)}px`);\n  const bgY = useTransform(sy, (v) => `${-(v * zoom - size / 2)}px`);\n  const left = useTransform(sx, (v) => v - size / 2);\n  const top = useTransform(sy, (v) => v - size / 2);\n\n  const track = (e: React.PointerEvent) => {\n    const r = box.current!.getBoundingClientRect();\n    setDims({ w: r.width, h: r.height });\n    x.set(e.clientX - r.left);\n    y.set(e.clientY - r.top);\n  };\n\n  return (\n    <div\n      ref={box}\n      className={cn(\"relative aspect-[4/5] cursor-none touch-none overflow-hidden rounded-3xl bg-muted\", className)}\n      onPointerEnter={(e) => (track(e), e.pointerType !== \"touch\" && setActive(true))}\n      onPointerDown={(e) => (track(e), setActive(true))}\n      onPointerMove={track}\n      onPointerUp={(e) => e.pointerType === \"touch\" && setActive(false)}\n      onPointerLeave={() => setActive(false)}\n      onWheel={(e) => active && setZoom((z) => Math.min(5, Math.max(1.5, z - e.deltaY * 0.004)))}\n    >\n      <img src={image} alt={alt} draggable={false} className=\"size-full object-cover\" />\n      <motion.div\n        aria-hidden\n        initial={false}\n        animate={{ scale: active ? 1 : 0.2, opacity: active ? 1 : 0 }}\n        transition={reduced ? { duration: 0 } : { type: \"spring\", stiffness: 420, damping: 26 }}\n        className=\"pointer-events-none absolute rounded-full shadow-[0_20px_50px_-10px_rgb(0_0_0/.55),inset_0_0_0_2px_rgb(255_255_255/.85),inset_0_0_24px_rgb(255_255_255/.35)]\"\n        style={{\n          width: size,\n          height: size,\n          left,\n          top,\n          backgroundImage: `url(${image})`,\n          backgroundSize: `${dims.w * zoom}px ${dims.h * zoom}px`,\n          backgroundPositionX: bgX,\n          backgroundPositionY: bgY,\n          backgroundRepeat: \"no-repeat\",\n        }}\n      >\n        <span className=\"absolute inset-x-6 top-3 h-6 rounded-full bg-gradient-to-b from-white/50 to-transparent blur-[2px]\" />\n        <span className=\"absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-semibold tabular-nums text-white\">{zoom.toFixed(1)}×</span>\n      </motion.div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "magnifier",
+      "zoom",
+      "product",
+      "ecommerce",
+      "image"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "portfolio"
+    ]
+  }
+}

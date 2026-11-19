@@ -1,0 +1,1 @@
+Build a slice slider: render the previous image full-size, then the new image as N flex slices each showing its portion (img width N×100%, left −k×100%); animate odd slices from y:−100% and even from +100% with stagger (ease [.76,0,.24,1]); caption/title lines rise from y:110% after a delay.

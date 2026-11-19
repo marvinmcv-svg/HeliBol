@@ -1,0 +1,1 @@
+Build radial bars: for each item an arc from 135° sweeping 270°·value/max (track + value path, round caps), radius decreasing per ring; animate pathLength with a stagger when in view; hovering/focusing a ring (or its legend button) dims the others, thickens it with a glow and shows its value in the centre.

@@ -1,0 +1,1 @@
+Build a comet ring loader in CSS: register --angle with @property, animate it 0→360deg; ring background = conic-gradient(from var(--angle), transparent, tail colour → head colour → white tip), masked with a radial-gradient to a band of `thickness`; add a blurred duplicate for glow and a subtle scale breathe.

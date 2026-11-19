@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cursor-smoke-trail",
+  "type": "registry:component",
+  "title": "Smoke Trail Cursor",
+  "description": "A soft glowing smoke trail: the pointer emits puffs that inherit its velocity, rise, swirl on a noise field, expand and fade; additive blending makes overlaps bloom.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/cursor-smoke-trail.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/cursor-smoke-trail.tsx",
+      "content": "\"use client\";\nimport { useMemo, type ReactNode } from \"react\";\nimport { cn, useCanvas } from \"@/lib/kinetik/core\";\n\nexport interface CursorSmokeTrailProps {\n  children?: ReactNode;\n  /** Colours puffs cycle through. */\n  colors?: string[];\n  className?: string;\n}\n\ntype Puff = { x: number; y: number; vx: number; vy: number; r: number; life: number; hue: number };\n\n/**\n * A soft, glowing smoke trail: the pointer emits puffs that inherit its velocity, rise, swirl on a\n * curl-ish noise field, expand and fade. Additive blending makes overlapping puffs bloom. Contained\n * to its area; paused off-screen; static under reduced motion.\n */\nexport function CursorSmokeTrail({ children, colors = [\"#a78bfa\", \"#22d3ee\", \"#f472b6\"], className }: CursorSmokeTrailProps) {\n  const puffs = useMemo<Puff[]>(() => [], []);\n  const last = useMemo(() => ({ x: 0, y: 0, has: false, i: 0 }), []);\n  const ref = useCanvas(({ ctx, width, height, time, dt, pointer }) => {\n    if (pointer) {\n      const vx = last.has ? pointer.x - last.x : 0, vy = last.has ? pointer.y - last.y : 0;\n      const n = Math.min(6, 1 + Math.floor(Math.hypot(vx, vy) / 6));\n      for (let k = 0; k < n; k++) {\n        puffs.push({ x: pointer.x - (vx * k) / n, y: pointer.y - (vy * k) / n, vx: vx * 0.15 + (Math.random() - 0.5), vy: vy * 0.15 - 0.4, r: 6 + Math.random() * 8, life: 1, hue: last.i++ % colors.length });\n      }\n      Object.assign(last, { x: pointer.x, y: pointer.y, has: true });\n    } else last.has = false;\n    if (puffs.length > 420) puffs.splice(0, puffs.length - 420);\n    ctx.clearRect(0, 0, width, height);\n    ctx.globalCompositeOperation = \"lighter\";\n    const step = dt * 60;\n    for (let i = puffs.length - 1; i >= 0; i--) {\n      const p = puffs[i];\n      // swirl field\n      const a = Math.sin(p.x * 0.012 + time) + Math.cos(p.y * 0.014 - time * 0.8);\n      p.vx += Math.cos(a * 2) * 0.06 * step;\n      p.vy += (Math.sin(a * 2) * 0.06 - 0.02) * step;\n      p.vx *= 0.97;\n      p.vy *= 0.97;\n      p.x += p.vx * step;\n      p.y += p.vy * step;\n      p.r += 0.45 * step;\n      p.life -= 0.012 * step;\n      if (p.life <= 0) {\n        puffs.splice(i, 1);\n        continue;\n      }\n      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);\n      g.addColorStop(0, `${colors[p.hue]}${Math.round(p.life * 90).toString(16).padStart(2, \"0\")}`);\n      g.addColorStop(1, `${colors[p.hue]}00`);\n      ctx.fillStyle = g;\n      ctx.beginPath();\n      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);\n      ctx.fill();\n    }\n    ctx.globalCompositeOperation = \"source-over\";\n  });\n  return (\n    <div className={cn(\"relative isolate overflow-hidden\", className)}>\n      <canvas ref={ref} aria-hidden className=\"pointer-events-none absolute inset-0 -z-10 size-full\" />\n      {children}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "canvas",
+    "tags": [
+      "premium",
+      "cursor",
+      "smoke",
+      "trail",
+      "canvas",
+      "glow"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

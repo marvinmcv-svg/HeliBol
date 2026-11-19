@@ -1,0 +1,1 @@
+Build a wave divider: an SVG with preserveAspectRatio=none; each layer is a path made of smooth S-curves with period 1200 spanning 2400 units, filled with its colour, and translated -1200→0 (alternating direction) with animateTransform at a layer-specific duration; last layer matches the next section's background.

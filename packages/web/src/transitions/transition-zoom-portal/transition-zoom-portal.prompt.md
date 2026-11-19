@@ -1,0 +1,1 @@
+Build a zoom portal with Motion: cards with motion.img and title sharing layoutIds with a full-screen article's hero image and heading; open = render the article (AnimatePresence) so the image flies to the hero; the grid behind scales to .92, blurs and dims; content rises after .35 s; Back/Esc reverse.

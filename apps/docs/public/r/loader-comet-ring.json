@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loader-comet-ring",
+  "type": "registry:component",
+  "title": "Comet Ring Loader",
+  "description": "A comet chasing its tail: a conic-gradient ring masked to a thin band whose start angle is an animatable @property, plus a blurred glow copy, gently breathing. Zero JS.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/loader-comet-ring.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/loader-comet-ring.tsx",
+      "content": "import { cn } from \"@/lib/kinetik/utils\";\n\nexport interface LoaderCometRingProps {\n  size?: number;\n  /** Ring thickness in px. */\n  thickness?: number;\n  colors?: [string, string];\n  label?: string;\n  className?: string;\n}\n\nconst css = `\n@property --kn-comet { syntax: \"<angle>\"; inherits: false; initial-value: 0deg; }\n@keyframes kn-comet-spin { to { --kn-comet: 360deg; } }\n@keyframes kn-comet-breathe { 50% { transform: scale(.92); } }\n.kn-comet { animation: kn-comet-spin 1.1s linear infinite, kn-comet-breathe 2.2s ease-in-out infinite; }\n.kn-comet-glow { animation: kn-comet-spin 1.1s linear infinite; }\n@media (prefers-reduced-motion: reduce) { .kn-comet, .kn-comet-glow { animation: kn-comet-spin 4s linear infinite; } }\n[data-reduce-motion] .kn-comet, [data-reduce-motion] .kn-comet-glow { animation: kn-comet-spin 4s linear infinite; }\n`;\n\n/**\n * A comet chasing its tail: a conic-gradient ring masked to a thin band whose start angle is an\n * animatable @property, so the bright head and fading tail rotate smoothly; a blurred copy adds glow\n * and the ring gently breathes. Zero JS. Reduced motion slows it to a calm 4 s turn (a loader must\n * still show activity).\n */\nexport function LoaderCometRing({ size = 64, thickness = 5, colors = [\"#22d3ee\", \"#a855f7\"], label = \"Loading\", className }: LoaderCometRingProps) {\n  const ring = {\n    background: `conic-gradient(from var(--kn-comet), transparent 0deg, ${colors[1]}22 90deg, ${colors[1]} 260deg, ${colors[0]} 340deg, #fff 352deg, transparent 360deg)`,\n    WebkitMask: `radial-gradient(farthest-side, transparent calc(100% - ${thickness}px), #000 calc(100% - ${thickness}px + 1px))`,\n    mask: `radial-gradient(farthest-side, transparent calc(100% - ${thickness}px), #000 calc(100% - ${thickness}px + 1px))`,\n  } as const;\n  return (\n    <span role=\"status\" aria-label={label} className={cn(\"relative inline-block\", className)} style={{ width: size, height: size }}>\n      <style href=\"kn-loader-comet-ring\" precedence=\"kinetik\">{css}</style>\n      <span aria-hidden className=\"kn-comet-glow absolute inset-0 rounded-full opacity-70 blur-md\" style={ring} />\n      <span aria-hidden className=\"kn-comet absolute inset-0 rounded-full\" style={ring} />\n      <span className=\"sr-only\">{label}…</span>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "loaders"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "premium",
+      "loader",
+      "spinner",
+      "conic",
+      "glow",
+      "css"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "ai-app"
+    ]
+  }
+}

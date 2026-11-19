@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "three-hologram",
+  "type": "registry:component",
+  "title": "Hologram",
+  "description": "Sci-fi hologram: a fresnel-rim shader with scrolling scanlines, flicker and occasional horizontal glitch slices, additive-blended over a projector cone. Knot, head, ring or crystal.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/canvas-3d-shell.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/three-hologram.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/three-hologram.tsx",
+      "content": "\"use client\";\nimport { useMemo, useRef } from \"react\";\nimport { useFrame } from \"@react-three/fiber\";\nimport * as THREE from \"three\";\nimport { useReducedMotion } from \"@/lib/kinetik/core\";\nimport { Canvas3DShell } from \"@/components/kinetik/canvas-3d-shell\";\n\nexport type HologramShape = \"knot\" | \"head\" | \"ring\" | \"crystal\";\n\nexport interface ThreeHologramProps {\n  shape?: HologramShape;\n  color?: string;\n  className?: string;\n}\n\nconst vertexShader = /* glsl */ `\nuniform float uTime; uniform float uGlitch;\nvarying vec3 vNormal; varying vec3 vView; varying vec3 vWorld;\nfloat rand(vec2 c){ return fract(sin(dot(c, vec2(12.9898, 78.233))) * 43758.5453); }\nvoid main(){\n  vec4 world = modelMatrix * vec4(position, 1.0);\n  // glitch: horizontal slice displacement in short bursts\n  float band = step(.985, rand(vec2(floor(world.y * 18.0), floor(uTime * 8.0))));\n  world.x += band * (rand(vec2(uTime)) - .5) * .35 * uGlitch;\n  vWorld = world.xyz;\n  vec4 mv = viewMatrix * world;\n  vNormal = normalize(normalMatrix * normal);\n  vView = normalize(-mv.xyz);\n  gl_Position = projectionMatrix * mv;\n}`;\n\nconst fragmentShader = /* glsl */ `\nuniform float uTime; uniform vec3 uColor;\nvarying vec3 vNormal; varying vec3 vView; varying vec3 vWorld;\nvoid main(){\n  float fres = pow(1.0 - abs(dot(vNormal, vView)), 2.0);\n  float lines = step(.5, fract(vWorld.y * 22.0 - uTime * 1.6)) * .55 + .45;\n  float flicker = .92 + .08 * sin(uTime * 37.0);\n  float a = (fres * 1.25 + .08) * lines * flicker;\n  gl_FragColor = vec4(uColor * (1.0 + fres), a);\n}`;\n\nfunction Holo({ shape, color }: { shape: HologramShape; color: string }) {\n  const reduced = useReducedMotion();\n  const mesh = useRef<THREE.Mesh>(null);\n  const uniforms = useMemo(() => ({ uTime: { value: 0 }, uGlitch: { value: reduced ? 0 : 1 }, uColor: { value: new THREE.Color(color) } }), [color, reduced]);\n  useFrame((s, dt) => {\n    if (reduced) return;\n    uniforms.uTime.value += dt;\n    if (mesh.current) {\n      mesh.current.rotation.y += dt * 0.4;\n      mesh.current.rotation.x += (s.pointer.y * 0.4 - mesh.current.rotation.x) * 0.05;\n    }\n  });\n  return (\n    <group>\n      <mesh ref={mesh}>\n        {shape === \"knot\" && <torusKnotGeometry args={[0.8, 0.26, 220, 32]} />}\n        {shape === \"head\" && <sphereGeometry args={[1, 64, 64]} />}\n        {shape === \"ring\" && <torusGeometry args={[0.9, 0.3, 48, 128]} />}\n        {shape === \"crystal\" && <octahedronGeometry args={[1.15, 1]} />}\n        <shaderMaterial vertexShader={vertexShader} fragmentShader={fragmentShader} uniforms={uniforms} transparent depthWrite={false} blending={THREE.AdditiveBlending} side={THREE.DoubleSide} />\n      </mesh>\n      {/* projector base */}\n      <mesh position={[0, -1.45, 0]} rotation-x={-Math.PI / 2}>\n        <ringGeometry args={[0.6, 0.75, 64]} />\n        <meshBasicMaterial color={color} transparent opacity={0.6} />\n      </mesh>\n      <mesh position={[0, -0.75, 0]}>\n        <coneGeometry args={[1.1, 1.4, 64, 1, true]} />\n        <meshBasicMaterial color={color} transparent opacity={0.06} side={THREE.DoubleSide} depthWrite={false} blending={THREE.AdditiveBlending} />\n      </mesh>\n    </group>\n  );\n}\n\n/**\n * Sci-fi hologram: a fresnel-rim shader with scrolling scanlines, flicker and occasional horizontal\n * glitch slices, additive-blended over a projector cone. Pick a knot, head, ring or crystal.\n */\nexport function ThreeHologram({ shape = \"knot\", color = \"#22d3ee\", className }: ThreeHologramProps) {\n  return (\n    <Canvas3DShell className={className} camera={{ position: [0, 0.2, 4.4], fov: 45 }}>\n      <Holo shape={shape} color={color} />\n    </Canvas3DShell>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "3d"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "premium",
+      "three.js",
+      "hologram",
+      "shader",
+      "sci-fi",
+      "glitch"
+    ],
+    "pageTypes": [
+      "landing",
+      "ai-app"
+    ]
+  }
+}

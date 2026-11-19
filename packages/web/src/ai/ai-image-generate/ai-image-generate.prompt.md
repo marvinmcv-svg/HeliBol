@@ -1,0 +1,1 @@
+Build an image-generation preview: a square frame with the final image under CSS blur (28 → 0 px), saturation and scale easing with progress; a tiny canvas of random coloured noise (pixelated, overlay blend) fading out; a moving light band; a step counter with a progress ring; typewriter prompt. Drive it with rAF or real progress events.

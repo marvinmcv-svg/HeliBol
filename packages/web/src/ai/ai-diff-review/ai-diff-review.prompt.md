@@ -1,0 +1,1 @@
+Build an AI diff review: stream lines across hunks with a timer; each line enters with a green flash (add) or fade (del with line-through), a block cursor sits on the last line; when a hunk completes show Accept/Reject; on decision collapse the body (height → 0) and show an Accepted/Rejected chip in the header.

@@ -1,0 +1,1 @@
+Build a caustics background with raw WebGL: fullscreen triangle; fragment shader computes the classic iterated caustic (5 iterations of trig feedback) at two scales, adds a pointer ripple sin(d·40 − 4t)·e^(−6d) to the UVs, mixes a deep→shallow gradient and adds the light colour. rAF only while visible.

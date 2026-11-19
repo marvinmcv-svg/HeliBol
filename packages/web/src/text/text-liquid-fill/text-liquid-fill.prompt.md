@@ -1,0 +1,1 @@
+Build liquid-fill text in SVG: a clipPath of the text; inside it a group translated by (100 − level) that contains two seamless wave paths (period 50, tile 200) looping horizontally in opposite directions with animateTransform; draw an outlined copy of the text on top. Ease level changes with a CSS transition.

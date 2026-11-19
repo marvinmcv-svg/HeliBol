@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-radial-bars",
+  "type": "registry:component",
+  "title": "Radial Bar Chart",
+  "description": "Concentric gauge-shaped radial bars: rings sweep in one after another when visible; hovering or focusing a ring brightens it, dims the others and swaps the centre readout.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/chart-radial-bars.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/chart-radial-bars.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { motion, useInView } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ChartRadialBarsProps {\n  data: { label: string; value: number; color: string }[];\n  /** Value that maps to a full 270° sweep. */\n  max?: number;\n  size?: number;\n  centerLabel?: string;\n  className?: string;\n}\n\nconst START = 135; // degrees — open at the bottom like a gauge\nconst SWEEP = 270;\n\nfunction arc(cx: number, cy: number, r: number, a0: number, a1: number) {\n  const p = (a: number) => [cx + r * Math.cos((a * Math.PI) / 180), cy + r * Math.sin((a * Math.PI) / 180)];\n  const [x0, y0] = p(a0), [x1, y1] = p(a1);\n  return `M${x0},${y0} A${r},${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${x1},${y1}`;\n}\n\n/**\n * Concentric radial bars (Apple-Fitness style, gauge-shaped): rings sweep in one after another when\n * visible, hovering or focusing a ring brightens it, dims the others and swaps the centre readout.\n * A legend doubles as an accessible list of values.\n */\nexport function ChartRadialBars({ data, max = 100, size = 240, centerLabel = \"Total\", className }: ChartRadialBarsProps) {\n  const reduced = useReducedMotion();\n  const ref = useRef<HTMLDivElement>(null);\n  const seen = useInView(ref, { once: true, amount: 0.4 });\n  const [active, setActive] = useState<number | null>(null);\n  const c = size / 2, gap = 16, stroke = 11;\n  const total = data.reduce((s, d) => s + d.value, 0);\n  const cur = active === null ? null : data[active];\n\n  return (\n    <div ref={ref} className={cn(\"flex flex-wrap items-center justify-center gap-6\", className)}>\n      <div className=\"relative\" style={{ width: size, height: size }}>\n        <svg viewBox={`0 0 ${size} ${size}`} className=\"size-full\" aria-hidden>\n          {data.map((d, i) => {\n            const r = c - stroke - i * gap;\n            const frac = Math.min(1, d.value / max);\n            const dim = active !== null && active !== i;\n            return (\n              <g key={d.label} onPointerEnter={() => setActive(i)} onPointerLeave={() => setActive(null)}>\n                <path d={arc(c, c, r, START, START + SWEEP)} fill=\"none\" stroke={d.color} strokeOpacity=\".15\" strokeWidth={stroke} strokeLinecap=\"round\" />\n                <motion.path\n                  d={arc(c, c, r, START, START + SWEEP * Math.max(frac, 0.001))}\n                  fill=\"none\"\n                  stroke={d.color}\n                  strokeWidth={stroke}\n                  strokeLinecap=\"round\"\n                  initial={reduced ? false : { pathLength: 0 }}\n                  animate={{ pathLength: seen || reduced ? 1 : 0, opacity: dim ? 0.3 : 1, strokeWidth: active === i ? stroke + 3 : stroke }}\n                  transition={{ pathLength: { duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: reduced ? 0 : i * 0.15 }, opacity: { duration: 0.2 }, strokeWidth: { duration: 0.2 } }}\n                  style={{ filter: active === i ? `drop-shadow(0 0 6px ${d.color})` : undefined }}\n                />\n              </g>\n            );\n          })}\n        </svg>\n        <div className=\"pointer-events-none absolute inset-0 grid place-items-center text-center\">\n          <motion.div key={active ?? \"t\"} initial={reduced ? false : { opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2 }}>\n            <p className=\"text-3xl font-semibold tabular-nums\">{cur ? cur.value : total}</p>\n            <p className=\"text-xs text-muted-foreground\">{cur ? cur.label : centerLabel}</p>\n          </motion.div>\n        </div>\n      </div>\n      <ul className=\"space-y-2 text-sm\">\n        {data.map((d, i) => (\n          <li key={d.label}>\n            <button type=\"button\" onFocus={() => setActive(i)} onBlur={() => setActive(null)} onPointerEnter={() => setActive(i)} onPointerLeave={() => setActive(null)} className={cn(\"flex items-center gap-2 rounded-md px-1 transition-opacity\", active !== null && active !== i && \"opacity-40\")}>\n              <span className=\"size-2.5 rounded-full\" style={{ background: d.color }} />\n              <span>{d.label}</span>\n              <span className=\"ml-3 font-semibold tabular-nums\">{d.value}</span>\n            </button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "chart",
+      "radial",
+      "gauge",
+      "rings",
+      "kpi"
+    ],
+    "pageTypes": [
+      "dashboard"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Build an ink-bleed headline: an SVG filter (feTurbulence fractalNoise → feDisplacementMap → feGaussianBlur) applied to the text; on entering view animate a 0→1 progress with Motion's animate(), setting displacement scale (60→0) and blur (6→0) imperatively, while each word fades and rises with a per-word offset. Remove the filter at 1. Replays on re-entry.

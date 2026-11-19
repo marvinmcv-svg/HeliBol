@@ -1,0 +1,1 @@
+Build a lens zoom: a container with an image; a circular element following the pointer through a spring whose background is the same image at zoom× size, positioned so the point under the cursor sits in the lens centre (bg position = −(x·zoom − size/2)). Pop in/out with a spring, wheel adjusts zoom 1.5–5, show the zoom readout.

@@ -1,0 +1,1 @@
+Build a smoke trail on canvas: on each frame emit puffs along the segment between the last and current pointer positions (more when fast), each with velocity = pointer velocity × .15 plus upward drift; add a swirl from sin/cos of position and time, damp, grow radius, fade life; draw radial gradients with 'lighter' compositing.

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-ticket-tear",
+  "type": "registry:component",
+  "title": "Tear-off Ticket",
+  "description": "A boarding-pass ticket whose stub you drag down to tear along the perforation: it hinges and rotates as you pull, then drops away with gravity past the threshold.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-ticket-tear.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-ticket-tear.tsx",
+      "content": "\"use client\";\nimport { useState, type ReactNode } from \"react\";\nimport { motion, useMotionValue, useTransform, animate } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface CardTicketTearProps {\n  /** Main ticket body. */\n  children: ReactNode;\n  /** The tear-off stub. */\n  stub: ReactNode;\n  /** Called once the stub is torn off. */\n  onTear?: () => void;\n  className?: string;\n}\n\n/**\n * A boarding-pass style ticket whose stub you drag down to tear off along the perforation: the\n * stub hinges and rotates as you pull, the ragged edge appears, and past the threshold it drops\n * away with gravity; a button provides the same action for keyboard users.\n */\nexport function CardTicketTear({ children, stub, onTear, className }: CardTicketTearProps) {\n  const reduced = useReducedMotion();\n  const [torn, setTorn] = useState(false);\n  const y = useMotionValue(0);\n  const rotate = useTransform(y, [0, 140], [0, 9]);\n  const gap = useTransform(y, [0, 30], [0, 1]);\n\n  const tear = () => {\n    setTorn(true);\n    onTear?.();\n    if (reduced) return y.set(600);\n    animate(y, 700, { type: \"tween\", ease: [0.5, 0, 0.9, 0.4], duration: 0.7 });\n  };\n\n  return (\n    <div className={cn(\"relative w-72 select-none\", className)}>\n      <div className=\"relative rounded-t-3xl bg-card p-6 shadow-xl ring-1 ring-border\">\n        {children}\n        {/* perforation notches */}\n        <span aria-hidden className=\"absolute -bottom-3 -left-3 size-6 rounded-full bg-background ring-1 ring-border [clip-path:inset(0_0_50%_50%)]\" />\n        <span aria-hidden className=\"absolute -bottom-3 -right-3 size-6 rounded-full bg-background ring-1 ring-border [clip-path:inset(0_50%_50%_0)]\" />\n      </div>\n      <motion.div aria-hidden style={{ opacity: gap }} className=\"mx-4 h-1 [background:radial-gradient(circle,var(--color-border,#ccc)_1px,transparent_1.5px)_0_0/8px_4px]\" />\n      <motion.div\n        drag={torn ? false : \"y\"}\n        dragConstraints={{ top: 0, bottom: 0 }}\n        dragElastic={{ top: 0, bottom: 0.9 }}\n        dragSnapToOrigin={!torn}\n        onDragEnd={(_, info) => info.offset.y > 110 && tear()}\n        style={{ y, rotate, transformOrigin: \"0% 0%\" }}\n        transition={spring.smooth}\n        className={cn(\"relative cursor-grab rounded-b-3xl bg-card p-6 shadow-xl ring-1 ring-border active:cursor-grabbing\", torn && \"pointer-events-none\")}\n      >\n        <span aria-hidden className=\"absolute inset-x-0 -top-px h-2 [background:linear-gradient(135deg,transparent_33%,var(--color-card,#fff)_33%_66%,transparent_66%)_0_0/10px_8px]\" />\n        {stub}\n        {!torn && (\n          <div className=\"mt-4 flex items-center justify-between text-[11px] text-muted-foreground\">\n            <span>↓ Pull to tear</span>\n            <button type=\"button\" onClick={tear} className=\"rounded-full border border-border px-2.5 py-1 font-medium hover:text-foreground\">Tear stub</button>\n          </div>\n        )}\n      </motion.div>\n      <p className=\"sr-only\" aria-live=\"polite\">{torn ? \"Stub torn off\" : \"\"}</p>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "ticket",
+      "drag",
+      "boarding pass",
+      "event",
+      "playful"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "onboarding"
+    ]
+  }
+}

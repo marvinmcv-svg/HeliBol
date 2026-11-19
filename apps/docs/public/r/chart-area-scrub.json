@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-area-scrub",
+  "type": "registry:component",
+  "title": "Scrubbable Area Chart",
+  "description": "Stock-app area chart: the line draws in when visible, the gradient fill fades up, and scrubbing snaps a crosshair to the nearest point while the headline value rolls and the delta updates.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/chart-area-scrub.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/chart-area-scrub.tsx",
+      "content": "\"use client\";\nimport { useId, useMemo, useRef, useState } from \"react\";\nimport { AnimatePresence, motion, useInView } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ChartAreaScrubProps {\n  data: { label: string; value: number }[];\n  /** Format for the value readout. */\n  format?: (v: number) => string;\n  color?: string;\n  title?: string;\n  className?: string;\n}\n\nconst W = 600, H = 220, PAD = 8;\n\n/** Smooth path through points (monotone-ish cubic using midpoints). */\nfunction smooth(pts: [number, number][]) {\n  return pts.reduce((d, [x, y], i) => {\n    if (i === 0) return `M${x},${y}`;\n    const [px, py] = pts[i - 1];\n    const cx = (px + x) / 2;\n    return `${d} C${cx},${py} ${cx},${y} ${x},${y}`;\n  }, \"\");\n}\n\n/**\n * Stock-app area chart: the line draws in when it scrolls into view and the gradient fill fades up;\n * scrubbing (pointer or arrow keys) snaps a crosshair to the nearest point, the headline number\n * rolls to that value, the delta vs. the first point updates, and everything right of the cursor\n * dims.\n */\nexport function ChartAreaScrub({ data, format = (v) => v.toLocaleString(), color = \"#22c55e\", title = \"Revenue\", className }: ChartAreaScrubProps) {\n  const reduced = useReducedMotion();\n  const id = useId().replace(/:/g, \"\");\n  const ref = useRef<HTMLDivElement>(null);\n  const seen = useInView(ref, { once: true, amount: 0.3 });\n  const [hover, setHover] = useState<number | null>(null);\n  const { pts, line, area } = useMemo(() => {\n    const vs = data.map((d) => d.value);\n    const min = Math.min(...vs), max = Math.max(...vs);\n    const pts = data.map((d, i) => [PAD + (i / (data.length - 1)) * (W - PAD * 2), PAD + (1 - (d.value - min) / (max - min || 1)) * (H - PAD * 2 - 20)] as [number, number]);\n    const line = smooth(pts);\n    return { pts, line, area: `${line} L${pts.at(-1)![0]},${H} L${pts[0][0]},${H} Z` };\n  }, [data]);\n  const idx = hover ?? data.length - 1;\n  const cur = data[idx];\n  const delta = ((cur.value - data[0].value) / data[0].value) * 100;\n  const up = delta >= 0;\n  const pick = (clientX: number) => {\n    const r = ref.current!.querySelector(\"svg\")!.getBoundingClientRect();\n    const x = ((clientX - r.left) / r.width) * W;\n    let best = 0;\n    pts.forEach(([px], i) => Math.abs(px - x) < Math.abs(pts[best][0] - x) && (best = i));\n    setHover(best);\n  };\n\n  return (\n    <div ref={ref} className={cn(\"w-full rounded-3xl border border-border bg-card p-5\", className)}>\n      <p className=\"text-sm text-muted-foreground\">{title}</p>\n      <div className=\"mt-1 flex items-baseline gap-3\">\n        <div className=\"relative h-9 overflow-hidden\">\n          <AnimatePresence mode=\"popLayout\" initial={false}>\n            <motion.p key={idx} initial={reduced ? false : { y: 16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={reduced ? undefined : { y: -16, opacity: 0 }} transition={{ duration: 0.18 }} className=\"text-3xl font-semibold tabular-nums tracking-tight\">\n              {format(cur.value)}\n            </motion.p>\n          </AnimatePresence>\n        </div>\n        <span className={cn(\"text-sm font-medium tabular-nums\", up ? \"text-emerald-500\" : \"text-rose-500\")}>{up ? \"▲\" : \"▼\"} {Math.abs(delta).toFixed(1)}%</span>\n        <span className=\"ml-auto text-xs text-muted-foreground\">{cur.label}</span>\n      </div>\n      <svg\n        viewBox={`0 0 ${W} ${H}`}\n        className=\"mt-3 w-full touch-none overflow-visible outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        role=\"slider\"\n        tabIndex={0}\n        aria-label={`${title} by period`}\n        aria-valuemin={0}\n        aria-valuemax={data.length - 1}\n        aria-valuenow={idx}\n        aria-valuetext={`${cur.label}: ${format(cur.value)}`}\n        onPointerMove={(e) => pick(e.clientX)}\n        onPointerDown={(e) => pick(e.clientX)}\n        onPointerLeave={() => setHover(null)}\n        onKeyDown={(e) => {\n          if (e.key === \"ArrowLeft\") setHover(Math.max(0, idx - 1));\n          if (e.key === \"ArrowRight\") setHover(Math.min(data.length - 1, idx + 1));\n        }}\n      >\n        <defs>\n          <linearGradient id={`${id}-f`} x1=\"0\" x2=\"0\" y1=\"0\" y2=\"1\"><stop offset=\"0\" stopColor={color} stopOpacity=\".35\" /><stop offset=\"1\" stopColor={color} stopOpacity=\"0\" /></linearGradient>\n          <clipPath id={`${id}-c`}><motion.rect x=\"0\" y=\"-20\" height={H + 40} animate={{ width: hover === null ? W : pts[idx][0] }} transition={{ type: \"spring\", stiffness: 500, damping: 40 }} /></clipPath>\n        </defs>\n        <motion.path d={area} fill={`url(#${id}-f)`} initial={reduced ? false : { opacity: 0 }} animate={{ opacity: seen || reduced ? 1 : 0 }} transition={{ duration: 0.8, delay: 0.6 }} />\n        <path d={line} fill=\"none\" stroke={color} strokeOpacity=\".25\" strokeWidth=\"2.5\" />\n        <motion.path d={line} fill=\"none\" stroke={color} strokeWidth=\"2.5\" strokeLinecap=\"round\" clipPath={`url(#${id}-c)`} initial={reduced ? false : { pathLength: 0 }} animate={{ pathLength: seen || reduced ? 1 : 0 }} transition={{ duration: 1.2, ease: [0.65, 0, 0.35, 1] }} />\n        {hover !== null && (\n          <g>\n            <line x1={pts[idx][0]} x2={pts[idx][0]} y1=\"0\" y2={H} stroke=\"currentColor\" strokeOpacity=\".25\" strokeDasharray=\"3 4\" />\n            <motion.circle initial={false} animate={{ cx: pts[idx][0], cy: pts[idx][1] }} transition={{ type: \"spring\", stiffness: 500, damping: 40 }} r=\"6\" fill={color} stroke=\"var(--color-card, #fff)\" strokeWidth=\"3\" />\n          </g>\n        )}\n      </svg>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "chart",
+      "finance",
+      "area",
+      "scrub",
+      "dashboard"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "ecommerce"
+    ]
+  }
+}

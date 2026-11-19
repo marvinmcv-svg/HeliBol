@@ -1,0 +1,1 @@
+Build a hologram in R3F: ShaderMaterial with vertex glitch (random horizontal offset for thin y-bands in brief bursts) and a fragment of fresnel × scanlines (fract(y·22 − t·1.6)) × flicker, additive blending, double-sided; add a ring and an open cone for the projector; slow spin with pointer tilt.

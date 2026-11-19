@@ -1,0 +1,1 @@
+Build a sortable grid with Motion: tiles are motion.div with layout and drag (dragSnapToOrigin, no momentum); on drag find the nearest tile centre to the pointer and move the dragged item to that index (layout keeps it under the pointer); whileDrag lifts (scale 1.12, rotate −3°, shadow). Add keyboard pick-up/move/drop with aria-live messages.
