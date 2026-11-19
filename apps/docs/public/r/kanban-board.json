@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kanban-board",
+  "type": "registry:component",
+  "title": "Kanban Board",
+  "description": "Kanban board: drag cards between and within columns (native drag-and-drop, no library) or move them with buttons; every card glides to its new slot with shared layout and the target column lights up.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/kanban-board.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/kanban-board.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, LayoutGroup, motion } from \"motion/react\";\nimport { ArrowLeft, ArrowRight, GripVertical } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface KanbanCard {\n  id: string;\n  title: string;\n  tag?: string;\n}\n\nexport interface KanbanColumn {\n  id: string;\n  title: string;\n  cards: KanbanCard[];\n}\n\nexport interface KanbanBoardProps {\n  columns: KanbanColumn[];\n  onChange?: (columns: KanbanColumn[]) => void;\n  className?: string;\n}\n\n/**\n * Kanban board: drag cards between and within columns (native drag-and-drop, so it works without\n * a library), or move them with the arrow buttons / keyboard. Every card glides to its new slot\n * with a shared layout animation; the target column lights up while you drag over it.\n */\nexport function KanbanBoard({ columns: initial, onChange, className }: KanbanBoardProps) {\n  const reduced = useReducedMotion();\n  const [cols, setCols] = useState(initial);\n  const [drag, setDrag] = useState<string | null>(null);\n  const [over, setOver] = useState<{ col: string; index: number } | null>(null);\n  const [announce, setAnnounce] = useState(\"\");\n\n  const move = (cardId: string, toCol: string, toIndex: number) => {\n    setCols((prev) => {\n      const card = prev.flatMap((c) => c.cards).find((c) => c.id === cardId);\n      if (!card) return prev;\n      const next = prev.map((c) => ({ ...c, cards: c.cards.filter((x) => x.id !== cardId) }));\n      const target = next.find((c) => c.id === toCol)!;\n      target.cards.splice(Math.min(toIndex, target.cards.length), 0, card);\n      onChange?.(next);\n      setAnnounce(`${card.title} moved to ${target.title}, position ${Math.min(toIndex, target.cards.length - 1) + 1}`);\n      return next;\n    });\n  };\n  const nudge = (cardId: string, colIdx: number, dir: -1 | 1) => {\n    const to = cols[colIdx + dir];\n    if (to) move(cardId, to.id, to.cards.length);\n  };\n  const t = reduced ? { duration: 0 } : spring.smooth;\n\n  return (\n    <LayoutGroup>\n      <div className={cn(\"grid h-full auto-cols-[minmax(13rem,1fr)] grid-flow-col gap-3 overflow-x-auto p-1\", className)}>\n        <p className=\"sr-only\" aria-live=\"polite\">{announce}</p>\n        {cols.map((col, ci) => (\n          <section\n            key={col.id}\n            aria-label={`${col.title}, ${col.cards.length} cards`}\n            onDragOver={(e) => {\n              e.preventDefault();\n              if (over?.col !== col.id) setOver({ col: col.id, index: col.cards.length });\n            }}\n            onDragLeave={(e) => !e.currentTarget.contains(e.relatedTarget as Node) && setOver(null)}\n            onDrop={(e) => {\n              e.preventDefault();\n              if (drag) move(drag, col.id, over?.col === col.id ? over.index : col.cards.length);\n              setDrag(null);\n              setOver(null);\n            }}\n            className={cn(\"flex min-h-0 flex-col rounded-2xl border p-2 transition-colors\", over?.col === col.id ? \"border-primary/50 bg-primary/5\" : \"border-border bg-muted/40\")}\n          >\n            <header className=\"flex items-center justify-between px-1.5 pb-2 pt-1 text-xs font-semibold\">\n              {col.title}\n              <motion.span key={col.cards.length} initial={reduced ? false : { scale: 1.4 }} animate={{ scale: 1 }} transition={spring.bouncy} className=\"rounded-full bg-background px-1.5 tabular-nums text-muted-foreground\">\n                {col.cards.length}\n              </motion.span>\n            </header>\n            <ul className=\"flex min-h-12 flex-col gap-2 overflow-y-auto\">\n              <AnimatePresence initial={false}>\n                {col.cards.map((card, i) => (\n                  <motion.li key={card.id} layoutId={card.id} transition={t}>\n                  <div\n                    draggable\n                    onDragStart={(e) => {\n                      setDrag(card.id);\n                      e.dataTransfer.setData(\"text/plain\", card.id);\n                    }}\n                    onDragEnd={() => (setDrag(null), setOver(null))}\n                    onDragOver={(e) => {\n                      e.preventDefault();\n                      e.stopPropagation();\n                      const r = e.currentTarget.getBoundingClientRect();\n                      const index = e.clientY < r.top + r.height / 2 ? i : i + 1;\n                      if (over?.col !== col.id || over.index !== index) setOver({ col: col.id, index });\n                    }}\n                    className={cn(\n                      \"group relative cursor-grab rounded-xl border border-border bg-card p-3 text-sm shadow-sm active:cursor-grabbing\",\n                      drag === card.id && \"opacity-40\",\n                      over?.col === col.id && over.index === i && drag !== card.id && \"before:absolute before:-top-1.5 before:inset-x-2 before:h-0.5 before:rounded-full before:bg-primary\",\n                    )}\n                  >\n                    <div className=\"flex items-start gap-2\">\n                      <GripVertical className=\"mt-0.5 size-4 shrink-0 text-muted-foreground/60\" aria-hidden />\n                      <div className=\"min-w-0 flex-1\">\n                        <p className=\"font-medium leading-snug\">{card.title}</p>\n                        {card.tag && <span className=\"mt-1.5 inline-block rounded-full bg-muted px-2 py-0.5 text-[11px] text-muted-foreground\">{card.tag}</span>}\n                      </div>\n                    </div>\n                    <div className=\"mt-2 flex justify-end gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 [@media(hover:none)]:opacity-100\">\n                      <button type=\"button\" disabled={ci === 0} onClick={() => nudge(card.id, ci, -1)} aria-label={`Move ${card.title} to ${cols[ci - 1]?.title ?? \"\"}`} className=\"grid size-6 place-items-center rounded-md hover:bg-muted disabled:opacity-30\"><ArrowLeft className=\"size-3.5\" /></button>\n                      <button type=\"button\" disabled={ci === cols.length - 1} onClick={() => nudge(card.id, ci, 1)} aria-label={`Move ${card.title} to ${cols[ci + 1]?.title ?? \"\"}`} className=\"grid size-6 place-items-center rounded-md hover:bg-muted disabled:opacity-30\"><ArrowRight className=\"size-3.5\" /></button>\n                    </div>\n                  </div>\n                  </motion.li>\n                ))}\n              </AnimatePresence>\n            </ul>\n          </section>\n        ))}\n      </div>\n    </LayoutGroup>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "kanban",
+      "drag and drop",
+      "board",
+      "tasks",
+      "productivity"
+    ],
+    "pageTypes": [
+      "dashboard"
+    ]
+  }
+}

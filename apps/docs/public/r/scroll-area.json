@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-area",
+  "type": "registry:component",
+  "title": "Scroll Area",
+  "description": "Native scrolling with a custom overlay scrollbar that appears while scrolling or hovering, grows when grabbed and can be dragged; top/bottom fades appear only when there is more content that way.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/scroll-area.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/scroll-area.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState, type ReactNode } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ScrollAreaProps {\n  children: ReactNode;\n  /** Accessible name for the scroll region. */\n  label: string;\n  className?: string;\n  /** Height of the edge fades in px. */\n  fade?: number;\n}\n\n/**\n * Native scrolling with a custom overlay scrollbar: the thumb appears while you scroll or hover,\n * grows when grabbed, and can be dragged; top/bottom fades appear only when there is more content\n * that way. Keyboard, wheel, touch and screen readers keep the native behaviour.\n */\nexport function ScrollArea({ children, label, className, fade = 32 }: ScrollAreaProps) {\n  const reduced = useReducedMotion();\n  const vp = useRef<HTMLDivElement>(null);\n  const [m, setM] = useState({ top: 0, size: 1, atTop: true, atEnd: true });\n  const [active, setActive] = useState(false);\n  const [grab, setGrab] = useState(false);\n  const hide = useRef<ReturnType<typeof setTimeout>>(undefined);\n\n  useEffect(() => {\n    const el = vp.current;\n    if (!el) return;\n    const measure = () => {\n      const { scrollTop, scrollHeight, clientHeight } = el;\n      const size = clientHeight / scrollHeight;\n      setM({ top: (scrollTop / scrollHeight) * 100, size, atTop: scrollTop < 2, atEnd: scrollTop + clientHeight >= scrollHeight - 2 });\n    };\n    const onScroll = () => {\n      measure();\n      setActive(true);\n      clearTimeout(hide.current);\n      hide.current = setTimeout(() => setActive(false), 900);\n    };\n    measure();\n    const ro = new ResizeObserver(measure);\n    ro.observe(el);\n    if (el.firstElementChild) ro.observe(el.firstElementChild);\n    el.addEventListener(\"scroll\", onScroll, { passive: true });\n    return () => { ro.disconnect(); el.removeEventListener(\"scroll\", onScroll); clearTimeout(hide.current); };\n  }, []);\n\n  const dragThumb = (e: React.PointerEvent) => {\n    const el = vp.current!;\n    const startY = e.clientY, start = el.scrollTop;\n    setGrab(true);\n    const move = (ev: PointerEvent) => (el.scrollTop = start + (ev.clientY - startY) / m.size);\n    const up = () => (setGrab(false), window.removeEventListener(\"pointermove\", move), window.removeEventListener(\"pointerup\", up));\n    window.addEventListener(\"pointermove\", move);\n    window.addEventListener(\"pointerup\", up);\n  };\n  const scrollable = m.size < 1;\n  const mask = `linear-gradient(to bottom, ${m.atTop ? \"black\" : \"transparent\"}, black ${fade}px, black calc(100% - ${fade}px), ${m.atEnd ? \"black\" : \"transparent\"})`;\n\n  return (\n    <div className={cn(\"group relative overflow-hidden\", className)}>\n      <div\n        ref={vp}\n        role=\"region\"\n        aria-label={label}\n        tabIndex={0}\n        className=\"h-full overflow-y-auto overscroll-contain outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring [&::-webkit-scrollbar]:hidden\"\n        style={{ maskImage: mask, WebkitMaskImage: mask, transition: reduced ? undefined : \"mask-image .2s\" }}\n      >\n        <div>{children}</div>\n      </div>\n      {scrollable && (\n        <div aria-hidden className={cn(\"absolute inset-y-1 right-1 w-2.5 transition-opacity duration-300\", active || grab ? \"opacity-100\" : \"opacity-0 group-hover:opacity-100\")}>\n          <div\n            onPointerDown={dragThumb}\n            className={cn(\"absolute right-0 cursor-grab touch-none rounded-full bg-foreground/30 transition-[width,background-color] duration-150 hover:bg-foreground/50 active:cursor-grabbing\", grab ? \"w-2.5 bg-foreground/50\" : \"w-1.5\")}\n            style={{ top: `${m.top}%`, height: `${Math.max(8, m.size * 100)}%` }}\n          />\n        </div>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "js",
+    "tags": [
+      "scrollbar",
+      "scroll",
+      "overflow",
+      "list",
+      "fade"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "docs"
+    ]
+  }
+}

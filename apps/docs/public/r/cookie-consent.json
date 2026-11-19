@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cookie-consent",
+  "type": "registry:component",
+  "title": "Cookie Consent",
+  "description": "A polite consent card: slides up after a short delay, Customise expands per-category switches in place, and Accept and Reject are equally prominent — no dark patterns. The choice is remembered.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/cookie-consent.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/cookie-consent.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Cookie } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ConsentCategory {\n  id: string;\n  label: string;\n  description: string;\n  required?: boolean;\n}\n\nexport interface CookieConsentProps {\n  categories?: ConsentCategory[];\n  /** Persist the choice under this localStorage key; omit to show every time (demos). */\n  storageKey?: string;\n  onDecide?: (granted: Record<string, boolean>) => void;\n  /** Delay before the card slides in, ms. */\n  delay?: number;\n  className?: string;\n}\n\nconst DEFAULT: ConsentCategory[] = [\n  { id: \"necessary\", label: \"Strictly necessary\", description: \"Sign-in, security and your saved preferences.\", required: true },\n  { id: \"analytics\", label: \"Analytics\", description: \"Anonymous usage stats that help us improve.\" },\n  { id: \"marketing\", label: \"Marketing\", description: \"Personalised offers on other sites.\" },\n];\n\n/**\n * A polite consent card: slides up after a short delay, \"Customise\" expands per-category switches\n * in place (height auto), and both choices are equally prominent (no dark pattern). The decision\n * is remembered.\n */\nexport function CookieConsent({ categories = DEFAULT, storageKey, onDecide, delay = 600, className }: CookieConsentProps) {\n  const reduced = useReducedMotion();\n  const [open, setOpen] = useState(false);\n  const [custom, setCustom] = useState(false);\n  const [granted, setGranted] = useState<Record<string, boolean>>(() => Object.fromEntries(categories.map((c) => [c.id, !!c.required])));\n\n  useEffect(() => {\n    try {\n      if (storageKey && localStorage.getItem(storageKey)) return;\n    } catch {}\n    const id = setTimeout(() => setOpen(true), delay);\n    return () => clearTimeout(id);\n  }, [storageKey, delay]);\n\n  const decide = (g: Record<string, boolean>) => {\n    try {\n      if (storageKey) localStorage.setItem(storageKey, JSON.stringify(g));\n    } catch {}\n    onDecide?.(g);\n    setOpen(false);\n  };\n  const all = (v: boolean) => Object.fromEntries(categories.map((c) => [c.id, c.required ? true : v]));\n  const t = reduced ? { duration: 0.15 } : spring.smooth;\n\n  return (\n    <AnimatePresence>\n      {open && (\n        <motion.div\n          role=\"dialog\"\n          aria-modal=\"false\"\n          aria-labelledby=\"kn-cookie-title\"\n          initial={reduced ? { opacity: 0 } : { opacity: 0, y: 40, scale: 0.97 }}\n          animate={{ opacity: 1, y: 0, scale: 1 }}\n          exit={reduced ? { opacity: 0 } : { opacity: 0, y: 40, scale: 0.97 }}\n          transition={t}\n          className={cn(\"w-[min(100%-2rem,24rem)] overflow-hidden rounded-3xl border border-border bg-popover p-5 text-popover-foreground shadow-2xl\", className)}\n        >\n          <div className=\"flex items-start gap-3\">\n            <motion.span initial={reduced ? false : { rotate: -30, scale: 0.6 }} animate={{ rotate: 0, scale: 1 }} transition={{ ...spring.bouncy, delay: 0.15 }} className=\"grid size-9 shrink-0 place-items-center rounded-xl bg-amber-500/15 text-amber-600\">\n              <Cookie className=\"size-5\" />\n            </motion.span>\n            <div>\n              <h2 id=\"kn-cookie-title\" className=\"font-semibold\">We use cookies</h2>\n              <p className=\"mt-1 text-sm text-muted-foreground\">Some are essential; others help us improve. You choose.</p>\n            </div>\n          </div>\n          <AnimatePresence initial={false}>\n            {custom && (\n              <motion.ul initial={{ height: 0, opacity: 0 }} animate={{ height: \"auto\", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={t} className=\"overflow-hidden\">\n                {categories.map((c) => (\n                  <li key={c.id} className=\"mt-3 flex items-start justify-between gap-3 border-t border-border pt-3 first:mt-4\">\n                    <div className=\"text-sm\">\n                      <p className=\"font-medium\">{c.label}</p>\n                      <p className=\"text-xs text-muted-foreground\">{c.description}</p>\n                    </div>\n                    <button\n                      type=\"button\"\n                      role=\"switch\"\n                      aria-checked={granted[c.id]}\n                      aria-label={c.label}\n                      disabled={c.required}\n                      onClick={() => setGranted((g) => ({ ...g, [c.id]: !g[c.id] }))}\n                      className={cn(\"flex h-6 w-10 shrink-0 rounded-full p-0.5 transition-colors disabled:opacity-60\", granted[c.id] ? \"justify-end bg-emerald-500\" : \"justify-start bg-muted-foreground/30\")}\n                    >\n                      <motion.span layout transition={reduced ? { duration: 0 } : spring.snappy} className=\"size-5 rounded-full bg-white shadow\" />\n                    </button>\n                  </li>\n                ))}\n              </motion.ul>\n            )}\n          </AnimatePresence>\n          <div className=\"mt-5 grid grid-cols-2 gap-2\">\n            {custom ? (\n              <>\n                <button type=\"button\" onClick={() => setCustom(false)} className=\"h-10 rounded-xl border border-border text-sm font-medium hover:bg-muted\">Back</button>\n                <button type=\"button\" onClick={() => decide(granted)} className=\"h-10 rounded-xl bg-foreground text-sm font-medium text-background\">Save choices</button>\n              </>\n            ) : (\n              <>\n                <button type=\"button\" onClick={() => decide(all(false))} className=\"h-10 rounded-xl border border-border text-sm font-medium hover:bg-muted\">Reject all</button>\n                <button type=\"button\" onClick={() => decide(all(true))} className=\"h-10 rounded-xl bg-foreground text-sm font-medium text-background\">Accept all</button>\n              </>\n            )}\n          </div>\n          {!custom && <button type=\"button\" onClick={() => setCustom(true)} className=\"mt-3 w-full text-center text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground\">Customise</button>}\n        </motion.div>\n      )}\n    </AnimatePresence>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "cookie",
+      "consent",
+      "gdpr",
+      "privacy",
+      "banner"
+    ],
+    "pageTypes": [
+      "landing",
+      "ecommerce"
+    ]
+  }
+}

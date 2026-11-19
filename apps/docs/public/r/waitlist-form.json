@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "waitlist-form",
+  "type": "registry:component",
+  "title": "Waitlist Form",
+  "description": "Waitlist signup: the email pill morphs into a success pill with your place in line, the joined counter rolls up, your avatar pops into the stack, and invalid input shakes with a message.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/waitlist-form.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/waitlist-form.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useState } from \"react\";\nimport { AnimatePresence, animate, motion, useMotionValue, useTransform } from \"motion/react\";\nimport { ArrowRight, Check, Loader2 } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface WaitlistFormProps {\n  /** People already on the list. */\n  count: number;\n  avatars?: string[];\n  /** Resolve to accept, reject with an Error to show its message. */\n  onJoin?: (email: string) => Promise<void>;\n  className?: string;\n}\n\n/**\n * Waitlist signup: the email pill morphs into a success state with your place in line, the\n * joined counter rolls up by one, avatars shuffle to make room for yours, and errors shake the\n * field with a message.\n */\nexport function WaitlistForm({ count, avatars = [], onJoin = async () => new Promise((r) => setTimeout(r, 900)), className }: WaitlistFormProps) {\n  const reduced = useReducedMotion();\n  const id = useId();\n  const [email, setEmail] = useState(\"\");\n  const [state, setState] = useState<\"idle\" | \"loading\" | \"done\" | \"error\">(\"idle\");\n  const [error, setError] = useState(\"\");\n  const [shake, setShake] = useState(0);\n  const total = useMotionValue(count);\n  const shown = useTransform(total, (v) => Math.round(v).toLocaleString());\n  const [place, setPlace] = useState(count + 1);\n\n  useEffect(() => total.set(count), [count, total]);\n\n  const submit = async (e: React.FormEvent) => {\n    e.preventDefault();\n    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {\n      setError(\"Enter a valid email address.\");\n      setState(\"error\");\n      setShake((s) => s + 1);\n      return;\n    }\n    setState(\"loading\");\n    try {\n      await onJoin(email);\n      setPlace(Math.round(total.get()) + 1);\n      if (reduced) total.set(total.get() + 1);\n      else animate(total, total.get() + 1, { duration: 0.8, ease: \"easeOut\" });\n      setState(\"done\");\n    } catch (err) {\n      setError(err instanceof Error ? err.message : \"Something went wrong.\");\n      setState(\"error\");\n      setShake((s) => s + 1);\n    }\n  };\n\n  return (\n    <div className={cn(\"w-full max-w-sm space-y-4\", className)}>\n      <AnimatePresence mode=\"wait\" initial={false}>\n        {state === \"done\" ? (\n          <motion.div\n            key=\"done\"\n            layoutId={`${id}-pill`}\n            transition={reduced ? { duration: 0 } : spring.smooth}\n            className=\"flex h-12 items-center gap-3 rounded-full bg-emerald-500 px-4 text-sm font-medium text-white\"\n            role=\"status\"\n          >\n            <motion.span initial={reduced ? false : { scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} transition={{ ...spring.bouncy, delay: 0.1 }} className=\"grid size-6 place-items-center rounded-full bg-white/25\">\n              <Check className=\"size-4\" strokeWidth={3} />\n            </motion.span>\n            You&apos;re in — #{place.toLocaleString()} in line\n          </motion.div>\n        ) : (\n          <motion.form\n            key=\"form\"\n            layoutId={`${id}-pill`}\n            onSubmit={submit}\n            noValidate\n            transition={reduced ? { duration: 0 } : spring.smooth}\n            animate={shake && !reduced ? { x: [0, -8, 8, -5, 5, 0] } : undefined}\n            className={cn(\"flex h-12 items-center gap-1 rounded-full border bg-background p-1 pl-4 shadow-sm focus-within:ring-2 focus-within:ring-ring\", state === \"error\" ? \"border-rose-500\" : \"border-border\")}\n          >\n            <label htmlFor={id} className=\"sr-only\">Email address</label>\n            <input\n              id={id}\n              type=\"email\"\n              value={email}\n              onChange={(e) => (setEmail(e.target.value), state === \"error\" && setState(\"idle\"))}\n              placeholder=\"you@company.com\"\n              aria-invalid={state === \"error\"}\n              aria-describedby={state === \"error\" ? `${id}-err` : undefined}\n              className=\"min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground\"\n            />\n            <button type=\"submit\" disabled={state === \"loading\"} className=\"inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-foreground px-4 text-sm font-medium text-background disabled:opacity-70\">\n              {state === \"loading\" ? <Loader2 className=\"size-4 animate-spin motion-reduce:animate-none\" /> : <>Join <ArrowRight className=\"size-4\" /></>}\n            </button>\n          </motion.form>\n        )}\n      </AnimatePresence>\n      <p id={`${id}-err`} className=\"h-4 px-4 text-xs text-rose-500\" aria-live=\"assertive\">{state === \"error\" ? error : \"\"}</p>\n      <div className=\"flex items-center gap-3 px-1\">\n        <div className=\"flex -space-x-2\">\n          <AnimatePresence initial={false}>\n            {state === \"done\" && (\n              <motion.span key=\"you\" initial={reduced ? false : { scale: 0, width: 0 }} animate={{ scale: 1, width: 28 }} transition={spring.bouncy} className=\"grid size-7 place-items-center rounded-full border-2 border-background bg-emerald-500 text-[10px] font-bold text-white\">\n                You\n              </motion.span>\n            )}\n          </AnimatePresence>\n          {avatars.slice(0, 4).map((a) => <motion.img layout key={a} src={a} alt=\"\" className=\"size-7 rounded-full border-2 border-background object-cover\" />)}\n        </div>\n        <p className=\"text-sm text-muted-foreground\">\n          <motion.span className=\"font-semibold tabular-nums text-foreground\">{shown}</motion.span> people joined\n        </p>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "waitlist",
+      "email",
+      "signup",
+      "launch",
+      "form"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

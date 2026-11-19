@@ -1,0 +1,1 @@
+Build a scroll area: a native overflow-y viewport with the scrollbar hidden, a mask-image gradient whose top/bottom stops turn transparent only when not at the start/end, and an absolutely positioned thumb sized clientHeight/scrollHeight and positioned by scrollTop. Thumb shows while scrolling (900 ms timeout) or hovering and is draggable (pointer delta / size).

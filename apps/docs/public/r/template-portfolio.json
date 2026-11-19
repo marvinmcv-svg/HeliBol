@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "template-portfolio",
+  "type": "registry:block",
+  "title": "Template — Creative Portfolio",
+  "description": "An independent creative's portfolio: a 3D image-ribbon opener behind a giant name, an about section with a smart-animate discipline word, a selected-work grid, a vertical marquee of kind words, a contact section and a footer reveal.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/marquee-vertical.json",
+    "https://marvzkineticlibrary.vercel.app/r/text-smart-animate.json",
+    "https://marvzkineticlibrary.vercel.app/r/portfolio-ribbon.json",
+    "https://marvzkineticlibrary.vercel.app/r/blog-grid.json",
+    "https://marvzkineticlibrary.vercel.app/r/contact-section.json",
+    "https://marvzkineticlibrary.vercel.app/r/footer-reveal.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/template-portfolio.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/template-portfolio.tsx",
+      "content": "\"use client\";\nimport { MarqueeVertical } from \"@/components/kinetik/marquee-vertical\";\nimport { TextSmartAnimate } from \"@/components/kinetik/text-smart-animate\";\nimport { PortfolioRibbon } from \"@/components/kinetik/portfolio-ribbon\";\nimport { BlogGrid } from \"@/components/kinetik/blog-grid\";\nimport { ContactSection } from \"@/components/kinetik/contact-section\";\nimport { FooterReveal } from \"@/components/kinetik/footer-reveal\";\n\nconst quotes = [\n  [\"Mara turned a brief into a brand our customers talk about.\", \"Head of Brand, Halo\"],\n  [\"The fastest, calmest creative partner we've worked with.\", \"Founder, Orvo\"],\n  [\"Every frame had a reason to exist.\", \"Creative Director, Field\"],\n  [\"She made our book feel like an object, not a PDF.\", \"Editor, Saffron Press\"],\n];\n\n/** Independent creative's portfolio: 3D ribbon opener → about → selected work grid → kind words → contact → footer reveal. */\nexport function TemplatePortfolio() {\n  return (\n    <div className=\"relative bg-[#ece8df] text-zinc-900\">\n      <div className=\"p-3\"><PortfolioRibbon /></div>\n      <section id=\"about\" className=\"mx-auto grid max-w-5xl gap-8 px-6 py-16 md:grid-cols-[1fr_2fr]\">\n        <p className=\"text-xs uppercase tracking-[0.3em] text-zinc-500\">About</p>\n        <p className=\"text-2xl leading-snug tracking-tight sm:text-3xl\">\n          Art director for <TextSmartAnimate words={[\"brands\", \"books\", \"films\", \"spaces\"]} className=\"font-semibold\" /> that need to feel inevitable. Twelve years, four studios, one rule: motion must mean something.\n        </p>\n      </section>\n      <div id=\"work\" className=\"rounded-t-[2rem] bg-background text-foreground\"><BlogGrid /></div>\n      <section className=\"h-[420px] bg-background px-6 pb-10\">\n        <MarqueeVertical\n          className=\"mx-auto h-full max-w-4xl\"\n          columns={[0, 1, 2].map((c) => quotes.map((_, i) => quotes[(i + c) % quotes.length]).map((q) => (\n            <figure key={q[0]} className=\"rounded-2xl border border-border bg-card p-4 text-sm\"><blockquote>“{q[0]}”</blockquote><figcaption className=\"mt-2 text-xs text-muted-foreground\">{q[1]}</figcaption></figure>\n          )))}\n        />\n      </section>\n      <div id=\"contact\" className=\"bg-background text-foreground\"><ContactSection /></div>\n      <FooterReveal />\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "template",
+      "portfolio",
+      "personal",
+      "full page",
+      "three.js"
+    ],
+    "pageTypes": [
+      "portfolio"
+    ]
+  }
+}

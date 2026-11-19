@@ -1,0 +1,1 @@
+Build a cookie consent card with Motion: appears after a delay (y 40 → 0), icon pops in, two equal buttons (Reject all / Accept all) and a Customise link that expands a list of per-category switches with height auto. Save choices persists to localStorage and calls onDecide.

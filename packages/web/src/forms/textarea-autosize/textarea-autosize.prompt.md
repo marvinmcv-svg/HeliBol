@@ -1,0 +1,1 @@
+Build an auto-growing textarea: on each value change set height 0, read scrollHeight (capped at maxRows lines) and animate a wrapper's height with a snappy spring. Footer: remaining count, an SVG ring whose pathLength = length/max and stroke shifts to amber at 20 left and red when over, and a send button. ⌘/Ctrl+Enter submits.

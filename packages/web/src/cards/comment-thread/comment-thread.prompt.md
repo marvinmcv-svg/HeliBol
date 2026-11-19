@@ -1,0 +1,1 @@
+Build a comment thread with Motion: recursive items (avatar, author, time, body, like + reply). Like toggles a filled heart that pops and a count that rolls up/down via AnimatePresence popLayout. Reply expands an inline form (height auto); submitting appends a reply that fades/slides in while siblings animate layout.

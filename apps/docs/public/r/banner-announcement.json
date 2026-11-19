@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "banner-announcement",
+  "type": "registry:component",
+  "title": "Announcement Banner",
+  "description": "Top-of-page announcement bar: a sheen sweeps across, several messages rotate vertically (paused on hover/focus), the arrow nudges on hover, and dismissal collapses the bar and is remembered.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/banner-announcement.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/banner-announcement.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ArrowRight, X } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface Announcement {\n  label?: string;\n  text: string;\n  href?: string;\n}\n\nexport interface BannerAnnouncementProps {\n  items: Announcement[];\n  /** Milliseconds per message when there are several. */\n  interval?: number;\n  /** Remember dismissal in localStorage under this key. */\n  storageKey?: string;\n  className?: string;\n}\n\nconst css = `\n@keyframes kn-banner-sheen { from { background-position: 200% 0; } to { background-position: -200% 0; } }\n.kn-banner-sheen { background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / .25) 50%, transparent 65%) 0 0 / 200% 100%; animation: kn-banner-sheen 4s linear infinite; }\n@media (prefers-reduced-motion: reduce) { .kn-banner-sheen { animation: none; } }\n[data-reduce-motion] .kn-banner-sheen { animation: none; }\n`;\n\n/**\n * Top-of-page announcement bar: a sheen sweeps across, several messages rotate vertically (paused\n * on hover/focus), the arrow nudges on hover, and dismissal collapses the bar and is remembered.\n */\nexport function BannerAnnouncement({ items, interval = 4000, storageKey, className }: BannerAnnouncementProps) {\n  const reduced = useReducedMotion();\n  const [open, setOpen] = useState(true);\n  const [i, setI] = useState(0);\n  const [paused, setPaused] = useState(false);\n\n  useEffect(() => {\n    if (!storageKey) return;\n    try {\n      if (localStorage.getItem(storageKey) === \"1\") setOpen(false);\n    } catch {}\n  }, [storageKey]);\n  useEffect(() => {\n    if (items.length < 2 || paused) return;\n    const id = setInterval(() => setI((n) => (n + 1) % items.length), interval);\n    return () => clearInterval(id);\n  }, [items.length, interval, paused]);\n\n  const dismiss = () => {\n    setOpen(false);\n    if (storageKey) try { localStorage.setItem(storageKey, \"1\"); } catch {}\n  };\n  const it = items[i];\n\n  return (\n    <AnimatePresence initial={false}>\n      {open && (\n        <motion.div\n          role=\"region\"\n          aria-label=\"Announcement\"\n          initial={{ height: 0 }}\n          animate={{ height: \"auto\" }}\n          exit={{ height: 0 }}\n          transition={reduced ? { duration: 0 } : spring.smooth}\n          className={cn(\"relative overflow-hidden bg-foreground text-background\", className)}\n          onPointerEnter={() => setPaused(true)}\n          onPointerLeave={() => setPaused(false)}\n          onFocus={() => setPaused(true)}\n          onBlur={() => setPaused(false)}\n        >\n          <style href=\"kn-banner-announcement\" precedence=\"kinetik\">{css}</style>\n          <span aria-hidden className=\"kn-banner-sheen pointer-events-none absolute inset-0\" />\n          <div className=\"relative flex h-10 items-center justify-center px-10 text-sm\">\n            <AnimatePresence mode=\"popLayout\" initial={false}>\n              <motion.a\n                key={i}\n                href={it.href ?? \"#\"}\n                initial={reduced ? { opacity: 0 } : { y: 20, opacity: 0 }}\n                animate={{ y: 0, opacity: 1 }}\n                exit={reduced ? { opacity: 0 } : { y: -20, opacity: 0 }}\n                transition={reduced ? { duration: 0.15 } : spring.smooth}\n                className=\"group inline-flex items-center gap-2 truncate\"\n              >\n                {it.label && <span className=\"rounded-full bg-background/15 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide\">{it.label}</span>}\n                <span className=\"truncate\">{it.text}</span>\n                <ArrowRight className=\"size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none\" />\n              </motion.a>\n            </AnimatePresence>\n            <button type=\"button\" onClick={dismiss} aria-label=\"Dismiss announcement\" className=\"absolute right-2 grid size-7 place-items-center rounded-md opacity-70 hover:bg-background/10 hover:opacity-100\">\n              <X className=\"size-4\" />\n            </button>\n          </div>\n        </motion.div>\n      )}\n    </AnimatePresence>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "banner",
+      "announcement",
+      "top bar",
+      "marketing",
+      "launch"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

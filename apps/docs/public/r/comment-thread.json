@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "comment-thread",
+  "type": "registry:component",
+  "title": "Comment Thread",
+  "description": "Threaded comments: likes pop and their count rolls, the reply composer expands in place, and new replies slide into the thread while siblings make room. Two levels deep.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/comment-thread.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/comment-thread.tsx",
+      "content": "\"use client\";\nimport { useId, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Heart, MessageCircle } from \"lucide-react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface Comment {\n  id: string;\n  author: string;\n  avatar?: string;\n  time: string;\n  body: string;\n  likes: number;\n  replies?: Comment[];\n}\n\nexport interface CommentThreadProps {\n  comments: Comment[];\n  /** Name used for new replies. */\n  me?: string;\n  className?: string;\n}\n\nfunction Item({ c, depth, me, onReply }: { c: Comment; depth: number; me: string; onReply: (parent: string, body: string) => void }) {\n  const reduced = useReducedMotion();\n  const id = useId();\n  const [liked, setLiked] = useState(false);\n  const [open, setOpen] = useState(false);\n  const [draft, setDraft] = useState(\"\");\n  const likes = c.likes + (liked ? 1 : 0);\n  return (\n    <motion.li layout={!reduced} initial={reduced ? false : { opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={spring.smooth} className=\"relative\">\n      <article aria-labelledby={`${id}-a`} className=\"flex gap-3\">\n        {c.avatar ? <img src={c.avatar} alt=\"\" className=\"size-8 shrink-0 rounded-full object-cover\" /> : <span className=\"grid size-8 shrink-0 place-items-center rounded-full bg-primary/15 text-xs font-semibold text-primary\">{c.author[0]}</span>}\n        <div className=\"min-w-0 flex-1\">\n          <p className=\"text-sm\"><span id={`${id}-a`} className=\"font-semibold\">{c.author}</span> <span className=\"text-xs text-muted-foreground\">· {c.time}</span></p>\n          <p className=\"mt-0.5 text-sm leading-relaxed\">{c.body}</p>\n          <div className=\"mt-1.5 flex items-center gap-4 text-xs text-muted-foreground\">\n            <button type=\"button\" onClick={() => setLiked((l) => !l)} aria-pressed={liked} aria-label={`Like, ${likes} likes`} className={cn(\"inline-flex items-center gap-1 hover:text-foreground\", liked && \"text-rose-500\")}>\n              <motion.span key={String(liked)} initial={liked && !reduced ? { scale: 0.3 } : false} animate={{ scale: 1 }} transition={spring.bouncy}><Heart className={cn(\"size-3.5\", liked && \"fill-current\")} /></motion.span>\n              <AnimatePresence mode=\"popLayout\" initial={false}>\n                <motion.span key={likes} initial={reduced ? false : { y: liked ? 8 : -8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={reduced ? undefined : { y: liked ? -8 : 8, opacity: 0 }} className=\"tabular-nums\">{likes}</motion.span>\n              </AnimatePresence>\n            </button>\n            {depth < 2 && (\n              <button type=\"button\" onClick={() => setOpen((o) => !o)} aria-expanded={open} className=\"inline-flex items-center gap-1 hover:text-foreground\">\n                <MessageCircle className=\"size-3.5\" /> Reply\n              </button>\n            )}\n          </div>\n          <AnimatePresence initial={false}>\n            {open && (\n              <motion.form\n                initial={{ height: 0, opacity: 0 }}\n                animate={{ height: \"auto\", opacity: 1 }}\n                exit={{ height: 0, opacity: 0 }}\n                transition={reduced ? { duration: 0 } : spring.smooth}\n                onSubmit={(e) => {\n                  e.preventDefault();\n                  if (!draft.trim()) return;\n                  onReply(c.id, draft.trim());\n                  setDraft(\"\");\n                  setOpen(false);\n                }}\n                className=\"overflow-hidden\"\n              >\n                <div className=\"mt-2 flex gap-2\">\n                  <input autoFocus value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={`Reply to ${c.author} as ${me}…`} aria-label={`Reply to ${c.author}`} className=\"h-9 min-w-0 flex-1 rounded-xl border border-border bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring\" />\n                  <button type=\"submit\" disabled={!draft.trim()} className=\"h-9 rounded-xl bg-foreground px-3 text-sm font-medium text-background disabled:opacity-40\">Post</button>\n                </div>\n              </motion.form>\n            )}\n          </AnimatePresence>\n          {c.replies && c.replies.length > 0 && (\n            <ul className=\"mt-3 space-y-3 border-l border-border pl-4\">\n              <AnimatePresence initial={false}>{c.replies.map((r) => <Item key={r.id} c={r} depth={depth + 1} me={me} onReply={onReply} />)}</AnimatePresence>\n            </ul>\n          )}\n        </div>\n      </article>\n    </motion.li>\n  );\n}\n\n/**\n * Threaded comments: likes pop and their count rolls, the reply composer expands in place, and new\n * replies slide into the thread while siblings make room (layout animation). Two levels deep.\n */\nexport function CommentThread({ comments: initial, me = \"You\", className }: CommentThreadProps) {\n  const [comments, setComments] = useState(initial);\n  const addReply = (parent: string, body: string) => {\n    const reply: Comment = { id: `${parent}-${Date.now()}`, author: me, time: \"now\", body, likes: 0 };\n    const walk = (list: Comment[]): Comment[] => list.map((c) => (c.id === parent ? { ...c, replies: [...(c.replies ?? []), reply] } : { ...c, replies: c.replies && walk(c.replies) }));\n    setComments(walk);\n  };\n  return (\n    <ul className={cn(\"space-y-5\", className)} aria-label=\"Comments\">\n      <AnimatePresence initial={false}>{comments.map((c) => <Item key={c.id} c={c} depth={0} me={me} onReply={addReply} />)}</AnimatePresence>\n    </ul>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "comments",
+      "thread",
+      "reply",
+      "social",
+      "like"
+    ],
+    "pageTypes": [
+      "social",
+      "blog"
+    ]
+  }
+}

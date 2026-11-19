@@ -1,0 +1,606 @@
+[
+ {
+  "id": "alert-animated",
+  "name": "Animated Alert",
+  "category": "overlays",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Inline alert that springs in, draws its status icon, and on dismiss collapses its own height so the content below closes the gap. Optional auto-dismiss with a draining progress line.",
+  "tags": [
+   "alert",
+   "callout",
+   "status",
+   "notification",
+   "dismiss"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "settings"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "role=alert for warning/danger, role=status otherwise; labelled dismiss button. Reduced motion: fades only.",
+  "perf": "Height/opacity on one element; icon stroke via pathLength.",
+  "props": [
+   [
+    "tone",
+    "'info' | 'success' | 'warning' | 'danger'",
+    "'info'",
+    "Colour + icon."
+   ],
+   [
+    "title",
+    "string",
+    "",
+    "Heading."
+   ],
+   [
+    "duration",
+    "number",
+    "",
+    "Auto-dismiss ms."
+   ],
+   [
+    "dismissible",
+    "boolean",
+    "true",
+    "Show close button."
+   ],
+   [
+    "action",
+    "ReactNode",
+    "",
+    "Optional action."
+   ]
+  ],
+  "prompt": "Build an animated alert with Motion: AnimatePresence around a rounded tinted panel that enters (y \u22128, scale .98) and exits by animating height to 0 so siblings close the gap. The status icon is an SVG circle + glyph drawn with pathLength. Optional duration auto-dismisses with a scaleX progress bar. Danger/warning use role=alert."
+ },
+ {
+  "id": "banner-announcement",
+  "name": "Announcement Banner",
+  "category": "navigation",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Top-of-page announcement bar: a sheen sweeps across, several messages rotate vertically (paused on hover/focus), the arrow nudges on hover, and dismissal collapses the bar and is remembered.",
+  "tags": [
+   "banner",
+   "announcement",
+   "top bar",
+   "marketing",
+   "launch"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "Labelled region; rotation pauses on hover and focus; dismiss is a labelled button and persists. Reduced motion: no sheen, crossfades.",
+  "perf": "CSS sheen; one interval; height animation only on dismiss.",
+  "props": [
+   [
+    "items",
+    "{ label?, text, href? }[]",
+    "",
+    "Messages."
+   ],
+   [
+    "interval",
+    "number",
+    "4000",
+    "ms per message."
+   ],
+   [
+    "storageKey",
+    "string",
+    "",
+    "Persist dismissal."
+   ]
+  ],
+  "prompt": "Build an announcement bar: dark full-width strip with a CSS gradient sheen sweeping across, a message link (optional pill label + arrow that nudges on hover) that rotates vertically between items with AnimatePresence popLayout, pausing on hover/focus. Dismiss collapses height to 0 and stores a flag in localStorage."
+ },
+ {
+  "id": "badge-animated",
+  "name": "Animated Badges",
+  "category": "buttons",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Four badge behaviours: a pinging live dot, a metallic shine sweep, a counter that bumps and rolls when it changes (99+ cap), and a presence status dot.",
+  "tags": [
+   "badge",
+   "counter",
+   "live",
+   "status",
+   "notification"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "social"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "Counter has an aria-label with the full number; status text visible. Reduced motion: no ping/shine, numbers swap.",
+  "perf": "CSS keyframes for ping and shine; Motion only for the counter.",
+  "props": [
+   [
+    "variant",
+    "'live' | 'shine' | 'count' | 'status'",
+    "'live'",
+    "Behaviour."
+   ],
+   [
+    "count",
+    "number",
+    "0",
+    "Counter value."
+   ],
+   [
+    "status",
+    "'online' | 'away' | 'busy' | 'offline'",
+    "'online'",
+    "Presence."
+   ]
+  ],
+  "prompt": "Build animated badges: live (pinging dot via scale/opacity keyframes), shine (gold gradient pill with a skewed white highlight sweeping across), count (keyed on value so it bumps scale 1.35\u21921 with a bouncy spring while the digits roll via AnimatePresence popLayout; cap at 99+), status (coloured dot, pinging only when online)."
+ },
+ {
+  "id": "dropdown-menu",
+  "name": "Dropdown Menu",
+  "category": "overlays",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 400,
+  "description": "Menu button with the full WAI-ARIA keyboard model \u2014 arrows, Home/End, type-ahead, Esc returns focus. The panel springs from the trigger's corner, items stagger in and a highlight pill glides between them.",
+  "tags": [
+   "dropdown",
+   "menu",
+   "actions",
+   "keyboard",
+   "popover"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "settings"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "menu / menuitem / menuitemcheckbox roles with aria-activedescendant; Esc and Tab close; focus returns to the trigger. Reduced motion: fades only.",
+  "perf": "Panel mounts only while open; one layoutId highlight.",
+  "props": [
+   [
+    "trigger",
+    "ReactNode",
+    "",
+    "Button content."
+   ],
+   [
+    "items",
+    "DropdownItem[]",
+    "",
+    "Items, check items, labels and separators."
+   ],
+   [
+    "align",
+    "'start' | 'end'",
+    "'start'",
+    "Panel alignment."
+   ]
+  ],
+  "prompt": "Build an animated dropdown menu: a trigger with aria-haspopup/expanded, a role=menu panel (variants: hidden scale .92 \u2192 show with staggerChildren .025) whose items are menuitem or menuitemcheckbox. Track an active index for keyboard (arrows, Home/End, type-ahead, Enter/Space, Esc) and pointer hover; render a layoutId highlight under the active item. Close on outside pointerdown."
+ },
+ {
+  "id": "textarea-autosize",
+  "name": "Auto-growing Textarea",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "A textarea that grows smoothly with its content (spring on measured height), a character ring that fills and turns amber then red near the limit, and \u2318/Ctrl+Enter to send.",
+  "tags": [
+   "textarea",
+   "input",
+   "composer",
+   "counter",
+   "chat"
+  ],
+  "pageTypes": [
+   "ai-app",
+   "social"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "Real label; count is linked with aria-describedby and announced near the limit. Reduced motion: instant height.",
+  "perf": "Measures scrollHeight on change only; one spring.",
+  "props": [
+   [
+    "label",
+    "string",
+    "",
+    "Label."
+   ],
+   [
+    "maxLength",
+    "number",
+    "280",
+    "Soft limit."
+   ],
+   [
+    "maxRows",
+    "number",
+    "8",
+    "Rows before scrolling."
+   ],
+   [
+    "onSubmit",
+    "(v) => void",
+    "",
+    "\u2318/Ctrl+Enter or send."
+   ]
+  ],
+  "prompt": "Build an auto-growing textarea: on each value change set height 0, read scrollHeight (capped at maxRows lines) and animate a wrapper's height with a snappy spring. Footer: remaining count, an SVG ring whose pathLength = length/max and stroke shifts to amber at 20 left and red when over, and a send button. \u2318/Ctrl+Enter submits."
+ },
+ {
+  "id": "kanban-board",
+  "name": "Kanban Board",
+  "category": "layout",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Kanban board: drag cards between and within columns (native drag-and-drop, no library) or move them with buttons; every card glides to its new slot with shared layout and the target column lights up.",
+  "tags": [
+   "kanban",
+   "drag and drop",
+   "board",
+   "tasks",
+   "productivity"
+  ],
+  "pageTypes": [
+   "dashboard"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "Each column is a labelled section with a count; move-left/right buttons give a keyboard path; moves are announced via aria-live. Reduced motion: no layout animation.",
+  "perf": "layoutId per card; drag state is two small pieces of state.",
+  "props": [
+   [
+    "columns",
+    "{ id, title, cards }[]",
+    "",
+    "Initial board."
+   ],
+   [
+    "onChange",
+    "(columns) => void",
+    "",
+    "After every move."
+   ]
+  ],
+  "prompt": "Build a kanban board: columns with cards; native HTML drag-and-drop on an inner element (dragstart/dragover/drop) computing the insert index from the pointer's half of the hovered card, with a drop indicator line. Cards are motion.li with layoutId inside a LayoutGroup so they fly between columns. Add move-left/right buttons and an aria-live announcement."
+ },
+ {
+  "id": "color-picker",
+  "name": "Colour Picker",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Colour picker with a saturation/value plane, hue slider and swatches. Thumbs follow the pointer on a spring and grow while dragging; both controls are keyboard sliders and the hex input validates live.",
+  "tags": [
+   "color",
+   "picker",
+   "theme",
+   "input",
+   "design tool"
+  ],
+  "pageTypes": [
+   "settings",
+   "dashboard"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "Both areas are role=slider with value text and arrow-key control (Shift for big steps); hex input has a label and aria-invalid. Reduced motion: no springs.",
+  "perf": "Pure HSV maths; pointer capture; no canvas.",
+  "props": [
+   [
+    "value",
+    "string",
+    "",
+    "Hex colour."
+   ],
+   [
+    "onChange",
+    "(hex) => void",
+    "",
+    "Change handler."
+   ],
+   [
+    "swatches",
+    "string[]",
+    "9 presets",
+    "Quick picks."
+   ],
+   [
+    "label",
+    "string",
+    "'Colour'",
+    "Accessible name."
+   ]
+  ],
+  "prompt": "Build a colour picker: an SV plane (background = black\u2192transparent over white\u2192hsl(h)), a hue bar, swatches and a hex input. Convert hex\u2194HSV, keep hue when saturation is 0. Pointer down captures and maps position to S/V or hue; thumbs animate left/top with a stiff spring and scale 1.3 while dragging. Arrow keys adjust values."
+ },
+ {
+  "id": "cookie-consent",
+  "name": "Cookie Consent",
+  "category": "overlays",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "A polite consent card: slides up after a short delay, Customise expands per-category switches in place, and Accept and Reject are equally prominent \u2014 no dark patterns. The choice is remembered.",
+  "tags": [
+   "cookie",
+   "consent",
+   "gdpr",
+   "privacy",
+   "banner"
+  ],
+  "pageTypes": [
+   "landing",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "Non-modal labelled dialog; switches have names; required category disabled. Reduced motion: fades only.",
+  "perf": "Mounts after delay; height-auto expansion only on demand.",
+  "props": [
+   [
+    "categories",
+    "{ id, label, description, required? }[]",
+    "3 defaults",
+    "Consent categories."
+   ],
+   [
+    "storageKey",
+    "string",
+    "",
+    "Remember the decision."
+   ],
+   [
+    "onDecide",
+    "(granted) => void",
+    "",
+    "Callback."
+   ],
+   [
+    "delay",
+    "number",
+    "600",
+    "ms before showing."
+   ]
+  ],
+  "prompt": "Build a cookie consent card with Motion: appears after a delay (y 40 \u2192 0), icon pops in, two equal buttons (Reject all / Accept all) and a Customise link that expands a list of per-category switches with height auto. Save choices persists to localStorage and calls onDecide."
+ },
+ {
+  "id": "waitlist-form",
+  "name": "Waitlist Form",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Waitlist signup: the email pill morphs into a success pill with your place in line, the joined counter rolls up, your avatar pops into the stack, and invalid input shakes with a message.",
+  "tags": [
+   "waitlist",
+   "email",
+   "signup",
+   "launch",
+   "form"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "Labelled email input with aria-invalid and an assertive error message; success is role=status. Reduced motion: no shake or morph.",
+  "perf": "One shared layoutId morph; counter via motion value (no re-renders per frame).",
+  "props": [
+   [
+    "count",
+    "number",
+    "",
+    "People already joined."
+   ],
+   [
+    "avatars",
+    "string[]",
+    "[]",
+    "Avatar URLs."
+   ],
+   [
+    "onJoin",
+    "(email) => Promise<void>",
+    "fake 900 ms",
+    "Submit handler."
+   ]
+  ],
+  "prompt": "Build a waitlist form with Motion: a pill form (input + Join) that shares a layoutId with a green success pill (check pops in, 'You're in \u2014 #N in line'). Validate email; on error shake x keyframes and show a message. A motion value counter animates +1 on success and a 'You' avatar springs into the stack."
+ },
+ {
+  "id": "comment-thread",
+  "name": "Comment Thread",
+  "category": "cards",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Threaded comments: likes pop and their count rolls, the reply composer expands in place, and new replies slide into the thread while siblings make room. Two levels deep.",
+  "tags": [
+   "comments",
+   "thread",
+   "reply",
+   "social",
+   "like"
+  ],
+  "pageTypes": [
+   "social",
+   "blog"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "Each comment is an article labelled by its author; like is aria-pressed with the count in its label; reply toggles aria-expanded. Reduced motion: no layout animation.",
+  "perf": "Layout animation per item; composer mounts only when open.",
+  "props": [
+   [
+    "comments",
+    "Comment[]",
+    "",
+    "Thread data."
+   ],
+   [
+    "me",
+    "string",
+    "'You'",
+    "Author for new replies."
+   ]
+  ],
+  "prompt": "Build a comment thread with Motion: recursive items (avatar, author, time, body, like + reply). Like toggles a filled heart that pops and a count that rolls up/down via AnimatePresence popLayout. Reply expands an inline form (height auto); submitting appends a reply that fades/slides in while siblings animate layout."
+ },
+ {
+  "id": "scroll-area",
+  "name": "Scroll Area",
+  "category": "layout",
+  "engine": "js",
+  "deps": [],
+  "priority": "P2",
+  "previewHeight": 360,
+  "description": "Native scrolling with a custom overlay scrollbar that appears while scrolling or hovering, grows when grabbed and can be dragged; top/bottom fades appear only when there is more content that way.",
+  "tags": [
+   "scrollbar",
+   "scroll",
+   "overflow",
+   "list",
+   "fade"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "docs"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "The viewport is a focusable labelled region using native scroll, so keyboard, wheel, touch and screen readers work unchanged. Reduced motion: no mask transition.",
+  "perf": "One ResizeObserver; scroll handler updates two numbers; native scrollbar hidden.",
+  "props": [
+   [
+    "label",
+    "string",
+    "",
+    "Region name."
+   ],
+   [
+    "fade",
+    "number",
+    "32",
+    "Edge fade size in px."
+   ]
+  ],
+  "prompt": "Build a scroll area: a native overflow-y viewport with the scrollbar hidden, a mask-image gradient whose top/bottom stops turn transparent only when not at the start/end, and an absolutely positioned thumb sized clientHeight/scrollHeight and positioned by scrollTop. Thumb shows while scrolling (900 ms timeout) or hovering and is draggable (pointer delta / size)."
+ },
+ {
+  "id": "comparison-table",
+  "name": "Plan Comparison Table",
+  "category": "data",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 440,
+  "description": "Plan comparison table: a highlight column glides to the plan you hover or focus (defaults to the recommended one), checkmarks draw in row by row when it scrolls into view, and the header stays sticky.",
+  "tags": [
+   "pricing",
+   "comparison",
+   "table",
+   "plans",
+   "features"
+  ],
+  "pageTypes": [
+   "pricing"
+  ],
+  "inspiration": [
+   "21st.dev category gap (audit 2026-11)"
+  ],
+  "a11y": "Real table with caption, column and row headers, colgroup headers; checks have 'Included' labels. Reduced motion: no drawing or gliding.",
+  "perf": "One layoutId highlight; checks draw once.",
+  "props": [
+   [
+    "plans",
+    "{ id, name, price, highlight? }[]",
+    "",
+    "Columns."
+   ],
+   [
+    "rows",
+    "{ group?, feature, values }[]",
+    "",
+    "Rows; values are booleans or short text."
+   ],
+   [
+    "caption",
+    "string",
+    "'Compare plans'",
+    "Accessible caption."
+   ]
+  ],
+  "prompt": "Build a plan comparison table: semantic table with a sticky header; the hovered/focused plan column gets a motion.span highlight with a shared layoutId behind its header plus tinted cells; boolean cells render a check path that draws (pathLength) with a row/column stagger once in view; false shows a muted minus."
+ }
+]

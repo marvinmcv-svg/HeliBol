@@ -1,0 +1,1 @@
+Build a colour picker: an SV plane (background = black→transparent over white→hsl(h)), a hue bar, swatches and a hex input. Convert hex↔HSV, keep hue when saturation is 0. Pointer down captures and maps position to S/V or hue; thumbs animate left/top with a stiff spring and scale 1.3 while dragging. Arrow keys adjust values.

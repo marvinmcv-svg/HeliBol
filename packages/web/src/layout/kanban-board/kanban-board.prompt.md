@@ -1,0 +1,1 @@
+Build a kanban board: columns with cards; native HTML drag-and-drop on an inner element (dragstart/dragover/drop) computing the insert index from the pointer's half of the hovered card, with a drop indicator line. Cards are motion.li with layoutId inside a LayoutGroup so they fly between columns. Add move-left/right buttons and an aria-live announcement.

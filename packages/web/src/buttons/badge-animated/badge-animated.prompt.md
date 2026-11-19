@@ -1,0 +1,1 @@
+Build animated badges: live (pinging dot via scale/opacity keyframes), shine (gold gradient pill with a skewed white highlight sweeping across), count (keyed on value so it bumps scale 1.35→1 with a bouncy spring while the digits roll via AnimatePresence popLayout; cap at 99+), status (coloured dot, pinging only when online).

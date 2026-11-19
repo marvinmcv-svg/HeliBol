@@ -1,0 +1,1 @@
+Build a plan comparison table: semantic table with a sticky header; the hovered/focused plan column gets a motion.span highlight with a shared layoutId behind its header plus tinted cells; boolean cells render a check path that draws (pathLength) with a row/column stagger once in view; false shows a muted minus.

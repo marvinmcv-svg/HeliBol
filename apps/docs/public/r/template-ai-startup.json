@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "template-ai-startup",
+  "type": "registry:block",
+  "title": "Template — AI Startup",
+  "description": "An AI-product landing page in the MotionSites style: a particle-brain hero with a typing prompt box, logo marquee, a live working chat UI as the product shot, capability bento, a waitlist with suggested prompts, FAQ and footer reveal.",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "motion",
+    "gsap",
+    "@gsap/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/waitlist-form.json",
+    "https://marvzkineticlibrary.vercel.app/r/ai-suggestions.json",
+    "https://marvzkineticlibrary.vercel.app/r/hero-ai-particles.json",
+    "https://marvzkineticlibrary.vercel.app/r/social-proof-marquee.json",
+    "https://marvzkineticlibrary.vercel.app/r/ai-chat-app.json",
+    "https://marvzkineticlibrary.vercel.app/r/features-bento.json",
+    "https://marvzkineticlibrary.vercel.app/r/faq-section.json",
+    "https://marvzkineticlibrary.vercel.app/r/footer-reveal.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/template-ai-startup.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/template-ai-startup.tsx",
+      "content": "\"use client\";\nimport { WaitlistForm } from \"@/components/kinetik/waitlist-form\";\nimport { AiSuggestions } from \"@/components/kinetik/ai-suggestions\";\nimport { HeroAiParticles } from \"@/components/kinetik/hero-ai-particles\";\nimport { SocialProofMarquee } from \"@/components/kinetik/social-proof-marquee\";\nimport { AiChatApp } from \"@/components/kinetik/ai-chat-app\";\nimport { FeaturesBento } from \"@/components/kinetik/features-bento\";\nimport { FaqSection } from \"@/components/kinetik/faq-section\";\nimport { FooterReveal } from \"@/components/kinetik/footer-reveal\";\n\n/**\n * AI startup page (MotionSites \"AI product\" pattern): particle-brain hero → logos → live product\n * shot (a working chat UI in a browser frame) → capabilities → waitlist → FAQ → footer.\n */\nexport function TemplateAiStartup() {\n  return (\n    <div className=\"relative bg-[#030014] text-white\">\n      <div className=\"p-3\"><HeroAiParticles /></div>\n      <div className=\"dark text-foreground\"><SocialProofMarquee /></div>\n      <section className=\"mx-auto max-w-5xl px-6 py-14\">\n        <p className=\"text-center text-xs uppercase tracking-[0.3em] text-violet-300\">The product</p>\n        <h2 className=\"mt-2 text-center text-3xl font-semibold tracking-tight sm:text-4xl\">It&apos;s not a demo. Try it.</h2>\n        <div className=\"mx-auto mt-8 h-[460px] overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 shadow-[0_40px_120px_-40px_rgb(124_58_237/.6)]\">\n          <div className=\"flex h-9 items-center gap-1.5 border-b border-white/10 px-3\">{[\"#ff5f57\", \"#febc2e\", \"#28c840\"].map((c) => <span key={c} className=\"size-2.5 rounded-full\" style={{ background: c }} />)}</div>\n          <div className=\"dark h-[calc(100%-2.25rem)] bg-background text-foreground\"><AiChatApp /></div>\n        </div>\n      </section>\n      <div className=\"dark bg-background text-foreground\">\n        <FeaturesBento />\n        <section className=\"mx-auto flex max-w-xl flex-col items-center gap-5 px-6 py-16 text-center\">\n          <h2 className=\"text-3xl font-semibold tracking-tight\">Be first in line</h2>\n          <p className=\"text-muted-foreground\">We&apos;re onboarding teams weekly. Ask it anything while you wait:</p>\n          <AiSuggestions items={[{ icon: \"🗓️\", label: \"Plan my launch week\" }, { icon: \"📨\", label: \"Draft replies to my inbox\" }, { icon: \"📊\", label: \"Summarise Q3 metrics\" }]} />\n          <WaitlistForm count={12840} avatars={[\"/demo/photo-1.jpg\", \"/demo/photo-2.jpg\", \"/demo/photo-3.jpg\"]} />\n        </section>\n        <FaqSection />\n        <FooterReveal />\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "r3f",
+    "tags": [
+      "template",
+      "ai",
+      "startup",
+      "full page",
+      "waitlist"
+    ],
+    "pageTypes": [
+      "ai-app",
+      "landing"
+    ]
+  }
+}

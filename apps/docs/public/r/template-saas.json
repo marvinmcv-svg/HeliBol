@@ -1,0 +1,54 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "template-saas",
+  "type": "registry:block",
+  "title": "Template — SaaS Launch Page",
+  "description": "A complete SaaS launch page assembled from kinetik blocks in conversion order: announcement bar, floating expandable nav, split-text hero, logo marquee, animated bento features, integrations orbit, stats, testimonials wall, pricing toggle with plan comparison, FAQ, spotlight CTA and footer reveal.",
+  "dependencies": [
+    "motion",
+    "gsap",
+    "@gsap/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+    "https://marvzkineticlibrary.vercel.app/r/banner-announcement.json",
+    "https://marvzkineticlibrary.vercel.app/r/nav-expandable.json",
+    "https://marvzkineticlibrary.vercel.app/r/comparison-table.json",
+    "https://marvzkineticlibrary.vercel.app/r/hero-split-text.json",
+    "https://marvzkineticlibrary.vercel.app/r/social-proof-marquee.json",
+    "https://marvzkineticlibrary.vercel.app/r/features-bento.json",
+    "https://marvzkineticlibrary.vercel.app/r/integrations-orbit.json",
+    "https://marvzkineticlibrary.vercel.app/r/stats-impact.json",
+    "https://marvzkineticlibrary.vercel.app/r/testimonials-wall.json",
+    "https://marvzkineticlibrary.vercel.app/r/pricing-toggle.json",
+    "https://marvzkineticlibrary.vercel.app/r/faq-section.json",
+    "https://marvzkineticlibrary.vercel.app/r/cta-spotlight.json",
+    "https://marvzkineticlibrary.vercel.app/r/footer-reveal.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/template-saas.tsx",
+      "type": "registry:block",
+      "target": "components/kinetik/template-saas.tsx",
+      "content": "\"use client\";\nimport { BannerAnnouncement } from \"@/components/kinetik/banner-announcement\";\nimport { NavExpandable } from \"@/components/kinetik/nav-expandable\";\nimport { ComparisonTable } from \"@/components/kinetik/comparison-table\";\nimport { HeroSplitText } from \"@/components/kinetik/hero-split-text\";\nimport { SocialProofMarquee } from \"@/components/kinetik/social-proof-marquee\";\nimport { FeaturesBento } from \"@/components/kinetik/features-bento\";\nimport { IntegrationsOrbit } from \"@/components/kinetik/integrations-orbit\";\nimport { StatsImpact } from \"@/components/kinetik/stats-impact\";\nimport { TestimonialsWall } from \"@/components/kinetik/testimonials-wall\";\nimport { PricingToggle } from \"@/components/kinetik/pricing-toggle\";\nimport { FaqSection } from \"@/components/kinetik/faq-section\";\nimport { CtaSpotlight } from \"@/components/kinetik/cta-spotlight\";\nimport { FooterReveal } from \"@/components/kinetik/footer-reveal\";\n\n/**\n * Full SaaS launch page assembled from kinetik blocks, in conversion order:\n * announcement → floating nav → hero → logos → features → integrations → proof (stats,\n * testimonials) → pricing + comparison → FAQ → CTA → footer reveal.\n */\nexport function TemplateSaas() {\n  return (\n    <div className=\"relative bg-background text-foreground\">\n      <BannerAnnouncement items={[{ label: \"New\", text: \"Launch week — 30% off annual plans\", href: \"#pricing\" }, { text: \"SOC 2 Type II certified\", href: \"#security\" }]} />\n      <div className=\"sticky top-3 z-40 flex justify-center px-4\">\n        <NavExpandable brand=\"◆ Northwind\" links={[{ label: \"Product\", href: \"#features\", description: \"Everything in one workspace\" }, { label: \"Integrations\", href: \"#integrations\" }, { label: \"Pricing\", href: \"#pricing\", description: \"Free for small teams\" }, { label: \"Docs\", href: \"#docs\" }]} cta={<a href=\"#pricing\" className=\"block rounded-2xl bg-primary px-4 py-3 text-center text-sm font-medium text-primary-foreground\">Start free</a>} />\n      </div>\n      <div className=\"-mt-14 min-h-[560px]\"><HeroSplitText /></div>\n      <SocialProofMarquee />\n      <div id=\"features\"><FeaturesBento /></div>\n      <div id=\"integrations\"><IntegrationsOrbit /></div>\n      <StatsImpact />\n      <TestimonialsWall />\n      <div id=\"pricing\"><PricingToggle /></div>\n      <section className=\"mx-auto max-w-5xl px-6 pb-14\">\n        <ComparisonTable\n          plans={[{ id: \"free\", name: \"Free\", price: \"$0\" }, { id: \"pro\", name: \"Pro\", price: \"$12/mo\", highlight: true }, { id: \"team\", name: \"Team\", price: \"$40/mo\" }]}\n          rows={[\n            { group: \"Workspace\", feature: \"Members\", values: { free: \"3\", pro: \"Unlimited\", team: \"Unlimited\" } },\n            { feature: \"Automations\", values: { free: false, pro: true, team: true } },\n            { group: \"Security\", feature: \"SSO / SAML\", values: { free: false, pro: false, team: true } },\n            { feature: \"Audit log\", values: { free: false, pro: true, team: true } },\n          ]}\n        />\n      </section>\n      <FaqSection />\n      <CtaSpotlight />\n      <FooterReveal />\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "template",
+      "saas",
+      "landing page",
+      "full page",
+      "pricing"
+    ],
+    "pageTypes": [
+      "landing",
+      "pricing"
+    ]
+  }
+}

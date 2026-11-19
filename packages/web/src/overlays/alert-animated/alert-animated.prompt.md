@@ -1,0 +1,1 @@
+Build an animated alert with Motion: AnimatePresence around a rounded tinted panel that enters (y −8, scale .98) and exits by animating height to 0 so siblings close the gap. The status icon is an SVG circle + glyph drawn with pathLength. Optional duration auto-dismisses with a scaleX progress bar. Danger/warning use role=alert.

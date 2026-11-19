@@ -1,0 +1,1 @@
+Build an announcement bar: dark full-width strip with a CSS gradient sheen sweeping across, a message link (optional pill label + arrow that nudges on hover) that rotates vertically between items with AnimatePresence popLayout, pausing on hover/focus. Dismiss collapses height to 0 and stores a flag in localStorage.

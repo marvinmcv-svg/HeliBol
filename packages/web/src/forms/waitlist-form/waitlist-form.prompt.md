@@ -1,0 +1,1 @@
+Build a waitlist form with Motion: a pill form (input + Join) that shares a layoutId with a green success pill (check pops in, 'You're in — #N in line'). Validate email; on error shake x keyframes and show a message. A motion value counter animates +1 on success and a 'You' avatar springs into the stack.

@@ -1,0 +1,1 @@
+Build an animated dropdown menu: a trigger with aria-haspopup/expanded, a role=menu panel (variants: hidden scale .92 → show with staggerChildren .025) whose items are menuitem or menuitemcheckbox. Track an active index for keyboard (arrows, Home/End, type-ahead, Enter/Space, Esc) and pointer hover; render a layoutId highlight under the active item. Close on outside pointerdown.

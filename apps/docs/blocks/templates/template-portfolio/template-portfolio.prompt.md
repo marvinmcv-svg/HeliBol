@@ -1,0 +1,1 @@
+Build a creative portfolio: warm paper background; opener with a huge two-line name and a spinning three.js image ribbon in front of it plus a floating expandable nav; an about paragraph with a word that smart-animates (brands/books/films/spaces); a work grid with filterable cards; a three-column vertical marquee of testimonials; a contact section; footer reveal.

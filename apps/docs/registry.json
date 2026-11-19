@@ -406,6 +406,82 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "alert-animated",
+      "type": "registry:component",
+      "title": "Animated Alert",
+      "description": "Inline alert that springs in, draws its status icon, and on dismiss collapses its own height so the content below closes the gap. Optional auto-dismiss with a draining progress line.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "alert",
+          "callout",
+          "status",
+          "notification",
+          "dismiss"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/alert-animated.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/alert-animated.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "badge-animated",
+      "type": "registry:component",
+      "title": "Animated Badges",
+      "description": "Four badge behaviours: a pinging live dot, a metallic shine sweep, a counter that bumps and rolls when it changes (99+ cap), and a presence status dot.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "buttons"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "badge",
+          "counter",
+          "live",
+          "status",
+          "notification"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "social"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/badge-animated.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/badge-animated.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "animated-beam",
       "type": "registry:component",
       "title": "Animated Beam",
@@ -737,6 +813,43 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "banner-announcement",
+      "type": "registry:component",
+      "title": "Announcement Banner",
+      "description": "Top-of-page announcement bar: a sheen sweeps across, several messages rotate vertically (paused on hover/focus), the arrow nudges on hover, and dismissal collapses the bar and is remembered.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "banner",
+          "announcement",
+          "top bar",
+          "marketing",
+          "launch"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/banner-announcement.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/banner-announcement.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "button-arrow-slide",
       "type": "registry:component",
       "title": "Arrow Slide Button",
@@ -909,6 +1022,44 @@
           "path": "components/kinetik/auto-animate-list.tsx",
           "type": "registry:component",
           "target": "components/kinetik/auto-animate-list.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "textarea-autosize",
+      "type": "registry:component",
+      "title": "Auto-growing Textarea",
+      "description": "A textarea that grows smoothly with its content (spring on measured height), a character ring that fills and turns amber then red near the limit, and ⌘/Ctrl+Enter to send.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "textarea",
+          "input",
+          "composer",
+          "counter",
+          "chat"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "social"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/textarea-autosize.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/textarea-autosize.tsx"
         }
       ]
     },
@@ -1534,6 +1685,43 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "color-picker",
+      "type": "registry:component",
+      "title": "Colour Picker",
+      "description": "Colour picker with a saturation/value plane, hue slider and swatches. Thumbs follow the pointer on a spring and grow while dragging; both controls are keyboard sliders and the hex input validates live.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "color",
+          "picker",
+          "theme",
+          "input",
+          "design tool"
+        ],
+        "pageTypes": [
+          "settings",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/color-picker.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/color-picker.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "command-palette",
       "type": "registry:component",
       "title": "Command Palette",
@@ -1567,6 +1755,44 @@
           "path": "components/kinetik/command-palette.tsx",
           "type": "registry:component",
           "target": "components/kinetik/command-palette.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "comment-thread",
+      "type": "registry:component",
+      "title": "Comment Thread",
+      "description": "Threaded comments: likes pop and their count rolls, the reply composer expands in place, and new replies slide into the thread while siblings make room. Two levels deep.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "cards"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "comments",
+          "thread",
+          "reply",
+          "social",
+          "like"
+        ],
+        "pageTypes": [
+          "social",
+          "blog"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/comment-thread.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/comment-thread.tsx"
         }
       ]
     },
@@ -1639,6 +1865,44 @@
           "path": "components/kinetik/heatmap-grid.tsx",
           "type": "registry:component",
           "target": "components/kinetik/heatmap-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "cookie-consent",
+      "type": "registry:component",
+      "title": "Cookie Consent",
+      "description": "A polite consent card: slides up after a short delay, Customise expands per-category switches in place, and Accept and Reject are equally prominent — no dark patterns. The choice is remembered.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "cookie",
+          "consent",
+          "gdpr",
+          "privacy",
+          "banner"
+        ],
+        "pageTypes": [
+          "landing",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/cookie-consent.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/cookie-consent.tsx"
         }
       ]
     },
@@ -2333,6 +2597,44 @@
           "path": "components/kinetik/checkbox-draw.tsx",
           "type": "registry:component",
           "target": "components/kinetik/checkbox-draw.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "dropdown-menu",
+      "type": "registry:component",
+      "title": "Dropdown Menu",
+      "description": "Menu button with the full WAI-ARIA keyboard model — arrows, Home/End, type-ahead, Esc returns focus. The panel springs from the trigger's corner, items stagger in and a highlight pill glides between them.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "dropdown",
+          "menu",
+          "actions",
+          "keyboard",
+          "popover"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "settings"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/dropdown-menu.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/dropdown-menu.tsx"
         }
       ]
     },
@@ -5590,6 +5892,43 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "kanban-board",
+      "type": "registry:component",
+      "title": "Kanban Board",
+      "description": "Kanban board: drag cards between and within columns (native drag-and-drop, no library) or move them with buttons; every card glides to its new slot with shared layout and the target column lights up.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "kanban",
+          "drag and drop",
+          "board",
+          "tasks",
+          "productivity"
+        ],
+        "pageTypes": [
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/kanban-board.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/kanban-board.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "gsap-keyframes-loader",
       "type": "registry:component",
       "title": "Keyframes Loader",
@@ -7565,6 +7904,43 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "comparison-table",
+      "type": "registry:component",
+      "title": "Plan Comparison Table",
+      "description": "Plan comparison table: a highlight column glides to the plan you hover or focus (defaults to the recommended one), checkmarks draw in row by row when it scrolls into view, and the header stays sticky.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "pricing",
+          "comparison",
+          "table",
+          "plans",
+          "features"
+        ],
+        "pageTypes": [
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/comparison-table.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/comparison-table.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "button-press",
       "type": "registry:component",
       "title": "Press Button",
@@ -8362,6 +8738,41 @@
           "path": "components/kinetik/text-scramble.tsx",
           "type": "registry:component",
           "target": "components/kinetik/text-scramble.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "scroll-area",
+      "type": "registry:component",
+      "title": "Scroll Area",
+      "description": "Native scrolling with a custom overlay scrollbar that appears while scrolling or hovering, grows when grabbed and can be dragged; top/bottom fades appear only when there is more content that way.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "engine": "js",
+        "tags": [
+          "scrollbar",
+          "scroll",
+          "overflow",
+          "list",
+          "fade"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "docs"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/scroll-area.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/scroll-area.tsx"
         }
       ]
     },
@@ -10578,6 +10989,43 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "waitlist-form",
+      "type": "registry:component",
+      "title": "Waitlist Form",
+      "description": "Waitlist signup: the email pill morphs into a success pill with your place in line, the joined counter rolls up, your avatar pops into the stack, and invalid input shakes with a message.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "waitlist",
+          "email",
+          "signup",
+          "launch",
+          "form"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/waitlist-form.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/waitlist-form.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "bg-starfield",
       "type": "registry:component",
       "title": "Warp Starfield",
@@ -10953,6 +11401,57 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "template-ai-startup",
+      "type": "registry:block",
+      "title": "Template — AI Startup",
+      "description": "An AI-product landing page in the MotionSites style: a particle-brain hero with a typing prompt box, logo marquee, a live working chat UI as the product shot, capability bento, a waitlist with suggested prompts, FAQ and footer reveal.",
+      "dependencies": [
+        "three",
+        "@react-three/fiber",
+        "@react-three/drei",
+        "motion",
+        "gsap",
+        "@gsap/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/waitlist-form.json",
+        "https://marvzkineticlibrary.vercel.app/r/ai-suggestions.json",
+        "https://marvzkineticlibrary.vercel.app/r/hero-ai-particles.json",
+        "https://marvzkineticlibrary.vercel.app/r/social-proof-marquee.json",
+        "https://marvzkineticlibrary.vercel.app/r/ai-chat-app.json",
+        "https://marvzkineticlibrary.vercel.app/r/features-bento.json",
+        "https://marvzkineticlibrary.vercel.app/r/faq-section.json",
+        "https://marvzkineticlibrary.vercel.app/r/footer-reveal.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "r3f",
+        "tags": [
+          "template",
+          "ai",
+          "startup",
+          "full page",
+          "waitlist"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/template-ai-startup.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/template-ai-startup.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "hero-split-text",
       "type": "registry:block",
       "title": "Hero — Split Text + Aurora",
@@ -11190,6 +11689,59 @@
           "path": "components/kinetik/social-proof-marquee.tsx",
           "type": "registry:block",
           "target": "components/kinetik/social-proof-marquee.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "template-saas",
+      "type": "registry:block",
+      "title": "Template — SaaS Launch Page",
+      "description": "A complete SaaS launch page assembled from kinetik blocks in conversion order: announcement bar, floating expandable nav, split-text hero, logo marquee, animated bento features, integrations orbit, stats, testimonials wall, pricing toggle with plan comparison, FAQ, spotlight CTA and footer reveal.",
+      "dependencies": [
+        "motion",
+        "gsap",
+        "@gsap/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/banner-announcement.json",
+        "https://marvzkineticlibrary.vercel.app/r/nav-expandable.json",
+        "https://marvzkineticlibrary.vercel.app/r/comparison-table.json",
+        "https://marvzkineticlibrary.vercel.app/r/hero-split-text.json",
+        "https://marvzkineticlibrary.vercel.app/r/social-proof-marquee.json",
+        "https://marvzkineticlibrary.vercel.app/r/features-bento.json",
+        "https://marvzkineticlibrary.vercel.app/r/integrations-orbit.json",
+        "https://marvzkineticlibrary.vercel.app/r/stats-impact.json",
+        "https://marvzkineticlibrary.vercel.app/r/testimonials-wall.json",
+        "https://marvzkineticlibrary.vercel.app/r/pricing-toggle.json",
+        "https://marvzkineticlibrary.vercel.app/r/faq-section.json",
+        "https://marvzkineticlibrary.vercel.app/r/cta-spotlight.json",
+        "https://marvzkineticlibrary.vercel.app/r/footer-reveal.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "template",
+          "saas",
+          "landing page",
+          "full page",
+          "pricing"
+        ],
+        "pageTypes": [
+          "landing",
+          "pricing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/template-saas.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/template-saas.tsx"
         }
       ]
     },
@@ -11507,6 +12059,52 @@
           "path": "components/kinetik/portfolio-ribbon.tsx",
           "type": "registry:block",
           "target": "components/kinetik/portfolio-ribbon.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "template-portfolio",
+      "type": "registry:block",
+      "title": "Template — Creative Portfolio",
+      "description": "An independent creative's portfolio: a 3D image-ribbon opener behind a giant name, an about section with a smart-animate discipline word, a selected-work grid, a vertical marquee of kind words, a contact section and a footer reveal.",
+      "dependencies": [
+        "three",
+        "@react-three/fiber",
+        "@react-three/drei",
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json",
+        "https://marvzkineticlibrary.vercel.app/r/marquee-vertical.json",
+        "https://marvzkineticlibrary.vercel.app/r/text-smart-animate.json",
+        "https://marvzkineticlibrary.vercel.app/r/portfolio-ribbon.json",
+        "https://marvzkineticlibrary.vercel.app/r/blog-grid.json",
+        "https://marvzkineticlibrary.vercel.app/r/contact-section.json",
+        "https://marvzkineticlibrary.vercel.app/r/footer-reveal.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "r3f",
+        "tags": [
+          "template",
+          "portfolio",
+          "personal",
+          "full page",
+          "three.js"
+        ],
+        "pageTypes": [
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/template-portfolio.tsx",
+          "type": "registry:block",
+          "target": "components/kinetik/template-portfolio.tsx"
         }
       ]
     },
