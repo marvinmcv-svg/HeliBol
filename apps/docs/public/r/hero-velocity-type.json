@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-velocity-type",
+  "type": "registry:component",
+  "title": "Hero — Velocity Type",
+  "description": "Sports-performance hero: thin mono nav, a motion-blurred action photo with giant stacked uppercase lines, an orange split CTA, a logo strip and the intro statement below.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-velocity-type.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/hero-velocity-type.tsx",
+      "content": "\"use client\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nconst FONT = \"https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap\";\nconst css = `\n.k-hvt{font-family:\"Inter Tight\",ui-sans-serif,system-ui,sans-serif}\n.k-hvt .mono{font-family:\"JetBrains Mono\",ui-monospace,monospace}\n.k-hvt .photo{animation:k-hvt-pan 14s ease-in-out infinite alternate}\n@keyframes k-hvt-pan{to{transform:scale(1.12) translateX(-3%)}}\n.k-hvt .streak{position:absolute;left:-40%;width:45%;border-radius:999px;filter:blur(14px);animation:k-hvt-streak var(--s) linear infinite;animation-delay:var(--d)}\n@keyframes k-hvt-streak{to{transform:translateX(330%)}}\n.k-hvt .line{display:block;overflow:hidden}\n.k-hvt .line>span{display:block;animation:k-hvt-up 1s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d)}\n@keyframes k-hvt-up{from{transform:translateY(100%)}}\n.k-hvt .logos{animation:k-hvt-marquee 26s linear infinite}\n@keyframes k-hvt-marquee{to{transform:translateX(-50%)}}\n@media (prefers-reduced-motion:reduce){.k-hvt *{animation:none!important}}\n[data-reduce-motion] .k-hvt *{animation:none!important}`;\n\nconst logos = [\"NORTHSIDE FC\", \"◎\", \"TENNIS CLUB\", \"✦\", \"HALFTIME\", \"◈\", \"ARCTIC\", \"▲\", \"PRO LEAGUE\", \"⬡\", \"NORTHSIDE FC\", \"◎\"];\n\n/** Sports-performance hero: thin mono nav, a motion-blurred action photo with giant stacked uppercase lines, an orange split CTA, a logo strip and the intro statement below. */\nexport function HeroVelocityType({ lines = [\"Unlock\", \"next level\", \"performance\"], image, className }: { lines?: string[]; image?: string; className?: string }) {\n  return (\n    <section className={cn(\"k-hvt flex flex-col overflow-hidden bg-white text-[#111]\", className)}>\n      <link rel=\"stylesheet\" href={FONT} precedence=\"kinetik-font\" />\n      <style href=\"k-hvt\" precedence=\"kinetik\">{css}</style>\n      <nav className=\"mono flex items-center justify-between px-5 py-2.5 text-[11px] tracking-wide uppercase\">\n        <span className=\"font-medium\">The Kinet◘c Lab</span>\n        <span className=\"hidden gap-8 lg:flex\"><a href=\"#\">Home</a><a href=\"#\">Who we are</a><a href=\"#\">Blog</a><a href=\"#\">Contact</a><a href=\"#\" className=\"ml-10\">Services +</a></span>\n        <a href=\"#\" className=\"text-[#ff4a1c]\">Book a consultation ↗</a>\n      </nav>\n      <div className=\"relative isolate shrink-0 overflow-hidden bg-[#1e1d1a] text-white\">\n        <div aria-hidden className=\"photo absolute inset-0 -z-10\" style={{ background: image ? `center/cover url(${image})` : \"linear-gradient(100deg,#272622 0%,#3b3a2e 35%,#6f6a4a 55%,#2c2b26 80%)\", filter: \"blur(3px) saturate(.8)\" }} />\n        <div aria-hidden className=\"absolute inset-0 -z-10\">\n          {[[\"22%\", \"70px\", \"#c8d84a66\", \"2.8s\", \"0s\"], [\"48%\", \"40px\", \"#ffffff33\", \"1.9s\", \"-.8s\"], [\"70%\", \"90px\", \"#9aa63a55\", \"3.4s\", \"-1.6s\"]].map(([t, h, c, s, d], i) => <span key={i} className=\"streak\" style={{ top: t, height: h, background: `linear-gradient(90deg,transparent,${c},transparent)`, [\"--s\" as string]: s, [\"--d\" as string]: d }} />)}\n          <div className=\"absolute inset-0 bg-gradient-to-r from-black/45 via-black/20 to-black/30\" />\n        </div>\n        <div className=\"flex items-end justify-between gap-10 pt-12 pr-12 pb-6\">\n          <h1 className=\"-ml-[0.06em] text-[clamp(3.5rem,9.6vw,9rem)] leading-[.84] font-medium tracking-[-.045em] uppercase\">\n            {lines.map((l, i) => <span key={l} className=\"line\"><span style={{ [\"--d\" as string]: `${0.1 * i}s` }}>{l}</span></span>)}\n          </h1>\n          <div className=\"mb-8 hidden w-[22%] shrink-0 lg:block\">\n            <p className=\"text-[13px] leading-snug text-white/80\">The Kinetic Lab specializes in elite diagnostics, personalized training, and advanced therapy to help you reach your physical peak — whether you're a professional athlete or just getting started.</p>\n            <a href=\"#\" className=\"mono mt-12 inline-flex text-[11px] tracking-wider uppercase\">\n              <span className=\"bg-[#ff4a1c] px-5 py-4\">Unlock your potential</span>\n              <span className=\"ml-1 grid w-12 place-items-center bg-[#ff4a1c] transition-transform hover:translate-x-1\">→</span>\n            </a>\n          </div>\n        </div>\n      </div>\n      <div className=\"shrink-0 overflow-hidden bg-[#efefef] py-6\">\n        <div aria-hidden className=\"logos flex w-max items-center gap-24 pr-24 text-2xl font-semibold tracking-tight text-black\">{[...logos, ...logos].map((l, i) => <span key={i}>{l}</span>)}</div>\n      </div>\n      <div className=\"relative min-h-40 flex-1 bg-white px-6 pt-[13%] text-center\">\n        <div aria-hidden className=\"absolute top-[8%] left-[71.5%] aspect-square w-[10.7%] bg-[radial-gradient(circle_at_60%_55%,#ddd,#222_35%,#050505_70%)]\" />\n        <div aria-hidden className=\"absolute bottom-0 left-[3%] h-[14%] w-[17.6%] bg-gradient-to-r from-[#3a4a2e] to-[#6a6a52]\" />\n        <p className=\"mono text-[10px] tracking-widest text-zinc-400 uppercase\">What is the Kinetic Lab</p>\n        <h2 className=\"mx-auto mt-5 max-w-4xl text-[clamp(2rem,4.4vw,4rem)] leading-[1.02] font-medium tracking-[-.035em]\">Helping you move better, recover smarter, and perform at your best</h2>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "hero",
+      "sports",
+      "condensed",
+      "mask reveal",
+      "streaks",
+      "logo marquee"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

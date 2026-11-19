@@ -1,0 +1,1 @@
+Recreate a device hero inside a rounded warm-dark cinematic frame: logo badge top-left, frosted nav pill with orange 'ORDER NOW' top-right; a large tilted orange-bezel paper tablet whose screen draws an engraving (contour paths + horizon lines via stroke-dashoffset) and gently sways; bottom gradient with a 2-line Instrument Serif H1 (italic 'paper-like') and three icon features.

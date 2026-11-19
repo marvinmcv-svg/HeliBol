@@ -1,0 +1,1 @@
+Recreate a branding-agency hero: grayscale studio wall; city labels in the corners; a huge 3-line statement (~5.5vw, tracking −.055em) with the first line indented 24.5% and a wiggling ✺ after 'magic'; dozens of thin strings fanning from the ceiling to the heads of a team (photo slot or silhouettes) drawn in with stroke-dashoffset and swaying with skewX ±1.5°.

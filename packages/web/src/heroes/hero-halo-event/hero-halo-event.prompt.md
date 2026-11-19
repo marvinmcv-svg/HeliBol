@@ -1,0 +1,1 @@
+Recreate a keynote/event hero: slim centered global nav on white; a sky-blue gradient field with a glassy radial orb whose thin iridescent conic rim (masked ring, @property angle) rotates with a soft blurred halo, growing in from scale .6 + blur; a 2-line semibold announcement and a white 'Watch the event' pill.

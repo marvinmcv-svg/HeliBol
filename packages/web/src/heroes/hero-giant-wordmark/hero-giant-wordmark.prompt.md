@@ -1,0 +1,1 @@
+Recreate an inverted brand hero: a tall white card with 36px bottom radius holding a Newsreader 2-line H1 (italic second line), black 'Get started', three link columns and a spinning ✿ mark with mono copyright; below on a pale blue gradient, a colossal white serif wordmark (~30vw) rising letter by letter from 60% with 80ms stagger.

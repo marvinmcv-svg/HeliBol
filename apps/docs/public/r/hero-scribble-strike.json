@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-scribble-strike",
+  "type": "registry:component",
+  "title": "Hero — Scribble Strike",
+  "description": "Studio hero: black top bar, a cinematic full-bleed still under a heavy cream uppercase statement whose last word gets a hand-drawn red strike and scribbled correction, a circled link and a red name band.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/hero-scribble-strike.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/hero-scribble-strike.tsx",
+      "content": "\"use client\";\nimport { cn } from \"@/lib/kinetik/core\";\n\nconst FONT = \"https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;1,900&family=Caveat:wght@500&family=Cormorant+Garamond:wght@500&display=swap\";\nconst css = `\n.k-hss{font-family:Montserrat,ui-sans-serif,system-ui,sans-serif}\n.k-hss .hand{font-family:Caveat,cursive}\n.k-hss .ink{stroke-dasharray:var(--l);stroke-dashoffset:var(--l);animation:k-hss-ink var(--t,.6s) cubic-bezier(.65,0,.35,1) forwards;animation-delay:var(--d)}\n@keyframes k-hss-ink{to{stroke-dashoffset:0}}\n.k-hss .note{animation:k-hss-note .4s ease-out both;animation-delay:var(--d)}\n@keyframes k-hss-note{from{opacity:0;transform:rotate(-8deg) scale(.7)}}\n.k-hss .band{animation:k-hss-band 16s linear infinite}\n@keyframes k-hss-band{to{transform:translateX(-50%)}}\n.k-hss .bg{animation:k-hss-zoom 20s ease-in-out infinite alternate}\n@keyframes k-hss-zoom{to{transform:scale(1.08)}}\n@media (prefers-reduced-motion:reduce){.k-hss *{animation:none!important;stroke-dashoffset:0!important}}\n[data-reduce-motion] .k-hss *{animation:none!important;stroke-dashoffset:0!important}`;\n\n/** Studio hero: black top bar, a cinematic full-bleed still under a heavy cream uppercase statement whose last word gets a hand-drawn red strike and scribbled correction, a circled link and a red name band. */\nexport function HeroScribbleStrike({ lead = \"Where fresh ideas meet flawless execution. See the work that sets us\", struck = \"apart\", note = \"above\", image, studio = \"freshcut\", className }: { lead?: string; struck?: string; note?: string; image?: string; studio?: string; className?: string }) {\n  return (\n    <section className={cn(\"k-hss relative isolate flex flex-col overflow-hidden bg-[#141414] text-[#f3e7d3]\", className)}>\n      <link rel=\"stylesheet\" href={FONT} precedence=\"kinetik-font\" />\n      <style href=\"k-hss\" precedence=\"kinetik\">{css}</style>\n      <header className=\"flex items-center justify-between bg-[#141414] px-[1.4%] py-3\"><span className=\"text-[22px] font-black tracking-tight text-[#8b8b8b] italic\">{studio}</span><a href=\"#\" className=\"text-[13px] tracking-wide text-[#8b8b8b] uppercase\" style={{ fontFamily: '\"Cormorant Garamond\",serif' }}>+ Menu</a></header>\n      <div className=\"relative flex-1\">\n        <div aria-hidden className=\"bg absolute inset-0 -z-10\" style={{ background: image ? `center/cover url(${image})` : \"linear-gradient(180deg,#3d3833 0%,#6e5a4c 32%,#2b2724 60%,#1a1816 100%)\" }} />\n        <div aria-hidden className=\"absolute inset-0 -z-10 bg-black/35\" />\n        <div className=\"px-[7.5%] pt-[4%] text-center\">\n          <h1 className=\"mx-auto text-[clamp(1.8rem,4.55vw,4.3rem)] leading-[1.03] font-extrabold tracking-[-.02em] uppercase\">\n            {lead}{\" \"}\n            <span className=\"relative inline-block\">\n              <del className=\"no-underline\">{struck}</del>.\n              <svg aria-hidden viewBox=\"0 0 200 40\" preserveAspectRatio=\"none\" className=\"pointer-events-none absolute inset-x-[-4%] top-[42%] h-[30%] w-[108%]\">\n                <path className=\"ink\" style={{ [\"--l\" as string]: 230, [\"--d\" as string]: \".8s\" }} d=\"M3 22 C 50 16, 120 20, 198 14\" fill=\"none\" stroke=\"#e42620\" strokeWidth=\"7\" strokeLinecap=\"round\" />\n              </svg>\n              <span className=\"note hand absolute right-0 -bottom-[38%] text-[clamp(.9rem,1.6vw,1.6rem)] font-medium normal-case tracking-normal text-[#f3e7d3]\" style={{ [\"--d\" as string]: \"1.3s\" }}><ins className=\"no-underline\">{note}</ins></span>\n            </span>\n          </h1>\n          <a href=\"#\" className=\"hand relative mx-auto mt-[9%] block w-fit px-5 py-1 text-[clamp(.8rem,1.1vw,1.05rem)]\">\n            explore all work\n            <svg aria-hidden viewBox=\"0 0 160 40\" preserveAspectRatio=\"none\" className=\"absolute inset-0 size-full overflow-visible\"><path className=\"ink\" style={{ [\"--l\" as string]: 420, [\"--d\" as string]: \"1.5s\", [\"--t\" as string]: \"1s\" }} d=\"M150 12 C120 -2 30 0 8 16 S40 40 90 36 S162 28 140 8\" fill=\"none\" stroke=\"#e42620\" strokeWidth=\"2\" /></svg>\n          </a>\n        </div>\n      </div>\n      <div aria-hidden className=\"h-[4.2%] min-h-6 overflow-hidden bg-[#e42620] text-black\">\n        <div className=\"band flex w-max translate-y-[-30%] text-[clamp(5rem,13vw,12rem)] leading-[.8] font-black tracking-[-.04em] whitespace-nowrap italic\">{Array.from({ length: 6 }, (_, i) => <span key={i} className=\"px-[3vw]\">{studio}</span>)}</div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "heroes"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "hero",
+      "studio",
+      "hand-drawn",
+      "strikethrough",
+      "marquee",
+      "cinematic"
+    ],
+    "pageTypes": [
+      "portfolio"
+    ]
+  }
+}

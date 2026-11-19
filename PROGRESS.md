@@ -2,7 +2,7 @@
 
 Status of every component ID in `motion-library-master-plan.md` (Sections 7 & 8), plus everything built beyond it.
 
-**Summary (kinetik 2.2):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **304 registry items live** (266 components + 24 blocks + 14 flows), including the 36-piece GSAP collection and the 13-piece three.js collection. Research and gap analysis: `docs/research/README.md`.
+**Summary (kinetik 2.2):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **334 registry items live** (296 components + 24 blocks + 14 flows), including the 36-piece GSAP collection and the 13-piece three.js collection, plus 30 Mobbin-researched heroes. Research and gap analysis: `docs/research/README.md`.
 
 Legend: ✅ done · 🟡 partial · ⬜ todo
 

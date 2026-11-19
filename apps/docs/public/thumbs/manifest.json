@@ -2549,6 +2549,306 @@
     "captured_at": "2026-11-11T02:33:06.235Z",
     "provider": "rea-cdp-browser"
   },
+  "hero-dream-arches": {
+    "evidence_id": "ev_f3826913eee4bf934bf14c997a9a92b681030dbe9b3b46df748cce4b005ede8a",
+    "png_sha256": "c9a5142921b56cd593aae607f7727e3300f2196629d89a82bd3fd70d9c4ba0d7",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:16.446Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-dusk-skyline": {
+    "evidence_id": "ev_4270ffda495460f5ab30191d8a9c004b75c4e0be96071ea40e61d966c3beefc6",
+    "png_sha256": "9c243814e30c0e46096d25c3c2b6c17a2fbdc2ce582970fd2f942db23010af80",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:08:23.532Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-fold-open": {
+    "evidence_id": "ev_1251652b183e29080dfbdc4cf6ac062f0c85a4401bd251c2f8416e6dc9187719",
+    "png_sha256": "19e325dfe7b9d5415a2ae503ea22194ac49aae705bb570bdded0bc2bbdd1a340",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:28.836Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-feature-carousel": {
+    "evidence_id": "ev_61e758f78688d9003680f4b9ad140378f5c69a90a59f83658bd4c30553e47a4e",
+    "png_sha256": "4e8b42099504d683f2265fb624dd3a149d50592de598806296cd8399c437950d",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:27.813Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-converging-strings": {
+    "evidence_id": "ev_d5d07edff4452de346acad534ce2e2acbf223cfd0274bf54567ad9ae58fded99",
+    "png_sha256": "f7873bd5c3aa9f213d3779b5b1d27efa7b4787ba8a95b27d4035e05e463c75f5",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:10.683Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-framed-peak": {
+    "evidence_id": "ev_08bf1ff82f13d557d24f35016f844cca3ca32d146d750fac8790b5d07b48142f",
+    "png_sha256": "5d39cff277bfd84a08a73e6a38515ef9696144b0539ae27963b5fe90723b8134",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:08:23.430Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-giant-wordmark": {
+    "evidence_id": "ev_58efac22f1f2603f054f35c8d47b7c8557d07500653cdf6f1ef5feff8c0e6871",
+    "png_sha256": "761a720e6ae94457ccd4eb6f5388295ea97af15826841bc5bed67cc7ebf0353a",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:34.335Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-halo-event": {
+    "evidence_id": "ev_bd3406212f03d207f80975b30d8f830b82c348eebecd5a10544529048d2e59b9",
+    "png_sha256": "9835e687a3b7ce278ca4aab4e7c69c630372fb6030a783b6af90378262861cd1",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:39.644Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-launch-timeline": {
+    "evidence_id": "ev_bf5dfe46cea629a3434e376c5fb02183c861a8a59abcd9af49a1cb59d2d7c977",
+    "png_sha256": "b48a3163e3c377d6746fc64029c0d6e2960c57e3e0d72972b12a79254c3319c2",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:39.622Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-laurel-serif": {
+    "evidence_id": "ev_2b1c57ce91c6119cf2e1f4866094478425d5764d94eecf81efba845ff375b5df",
+    "png_sha256": "75d8bf1557bf85ab2731dd6303c59257966d331a2c048832a2badefe247b7022",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:44.939Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-model-number": {
+    "evidence_id": "ev_ec679c11dec632b71591902a4a8c247546e162939e5dbc28e3ce113b8550f048",
+    "png_sha256": "26c8f903f2cc80f82425256a267df7250eceba8ae297bdbaff07ab52bff40531",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:45.002Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-multiplayer-canvas": {
+    "evidence_id": "ev_a60ef64f661c5db76eea820d0c57237aee6bc4019564f1fbfc10d9c7314f3c66",
+    "png_sha256": "5e7f0f17e8597616960ee01afcda6581109261a12be8dd2ca4ed124bebf403f4",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:08:29.047Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-nested-frames": {
+    "evidence_id": "ev_8737f5c88478141fa1fb1eaa59f54200acd250127f20bc37aab0e1e2041dbb3e",
+    "png_sha256": "c79555624b3a8929c4d05072469aa5b52046afdac9b19b3e3515c9449d066f31",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:08:29.049Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-notebook-windows": {
+    "evidence_id": "ev_13f7a2baf6c3bcba3615e3c560f52aef0b8acbbfc95a5ce7ff167c5048cd5ce6",
+    "png_sha256": "d2bc1c14d7699ec79667cfa7ec13f554f194734d584d06d83b63a148810d54ba",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:08:34.524Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-orb-clients": {
+    "evidence_id": "ev_52148af792c259c441493ae6cc2165dd43818b9e487b46898166b16ea0221cc2",
+    "png_sha256": "750271402a0ce33364da7e9147f701279e0a597e335b5f86b4aff102db9538f0",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:56.056Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-paper-sketch": {
+    "evidence_id": "ev_58762aa376459038f27b45ec0638482980a249c2748318723620338961090525",
+    "png_sha256": "a24cdc4426d3ba4059773ecd555dc37c1566bcdc8be48fc7eb1bafc22b86b939",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:06:01.417Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-pixel-logos": {
+    "evidence_id": "ev_28d76dede276913285e4b3ef0ad6932da8788d3f866bcfbb4e1df7b801db7bd3",
+    "png_sha256": "b82c2dfec86b7d56ba8dc4b27cc31ee71d892e3ae05bfb43462dcd60754ef617",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:08:34.429Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-pocket-device": {
+    "evidence_id": "ev_6f82b26d4ac241dd87c72849fb5a59b1a6966122cf643c2c9a182cc82bed6e16",
+    "png_sha256": "1be51a4a3c681e8d5ca3c765daf651dc69af81039190da222ef34cb82d9a5fcc",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:06:07.143Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-prism-arc": {
+    "evidence_id": "ev_a47ca6fa6b636f7c031bfc5b01610b34069c0d00ee52ea20c327c6ed84cc03bf",
+    "png_sha256": "5bffd5201a436e6f129286ee33bf9cf97ef7f3568893dffe654afcaa7d6edae7",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:06:07.050Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-red-portrait": {
+    "evidence_id": "ev_3c941fbc663144993bcadc8b17b6e70bb868725ce6161b56f6f4a6d64b1bfb8a",
+    "png_sha256": "648df83d7e16984f18d0857ea45856dc6b8455dae7efa0a1aa1be55d9451495c",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:06:12.676Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-scribble-strike": {
+    "evidence_id": "ev_024f673cbb409380bfaf5d5217e8190d97440f2b1a20afa83dc5642294ec7822",
+    "png_sha256": "5032ea59ac225e3246dd6e0306db66e8d6d57e8858b47054e50cbd761a3f95a4",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:06:12.675Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-slot-rows": {
+    "evidence_id": "ev_cf82591f9d2a5a05f7c7528cf2eb84fc18cfebe0a15f7cd194764f339c35984d",
+    "png_sha256": "46db00e57280862e2a11464d4787d86d533885dad0cf2236a27ec67df4ea7166",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:06:18.191Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-spectrum-console": {
+    "evidence_id": "ev_48f72b0ec845502358274e4b864454452735c80134b4ceea9a82a92881eb8d86",
+    "png_sha256": "b14fe04d441f0089351b6b4cbc19651df728f0e5309cae8d778f29930cea110a",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:08:39.959Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-token-prompt": {
+    "evidence_id": "ev_e4e96cb203e12de6fa535ef6b50c322cb5b8aaf49647b026c0c91fee5832e8b0",
+    "png_sha256": "8ccaf3b1cf5ae4f92921780cf34d7e871d44447b96d2845487cd17d7472836e0",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:06:36.041Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-story-rail": {
+    "evidence_id": "ev_0e9ae0b62a4805f8e2c3873efe52986d34e065de1b3d515a12d1456ac5c58fd0",
+    "png_sha256": "16e6cfd2dabeb17e5d4da5d7822004b8a9d53d221e0b7c84e6dfbd0ab51a2eed",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:06:23.665Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-sunset-stripes": {
+    "evidence_id": "ev_e7ed04865fd723f6261b796ea6f575cf96d12b1e26dbec37890837da226eaa71",
+    "png_sha256": "d6dfe752506914a1020de1f3834bbae3ea165cc1755be423fed364fd7b7535a6",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:06:23.734Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-wordmark-dashboard": {
+    "evidence_id": "ev_24b967f2dddd832aa47368cee29194abe0f363b507963c8eac19064f95808cf8",
+    "png_sha256": "5218d7466f285d0c89e0e7a74feae612944bbcccdbbd5f9c82d166fb57d256d9",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:06:36.079Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-velocity-type": {
+    "evidence_id": "ev_686944c3326e2ae3b078739101fec7561dfeb63cd154fe703f7cff892549702c",
+    "png_sha256": "59a22bc2605e40c9ee396a6bc2f77bae2616b4729077ccc351786dec453977b2",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:08:40.045Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-blueprint": {
+    "evidence_id": "ev_354d1d9760f40a99d5d846124a0379341b580b3af8a540324096c9f223d512c0",
+    "png_sha256": "b59d544d0daceb01462a4102e6fccab0be34b337fcb570f75e9b0ca321910873",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:10.683Z",
+    "provider": "rea-cdp-browser"
+  },
+  "hero-curved-collage": {
+    "evidence_id": "ev_ac535f5e65f4b272a8c2357952123feff6d35a4d76237a183198aa206e108163",
+    "png_sha256": "3b6721f131ec25920ae3a9496542171f32f6b8e800a5415bc998186d9480dfb1",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-16T15:05:23.567Z",
+    "provider": "rea-cdp-browser"
+  },
   "data-table": {
     "png_sha256": "63f1ac0b825f8ecfef0d65682063ee0b51d0e3f09dad1ddf5e5b0ba13cd7850f",
     "viewport": {

@@ -3585,6 +3585,116 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-blueprint",
+      "type": "registry:component",
+      "title": "Hero — Blueprint Grid",
+      "description": "Architectural AI-agent hero on a ruled cream grid: heavy two-line headline, mono ticker, a line-drawn tower with a red sun dissolving into pixels, a shouty statement and a client row.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "editorial",
+          "grid",
+          "line art",
+          "path draw",
+          "ticker",
+          "architecture"
+        ],
+        "pageTypes": [
+          "landing",
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-blueprint.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-blueprint.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-converging-strings",
+      "type": "registry:component",
+      "title": "Hero — Converging Strings",
+      "description": "Branding-agency hero: a grayscale studio where dozens of taut strings fan down from the ceiling onto the team (photo slot or silhouettes), under a huge indented statement.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "branding",
+          "lines",
+          "strings",
+          "grayscale",
+          "agency"
+        ],
+        "pageTypes": [
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-converging-strings.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-converging-strings.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-curved-collage",
+      "type": "registry:component",
+      "title": "Hero — Curved Collage",
+      "description": "About-page hero: full nav with three CTAs, a bold centered headline and paragraph, and a photo collage whose side photos are carved by huge sweeping curves.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "about",
+          "story",
+          "collage",
+          "curved mask",
+          "photos"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-curved-collage.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-curved-collage.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "hero-dev-terminal",
       "type": "registry:component",
       "title": "Hero — Dev Tool Terminal",
@@ -3657,6 +3767,77 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-dream-arches",
+      "type": "registry:component",
+      "title": "Hero — Dream Arches",
+      "description": "Studio hero: a surreal pastel room — a tall arch onto lavender hills, a doorway to the sky, a stair rising out of still water, rocks and a floating pearl — under an italic-serif + sans headline.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "studio",
+          "surreal",
+          "pastel",
+          "serif",
+          "3d look"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-dream-arches.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-dream-arches.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-dusk-skyline",
+      "type": "registry:component",
+      "title": "Hero — Dusk Skyline",
+      "description": "Corporate hero: black utility bar and white nav over a dusk skyline (drawn placeholder or your photo) with thin oversized type, then a calm statement section below.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "corporate",
+          "skyline",
+          "city",
+          "twinkle",
+          "thin type"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-dusk-skyline.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-dusk-skyline.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "hero-editorial",
       "type": "registry:component",
       "title": "Hero — Editorial Studio",
@@ -3688,6 +3869,44 @@
           "path": "components/kinetik/hero-editorial.tsx",
           "type": "registry:component",
           "target": "components/kinetik/hero-editorial.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-feature-carousel",
+      "type": "registry:component",
+      "title": "Hero — Feature Carousel",
+      "description": "Feature-led video-AI hero: announcement strip and nav, a condensed uppercase headline with gradient pill and big round arrows that drive a spring-physics card slider (auto-advances), and an enterprise banner pill.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "ai",
+          "video",
+          "carousel",
+          "slider",
+          "condensed"
+        ],
+        "pageTypes": [
+          "landing",
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-feature-carousel.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-feature-carousel.tsx"
         }
       ]
     },
@@ -3730,6 +3949,223 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-fold-open",
+      "type": "registry:component",
+      "title": "Hero — Fold Open",
+      "description": "Foldable-device launch hero on soft grey: centered title, two lines of copy, pre-order note and pill CTAs, then the device unfolds on its hinge in 3D between two hands, revealing a photo memory and a widget/app grid.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "foldable",
+          "3d",
+          "device",
+          "launch",
+          "hinge"
+        ],
+        "pageTypes": [
+          "landing",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-fold-open.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-fold-open.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-framed-peak",
+      "type": "registry:component",
+      "title": "Hero — Framed Peak",
+      "description": "Foundation/mission hero: lavender nav, a rounded alpine photo card with a hiker climbing and a white square frame drawing itself around the name, then the mission copy.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "mission",
+          "mountain",
+          "frame",
+          "path draw",
+          "parallax"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-framed-peak.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-framed-peak.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-giant-wordmark",
+      "type": "registry:component",
+      "title": "Hero — Giant Wordmark",
+      "description": "Brand hero inverted: a tall white card with rounded bottom holds the serif pitch, CTA, link columns and a small mark + copyright, while a colossal serif wordmark rises letter by letter out of a pale sky below.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "brand",
+          "wordmark",
+          "serif",
+          "sky",
+          "inverted"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-giant-wordmark.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-giant-wordmark.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-halo-event",
+      "type": "registry:component",
+      "title": "Hero — Halo Event",
+      "description": "Keynote/event hero: slim global nav over a sky-blue field where a glassy orb with an iridescent rotating rim glows above a one-line announcement and a single pill CTA.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "event",
+          "keynote",
+          "iridescent",
+          "ring",
+          "glow"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-halo-event.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-halo-event.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-launch-timeline",
+      "type": "registry:component",
+      "title": "Hero — Launch Timeline",
+      "description": "Release-notes hero on warm beige: edition wordmark and roman-numeral index at left, a storefront preview whose banner swaps as a vertical schedule timeline ticks through each launch.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "release",
+          "schedule",
+          "timeline",
+          "store preview",
+          "a/b"
+        ],
+        "pageTypes": [
+          "landing",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-launch-timeline.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-launch-timeline.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-laurel-serif",
+      "type": "registry:component",
+      "title": "Hero — Laurel Serif",
+      "description": "Quiet agency hero: tiny letter-spaced wordmark, one serif line revealing per character, laurel-wrapped awards popping in, and a neon slab rising from the fold.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "minimal",
+          "serif",
+          "awards",
+          "agency",
+          "neon"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-laurel-serif.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-laurel-serif.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "hero-mesh-cards",
       "type": "registry:component",
       "title": "Hero — Mesh + Floating Cards",
@@ -3761,6 +4197,403 @@
           "path": "components/kinetik/hero-mesh-cards.tsx",
           "type": "registry:component",
           "target": "components/kinetik/hero-mesh-cards.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-model-number",
+      "type": "registry:component",
+      "title": "Hero — Model Number",
+      "description": "Product-glamour hero: neon promo strip, a floating boxed header, and a moody machined e-bike close-up with a pulsing red lamp, a huge model number and a reserve line.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "product",
+          "glamour",
+          "dark",
+          "promo bar",
+          "bike"
+        ],
+        "pageTypes": [
+          "ecommerce",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-model-number.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-model-number.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-multiplayer-canvas",
+      "type": "registry:component",
+      "title": "Hero — Multiplayer Canvas",
+      "description": "AI site-builder hero on a design canvas: product nav, a violet selection frame with handles, site thumbnails bleeding off both edges, wandering multiplayer cursors, a light display headline and a rainbow-ringed prompt bar.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "ai",
+          "canvas",
+          "cursors",
+          "multiplayer",
+          "prompt"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-multiplayer-canvas.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-multiplayer-canvas.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-nested-frames",
+      "type": "registry:component",
+      "title": "Hero — Nested Frames",
+      "description": "Manifesto hero: white nav bar over a deep-purple field where the copy sits in a glowing rounded panel wrapped by concentric frames that pulse outward.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "manifesto",
+          "concentric",
+          "frames",
+          "glow",
+          "purple"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-nested-frames.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-nested-frames.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-notebook-windows",
+      "type": "registry:component",
+      "title": "Hero — Notebook Windows",
+      "description": "Data-platform hero on dotted pink paper: news ticker, centered-logo nav, italic serif + heavy sans headline with a sparkle, handle-framed CTAs and three product windows rising and overlapping at the fold.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "data",
+          "notebook",
+          "windows",
+          "serif",
+          "dotted"
+        ],
+        "pageTypes": [
+          "landing",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-notebook-windows.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-notebook-windows.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-orb-clients",
+      "type": "registry:component",
+      "title": "Hero — Orb + Client Cards",
+      "description": "Agency hero: wordmark and small nav, a soft coral orb glowing behind huge frosted pill CTAs, and a row of client case cards — each with a tiny site preview — fanning in.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "agency",
+          "orb",
+          "conic gradient",
+          "case studies",
+          "cards"
+        ],
+        "pageTypes": [
+          "portfolio",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-orb-clients.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-orb-clients.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-paper-sketch",
+      "type": "registry:component",
+      "title": "Hero — Paper Sketch",
+      "description": "Device hero in a rounded cinematic frame: a large tilted paper-like tablet sketches an engraving stroke by stroke beside a hand, under a frosted nav pill, with serif copy and three features along the bottom.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "device",
+          "e-ink",
+          "sketch",
+          "cinematic",
+          "features"
+        ],
+        "pageTypes": [
+          "landing",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-paper-sketch.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-paper-sketch.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-pixel-logos",
+      "type": "registry:component",
+      "title": "Hero — Pixel Logos",
+      "description": "Enterprise-AI hero in a ruled grid: bordered cell nav, hopping pixel-art mascots, a word-by-word headline, a drifting row of tall logo cells and a strip of customer stories.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "enterprise",
+          "pixel art",
+          "logo grid",
+          "marquee",
+          "ai"
+        ],
+        "pageTypes": [
+          "landing",
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-pixel-logos.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-pixel-logos.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-pocket-device",
+      "type": "registry:component",
+      "title": "Hero — Pocket Device",
+      "description": "Hardware hero: two-tier commerce nav with a hardware icon strip, then a soft grey split card with a NEW badge, serif two-liner, pill CTAs and a handheld terminal swinging upright to ring up a sale.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "hardware",
+          "device",
+          "payments",
+          "serif",
+          "count up"
+        ],
+        "pageTypes": [
+          "landing",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-pocket-device.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-pocket-device.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-prism-arc",
+      "type": "registry:component",
+      "title": "Hero — Prism Arc",
+      "description": "Creative-AI hero on soft grey: minimal nav, a light two-line headline, copy with bold keywords and a big pill CTA, above a half-dome window of rotating prismatic crystal light.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "ai",
+          "prism",
+          "iridescent",
+          "dome",
+          "creative"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-prism-arc.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-prism-arc.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-red-portrait",
+      "type": "registry:component",
+      "title": "Hero — Red Portrait",
+      "description": "Digital-agency hero: a red-monochrome portrait (photo slot or CSS stand-in) with projected blue light points, a thin nav and a cyan condensed-serif wordmark + tagline wiping in at bottom left.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "agency",
+          "portrait",
+          "duotone",
+          "serif",
+          "light dots"
+        ],
+        "pageTypes": [
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-red-portrait.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-red-portrait.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-scribble-strike",
+      "type": "registry:component",
+      "title": "Hero — Scribble Strike",
+      "description": "Studio hero: black top bar, a cinematic full-bleed still under a heavy cream uppercase statement whose last word gets a hand-drawn red strike and scribbled correction, a circled link and a red name band.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "studio",
+          "hand-drawn",
+          "strikethrough",
+          "marquee",
+          "cinematic"
+        ],
+        "pageTypes": [
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-scribble-strike.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-scribble-strike.tsx"
         }
       ]
     },
@@ -3802,6 +4635,79 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-slot-rows",
+      "type": "registry:component",
+      "title": "Hero — Slot Rows",
+      "description": "Capability hero: pill-menu header, \"AI that\" in a ruled left column, a slot-reel of huge phrases that springs up one row at a time (current row in full ink), and a drifting \"Trusted by\" logo row.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "hero",
+          "ai",
+          "slot",
+          "rotating words",
+          "rows",
+          "minimal"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-slot-rows.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-slot-rows.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-spectrum-console",
+      "type": "registry:component",
+      "title": "Hero — Spectrum Console",
+      "description": "Observability hero: dark nav + announcement bar, spaced eyebrow, big headline, email capture with glowing CTA, and a logs dashboard rising between equaliser-style volume bars.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "devtools",
+          "observability",
+          "equalizer",
+          "email capture",
+          "dark"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-spectrum-console.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-spectrum-console.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "hero-spotlight-grid",
       "type": "registry:component",
       "title": "Hero — Spotlight Grid",
@@ -3833,6 +4739,148 @@
           "path": "components/kinetik/hero-spotlight-grid.tsx",
           "type": "registry:component",
           "target": "components/kinetik/hero-spotlight-grid.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-story-rail",
+      "type": "registry:component",
+      "title": "Hero — Story Rail",
+      "description": "Customer-story hero on black: big two-line headline, two small pills, then an endless rail of tall photo cards with white brand marks — hover pauses it.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "customer stories",
+          "marquee",
+          "cards",
+          "dark",
+          "logos"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-story-rail.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-story-rail.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-sunset-stripes",
+      "type": "registry:component",
+      "title": "Hero — Sunset Stripes",
+      "description": "Closing-statement hero on cream: bordered-pill nav, a careers banner card, a plain centered statement with underlined text links, and a pixel cat on stacked sunset stripes that sweep in from alternating sides.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "cta",
+          "stripes",
+          "pixel art",
+          "sunset",
+          "minimal"
+        ],
+        "pageTypes": [
+          "landing",
+          "ai-app"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-sunset-stripes.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-sunset-stripes.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-token-prompt",
+      "type": "registry:component",
+      "title": "Hero — Token Prompt",
+      "description": "Enterprise-AI hero: halftone dot fields frame a prompt box that types itself, dropping in coloured data chips; \"New suggestion\" shuffles prompts.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "ai",
+          "prompt",
+          "typing",
+          "chips",
+          "halftone"
+        ],
+        "pageTypes": [
+          "ai-app",
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-token-prompt.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-token-prompt.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-velocity-type",
+      "type": "registry:component",
+      "title": "Hero — Velocity Type",
+      "description": "Sports-performance hero: thin mono nav, a motion-blurred action photo with giant stacked uppercase lines, an orange split CTA, a logo strip and the intro statement below.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "sports",
+          "condensed",
+          "mask reveal",
+          "streaks",
+          "logo marquee"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-velocity-type.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-velocity-type.tsx"
         }
       ]
     },
@@ -3870,6 +4918,42 @@
           "path": "components/kinetik/hero-video-dialog.tsx",
           "type": "registry:component",
           "target": "components/kinetik/hero-video-dialog.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-wordmark-dashboard",
+      "type": "registry:component",
+      "title": "Hero — Wordmark + Dashboard",
+      "description": "Product-launch hero: a giant condensed wordmark drops in letter by letter, then a violet stage rises with a condensed tagline and a full store-admin mock whose chart draws itself.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "hero",
+          "launch",
+          "wordmark",
+          "dashboard",
+          "chart",
+          "product"
+        ],
+        "pageTypes": [
+          "landing",
+          "dashboard"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-wordmark-dashboard.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-wordmark-dashboard.tsx"
         }
       ]
     },

@@ -1,0 +1,1 @@
+Recreate a foldable-phone launch hero on #f5f5f7: centered semibold H1, 2-line grey subtitle, small pre-order note, black + outlined pill CTAs; then the device held between two hands: the left panel (photo memory) unfolds from rotateY 115° to a slight V, revealing the right panel's weather widget and app grid.

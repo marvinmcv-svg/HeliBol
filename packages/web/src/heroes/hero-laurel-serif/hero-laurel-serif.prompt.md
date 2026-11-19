@@ -1,0 +1,1 @@
+Recreate a quiet agency hero on #f6f6f4: letter-spaced wordmark and = menu; one EB Garamond line (~4.6vw) revealing per character (translateY .25em + blur 4px, 28ms stagger) at ~45% height; tiny '7x Agency of the Year' and two rows of awards wrapped in SVG laurels popping in; a neon green #00e83a top-rounded slab rising from the bottom edge (66% wide).

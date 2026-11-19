@@ -1,0 +1,1 @@
+Recreate a creative-AI hero on #f0f0f0: nav (mark left; API, Pricing, Documentation, black 'Start Building' pill right); light 2-line H1 (~4.5vw), 3-line paragraph with bold keywords, big black pill CTA; a half-dome window (45% wide, rounded-t-full) filled with a rotating conic prism gradient and sliding overlay facets, rising on load; a 'Get Help' pill bottom-right.
