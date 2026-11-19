@@ -33,11 +33,23 @@ function H({ id, children }: { id: string; children: React.ReactNode }) {
 }
 
 export default async function Page() {
-  const [install, manual, usage, agent] = await Promise.all([
+  const [install, manual, usage, agent, mcp] = await Promise.all([
     highlight(`# 1. shadcn project (skip if you have one)\nnpx shadcn@latest init\n\n# 2. add any component — its deps + kinetik-core come along\nnpx shadcn@latest add ${SITE_URL}/r/like-burst.json`, "bash"),
     highlight(`npm i motion gsap @gsap/react lenis   # only the engines you use\n# then copy lib/kinetik/{utils,core,tokens}.ts from\n${SITE_URL}/r/kinetik-core.json`, "bash"),
     highlight(`import { LikeBurst } from "@/components/kinetik/like-burst";\nimport { spring, duration } from "@/lib/kinetik/tokens";\n\nexport default function Post() {\n  return <LikeBurst count={1284} />;\n}`, "tsx"),
     highlight(`# Every item exposes three agent-friendly endpoints\n${SITE_URL}/r/registry.json          # index of all items (shadcn registry schema)\n${SITE_URL}/r/<id>.json              # registry item with full source\n${SITE_URL}/r/<id>.prompt.md         # paste-ready AI prompt\n\n# Example: tell Claude Code\n"Install ${SITE_URL}/r/toast-stack.json and wire useToast() into our settings page"`, "bash"),
+    highlight(`// components.json — register kinetik as a namespaced registry
+{
+  "registries": {
+    "@kinetik": "${SITE_URL}/r/{name}.json"
+  }
+}
+
+# then install by name…
+npx shadcn@latest add @kinetik/like-burst @kinetik/three-coin
+
+# …or let your agent browse, search and install through the shadcn MCP server
+npx shadcn@latest mcp init --client claude   # also: cursor, vscode, codex`, "bash"),
   ]);
   const code = "overflow-hidden rounded-2xl border border-border bg-card text-[13px] [&_pre]:overflow-x-auto [&_pre]:p-4";
 
@@ -113,6 +125,13 @@ export default async function Page() {
             <H id="ai">AI agents</H>
             <p className="text-muted-foreground">Like 21st.dev, every item has a <b>Copy AI prompt</b> button. The prompt contains intent, motion spec, accessibility/performance constraints, the full source, a usage example and the helper files — enough for any coding agent to rebuild it in your stack.</p>
             <div className={code} dangerouslySetInnerHTML={{ __html: agent }} />
+            <h3 className="pt-2 text-lg font-semibold">MCP: let the agent pick components itself</h3>
+            <p className="text-muted-foreground">Add kinetik as a namespaced registry and the official shadcn MCP server can list, search and install every item for Claude Code, Cursor, VS Code or Codex — no copy-paste.</p>
+            <div className={code} dangerouslySetInnerHTML={{ __html: mcp }} />
+            <p className="text-sm text-muted-foreground">
+              For agents that read the web: <a href="/llms.txt" className="text-foreground underline underline-offset-4">/llms.txt</a> maps the whole library (one line per item with its prompt URL) and{" "}
+              <a href="/llms-full.txt" className="text-foreground underline underline-offset-4">/llms-full.txt</a> adds props, accessibility, performance and install commands for every item.
+            </p>
           </section>
 
           <section className="space-y-4">

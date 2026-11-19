@@ -2,17 +2,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
-import { Search } from "lucide-react";
+import { Heart, Search } from "lucide-react";
 import { cn } from "@kinetik/core";
 import { spring } from "@kinetik/tokens";
 import { ThemeToggle } from "@web/buttons/theme-toggle/theme-toggle";
 import { Logo } from "./logo";
 import { ReduceMotionToggle } from "./reduce-motion-toggle";
 import { openCommandMenu } from "./command-menu";
+import { useSaved } from "@/lib/saved";
 
 const nav = [
   { href: "/components", label: "Components" },
   { href: "/blocks", label: "Blocks" },
+  { href: "/templates", label: "Templates" },
   { href: "/flows", label: "Flows" },
   { href: "/playground", label: "Playground" },
   { href: "/docs", label: "Docs" },
@@ -20,6 +22,7 @@ const nav = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const saved = useSaved().length;
   if (pathname.startsWith("/thumb/")) return null;
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/75 backdrop-blur-xl">
@@ -49,6 +52,10 @@ export function SiteHeader() {
           <button type="button" onClick={openCommandMenu} aria-label="Search" className="grid size-8 place-items-center rounded-lg text-muted-foreground hover:bg-accent sm:hidden">
             <Search className="size-4" />
           </button>
+          <Link href="/saved" aria-label={`Saved${saved ? ` (${saved})` : ""}`} className="relative grid size-8 place-items-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground">
+            <Heart className={cn("size-4", saved > 0 && "fill-rose-500 text-rose-500")} />
+            {saved > 0 && <span className="absolute -top-0.5 -right-0.5 grid min-w-4 place-items-center rounded-full bg-rose-500 px-1 text-[9px] font-semibold text-white tabular-nums">{saved}</span>}
+          </Link>
           <ReduceMotionToggle />
           <ThemeToggle className="size-8" />
           <a href="https://github.com/marvinmcv-svg/HeliBol" className="grid size-8 place-items-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground" aria-label="GitHub">

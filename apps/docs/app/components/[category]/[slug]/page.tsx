@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { ItemDetail } from "@/components/item-detail";
-import { components } from "@/lib/registry.generated";
+import { components, thumbs } from "@/lib/registry.generated";
 import { categories, categoryName } from "@/lib/taxonomy";
 
 const order = categories.flatMap((c) => components.filter((m) => m.category === c.id));
@@ -13,7 +13,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const m = components.find((c) => c.id === slug);
-  return m ? { title: m.name, description: m.description } : {};
+  return m ? { title: m.name, description: m.description, alternates: { canonical: `/components/${m.category}/${m.id}` }, openGraph: { title: `${m.name} · kinetik`, description: m.description, images: thumbs[m.id] ? [{ url: thumbs[m.id], width: 800, height: 500, alt: `${m.name} preview` }] : undefined }, twitter: { card: "summary_large_image" } } : {};
 }
 
 export default async function Page({ params }: { params: Promise<{ category: string; slug: string }> }) {

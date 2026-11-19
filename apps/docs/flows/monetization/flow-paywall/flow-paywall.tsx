@@ -55,7 +55,7 @@ export function FlowPaywall({ initialStep = 0 }: { initialStep?: number }) {
             </div>
             <label className="mt-4 flex items-center justify-between rounded-2xl bg-white/5 px-3.5 py-3 text-sm">
               Free 7-day trial
-              <button role="switch" aria-checked={trial} onClick={() => { setTrial((t) => !t); haptic("light"); }} className={cn("flex h-7 w-12 rounded-full p-0.5 transition-colors", trial ? "justify-end bg-emerald-500" : "justify-start bg-white/20")}>
+              <button role="switch" aria-checked={trial} aria-label="Free 7-day trial" onClick={() => { setTrial((t) => !t); haptic("light"); }} className={cn("flex h-7 w-12 rounded-full p-0.5 transition-colors", trial ? "justify-end bg-emerald-500" : "justify-start bg-white/20")}>
                 <motion.span layout transition={spring.snappy} className="size-6 rounded-full bg-white" />
               </button>
             </label>

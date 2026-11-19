@@ -4,12 +4,18 @@ import { GeistMono } from "geist/font/mono";
 import { SiteHeader } from "@/components/site-header";
 import { CommandMenu } from "@/components/command-menu";
 import { Providers } from "@/components/providers";
+import { SITE_URL } from "@/lib/content";
+import { blocks, components, flows } from "@/lib/registry.generated";
 import "./globals.css";
 
+const total = components.length + blocks.length + flows.length;
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: { default: "kinetik — the motion library for web & mobile", template: "%s · kinetik" },
-  description:
-    "250+ copy-paste animated components, blocks and mobile flows for React, Next.js and React Native. Live previews, source, install command and an AI prompt for every piece.",
+  description: `${total} copy-paste animated components, blocks and mobile flows for React, Next.js and React Native. Live previews, source, install command and an AI prompt for every piece.`,
+  openGraph: { siteName: "kinetik", type: "website", images: ["/thumbs/hero-mesh-cards.webp"] },
+  twitter: { card: "summary_large_image" },
+  alternates: { types: { "text/plain": "/llms.txt" } },
 };
 
 const boot = `try{var t=localStorage.getItem("theme");if(t!=="light")document.documentElement.classList.add("dark");if(localStorage.getItem("kinetik-reduce-motion")==="1")document.documentElement.setAttribute("data-reduce-motion","")}catch(e){document.documentElement.classList.add("dark")}`;

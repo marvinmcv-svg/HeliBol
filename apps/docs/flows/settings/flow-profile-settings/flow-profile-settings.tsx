@@ -6,9 +6,9 @@ import { cn } from "@kinetik/core";
 import { spring } from "@kinetik/tokens";
 import { haptic } from "../../_shared/phone";
 
-function Toggle({ on, onChange }: { on: boolean; onChange: () => void }) {
+function Toggle({ on, onChange, label }: { on: boolean; onChange: () => void; label: string }) {
   return (
-    <button role="switch" aria-checked={on} onClick={() => { haptic(); onChange(); }} className={cn("flex h-[30px] w-[50px] rounded-full p-0.5 transition-colors", on ? "justify-end bg-emerald-500" : "justify-start bg-zinc-300")}>
+    <button role="switch" aria-checked={on} aria-label={label} onClick={() => { haptic(); onChange(); }} className={cn("flex h-[30px] w-[50px] rounded-full p-0.5 transition-colors", on ? "justify-end bg-emerald-500" : "justify-start bg-zinc-300")}>
       <motion.span layout transition={spring.snappy} className="size-[26px] rounded-full bg-white shadow" />
     </button>
   );
@@ -51,7 +51,7 @@ export function FlowProfileSettings({ initialStep = 0 }: { initialStep?: number 
             <div key={k} className="flex items-center gap-3 px-3.5 py-2.5">
               <span className="grid size-8 place-items-center rounded-lg text-white" style={{ background: color }}><Icon className="size-4" /></span>
               <span className="flex-1 text-[15px]">{label}</span>
-              <Toggle on={prefs[k]} onChange={() => flip(k)} />
+              <Toggle on={prefs[k]} onChange={() => flip(k)} label={String(label)} />
             </div>
           ))}
         </div>

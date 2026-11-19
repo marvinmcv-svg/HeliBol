@@ -248,6 +248,29 @@ if (fs.existsSync(thumbDir)) {
 }
 lines.push("");
 lines.push(`export const thumbs: Record<string, string> = ${JSON.stringify(thumbs)};`);
+
+// Date each item was added (first commit that created its meta file), for "Newest" sorting and
+// "New" badges. Items not committed yet count as today.
+const added = {};
+try {
+  const { execFileSync } = await import("node:child_process");
+  const log = execFileSync("git", ["log", "--diff-filter=A", "--format=@%aI", "--name-only", "--", "packages/web/src", "apps/docs/blocks", "apps/docs/flows"], { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  let date = "";
+  for (const line of log.split("\n")) {
+    if (line.startsWith("@")) date = line.slice(1, 11);
+    else if (line.endsWith(".meta.ts")) added[path.basename(line, ".meta.ts")] = date; // log is newest-first, so the oldest add wins
+  }
+} catch {
+  /* not a git checkout */
+}
+const today = new Date().toISOString().slice(0, 10);
+for (const c of [...components, ...blocks, ...flows]) added[c.meta.id] ??= today;
+lines.push("");
+lines.push(`/** ISO date each item was first added. */`);
+lines.push(`export const added: Record<string, string> = ${JSON.stringify(added)};`);
+const releases = [...new Set(Object.values(added))].sort().slice(-2);
+lines.push(`/** Items from the two most recent release dates get a "New" badge. */`);
+lines.push(`export const newIds: string[] = ${JSON.stringify(Object.keys(added).filter((id) => releases.includes(added[id])))};`);
 fs.writeFileSync(path.join(docs, "lib/registry.generated.ts"), lines.join("\n") + "\n");
 
 // Demo loaders live in their own client-only module. If server components import them (even

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ComponentMeta } from "@web/types";
 import { EngineBadge } from "./engine-badge";
 import { CardPreview } from "./card-preview";
+import { SaveButton } from "./save-button";
 
 const sizes = {
   md: { h: "h-48", top: "after:top-48", inner: "scale-[0.6] [height:166.67%] [width:166.67%]" },
@@ -9,12 +10,14 @@ const sizes = {
   phone: { h: "h-[26rem]", top: "after:top-[26rem]", inner: "h-full w-full" },
 };
 
-export function ComponentCard({ meta, href, size = "md" }: { meta: ComponentMeta; href: string; size?: keyof typeof sizes }) {
+export function ComponentCard({ meta, href, size = "md", isNew = false }: { meta: ComponentMeta; href: string; size?: keyof typeof sizes; isNew?: boolean }) {
   const z = sizes[size];
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-[box-shadow,border-color,translate] duration-300 hover:-translate-y-0.5 hover:border-foreground/15 hover:shadow-xl hover:shadow-black/5">
       <div className={`relative ${z.h} overflow-hidden border-b border-border bg-background`}>
         <CardPreview id={meta.id} name={meta.name} inner={z.inner} />
+        {isNew && <span className="pointer-events-none absolute top-2 left-2 z-10 rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white shadow">New</span>}
+        <SaveButton id={meta.id} name={meta.name} className="absolute top-2 right-2 z-20 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 aria-pressed:opacity-100 [@media(hover:none)]:opacity-100" />
       </div>
       <Link href={href} className={`flex items-start justify-between gap-3 p-4 after:absolute after:inset-x-0 after:bottom-0 ${z.top}`}>
         <div className="min-w-0">

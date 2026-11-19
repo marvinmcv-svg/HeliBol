@@ -1,11 +1,14 @@
 import Link from "next/link";
-import { Accessibility, ArrowLeft, ArrowRight, Gauge } from "lucide-react";
+import { Accessibility, ArrowLeft, ArrowRight, ExternalLink, FileText, Gauge } from "lucide-react";
 import type { ComponentMeta } from "@web/types";
-import { getContent, installCommand } from "@/lib/content";
+import { getContent, SITE_URL } from "@/lib/content";
+import { added, newIds } from "@/lib/registry.generated";
 import { highlight } from "@/lib/highlight";
 import { categoryName, pageTypes } from "@/lib/taxonomy";
 import { CodeTabs } from "./code-tabs";
 import { CopyButton } from "./copy-button";
+import { InstallTabs } from "./install-tabs";
+import { SaveButton } from "./save-button";
 import { EngineBadge } from "./engine-badge";
 import { PreviewFrame } from "./preview-frame";
 import { ComponentCard } from "./component-card";
@@ -32,13 +35,8 @@ export async function ItemDetail({
   extra?: React.ReactNode;
 }) {
   const content = getContent(meta.id);
-  const install = installCommand(meta.id);
-  const [sourceHtml, demoHtml, promptHtml, installHtml] = await Promise.all([
-    highlight(content.source),
-    highlight(content.demo),
-    highlight(content.prompt, "markdown"),
-    highlight(`${install}\n\n# or install dependencies manually\nnpm i ${meta.dependencies.join(" ") || "# (none — CSS only)"}`, "bash"),
-  ]);
+  const registryUrl = `${SITE_URL}/r/${meta.id}.json`;
+  const [sourceHtml, demoHtml, promptHtml] = await Promise.all([highlight(content.source), highlight(content.demo), highlight(content.prompt, "markdown")]);
 
   return (
     <div className="mx-auto max-w-5xl space-y-8">
@@ -53,6 +51,8 @@ export async function ItemDetail({
               <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{meta.priority}</span>
               <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{meta.platforms.join(" + ")}</span>
               {meta.status !== "stable" && <span className="rounded-md bg-brand/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand">{meta.status}</span>}
+              {newIds.includes(meta.id) && <span className="rounded-md bg-brand px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">New</span>}
+              {added[meta.id] && <span className="text-[11px] text-muted-foreground">Added {added[meta.id]}</span>}
             </div>
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{meta.name}</h1>
             <p className="text-muted-foreground">{meta.description}</p>
@@ -64,7 +64,19 @@ export async function ItemDetail({
               icon="sparkles"
               className="h-9 rounded-xl bg-foreground px-3.5 text-sm text-background hover:bg-foreground/90 hover:text-background"
             />
-            <CopyButton text={install} label="Copy install" icon="terminal" className="h-9 rounded-xl border border-border px-3.5 text-sm" />
+            <CopyButton text={`npx shadcn@latest add ${registryUrl}`} label="Copy install" icon="terminal" className="h-9 rounded-xl border border-border px-3.5 text-sm" />
+            <SaveButton id={meta.id} name={meta.name} withLabel />
+          </div>
+          <div className="flex w-full flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground sm:justify-end">
+            <a href={`https://v0.dev/chat/api/open?url=${encodeURIComponent(registryUrl)}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-foreground">
+              <ExternalLink className="size-3" /> Open in v0
+            </a>
+            <a href={`/r/${meta.id}.prompt.md`} className="inline-flex items-center gap-1 hover:text-foreground">
+              <FileText className="size-3" /> Prompt as Markdown
+            </a>
+            <a href={`/r/${meta.id}.json`} className="inline-flex items-center gap-1 hover:text-foreground">
+              <FileText className="size-3" /> Registry JSON
+            </a>
           </div>
         </div>
       </div>
@@ -75,7 +87,7 @@ export async function ItemDetail({
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold tracking-tight">Installation</h2>
-        <div className="overflow-hidden rounded-2xl border border-border bg-card text-[13px] [&_pre]:overflow-x-auto [&_pre]:p-4" dangerouslySetInnerHTML={{ __html: installHtml }} />
+        <InstallTabs registryUrl={registryUrl} dependencies={meta.dependencies} />
       </section>
 
       <section className="space-y-3">

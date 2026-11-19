@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { FlowStrip } from "@/components/flow-strip";
 import { ItemDetail } from "@/components/item-detail";
-import { flows } from "@/lib/registry.generated";
+import { flows, thumbs } from "@/lib/registry.generated";
 
 const href = (m: (typeof flows)[number]) => `/flows/${m.id}`;
 
@@ -12,7 +12,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const m = flows.find((c) => c.id === slug);
-  return m ? { title: m.name, description: m.description } : {};
+  return m ? { title: m.name, description: m.description, alternates: { canonical: `/flows/${m.id}` }, openGraph: { title: `${m.name} · kinetik`, description: m.description, images: thumbs[m.id] ? [{ url: thumbs[m.id], width: 800, height: 500, alt: `${m.name} preview` }] : undefined }, twitter: { card: "summary_large_image" } } : {};
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
