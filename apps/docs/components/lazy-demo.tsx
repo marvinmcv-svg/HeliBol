@@ -1,7 +1,7 @@
 "use client";
 import { Component, lazy, Suspense, useMemo, useRef, type ComponentType, type ReactNode } from "react";
 import { useInView } from "@kinetik/core";
-import { demoLoaders } from "@/lib/registry.generated";
+import { demoLoaders } from "@/lib/demo-loaders.generated";
 
 const cache = new Map<string, ComponentType>();
 function getLazy(id: string) {

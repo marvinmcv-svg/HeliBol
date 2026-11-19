@@ -1,6 +1,6 @@
 "use client";
 import { lazy, Suspense, useMemo, type ComponentType } from "react";
-import { demoLoaders } from "@/lib/registry.generated";
+import { demoLoaders } from "@/lib/demo-loaders.generated";
 
 /** Mobbin-style strip: every screen of a flow rendered side by side, each frozen at its step. */
 export function FlowStrip({ id, steps }: { id: string; steps: string[] }) {
