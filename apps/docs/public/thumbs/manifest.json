@@ -3289,5 +3289,140 @@
     },
     "captured_at": "2026-11-11T18:57:49.983Z",
     "provider": "cdp-page-capture"
+  },
+  "badge-animated": {
+    "png_sha256": "ad36c87ae95efaad5a0ad4e975916b332fd5f96cdfc32094a1b6fcc8be08b2cb",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:32:16.642Z",
+    "provider": "cdp-page-capture"
+  },
+  "banner-announcement": {
+    "png_sha256": "72b2a44534b1df698443e2065ef25933f628159de56554cfe9cb4deb103d94dc",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:45.227Z",
+    "provider": "cdp-page-capture"
+  },
+  "alert-animated": {
+    "png_sha256": "64f556381cbedfebd5c7ebbda507ca04f09f92bc2c8875368594ba14c60c57b5",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:45.324Z",
+    "provider": "cdp-page-capture"
+  },
+  "comment-thread": {
+    "png_sha256": "270227192f3cae95f628c037292e67be1cb938f1d2b8e86e67a78563095adbbc",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:48.758Z",
+    "provider": "cdp-page-capture"
+  },
+  "textarea-autosize": {
+    "png_sha256": "cf6b6be855597aa2d4058e9864516d7c7b6d538692324c49a1b0183b312464eb",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:48.867Z",
+    "provider": "cdp-page-capture"
+  },
+  "color-picker": {
+    "png_sha256": "66058b86bdb307421a29cea14ed668ad10db5c50fe3692835779743e56d29f62",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:48.970Z",
+    "provider": "cdp-page-capture"
+  },
+  "cookie-consent": {
+    "png_sha256": "a273e7bac51c4ee9c0ae38740bd6ce8d31e305dc2f3636c44d3005dfbc103b1b",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:52.365Z",
+    "provider": "cdp-page-capture"
+  },
+  "kanban-board": {
+    "png_sha256": "d9124b6e4356b1c2770bbb5468a4764d600ead0a8d6e6bdffe40916e69cbca67",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:52.455Z",
+    "provider": "cdp-page-capture"
+  },
+  "dropdown-menu": {
+    "png_sha256": "921544fe69af307c25c5a0249a471edd7409ff1c9cf28c8b195eae9850bcdf18",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:32:16.785Z",
+    "provider": "cdp-page-capture"
+  },
+  "scroll-area": {
+    "png_sha256": "5eeb6bdd14b5760a38a00c90e437b94b87dd1c492c56bcc9a4f74c0bb3cc2308",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:55.951Z",
+    "provider": "cdp-page-capture"
+  },
+  "comparison-table": {
+    "png_sha256": "d9bd9685dded3918dc8030499d7c55c0f98bf2146dc36249158b46cd45fb57b3",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:56.042Z",
+    "provider": "cdp-page-capture"
+  },
+  "waitlist-form": {
+    "png_sha256": "7ce14ea6b6d8d66d2164463b7eb2d66317a1b0c5871e8c792993022b99cdd6f5",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:56.132Z",
+    "provider": "cdp-page-capture"
+  },
+  "template-ai-startup": {
+    "png_sha256": "03a0572a512b0bfeff85bd89f23595125f14f107ace0503cc3659adc6df622d0",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:59.797Z",
+    "provider": "cdp-page-capture"
+  },
+  "template-portfolio": {
+    "png_sha256": "8c9d03c417ae65623bd42c06bf9bbd1357f1909beee85c31a64879a011d752cf",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:29:59.956Z",
+    "provider": "cdp-page-capture"
+  },
+  "template-saas": {
+    "png_sha256": "db8e3610d37993604b5bb8fc45807913d156b29f7f552c7e53ff04802a41969c",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T04:30:00.120Z",
+    "provider": "cdp-page-capture"
   }
 }

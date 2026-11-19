@@ -57,7 +57,7 @@ export function BadgeAnimated({ variant = "live", children, count = 0, status = 
 
   if (variant === "status")
     return (
-      <span className={cn("inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-0.5 text-xs font-medium capitalize", className)}>
+      <span className={cn("inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-0.5 text-xs font-medium", !children && "capitalize", className)}>
         {style}
         <span className="relative flex size-2">
           {status === "online" && <span className={cn("kn-badge-ping absolute inline-flex size-full rounded-full opacity-60", statusColor[status])} />}

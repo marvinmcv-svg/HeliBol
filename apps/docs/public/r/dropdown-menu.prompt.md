@@ -41,6 +41,8 @@ export interface DropdownMenuProps {
   trigger: ReactNode;
   items: DropdownItem[];
   align?: "start" | "end";
+  /** Start open (without moving focus) — handy for previews. */
+  defaultOpen?: boolean;
   className?: string;
 }
 
@@ -49,11 +51,13 @@ export interface DropdownMenuProps {
  * focus). The panel springs from the trigger's corner, items stagger in, and a highlight pill
  * glides between items as you hover or arrow through them.
  */
-export function DropdownMenu({ trigger, items, align = "start", className }: DropdownMenuProps) {
+export function DropdownMenu({ trigger, items, align = "start", defaultOpen = false, className }: DropdownMenuProps) {
   const reduced = useReducedMotion();
   const id = useId();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const [active, setActive] = useState(-1);
+  // only move focus into the menu when the user opened it
+  const userOpened = useRef(false);
   const btn = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
   const focusable = items.map((it, i) => (it.type === "separator" || it.type === "label" ? -1 : i)).filter((i) => i >= 0);
@@ -65,7 +69,7 @@ export function DropdownMenu({ trigger, items, align = "start", className }: Dro
   };
   useEffect(() => {
     if (!open) return;
-    menu.current?.focus();
+    if (userOpened.current) menu.current?.focus();
     const down = (e: PointerEvent) => !menu.current?.contains(e.target as Node) && !btn.current?.contains(e.target as Node) && close(false);
     document.addEventListener("pointerdown", down);
     return () => document.removeEventListener("pointerdown", down);
@@ -105,8 +109,8 @@ export function DropdownMenu({ trigger, items, align = "start", className }: Dro
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={`${id}-menu`}
-        onClick={() => (open ? close() : (setOpen(true), setActive(focusable[0])))}
-        onKeyDown={(e) => e.key === "ArrowDown" && (e.preventDefault(), setOpen(true), setActive(focusable[0]))}
+        onClick={() => (open ? close() : ((userOpened.current = true), setOpen(true), setActive(focusable[0])))}
+        onKeyDown={(e) => e.key === "ArrowDown" && (e.preventDefault(), (userOpened.current = true), setOpen(true), setActive(focusable[0]))}
         className="inline-flex h-9 items-center gap-2 rounded-xl border border-border bg-background px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         {trigger}
@@ -180,6 +184,7 @@ export default function Demo() {
     <div className="flex h-full flex-col items-center gap-4 p-8 pt-10">
       <DropdownMenu
         trigger="Actions"
+        defaultOpen
         items={[
           { type: "label", label: "File" },
           { label: "Rename", icon: <Pencil className="size-4" />, shortcut: "⌘R", onSelect: () => setLast("Rename") },

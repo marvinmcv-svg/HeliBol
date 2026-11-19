@@ -10,6 +10,7 @@ export default function Demo() {
     <div className="flex h-full flex-col items-center gap-4 p-8 pt-10">
       <DropdownMenu
         trigger="Actions"
+        defaultOpen
         items={[
           { type: "label", label: "File" },
           { label: "Rename", icon: <Pencil className="size-4" />, shortcut: "⌘R", onSelect: () => setLast("Rename") },

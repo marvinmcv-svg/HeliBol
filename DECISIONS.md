@@ -54,3 +54,15 @@ Decisions made while executing `motion-library-master-plan.md`. Per Section 0.9,
 | 33 | **GSAP ↔ three.js bridge pattern:** GSAP tweens a plain object, `useFrame` copies it to the camera. | GSAP never mutates three.js objects directly, so React/R3F stay the owner of the scene graph and scrub reversals are exact. |
 | 34 | **`capture-thumbs.mjs` gained `THUMB_ENGINE=cdp`**: the same CDP session and `/thumb/<id>` auto-fit page, but the shot comes from Chrome's `Page.captureScreenshot` instead of REA. Manifest entries record `provider: "cdp-page-capture"`. | REA is fetched with `npx` at run time and this environment blocked that download; the 2.2 thumbnails use the fallback. Existing REA evidence for the 255 older items is untouched. |
 | 35 | **Glass refraction needs something behind it:** `MeshTransmissionMaterial` gets a `background` colour and the demo a backdrop wall. | Without them, rays that miss geometry sample black and faceted glass reads as solid black (caught on the thumbnail contact sheet). |
+
+## kinetik 2.3 (audit release)
+
+| # | Decision | Why |
+|---|---|---|
+| 36 | **Demo `import()` loaders live in `lib/demo-loaders.generated.ts`, imported only by client components.** | Server pages imported the meta registry; its import() map made every demo a client reference, shipping the whole catalogue (4.9 MB) on every page. |
+| 37 | **"Date added" comes from git** (first commit that created each meta file); "New" = the two most recent release dates. | No hand-maintained dates; badges and the changelog stay correct automatically. |
+| 38 | **Saved collection is localStorage-only** (no accounts), synced across tabs via the storage event. | Mobbin's save loop without a backend; can grow into URL-shareable collections. |
+| 39 | **Templates are blocks tagged `template`** that compose other blocks; their registry dependencies list every composed block. | One install pulls the whole page; no new item kind for the registry or tests. |
+| 40 | **OG images reuse the gallery thumbnails** (800×500 WebP) instead of generated cards. | Zero build cost, always in sync with the preview; all major unfurlers accept WebP. |
+| 41 | **Agent surface = llms.txt + llms-full.txt + the shadcn MCP via a namespaced registry**, not a custom MCP server. | The shadcn MCP already lists/searches/installs registry items for Claude Code, Cursor, VS Code and Codex. |
+| 42 | **`html, body { overflow-x: clip }`** rather than `hidden`. | Stops decorative layers causing sideways scroll on phones without breaking `position: sticky`. |

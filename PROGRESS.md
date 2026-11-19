@@ -2,7 +2,7 @@
 
 Status of every component ID in `motion-library-master-plan.md` (Sections 7 & 8), plus everything built beyond it.
 
-**Summary (kinetik 2.2):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **334 registry items live** (296 components + 24 blocks + 14 flows), including the 36-piece GSAP collection and the 13-piece three.js collection, plus 30 Mobbin-researched heroes. Research and gap analysis: `docs/research/README.md`.
+**Summary (kinetik 2.2):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **349 registry items live** (308 components + 27 blocks incl. 3 templates + 14 flows), including the 36-piece GSAP collection and the 13-piece three.js collection, plus 30 Mobbin-researched heroes. Research and gap analysis: `docs/research/README.md`.
 
 Legend: ✅ done · 🟡 partial · ⬜ todo
 
@@ -361,3 +361,13 @@ Sources and reasoning: `docs/research/sources-2.2.md`.
 **Flows (2):** `flow-empty-state` · `flow-search-filter`
 
 All 49 have gallery thumbnails (captured with Chrome's own screenshot via `THUMB_ENGINE=cdp`, see DECISIONS #34). Still open: native Expo source for the new flows, Rive/Lottie players, MCP server.
+
+## kinetik 2.3 — audit release
+
+Report: `docs/audit/2026-11-site-audit.md`.
+
+**Site:** demo loaders split out of the server registry (JS/page 4.9 MB → 1.45 MB) · incremental gallery (36 at a time) · Featured/Newest/A–Z sort · New badges from git history · facet counts · URL-synced filters · mobile filter drawer · collapsible sidebar · Saved collection (`/saved`) · `/templates` · `/changelog` · package-manager install tabs · Open in v0 · OG images + canonical · sitemap.xml · robots.txt · `/llms.txt` + `/llms-full.txt` · shadcn MCP docs · mobile overflow + unlabelled switch fixes.
+
+**Library (15):** `alert-animated` · `banner-announcement` · `badge-animated` · `dropdown-menu` · `textarea-autosize` · `kanban-board` · `color-picker` · `cookie-consent` · `waitlist-form` · `comment-thread` · `scroll-area` · `comparison-table` · templates `template-saas` · `template-ai-startup` · `template-portfolio`.
+
+**Next:** prop playground with presets · 20+ templates by industry · industry facet · shareable named collections · usage-based Popular sort · video thumbnails for touch · Next.js security upgrade.

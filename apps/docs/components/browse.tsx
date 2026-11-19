@@ -137,7 +137,7 @@ export function Browse({
     <div className="space-y-5">
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2">
-          <div className="relative min-w-0 flex-1 sm:max-w-md">
+          <div className="relative w-full min-w-0 sm:w-auto sm:max-w-md sm:flex-1">
             <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="search"
