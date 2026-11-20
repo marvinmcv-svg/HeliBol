@@ -1,0 +1,1 @@
+Build a flight widget: a fixed-size box with an SVG quadratic arc (dashed track + solid flown path using pathLength = progress) and a plane element using CSS offset-path on the same path (identical px coordinates) with offset-rotate auto and offset-distance = progress; show codes, cities, times, time left and a progress bar.

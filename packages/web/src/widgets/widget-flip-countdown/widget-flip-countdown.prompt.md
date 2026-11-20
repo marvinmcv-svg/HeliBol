@@ -1,0 +1,1 @@
+Build a flip countdown: each digit card shows a static top half (new value) and bottom half (old value); on change, mount two leaves: the old top half rotating 0→−90° about its bottom edge, then the new bottom half rotating 90°→0 about its top edge (perspective on the card). Halves are clipped copies of the full digit.

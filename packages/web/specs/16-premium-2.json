@@ -1,0 +1,515 @@
+[
+ {
+  "id": "hero-depth-landscape",
+  "name": "Hero \u2014 Depth Landscape",
+  "category": "heroes",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Editorial landscape hero: five ridge layers, a glowing sun and drifting fog move at different depths with the pointer (spring) and with scroll, while the headline sits between the mountains \u2014 in front of the far ridges, behind the near ones.",
+  "tags": [
+   "premium",
+   "hero",
+   "parallax",
+   "landscape",
+   "travel",
+   "editorial"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Headline is real HTML; layers aria-hidden. Pointer parallax off on touch; reduced motion: static scene.",
+  "perf": "Five SVG layers with transforms from motion values; no re-renders while moving.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Headline/CTA (sits between ridges)."
+   ],
+   [
+    "sky",
+    "[string, string]",
+    "night \u2192 peach",
+    "Sky gradient."
+   ],
+   [
+    "ridges",
+    "string[]",
+    "5 violets",
+    "Ridge colours, far \u2192 near."
+   ]
+  ],
+  "prompt": "Build a depth-landscape hero: generate N deterministic jagged ridge paths (wider than the view), stack them as absolutely positioned SVGs; each layer's x/y = pointer offset \u00d7 depth (springs) + scroll offset \u00d7 depth; render the headline between the far and near halves of the stack so near ridges overlap it; add a glowing sun and a drifting blurred fog band."
+ },
+ {
+  "id": "hero-product-orbit",
+  "name": "Hero \u2014 Product Orbit",
+  "category": "heroes",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Product hero with feature chips riding a tilted 3D ellipse around the product: chips in front are larger and sharp, chips behind shrink, blur and pass behind it. The orbit tilts toward the pointer; hovering a chip pauses it.",
+  "tags": [
+   "premium",
+   "hero",
+   "orbit",
+   "features",
+   "saas",
+   "3d"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Chips are decorative labels; the feature list should also exist as text elsewhere. Reduced motion: static orbit.",
+  "perf": "One angle motion value; chip positions via useTransform (no React renders per frame).",
+  "props": [
+   [
+    "product",
+    "ReactNode",
+    "",
+    "Centre visual."
+   ],
+   [
+    "chips",
+    "{ icon, label }[]",
+    "",
+    "Orbiting chips."
+   ],
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Headline."
+   ]
+  ],
+  "prompt": "Build a product-orbit hero with Motion: animate an angle 0\u2192360 linearly forever; each chip computes x = cos(a)\u00b7R, y = sin(a)\u00b7R\u00b7cos(tilt), depth z = sin(a); map depth to scale, blur, opacity and z-index (behind/in front of the centre product). Tilt springs follow the pointer; hovering a chip stops the angle animation."
+ },
+ {
+  "id": "hero-aurora-type",
+  "name": "Hero \u2014 Aurora Type",
+  "category": "heroes",
+  "engine": "css",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "A massive word filled with a living aurora: drifting, blurred colour blobs show only through the letterforms (white-on-black text multiplied over them), with a soft echo of the light glowing on the floor beneath. Pure CSS.",
+  "tags": [
+   "premium",
+   "hero",
+   "typography",
+   "aurora",
+   "gradient",
+   "css"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "The word is a real H1. Reduced motion: still aurora.",
+  "perf": "Three blurred blobs with transform keyframes; one blend layer. Zero JS.",
+  "props": [
+   [
+    "word",
+    "string",
+    "",
+    "Giant word."
+   ],
+   [
+    "colors",
+    "[string, string, string]",
+    "cyan, purple, pink",
+    "Aurora colours."
+   ],
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Subline/CTA."
+   ]
+  ],
+  "prompt": "Build aurora type: inside an isolated, overflow-hidden h1 put three large blurred colour blobs animating translate/rotate/scale, then the word in white on a black background with mix-blend-mode: multiply on top, so colour only shows through the letters. Below, a blurred, faded copy of the blobs as a floor reflection."
+ },
+ {
+  "id": "form-auth-morph",
+  "name": "Auth Card Morph",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "One card, two forms: switching Sign in \u2194 Create account morphs the card height, slides the tab indicator, keeps shared fields in place while Name and Confirm grow in and out, and the title and button label roll to their new text.",
+  "tags": [
+   "premium",
+   "auth",
+   "sign in",
+   "sign up",
+   "form",
+   "morph"
+  ],
+  "pageTypes": [
+   "auth",
+   "onboarding"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Real labelled inputs with correct autocomplete for each mode; tablist for the mode switch. Reduced motion: instant swap.",
+  "perf": "Layout animations on a handful of elements; extra fields mount only in sign-up mode.",
+  "props": [
+   [
+    "onSubmit",
+    "(mode, data) => void",
+    "",
+    "Submit handler."
+   ],
+   [
+    "brand",
+    "string",
+    "'kinetik'",
+    "Kicker text."
+   ]
+  ],
+  "prompt": "Build a morphing auth card with Motion: a form with layout, a two-tab switch with a layoutId pill, AnimatePresence-wrapped Name and Confirm fields that expand (height auto) only in sign-up, shared Email/Password fields with layout so they glide, a 'Forgot password?' link only in sign-in, and title/button labels that roll vertically when the mode changes."
+ },
+ {
+  "id": "form-credit-card",
+  "name": "Credit Card Form",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 520,
+  "description": "Payment form with a live 3D card: digits roll into place as you type, the card skin cross-fades to the detected brand, the focused field glows on the card, and focusing CVC flips the card to its back.",
+  "tags": [
+   "premium",
+   "payment",
+   "credit card",
+   "checkout",
+   "form",
+   "3d"
+  ],
+  "pageTypes": [
+   "ecommerce"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Real labelled inputs with cc-* autocomplete and numeric keyboards; the card preview is aria-hidden. Reduced motion: no flip or roll.",
+  "perf": "Per-character AnimatePresence only on the number row; one 3D flip.",
+  "props": [
+   [
+    "onSubmit",
+    "(card) => void",
+    "",
+    "Submit handler."
+   ]
+  ],
+  "prompt": "Build a credit-card form: format number in groups of 4 and expiry as MM/YY; a 3D card (preserve-3d, front/back with backface hidden) above the inputs; digits render per character with a vertical roll; brand detected from the prefix cross-fades the gradient skin; focused fields get an outline on the card; focusing CVC rotates the card 180\u00b0 with a spring."
+ },
+ {
+  "id": "input-password-peek",
+  "name": "Password Peek",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 300,
+  "description": "Password field with character: an eye whose lid opens to reveal \u2014 letters scramble from dots into real characters left-to-right \u2014 and closes to hide; the pupil follows the caret as you type.",
+  "tags": [
+   "premium",
+   "password",
+   "input",
+   "reveal",
+   "scramble",
+   "eye"
+  ],
+  "pageTypes": [
+   "auth"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Real password input underneath (autofill and managers work); toggle is aria-pressed with a label; character count announced. Reduced motion: instant swap.",
+  "perf": "Scramble runs ~350 ms only on toggle.",
+  "props": [
+   [
+    "label",
+    "string",
+    "'Password'",
+    "Label."
+   ],
+   [
+    "name",
+    "string",
+    "'password'",
+    "Field name."
+   ],
+   [
+    "autoComplete",
+    "string",
+    "'current-password'",
+    "Autocomplete hint."
+   ]
+  ],
+  "prompt": "Build a password-peek input: a real input with transparent text and a visible caret, overlaid by a mono span showing either dots or the value; toggling reveal scrambles characters (random glyphs settling left\u2192right over 350 ms). The toggle is an SVG eye whose lid (pupil group) scales on Y open/closed with a spring and whose pupil moves with the text length."
+ },
+ {
+  "id": "widget-flight",
+  "name": "Flight Tracker Widget",
+  "category": "widgets",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 360,
+  "description": "Live flight widget: the plane glides along a curved route with offset-path, banking with the arc; the flown part of the route fills in and time remaining counts down.",
+  "tags": [
+   "premium",
+   "flight",
+   "travel",
+   "tracker",
+   "widget",
+   "progress"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Grouped and labelled; progress is a real progressbar. Reduced motion: no simulated movement.",
+  "perf": "offset-distance and pathLength on two elements.",
+  "props": [
+   [
+    "from",
+    "{ code, city, time }",
+    "",
+    "Origin."
+   ],
+   [
+    "to",
+    "{ code, city, time }",
+    "",
+    "Destination."
+   ],
+   [
+    "flight",
+    "string",
+    "",
+    "Flight number."
+   ],
+   [
+    "progress",
+    "number",
+    "simulated",
+    "0\u20131 progress."
+   ]
+  ],
+  "prompt": "Build a flight widget: a fixed-size box with an SVG quadratic arc (dashed track + solid flown path using pathLength = progress) and a plane element using CSS offset-path on the same path (identical px coordinates) with offset-rotate auto and offset-distance = progress; show codes, cities, times, time left and a progress bar."
+ },
+ {
+  "id": "widget-vinyl",
+  "name": "Vinyl Player Widget",
+  "category": "widgets",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 440,
+  "description": "Turntable now-playing widget: the record spins up with inertia on play and coasts to a stop on pause, the tonearm swings on, grooves catch a moving highlight and an equaliser dances. Skip slides a new record in.",
+  "tags": [
+   "premium",
+   "music",
+   "vinyl",
+   "player",
+   "widget",
+   "turntable"
+  ],
+  "pageTypes": [
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Play/pause and next are labelled buttons; visuals are decorative. Reduced motion: record stays still.",
+  "perf": "One rAF loop easing angular speed; transforms only.",
+  "props": [
+   [
+    "cover",
+    "string",
+    "",
+    "Label art."
+   ],
+   [
+    "title",
+    "string",
+    "",
+    "Track."
+   ],
+   [
+    "artist",
+    "string",
+    "",
+    "Artist."
+   ]
+  ],
+  "prompt": "Build a vinyl widget: a repeating-radial-gradient record with conic sheen and centre label image; a rAF loop eases angular speed toward 200\u00b0/s when playing or 0 when paused (spin-up faster than coast-down) and accumulates rotation into a motion value; the tonearm rotates on a spring; equaliser bars animate height while playing; skip re-keys the record so it slides in."
+ },
+ {
+  "id": "widget-flip-countdown",
+  "name": "Flip Clock Countdown",
+  "category": "widgets",
+  "engine": "css",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Split-flap countdown: each digit is a physical flap \u2014 the top leaf falls away and the bottom leaf swings down with the new number, with a hinge line and depth. Days, hours, minutes, seconds.",
+  "tags": [
+   "premium",
+   "countdown",
+   "flip clock",
+   "launch",
+   "timer",
+   "widget"
+  ],
+  "pageTypes": [
+   "landing",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=timer with an sr-only summary of time left; digits aria-hidden. Reduced motion: digits change without flipping.",
+  "perf": "CSS keyframes per changed digit only; one 1 s interval.",
+  "props": [
+   [
+    "to",
+    "Date",
+    "",
+    "Target time."
+   ],
+   [
+    "title",
+    "string",
+    "'Launch in'",
+    "Label."
+   ]
+  ],
+  "prompt": "Build a flip countdown: each digit card shows a static top half (new value) and bottom half (old value); on change, mount two leaves: the old top half rotating 0\u2192\u221290\u00b0 about its bottom edge, then the new bottom half rotating 90\u00b0\u21920 about its top edge (perspective on the card). Halves are clipped copies of the full digit."
+ },
+ {
+  "id": "mockup-phone-3d",
+  "name": "3D Phone Mockup",
+  "category": "mockups",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 520,
+  "description": "A real 3D phone in CSS \u2014 front, back and four sides with depth \u2014 resting at a three-quarter angle and turning toward the pointer on a spring, with glare sweeping the glass and the shadow shifting. Any React content renders live on the screen.",
+  "tags": [
+   "premium",
+   "mockup",
+   "iphone",
+   "3d",
+   "device",
+   "app"
+  ],
+  "pageTypes": [
+   "landing",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Screen content is live and keyboard-accessible; the device chrome is decorative. Rotation off on touch/reduced motion.",
+  "perf": "CSS preserve-3d; rotation via springs (no re-render).",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Screen content."
+   ],
+   [
+    "restY",
+    "number",
+    "-22",
+    "Resting Y rotation."
+   ],
+   [
+    "restX",
+    "number",
+    "8",
+    "Resting X rotation."
+   ]
+  ],
+  "prompt": "Build a CSS 3D phone: a preserve-3d box with a front (screen + bezel + island), a back translated by \u2212depth and rotated 180\u00b0, and four side faces rotated \u00b190\u00b0 about their edges; rotateX/Y springs follow the pointer around a three-quarter rest pose; a glare stripe's position and a soft floor shadow follow rotateY."
+ },
+ {
+  "id": "mockup-laptop-open",
+  "name": "Laptop Opening Mockup",
+  "category": "mockups",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A laptop that opens as it scrolls into view: the lid hinges up from closed in 3D, the screen wakes with a flash of glow, then the content fades in.",
+  "tags": [
+   "premium",
+   "mockup",
+   "laptop",
+   "macbook",
+   "scroll",
+   "reveal"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Screen content is real HTML; reduced motion shows it open immediately.",
+  "perf": "One rotateX transform and two opacity fades, once.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Screen content."
+   ]
+  ],
+  "prompt": "Build a laptop-open mockup with Motion: a lid (aspect 16:10 bezel + screen) with transform-origin bottom animating rotateX \u221288\u00b0 \u2192 0 over 1.4 s when in view (perspective on the parent), a base with a notch below; after the lid opens, flash a white overlay (0 \u2192 .35 \u2192 0) and fade the content from bright to normal."
+ }
+]

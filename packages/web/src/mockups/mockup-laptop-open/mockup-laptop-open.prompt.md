@@ -1,0 +1,1 @@
+Build a laptop-open mockup with Motion: a lid (aspect 16:10 bezel + screen) with transform-origin bottom animating rotateX −88° → 0 over 1.4 s when in view (perspective on the parent), a base with a notch below; after the lid opens, flash a white overlay (0 → .35 → 0) and fade the content from bright to normal.

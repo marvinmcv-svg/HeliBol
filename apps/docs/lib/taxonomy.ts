@@ -64,6 +64,9 @@ const curatedPremium = new Set([
   "three-floating-shapes", "gsap-three-waypoints", "gsap-bento-scrub", "gsap-particle-text", "gsap-mask-expand",
   "gsap-shader-scroll", "gsap-flip-carousel", "card-holo", "card-swipe-deck", "dynamic-island", "text-morph",
   "text-smart-animate", "bg-shader", "hero-globe", "orbital-image-wheel", "kanban-board",
+  "hero-velocity-type", "hero-multiplayer-canvas", "hero-prism-arc", "hero-spectrum-console", "hero-mesh-cards",
+  "date-picker", "color-picker", "range-slider", "questionnaire", "otp-input",
+  "widget-music", "widget-weather", "widget-stock", "mockup-iphone",
   "hero-ai-particles", "hero-liquid-glass", "hero-ink-reveal", "portfolio-ribbon", "template-saas", "template-ai-startup", "template-portfolio",
 ]);
 export const isPremium = (m: { id: string; tags: string[] }) => m.tags.includes("premium") || curatedPremium.has(m.id);

@@ -1,0 +1,1 @@
+Build a product-orbit hero with Motion: animate an angle 0→360 linearly forever; each chip computes x = cos(a)·R, y = sin(a)·R·cos(tilt), depth z = sin(a); map depth to scale, blur, opacity and z-index (behind/in front of the centre product). Tilt springs follow the pointer; hovering a chip stops the angle animation.

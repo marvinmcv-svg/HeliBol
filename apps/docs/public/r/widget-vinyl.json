@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-vinyl",
+  "type": "registry:component",
+  "title": "Vinyl Player Widget",
+  "description": "Turntable now-playing widget: the record spins up with inertia on play and coasts to a stop on pause, the tonearm swings on, grooves catch a moving highlight and an equaliser dances. Skip slides a new record in.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/widget-vinyl.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/widget-vinyl.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport { animate, motion, useMotionValue } from \"motion/react\";\nimport { Pause, Play, SkipForward } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface WidgetVinylProps {\n  cover: string;\n  title: string;\n  artist: string;\n  className?: string;\n}\n\n/**\n * Turntable now-playing widget: the record spins up with inertia when you press play and coasts to\n * a stop on pause, the tonearm swings onto the record, grooves catch a moving highlight and an\n * equaliser dances. Skip slides the record out and a new one in.\n */\nexport function WidgetVinyl({ cover, title, artist, className }: WidgetVinylProps) {\n  const reduced = useReducedMotion();\n  const [playing, setPlaying] = useState(true);\n  const [track, setTrack] = useState(0);\n  const rot = useMotionValue(0);\n  const speed = useRef(0);\n  const target = useRef(1);\n\n  useEffect(() => {\n    target.current = playing && !reduced ? 1 : 0;\n  }, [playing, reduced]);\n  useEffect(() => {\n    let raf = 0;\n    let last = performance.now();\n    const tick = (now: number) => {\n      const dt = Math.min(0.05, (now - last) / 1000);\n      last = now;\n      // spin-up / coast-down: ease speed toward target (33⅓ rpm ≈ 200°/s)\n      speed.current += (target.current - speed.current) * Math.min(1, dt * (target.current ? 2.2 : 0.9));\n      rot.set(rot.get() + speed.current * 200 * dt);\n      raf = requestAnimationFrame(tick);\n    };\n    raf = requestAnimationFrame(tick);\n    return () => cancelAnimationFrame(raf);\n  }, [rot]);\n\n  const skip = () => {\n    setTrack((t) => t + 1);\n    if (!reduced) animate(rot, rot.get() + 120, { duration: 0.6 });\n  };\n\n  return (\n    <div className={cn(\"relative w-80 overflow-hidden rounded-3xl bg-zinc-900 p-5 text-white shadow-2xl\", className)}>\n      <div className=\"relative mx-auto aspect-square w-52\">\n        <motion.div key={track} className=\"absolute inset-0\" initial={reduced ? false : { x: -240, rotate: -90, opacity: 0 }} animate={{ x: 0, rotate: 0, opacity: 1 }} transition={{ type: \"spring\", stiffness: 120, damping: 18 }}>\n          <motion.div className=\"size-full rounded-full shadow-[0_20px_40px_rgb(0_0_0/.6)]\" style={{ rotate: rot, background: \"repeating-radial-gradient(circle, #111 0 1.5px, #1c1c1c 1.5px 3px)\" }}>\n            <span aria-hidden className=\"absolute inset-0 rounded-full bg-[conic-gradient(from_20deg,transparent_0deg,rgb(255_255_255/.12)_30deg,transparent_60deg,transparent_180deg,rgb(255_255_255/.08)_210deg,transparent_240deg)]\" />\n            <img src={cover} alt=\"\" className=\"absolute left-1/2 top-1/2 size-[38%] -translate-x-1/2 -translate-y-1/2 rounded-full object-cover ring-4 ring-zinc-950\" />\n            <span aria-hidden className=\"absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-zinc-300\" />\n          </motion.div>\n        </motion.div>\n        {/* tonearm */}\n        <motion.div aria-hidden className=\"absolute -right-6 -top-3 h-40 w-3 origin-top\" animate={{ rotate: playing ? 24 : 4 }} transition={reduced ? { duration: 0 } : { type: \"spring\", stiffness: 60, damping: 12 }}>\n          <span className=\"absolute -left-2.5 -top-2.5 size-8 rounded-full bg-gradient-to-br from-zinc-300 to-zinc-500 shadow\" />\n          <span className=\"absolute left-1 top-2 h-36 w-1 rounded-full bg-gradient-to-b from-zinc-300 to-zinc-400\" />\n          <span className=\"absolute -left-0.5 bottom-0 h-6 w-4 rounded-sm bg-zinc-200\" />\n        </motion.div>\n      </div>\n      <div className=\"mt-4 flex items-end justify-between\">\n        <div className=\"min-w-0\">\n          <p className=\"truncate font-semibold\">{title}</p>\n          <p className=\"truncate text-sm text-white/60\">{artist}</p>\n        </div>\n        <div aria-hidden className=\"flex h-5 items-end gap-0.5\">\n          {[0, 1, 2, 3].map((i) => (\n            <motion.span key={i} className=\"w-1 rounded-full bg-emerald-400\" animate={playing && !reduced ? { height: [\"20%\", \"100%\", \"45%\", \"80%\", \"20%\"] } : { height: \"20%\" }} transition={{ duration: 0.9 + i * 0.15, repeat: Infinity, ease: \"easeInOut\", delay: i * 0.1 }} />\n          ))}\n        </div>\n      </div>\n      <div className=\"mt-4 flex items-center justify-center gap-6\">\n        <button type=\"button\" onClick={() => setPlaying((p) => !p)} aria-label={playing ? \"Pause\" : \"Play\"} className=\"grid size-12 place-items-center rounded-full bg-white text-black transition-transform active:scale-90\">\n          {playing ? <Pause className=\"size-5 fill-current\" /> : <Play className=\"ml-0.5 size-5 fill-current\" />}\n        </button>\n        <button type=\"button\" onClick={skip} aria-label=\"Next track\" className=\"grid size-10 place-items-center rounded-full text-white/80 hover:bg-white/10\"><SkipForward className=\"size-5 fill-current\" /></button>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "widgets"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "music",
+      "vinyl",
+      "player",
+      "widget",
+      "turntable"
+    ],
+    "pageTypes": [
+      "media"
+    ]
+  }
+}

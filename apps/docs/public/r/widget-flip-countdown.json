@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-flip-countdown",
+  "type": "registry:component",
+  "title": "Flip Clock Countdown",
+  "description": "Split-flap countdown: each digit is a physical flap — the top leaf falls away and the bottom leaf swings down with the new number, with a hinge line and depth. Days, hours, minutes, seconds.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/widget-flip-countdown.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/widget-flip-countdown.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface WidgetFlipCountdownProps {\n  /** Target date/time. */\n  to: Date;\n  title?: string;\n  className?: string;\n}\n\nconst css = `\n.kn-flip { perspective: 400px; }\n@keyframes kn-flip-top { from { transform: rotateX(0deg); } to { transform: rotateX(-90deg); } }\n@keyframes kn-flip-bottom { from { transform: rotateX(90deg); } to { transform: rotateX(0deg); } }\n.kn-flip-top { transform-origin: bottom; animation: kn-flip-top .3s ease-in forwards; }\n.kn-flip-bottom { transform-origin: top; animation: kn-flip-bottom .3s ease-out .3s both; }\n@media (prefers-reduced-motion: reduce) { .kn-flip-top, .kn-flip-bottom { animation: none; display: none; } }\n[data-reduce-motion] .kn-flip-top, [data-reduce-motion] .kn-flip-bottom { animation: none; display: none; }\n`;\n\nfunction Half({ value, part, className }: { value: string; part: \"top\" | \"bottom\"; className?: string }) {\n  return (\n    <span className={cn(\"absolute inset-x-0 overflow-hidden bg-zinc-800\", part === \"top\" ? \"top-0 h-1/2 rounded-t-lg\" : \"bottom-0 h-1/2 rounded-b-lg\", className)}>\n      <span className={cn(\"absolute inset-x-0 flex h-[200%] items-center justify-center\", part === \"top\" ? \"top-0\" : \"bottom-0\")}>{value}</span>\n    </span>\n  );\n}\n\n/** One split-flap card: static halves show the new/old values, two animated leaves flip between them. */\nfunction FlipCard({ value }: { value: string }) {\n  const [prev, setPrev] = useState(value);\n  const [cur, setCur] = useState(value);\n  const [k, setK] = useState(0);\n  useEffect(() => {\n    if (value === cur) return;\n    setPrev(cur);\n    setCur(value);\n    setK((x) => x + 1);\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, [value]);\n  return (\n    <span className=\"kn-flip relative block h-14 w-10 font-mono text-4xl font-bold tabular-nums text-white sm:h-24 sm:w-16 sm:text-6xl\">\n      <Half value={cur} part=\"top\" />\n      <Half value={prev} part=\"bottom\" />\n      {k > 0 && (\n        <span key={k}>\n          <Half value={prev} part=\"top\" className=\"kn-flip-top z-10\" />\n          <Half value={cur} part=\"bottom\" className=\"kn-flip-bottom z-10\" />\n        </span>\n      )}\n      <span aria-hidden className=\"absolute inset-x-0 top-1/2 z-20 h-px bg-black/70\" />\n    </span>\n  );\n}\n\n/**\n * Split-flap countdown: each digit is a physical flap — the top leaf falls away and the bottom leaf\n * swings down with the new number, with a hinge line and depth shading. Days, hours, minutes,\n * seconds; an sr-only line gives the time left in words once a minute.\n */\nexport function WidgetFlipCountdown({ to, title = \"Launch in\", className }: WidgetFlipCountdownProps) {\n  const reduced = useReducedMotion();\n  const [now, setNow] = useState(() => Date.now());\n  useEffect(() => {\n    const id = setInterval(() => setNow(Date.now()), 1000);\n    return () => clearInterval(id);\n  }, []);\n  const diff = Math.max(0, to.getTime() - now);\n  const parts = [\n    [\"Days\", Math.floor(diff / 864e5)],\n    [\"Hours\", Math.floor(diff / 36e5) % 24],\n    [\"Minutes\", Math.floor(diff / 6e4) % 60],\n    [\"Seconds\", Math.floor(diff / 1e3) % 60],\n  ] as const;\n  return (\n    <div className={cn(\"rounded-3xl bg-zinc-950 p-6 text-white shadow-2xl\", className)} role=\"timer\" aria-label={title}>\n      <style href=\"kn-widget-flip-countdown\" precedence=\"kinetik\">{css}</style>\n      <p className=\"text-xs uppercase tracking-[0.3em] text-white/50\">{title}</p>\n      <div className=\"mt-4 flex items-start gap-2 sm:gap-4\">\n        {parts.map(([label, n], i) => {\n          const s = String(n).padStart(2, \"0\");\n          return (\n            <div key={label} className=\"flex items-start gap-2 sm:gap-4\">\n              <div className=\"text-center\">\n                <div className=\"flex gap-1\" aria-hidden>\n                  <FlipCard value={s[0]} />\n                  <FlipCard value={s[1]} />\n                </div>\n                <p className=\"mt-2 text-[10px] uppercase tracking-widest text-white/45\">{label}</p>\n              </div>\n              {i < 3 && <span aria-hidden className=\"mt-6 text-3xl font-bold text-white/30 sm:mt-8\">:</span>}\n            </div>\n          );\n        })}\n      </div>\n      <p className=\"sr-only\" aria-live={reduced ? \"off\" : \"polite\"}>\n        {parts[0][1]} days, {parts[1][1]} hours, {parts[2][1]} minutes left\n      </p>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "widgets"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "premium",
+      "countdown",
+      "flip clock",
+      "launch",
+      "timer",
+      "widget"
+    ],
+    "pageTypes": [
+      "landing",
+      "ecommerce"
+    ]
+  }
+}

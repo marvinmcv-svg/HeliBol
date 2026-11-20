@@ -1,0 +1,1 @@
+Build a depth-landscape hero: generate N deterministic jagged ridge paths (wider than the view), stack them as absolutely positioned SVGs; each layer's x/y = pointer offset × depth (springs) + scroll offset × depth; render the headline between the far and near halves of the stack so near ridges overlap it; add a glowing sun and a drifting blurred fog band.

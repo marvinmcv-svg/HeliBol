@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mockup-phone-3d",
+  "type": "registry:component",
+  "title": "3D Phone Mockup",
+  "description": "A real 3D phone in CSS — front, back and four sides with depth — resting at a three-quarter angle and turning toward the pointer on a spring, with glare sweeping the glass and the shadow shifting. Any React content renders live on the screen.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/mockup-phone-3d.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/mockup-phone-3d.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { motion, useMotionValue, useSpring, useTransform } from \"motion/react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface MockupPhone3DProps {\n  /** Screen content. */\n  children: ReactNode;\n  /** Resting rotation (deg) — a slight three-quarter view reads as \"3D\". */\n  restY?: number;\n  restX?: number;\n  className?: string;\n}\n\nconst W = 240, H = 500, D = 18; // px: width, height, depth\n\n/**\n * A real 3D phone in CSS (front, back and four sides with depth), resting at a three-quarter angle\n * and turning toward the pointer with a spring; a moving glare sweeps the glass as it turns and the\n * shadow underneath shifts. Any React content renders live on the screen.\n */\nexport function MockupPhone3D({ children, restY = -22, restX = 8, className }: MockupPhone3DProps) {\n  const reduced = useReducedMotion();\n  const touch = usePrefersTouch();\n  const box = useRef<HTMLDivElement>(null);\n  const rx = useSpring(useMotionValue(restX), { stiffness: 90, damping: 16 });\n  const ry = useSpring(useMotionValue(restY), { stiffness: 90, damping: 16 });\n  const glare = useTransform(ry, [-40, 40], [\"-60%\", \"160%\"]);\n  const shadowX = useTransform(ry, [-40, 40], [30, -30]);\n\n  return (\n    <div\n      ref={box}\n      className={cn(\"relative grid place-items-center\", className)}\n      style={{ perspective: 1400, width: W + 120, height: H + 80 }}\n      onPointerMove={(e) => {\n        if (reduced || touch) return;\n        const r = box.current!.getBoundingClientRect();\n        ry.set(restY + ((e.clientX - r.left) / r.width - 0.5) * 50);\n        rx.set(restX - ((e.clientY - r.top) / r.height - 0.5) * 24);\n      }}\n      onPointerLeave={() => (ry.set(restY), rx.set(restX))}\n    >\n      <motion.span aria-hidden className=\"absolute bottom-2 h-6 w-48 rounded-[50%] bg-black/45 blur-xl\" style={{ x: shadowX }} />\n      <motion.div className=\"relative\" style={{ width: W, height: H, transformStyle: \"preserve-3d\", rotateX: rx, rotateY: ry }}>\n        {/* sides */}\n        <span aria-hidden className=\"absolute left-0 top-0 h-full rounded-[2rem] bg-zinc-700\" style={{ width: D, transform: `rotateY(-90deg) translateZ(${0}px)`, transformOrigin: \"left\" }} />\n        <span aria-hidden className=\"absolute right-0 top-0 h-full rounded-[2rem] bg-zinc-600\" style={{ width: D, transform: `rotateY(90deg)`, transformOrigin: \"right\" }} />\n        <span aria-hidden className=\"absolute left-6 right-6 top-0 bg-zinc-600\" style={{ height: D, transform: \"rotateX(90deg)\", transformOrigin: \"top\" }} />\n        <span aria-hidden className=\"absolute bottom-0 left-6 right-6 bg-zinc-800\" style={{ height: D, transform: \"rotateX(-90deg)\", transformOrigin: \"bottom\" }} />\n        {/* back */}\n        <span aria-hidden className=\"absolute inset-0 rounded-[2.4rem] bg-gradient-to-br from-zinc-600 to-zinc-800\" style={{ transform: `translateZ(${-D}px) rotateY(180deg)` }}>\n          <span className=\"absolute left-5 top-5 size-16 rounded-2xl bg-zinc-900/70 ring-1 ring-zinc-500\" />\n        </span>\n        {/* front */}\n        <div className=\"absolute inset-0 overflow-hidden rounded-[2.4rem] bg-black p-[9px] shadow-[inset_0_0_0_2px_rgb(120_120_130)]\" style={{ transform: \"translateZ(0.5px)\" }}>\n          <div className=\"relative size-full overflow-hidden rounded-[1.9rem] bg-background\">\n            {children}\n            <span aria-hidden className=\"pointer-events-none absolute left-1/2 top-2.5 h-6 w-20 -translate-x-1/2 rounded-full bg-black\" />\n            {!reduced && <motion.span aria-hidden className=\"pointer-events-none absolute -top-1/4 h-[150%] w-1/3 rotate-12 bg-gradient-to-r from-transparent via-white/25 to-transparent\" style={{ left: glare }} />}\n          </div>\n        </div>\n      </motion.div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "mockups"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "mockup",
+      "iphone",
+      "3d",
+      "device",
+      "app"
+    ],
+    "pageTypes": [
+      "landing",
+      "ecommerce"
+    ]
+  }
+}

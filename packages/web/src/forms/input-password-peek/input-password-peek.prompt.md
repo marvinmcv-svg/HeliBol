@@ -1,0 +1,1 @@
+Build a password-peek input: a real input with transparent text and a visible caret, overlaid by a mono span showing either dots or the value; toggling reveal scrambles characters (random glyphs settling left→right over 350 ms). The toggle is an SVG eye whose lid (pupil group) scales on Y open/closed with a spring and whose pupil moves with the text length.

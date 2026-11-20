@@ -182,6 +182,44 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "mockup-phone-3d",
+      "type": "registry:component",
+      "title": "3D Phone Mockup",
+      "description": "A real 3D phone in CSS — front, back and four sides with depth — resting at a three-quarter angle and turning toward the pointer on a spring, with glare sweeping the glass and the shadow shifting. Any React content renders live on the screen.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "mockups"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "premium",
+          "mockup",
+          "iphone",
+          "3d",
+          "device",
+          "app"
+        ],
+        "pageTypes": [
+          "landing",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/mockup-phone-3d.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/mockup-phone-3d.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "tilt-card",
       "type": "registry:component",
       "title": "3D Tilt Card",
@@ -1062,6 +1100,44 @@
           "path": "components/kinetik/card-aurora.tsx",
           "type": "registry:component",
           "target": "components/kinetik/card-aurora.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "form-auth-morph",
+      "type": "registry:component",
+      "title": "Auth Card Morph",
+      "description": "One card, two forms: switching Sign in ↔ Create account morphs the card height, slides the tab indicator, keeps shared fields in place while Name and Confirm grow in and out, and the title and button label roll to their new text.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "premium",
+          "auth",
+          "sign in",
+          "sign up",
+          "form",
+          "morph"
+        ],
+        "pageTypes": [
+          "auth",
+          "onboarding"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/form-auth-morph.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/form-auth-morph.tsx"
         }
       ]
     },
@@ -2236,6 +2312,43 @@
           "path": "components/kinetik/coverflow.tsx",
           "type": "registry:component",
           "target": "components/kinetik/coverflow.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "form-credit-card",
+      "type": "registry:component",
+      "title": "Credit Card Form",
+      "description": "Payment form with a live 3D card: digits roll into place as you type, the card skin cross-fades to the detected brand, the focused field glows on the card, and focusing CVC flips the card to its back.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "premium",
+          "payment",
+          "credit card",
+          "checkout",
+          "form",
+          "3d"
+        ],
+        "pageTypes": [
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/form-credit-card.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/form-credit-card.tsx"
         }
       ]
     },
@@ -3449,6 +3562,45 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-flight",
+      "type": "registry:component",
+      "title": "Flight Tracker Widget",
+      "description": "Live flight widget: the plane glides along a curved route with offset-path, banking with the arc; the flown part of the route fills in and time remaining counts down.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "premium",
+          "flight",
+          "travel",
+          "tracker",
+          "widget",
+          "progress"
+        ],
+        "pageTypes": [
+          "dashboard",
+          "media"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-flight.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-flight.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "card-flip",
       "type": "registry:component",
       "title": "Flip Card",
@@ -3521,6 +3673,42 @@
           "path": "components/kinetik/gsap-flip-carousel.tsx",
           "type": "registry:component",
           "target": "components/kinetik/gsap-flip-carousel.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-flip-countdown",
+      "type": "registry:component",
+      "title": "Flip Clock Countdown",
+      "description": "Split-flap countdown: each digit is a physical flap — the top leaf falls away and the bottom leaf swings down with the new number, with a hinge line and depth. Days, hours, minutes, seconds.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "premium",
+          "countdown",
+          "flip clock",
+          "launch",
+          "timer",
+          "widget"
+        ],
+        "pageTypes": [
+          "landing",
+          "ecommerce"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-flip-countdown.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-flip-countdown.tsx"
         }
       ]
     },
@@ -4148,6 +4336,42 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-aurora-type",
+      "type": "registry:component",
+      "title": "Hero — Aurora Type",
+      "description": "A massive word filled with a living aurora: drifting, blurred colour blobs show only through the letterforms (white-on-black text multiplied over them), with a soft echo of the light glowing on the floor beneath. Pure CSS.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "css",
+        "tags": [
+          "premium",
+          "hero",
+          "typography",
+          "aurora",
+          "gradient",
+          "css"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-aurora-type.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-aurora-type.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "hero-blueprint",
       "type": "registry:component",
       "title": "Hero — Blueprint Grid",
@@ -4253,6 +4477,44 @@
           "path": "components/kinetik/hero-curved-collage.tsx",
           "type": "registry:component",
           "target": "components/kinetik/hero-curved-collage.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-depth-landscape",
+      "type": "registry:component",
+      "title": "Hero — Depth Landscape",
+      "description": "Editorial landscape hero: five ridge layers, a glowing sun and drifting fog move at different depths with the pointer (spring) and with scroll, while the headline sits between the mountains — in front of the far ridges, behind the near ones.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "premium",
+          "hero",
+          "parallax",
+          "landscape",
+          "travel",
+          "editorial"
+        ],
+        "pageTypes": [
+          "landing",
+          "portfolio"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-depth-landscape.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-depth-landscape.tsx"
         }
       ]
     },
@@ -5087,6 +5349,43 @@
           "path": "components/kinetik/hero-prism-arc.tsx",
           "type": "registry:component",
           "target": "components/kinetik/hero-prism-arc.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero-product-orbit",
+      "type": "registry:component",
+      "title": "Hero — Product Orbit",
+      "description": "Product hero with feature chips riding a tilted 3D ellipse around the product: chips in front are larger and sharp, chips behind shrink, blur and pass behind it. The orbit tilts toward the pointer; hovering a chip pauses it.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "heroes"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "premium",
+          "hero",
+          "orbit",
+          "features",
+          "saas",
+          "3d"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/hero-product-orbit.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/hero-product-orbit.tsx"
         }
       ]
     },
@@ -6449,6 +6748,43 @@
           "path": "components/kinetik/mockup-laptop.tsx",
           "type": "registry:component",
           "target": "components/kinetik/mockup-laptop.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "mockup-laptop-open",
+      "type": "registry:component",
+      "title": "Laptop Opening Mockup",
+      "description": "A laptop that opens as it scrolls into view: the lid hinges up from closed in 3D, the screen wakes with a flash of glow, then the content fades in.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "mockups"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "premium",
+          "mockup",
+          "laptop",
+          "macbook",
+          "scroll",
+          "reveal"
+        ],
+        "pageTypes": [
+          "landing"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/mockup-laptop-open.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/mockup-laptop-open.tsx"
         }
       ]
     },
@@ -8323,6 +8659,43 @@
           "path": "components/kinetik/gsap-particle-text.tsx",
           "type": "registry:component",
           "target": "components/kinetik/gsap-particle-text.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "input-password-peek",
+      "type": "registry:component",
+      "title": "Password Peek",
+      "description": "Password field with character: an eye whose lid opens to reveal — letters scramble from dots into real characters left-to-right — and closes to hide; the pupil follows the caret as you type.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "premium",
+          "password",
+          "input",
+          "reveal",
+          "scramble",
+          "eye"
+        ],
+        "pageTypes": [
+          "auth"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/input-password-peek.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/input-password-peek.tsx"
         }
       ]
     },
@@ -11972,6 +12345,44 @@
           "path": "components/kinetik/view-switch.tsx",
           "type": "registry:component",
           "target": "components/kinetik/view-switch.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "widget-vinyl",
+      "type": "registry:component",
+      "title": "Vinyl Player Widget",
+      "description": "Turntable now-playing widget: the record spins up with inertia on play and coasts to a stop on pause, the tonearm swings on, grooves catch a moving highlight and an equaliser dances. Skip slides a new record in.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+      ],
+      "categories": [
+        "widgets"
+      ],
+      "meta": {
+        "engine": "motion",
+        "tags": [
+          "premium",
+          "music",
+          "vinyl",
+          "player",
+          "widget",
+          "turntable"
+        ],
+        "pageTypes": [
+          "media"
+        ]
+      },
+      "files": [
+        {
+          "path": "components/kinetik/widget-vinyl.tsx",
+          "type": "registry:component",
+          "target": "components/kinetik/widget-vinyl.tsx"
         }
       ]
     },

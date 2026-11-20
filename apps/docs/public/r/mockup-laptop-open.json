@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mockup-laptop-open",
+  "type": "registry:component",
+  "title": "Laptop Opening Mockup",
+  "description": "A laptop that opens as it scrolls into view: the lid hinges up from closed in 3D, the screen wakes with a flash of glow, then the content fades in.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/mockup-laptop-open.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/mockup-laptop-open.tsx",
+      "content": "\"use client\";\nimport { useRef, type ReactNode } from \"react\";\nimport { motion, useInView } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface MockupLaptopOpenProps {\n  /** Screen content (shown once the lid is open). */\n  children: ReactNode;\n  className?: string;\n}\n\n/**\n * A laptop that opens as it scrolls into view: the lid hinges up from closed (CSS 3D), the screen\n * wakes with a soft glow, then the content fades in. The base keeps a keyboard well and trackpad\n * for realism. Reduced motion: shown open.\n */\nexport function MockupLaptopOpen({ children, className }: MockupLaptopOpenProps) {\n  const reduced = useReducedMotion();\n  const ref = useRef<HTMLDivElement>(null);\n  const open = useInView(ref, { once: true, amount: 0.5 }) || reduced;\n  const ease = [0.22, 1, 0.36, 1] as const;\n  return (\n    <div ref={ref} className={cn(\"relative w-full max-w-xl\", className)} style={{ perspective: 1600 }}>\n      {/* lid */}\n      <motion.div\n        className=\"relative mx-auto w-[86%] origin-bottom\"\n        style={{ transformStyle: \"preserve-3d\" }}\n        initial={false}\n        animate={{ rotateX: open ? 0 : -88 }}\n        transition={{ duration: reduced ? 0 : 1.4, ease }}\n      >\n        <div className=\"relative aspect-[16/10] overflow-hidden rounded-t-2xl bg-zinc-900 p-[2.2%] shadow-[0_-10px_60px_-20px_rgb(0_0_0/.5)] ring-1 ring-zinc-700\" style={{ backfaceVisibility: \"hidden\" }}>\n          <div className=\"relative size-full overflow-hidden rounded-md bg-black\">\n            <motion.div className=\"size-full\" initial={false} animate={{ opacity: open ? 1 : 0, filter: open ? \"brightness(1)\" : \"brightness(2.5)\" }} transition={{ duration: reduced ? 0 : 0.8, delay: reduced ? 0 : 1.1 }}>\n              {children}\n            </motion.div>\n            <motion.span aria-hidden className=\"pointer-events-none absolute inset-0 bg-white\" initial={false} animate={{ opacity: open ? [0, 0.35, 0] : 0 }} transition={{ duration: 0.7, delay: reduced ? 0 : 1 }} />\n            <span aria-hidden className=\"pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent\" />\n          </div>\n          <span aria-hidden className=\"absolute left-1/2 top-[0.6%] size-1.5 -translate-x-1/2 rounded-full bg-zinc-700\" />\n        </div>\n      </motion.div>\n      {/* base */}\n      <div className=\"relative mx-auto h-4 w-full rounded-b-2xl rounded-t-sm bg-gradient-to-b from-zinc-400 to-zinc-600 shadow-[0_20px_40px_-10px_rgb(0_0_0/.5)] dark:from-zinc-500 dark:to-zinc-700\">\n        <span aria-hidden className=\"absolute left-1/2 top-0 h-1.5 w-1/6 -translate-x-1/2 rounded-b-lg bg-zinc-700/60\" />\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "mockups"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "mockup",
+      "laptop",
+      "macbook",
+      "scroll",
+      "reveal"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

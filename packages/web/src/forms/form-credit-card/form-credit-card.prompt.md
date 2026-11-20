@@ -1,0 +1,1 @@
+Build a credit-card form: format number in groups of 4 and expiry as MM/YY; a 3D card (preserve-3d, front/back with backface hidden) above the inputs; digits render per character with a vertical roll; brand detected from the prefix cross-fades the gradient skin; focused fields get an outline on the card; focusing CVC rotates the card 180° with a spring.

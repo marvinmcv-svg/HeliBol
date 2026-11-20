@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "form-auth-morph",
+  "type": "registry:component",
+  "title": "Auth Card Morph",
+  "description": "One card, two forms: switching Sign in ↔ Create account morphs the card height, slides the tab indicator, keeps shared fields in place while Name and Confirm grow in and out, and the title and button label roll to their new text.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/form-auth-morph.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/form-auth-morph.tsx",
+      "content": "\"use client\";\nimport { useId, useState } from \"react\";\nimport { AnimatePresence, LayoutGroup, motion } from \"motion/react\";\nimport { spring } from \"@/lib/kinetik/tokens\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface FormAuthMorphProps {\n  onSubmit?: (mode: \"signin\" | \"signup\", data: Record<string, string>) => void;\n  brand?: string;\n  className?: string;\n}\n\n/**\n * One card, two forms: switching Sign in ↔ Create account morphs the card's height, slides the tab\n * indicator, keeps the shared Email/Password fields in place (shared layout) while the Name and\n * Confirm fields grow in and out, and the title and button label roll to their new text.\n */\nexport function FormAuthMorph({ onSubmit, brand = \"kinetik\", className }: FormAuthMorphProps) {\n  const reduced = useReducedMotion();\n  const id = useId();\n  const [mode, setMode] = useState<\"signin\" | \"signup\">(\"signin\");\n  const signup = mode === \"signup\";\n  const t = reduced ? { duration: 0 } : spring.smooth;\n  const field = (name: string, label: string, type = \"text\", auto?: string) => (\n    <motion.div key={name} layout={!reduced} transition={t} className=\"space-y-1\">\n      <label htmlFor={`${id}-${name}`} className=\"text-xs font-medium text-muted-foreground\">{label}</label>\n      <input id={`${id}-${name}`} name={name} type={type} autoComplete={auto} required className=\"h-10 w-full rounded-xl border border-border bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring\" />\n    </motion.div>\n  );\n  const extra = (name: string, label: string, type: string, auto: string) => (\n    <motion.div\n      key={name}\n      initial={reduced ? { opacity: 0 } : { opacity: 0, height: 0, y: -6 }}\n      animate={{ opacity: 1, height: \"auto\", y: 0 }}\n      exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0, y: -6 }}\n      transition={t}\n      className=\"overflow-hidden\"\n    >\n      <div className=\"space-y-1 pb-3\">\n        <label htmlFor={`${id}-${name}`} className=\"text-xs font-medium text-muted-foreground\">{label}</label>\n        <input id={`${id}-${name}`} name={name} type={type} autoComplete={auto} required className=\"h-10 w-full rounded-xl border border-border bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring\" />\n      </div>\n    </motion.div>\n  );\n  const roll = (text: string) => (\n    <AnimatePresence mode=\"popLayout\" initial={false}>\n      <motion.span key={text} className=\"inline-block\" initial={reduced ? { opacity: 0 } : { y: 14, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={reduced ? { opacity: 0 } : { y: -14, opacity: 0 }} transition={t}>{text}</motion.span>\n    </AnimatePresence>\n  );\n\n  return (\n    <LayoutGroup>\n      <motion.form\n        layout={!reduced}\n        transition={t}\n        onSubmit={(e) => {\n          e.preventDefault();\n          onSubmit?.(mode, Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>);\n        }}\n        className={cn(\"w-full max-w-sm overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-xl\", className)}\n        style={{ borderRadius: 24 }}\n        aria-labelledby={`${id}-title`}\n      >\n        <motion.div layout={!reduced} transition={t}>\n          <p className=\"text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground\">{brand}</p>\n          <h2 id={`${id}-title`} className=\"mt-1 overflow-hidden text-2xl font-semibold tracking-tight\">{roll(signup ? \"Create your account\" : \"Welcome back\")}</h2>\n          <div role=\"tablist\" aria-label=\"Mode\" className=\"mt-5 grid grid-cols-2 rounded-xl bg-muted p-1 text-sm\">\n            {([\"signin\", \"signup\"] as const).map((m) => (\n              <button key={m} type=\"button\" role=\"tab\" aria-selected={mode === m} onClick={() => setMode(m)} className={cn(\"relative rounded-lg py-1.5 font-medium transition-colors\", mode === m ? \"text-foreground\" : \"text-muted-foreground\")}>\n                {mode === m && <motion.span layoutId={`${id}-tab`} transition={t} className=\"absolute inset-0 rounded-lg bg-background shadow-sm\" />}\n                <span className=\"relative\">{m === \"signin\" ? \"Sign in\" : \"Create account\"}</span>\n              </button>\n            ))}\n          </div>\n        </motion.div>\n        <div className=\"mt-5\">\n          <AnimatePresence initial={false}>{signup && extra(\"name\", \"Full name\", \"text\", \"name\")}</AnimatePresence>\n          <div className=\"space-y-3\">\n            {field(\"email\", \"Email\", \"email\", \"email\")}\n            {field(\"password\", \"Password\", \"password\", signup ? \"new-password\" : \"current-password\")}\n          </div>\n          <AnimatePresence initial={false}>{signup && <div className=\"pt-3\">{extra(\"confirm\", \"Confirm password\", \"password\", \"new-password\")}</div>}</AnimatePresence>\n          <AnimatePresence initial={false}>\n            {!signup && (\n              <motion.a key=\"forgot\" href=\"#forgot\" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className=\"mt-2 block text-right text-xs text-muted-foreground hover:text-foreground\">\n                Forgot password?\n              </motion.a>\n            )}\n          </AnimatePresence>\n        </div>\n        <motion.button layout={!reduced} transition={t} type=\"submit\" className=\"mt-5 h-11 w-full overflow-hidden rounded-xl bg-foreground text-sm font-semibold text-background\">\n          {roll(signup ? \"Create account\" : \"Sign in\")}\n        </motion.button>\n      </motion.form>\n    </LayoutGroup>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "auth",
+      "sign in",
+      "sign up",
+      "form",
+      "morph"
+    ],
+    "pageTypes": [
+      "auth",
+      "onboarding"
+    ]
+  }
+}

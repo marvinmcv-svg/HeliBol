@@ -1,0 +1,1 @@
+Build a vinyl widget: a repeating-radial-gradient record with conic sheen and centre label image; a rAF loop eases angular speed toward 200°/s when playing or 0 when paused (spin-up faster than coast-down) and accumulates rotation into a motion value; the tonearm rotates on a spring; equaliser bars animate height while playing; skip re-keys the record so it slides in.

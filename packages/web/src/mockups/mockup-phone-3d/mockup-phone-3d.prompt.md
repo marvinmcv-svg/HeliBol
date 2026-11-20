@@ -1,0 +1,1 @@
+Build a CSS 3D phone: a preserve-3d box with a front (screen + bezel + island), a back translated by −depth and rotated 180°, and four side faces rotated ±90° about their edges; rotateX/Y springs follow the pointer around a three-quarter rest pose; a glare stripe's position and a soft floor shadow follow rotateY.

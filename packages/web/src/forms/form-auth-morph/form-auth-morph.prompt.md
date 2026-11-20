@@ -1,0 +1,1 @@
+Build a morphing auth card with Motion: a form with layout, a two-tab switch with a layoutId pill, AnimatePresence-wrapped Name and Confirm fields that expand (height auto) only in sign-up, shared Email/Password fields with layout so they glide, a 'Forgot password?' link only in sign-in, and title/button labels that roll vertically when the mode changes.

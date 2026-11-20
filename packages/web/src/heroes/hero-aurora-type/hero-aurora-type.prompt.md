@@ -1,0 +1,1 @@
+Build aurora type: inside an isolated, overflow-hidden h1 put three large blurred colour blobs animating translate/rotate/scale, then the word in white on a black background with mix-blend-mode: multiply on top, so colour only shows through the letters. Below, a blurred, faded copy of the blobs as a floor reflection.
