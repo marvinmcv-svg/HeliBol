@@ -53,9 +53,9 @@ function Blob({ color, i, n, reduced }: { color: string; i: number; n: number; r
   useFrame(({ clock }) => {
     if (!ref.current) return;
     const t = reduced ? i : clock.elapsedTime * 0.45 + (i / n) * Math.PI * 2;
-    ref.current.position.set(Math.sin(t * 1.1 + i) * 0.42, Math.cos(t * 0.9 + i * 2) * 0.32, Math.sin(t * 0.7 + i * 3) * 0.25);
+    ref.current.position.set(Math.sin(t * 1.1 + i) * 0.3, Math.cos(t * 0.9 + i * 2) * 0.24, Math.sin(t * 0.7 + i * 3) * 0.18);
   });
-  return <MarchingCube ref={ref} strength={0.5} subtract={12} color={c} />;
+  return <MarchingCube ref={ref} strength={0.62} subtract={10} color={c} />;
 }
 
 function PointerBlob() {

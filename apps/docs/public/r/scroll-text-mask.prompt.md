@@ -57,7 +57,7 @@ export function ScrollTextMask({ text, image, children, container, className }: 
 
   if (reduced)
     return (
-      <div className={cn("relative h-[100cqh] overflow-hidden", className)}>
+      <div ref={ref} className={cn("relative h-[100cqh] overflow-hidden", className)}>
         <img src={image} alt="" className="size-full object-cover" />
         <div className="absolute inset-0 grid place-items-center bg-black/40 p-6 text-white">{children ?? <h3 className="text-5xl font-black">{text}</h3>}</div>
       </div>
@@ -110,7 +110,7 @@ function Inner() {
 
 export default function Demo() {
   return (
-    <DemoScroller thumbAt={0.08}>
+    <DemoScroller thumbAt={0.01}>
       <Inner />
     </DemoScroller>
   );

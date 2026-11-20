@@ -70,7 +70,7 @@ export function ScrollZoomParallax({ images, container, className }: ScrollZoomP
 
   if (reduced)
     return (
-      <div className={cn("grid grid-cols-2 gap-3 p-4 sm:grid-cols-3", className)}>
+      <div ref={ref} className={cn("grid grid-cols-2 gap-3 p-4 sm:grid-cols-3", className)}>
         {images.slice(0, 7).map((s, i) => <img key={i} src={s} alt="" className={cn("w-full rounded-xl object-cover", i === 0 ? "col-span-full aspect-video" : "aspect-square")} />)}
       </div>
     );

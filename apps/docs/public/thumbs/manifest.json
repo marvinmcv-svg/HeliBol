@@ -3424,5 +3424,293 @@
     },
     "captured_at": "2026-11-19T04:30:00.120Z",
     "provider": "cdp-page-capture"
+  },
+  "nav-circle-reveal": {
+    "png_sha256": "6418985f4cefa6aca15b37de4fc688dd8eead67340462af648ef051e7c999796",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:02.893Z",
+    "provider": "cdp-page-capture"
+  },
+  "ai-diff-review": {
+    "png_sha256": "397deb25e940e764ecb0a2ede2a8ffabe412b31a60092601e1be9d230ba435bf",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:03.018Z",
+    "provider": "cdp-page-capture"
+  },
+  "ai-image-generate": {
+    "png_sha256": "04941cdcedd74343a7f883d65b81f3307e9f81b9958963997a92904644a292f6",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:03.126Z",
+    "provider": "cdp-page-capture"
+  },
+  "button-directional-fill": {
+    "png_sha256": "0b6733ca1364c220b036715b4f0a957e26332d73d4ee9c9442591aaa431629b3",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:06.504Z",
+    "provider": "cdp-page-capture"
+  },
+  "loader-comet-ring": {
+    "png_sha256": "4bdce4e5d0ced036b59a18b386c62aca16178612a8d7f1caf5c744c3d0e1ff5e",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:06.666Z",
+    "provider": "cdp-page-capture"
+  },
+  "cursor-context-label": {
+    "png_sha256": "2af7cfef4236feb2eaab296f18144b9de52aa15fbdbec4ea3da4023b304569bc",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:06.828Z",
+    "provider": "cdp-page-capture"
+  },
+  "svg-signature": {
+    "png_sha256": "7b55b01092ba972771e881217746250b982db37c3c8ab9fd1a1ebe9a17baa073",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:10.361Z",
+    "provider": "cdp-page-capture"
+  },
+  "image-accordion": {
+    "png_sha256": "1f26c88cc75b33230f9c2255c761bd645287492285f081555ab7da25815ea9b1",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:10.483Z",
+    "provider": "cdp-page-capture"
+  },
+  "three-hologram": {
+    "png_sha256": "6c5fb82d331c67f7c6aecd866c0070f56737c3ffab63a42957d5e605d50858a4",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:13.420Z",
+    "provider": "cdp-page-capture"
+  },
+  "card-lens-zoom": {
+    "png_sha256": "0890ce053b7bda09310b6486f2054748c3cf730e37a74bbfea4ddb001b7c17b8",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:13.996Z",
+    "provider": "cdp-page-capture"
+  },
+  "text-ink-bleed": {
+    "png_sha256": "308a3ecd4bd2cfb97933770ba7ea8efa8e6ab71dcb4d1ae2ae4eed32786c571d",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:16.355Z",
+    "provider": "cdp-page-capture"
+  },
+  "text-liquid-fill": {
+    "png_sha256": "e1beaadb3cea479aaf09ae6b2645dc079394c1416916f078709883a0ab6f03a3",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:06:11.119Z",
+    "provider": "cdp-page-capture"
+  },
+  "three-metaballs": {
+    "png_sha256": "4b83f3fd5ce9427595140a530759dc9fe08786df8e29b33fb0793ac127f000bd",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:06:13.266Z",
+    "provider": "cdp-page-capture"
+  },
+  "loader-liquid": {
+    "png_sha256": "888510eea43fb1f801a50df17b1608763f8cebb91ac3920c41446ecb54b9a6b3",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:19.951Z",
+    "provider": "cdp-page-capture"
+  },
+  "text-magnetic-letters": {
+    "png_sha256": "30ac270ce0332d28a3290e0d8fbef3043c0ea836aaa2b4c05bce2ade71fde517",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:20.182Z",
+    "provider": "cdp-page-capture"
+  },
+  "nav-morph-tabbar": {
+    "png_sha256": "d3e3e78032e0a343c383d59accf30a4c81eaff5a8d6fcc1beb83af00ce2b4540",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:22.923Z",
+    "provider": "cdp-page-capture"
+  },
+  "chart-radial-bars": {
+    "png_sha256": "f0b907860e4a9543c8e0505fc203de8f6f0396dc9b45071fcefd6ffc173eaca7",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:23.858Z",
+    "provider": "cdp-page-capture"
+  },
+  "button-particle-dissolve": {
+    "png_sha256": "71a1bdad6adf74231bb9f56601f4949b81a840ec60bed45570cf59710643c2a3",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:23.970Z",
+    "provider": "cdp-page-capture"
+  },
+  "scroll-text-mask": {
+    "png_sha256": "c3a255165e71d1ce75ff3ea277e412933fcdffa0e3a0ae8a695d3c7904cca4a6",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:06:11.025Z",
+    "provider": "cdp-page-capture"
+  },
+  "chart-area-scrub": {
+    "png_sha256": "d3a2a182e965fd62e37b187428f4e4a4c39c13e6d4500a411554670eb7e5a0f9",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:27.491Z",
+    "provider": "cdp-page-capture"
+  },
+  "transition-shutter": {
+    "png_sha256": "d43f125bb433ecc515240ec9874491d0c03d2c4982f72754ba5aafa0396442ec",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:27.596Z",
+    "provider": "cdp-page-capture"
+  },
+  "cursor-smoke-trail": {
+    "png_sha256": "ff51aaf136f8fcf0b0709094df10f147ad9dd9cba03f8c8c4e72291c3d206b18",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:30.983Z",
+    "provider": "cdp-page-capture"
+  },
+  "bg-silk-lines": {
+    "png_sha256": "d867bb5fa24548f21ab312d73c4c2589a14e7eff117e5ecc3a8429e56d800732",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:31.081Z",
+    "provider": "cdp-page-capture"
+  },
+  "media-slice-slider": {
+    "png_sha256": "b3dd9fc9c26ed71e0d73edecff4d9e02441139e715a72213243e95ffcfcc2826",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:31.329Z",
+    "provider": "cdp-page-capture"
+  },
+  "sortable-grid": {
+    "png_sha256": "a68648e72e09dca42b8813e9566249d67a4dfa3904031b66e84e884755e0fc2a",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:34.800Z",
+    "provider": "cdp-page-capture"
+  },
+  "spotlight-tour": {
+    "png_sha256": "0ec1dc6595f5705e09b0717302e99a1477ef39b55e01c58f4423472d8084b6b3",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:34.892Z",
+    "provider": "cdp-page-capture"
+  },
+  "sheet-stack": {
+    "png_sha256": "302b58d2d1319d743a28cfed0ddbccd1dfac5d0d7fbaeef0cc17bb82f0497ee1",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:35.217Z",
+    "provider": "cdp-page-capture"
+  },
+  "svg-wave-divider": {
+    "png_sha256": "1213a0c5316aeeae23d4a822e7e59951a02284b14799408e82c79c2afc4b93e0",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:38.659Z",
+    "provider": "cdp-page-capture"
+  },
+  "card-ticket-tear": {
+    "png_sha256": "dfcfc5a29e283564c65c1f79af9dffcdd7c17db560a46a368356b81fe1a76c2f",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:38.758Z",
+    "provider": "cdp-page-capture"
+  },
+  "bg-caustics": {
+    "png_sha256": "9473456ccc8d82abb1295815d6559e2b60f1511ac4e186e9a1bf0f39bc293bf8",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:38.928Z",
+    "provider": "cdp-page-capture"
+  },
+  "scroll-zoom-parallax": {
+    "png_sha256": "ad38355ea7590235ffed3e26669c54292304cf8ed6c55655b126f7c047a12855",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:42.391Z",
+    "provider": "cdp-page-capture"
+  },
+  "transition-zoom-portal": {
+    "png_sha256": "a2072d648ec943d99011cf3802e153946d24daf06e17291c44133c3febc2c49c",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-19T05:02:42.706Z",
+    "provider": "cdp-page-capture"
   }
 }

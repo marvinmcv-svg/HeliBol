@@ -38,7 +38,7 @@ export interface TextLiquidFillProps {
 }
 
 /**
- * Letters as glass vessels: two offset waves (SVG, clipped to the text) slosh inside the outlined
+ * Letters as glass vessels: two offset waves (SVG, clipped to the text) slosh inside the frosted
  * type and rise to `level` with a soft ease — great for loaders, counters and scroll progress.
  */
 export function TextLiquidFill({ text, level = 60, color = "#38bdf8", colorBack = "#818cf8", className }: TextLiquidFillProps) {
@@ -54,7 +54,7 @@ export function TextLiquidFill({ text, level = 60, color = "#38bdf8", colorBack 
             <text x="500" y="160" textAnchor="middle" fontSize="190" fontWeight="900" fontFamily="inherit" letterSpacing="-6">{text}</text>
           </clipPath>
         </defs>
-        <text x="500" y="160" textAnchor="middle" fontSize="190" fontWeight="900" fontFamily="inherit" letterSpacing="-6" fill="none" stroke="currentColor" strokeOpacity=".35" strokeWidth="3">{text}</text>
+        <text x="500" y="160" textAnchor="middle" fontSize="190" fontWeight="900" fontFamily="inherit" letterSpacing="-6" fill="currentColor" fillOpacity=".1">{text}</text>
         <g clipPath={`url(#${id})`}>
           <g style={{ transform: `translateY(${y * 2}px)`, transition: reduced ? undefined : "transform 1.2s cubic-bezier(.22,1,.36,1)" }}>
             <svg x="0" y="-10" width="2000" height="240" viewBox="0 0 200 120" preserveAspectRatio="none" overflow="visible">

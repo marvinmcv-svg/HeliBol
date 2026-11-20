@@ -11,7 +11,7 @@ const notes: Record<string, { title: string; body: string }> = {
   "2026-10-31": { title: "kinetik 2.0 — research-driven expansion", body: "139 items from a gap analysis of 21st.dev, Mobbin, Refero, Awwwards and six open-source libraries: heroes, AI interfaces, widgets, device mockups, canvas/WebGL backgrounds." },
   "2026-11-11": { title: "kinetik 2.1–2.2 — GSAP, three.js, unlumen & 21st UI", body: "The GSAP collection, a 13-piece three.js collection, unlumen-inspired components, the missing 21st.dev UI sections, MotionSites-style hero blocks and two new Mobbin-style flows." },
   "2026-11-16": { title: "30 Mobbin heroes", body: "Thirty hero sections, each modelled on a standout hero found through Mobbin and rebuilt as original code." },
-  "2026-11-19": { title: "kinetik 2.3 — the audit release", body: "Templates (SaaS, AI startup, portfolio), 12 components for the 21st.dev categories we lacked, saved collections, sorting and New badges, package-manager install tabs, llms.txt, sitemap and OG images — and 74% less JavaScript per page." },
+  "2026-11-19": { title: "kinetik 2.3 & 2.4 — audit release + ✦ Premium collection", body: "Templates (SaaS, AI startup, portfolio), 12 components for the 21st.dev categories we lacked, saved collections, sorting and New badges, package-manager install tabs, llms.txt, sitemap and OG images — and 74% less JavaScript per page." },
 };
 
 const all: { m: ComponentMeta; href: string }[] = [

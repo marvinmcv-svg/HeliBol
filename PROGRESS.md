@@ -2,7 +2,7 @@
 
 Status of every component ID in `motion-library-master-plan.md` (Sections 7 & 8), plus everything built beyond it.
 
-**Summary (kinetik 2.2):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **349 registry items live** (308 components + 27 blocks incl. 3 templates + 14 flows), including the 36-piece GSAP collection and the 13-piece three.js collection, plus 30 Mobbin-researched heroes. Research and gap analysis: `docs/research/README.md`.
+**Summary (kinetik 2.2):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **381 registry items live** (340 components + 27 blocks incl. 3 templates + 14 flows), including the 36-piece GSAP collection and the 13-piece three.js collection, plus 30 Mobbin-researched heroes. Research and gap analysis: `docs/research/README.md`.
 
 Legend: ✅ done · 🟡 partial · ⬜ todo
 
@@ -371,3 +371,9 @@ Report: `docs/audit/2026-11-site-audit.md`.
 **Library (15):** `alert-animated` · `banner-announcement` · `badge-animated` · `dropdown-menu` · `textarea-autosize` · `kanban-board` · `color-picker` · `cookie-consent` · `waitlist-form` · `comment-thread` · `scroll-area` · `comparison-table` · templates `template-saas` · `template-ai-startup` · `template-portfolio`.
 
 **Next:** prop playground with presets · 20+ templates by industry · industry facet · shareable named collections · usage-based Popular sort · video thumbnails for touch · Next.js security upgrade.
+
+## kinetik 2.4 — ✦ Premium collection (32)
+
+`/premium` groups every premium item by category (tag `premium` + a curated list of the best existing pieces, see `isPremium` in `apps/docs/lib/taxonomy.ts`). Cards show a gold badge; galleries filter with `?collection=premium`.
+
+**Text:** `text-ink-bleed` · `text-magnetic-letters` · `text-liquid-fill` — **Buttons:** `button-directional-fill` · `button-particle-dissolve` — **Cards:** `card-lens-zoom` · `card-ticket-tear` — **Backgrounds:** `bg-caustics` · `bg-silk-lines` — **Cursor:** `cursor-smoke-trail` · `cursor-context-label` — **Scroll:** `scroll-zoom-parallax` · `scroll-text-mask` — **Layout:** `image-accordion` · `sortable-grid` — **Navigation:** `nav-circle-reveal` · `nav-morph-tabbar` — **Overlays:** `sheet-stack` · `spotlight-tour` — **Loaders:** `loader-liquid` · `loader-comet-ring` — **Media:** `media-slice-slider` — **Data:** `chart-area-scrub` · `chart-radial-bars` — **SVG:** `svg-signature` · `svg-wave-divider` — **Transitions:** `transition-shutter` · `transition-zoom-portal` — **3D:** `three-metaballs` · `three-hologram` — **AI:** `ai-image-generate` · `ai-diff-review`
