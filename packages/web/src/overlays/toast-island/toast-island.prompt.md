@@ -1,0 +1,1 @@
+Provide context with show(kind,title,detail) and promise(p,{loading,success,error}); render one motion.div with layout and rounded-full; contents keyed by state animate in/out; auto-collapse to a small pill after a delay.

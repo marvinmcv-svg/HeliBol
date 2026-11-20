@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-plan-graph",
+  "type": "registry:component",
+  "title": "AI — Plan Graph",
+  "description": "Agent plan visualiser: a goal node grows a tree of steps; each step's sub-tasks spin then tick off, finished steps collapse into an 'N done' chip, and the next step unfolds — like watching an agent think.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/ai-plan-graph.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/ai-plan-graph.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check, Loader2 } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface PlanStep {\n  id: string;\n  title: string;\n  /** Sub-tasks that branch out of this step. */\n  children?: { id: string; title: string }[];\n}\n\nexport interface AiPlanGraphProps {\n  goal: string;\n  steps: PlanStep[];\n  /** ms per sub-task. */\n  speed?: number;\n  className?: string;\n}\n\n/**\n * An agent's plan as a growing tree: the goal sits at the top, steps unfold one at a time with a\n * connector line drawing down to each, each step branches into sub-tasks that spin then tick, and a\n * finished step collapses its branches into a summary count. Status is announced as it progresses.\n */\nexport function AiPlanGraph({ goal, steps, speed = 650, className }: AiPlanGraphProps) {\n  const reduced = useReducedMotion();\n  const flat = steps.flatMap((s) => [s.id, ...(s.children ?? []).map((c) => c.id)]);\n  const [done, setDone] = useState(reduced ? flat.length : 0);\n\n  useEffect(() => {\n    if (reduced || done >= flat.length) return;\n    const id = setTimeout(() => setDone((d) => d + 1), speed);\n    return () => clearTimeout(id);\n  }, [done, flat.length, speed, reduced]);\n\n  const idx = (id: string) => flat.indexOf(id);\n  const status = (id: string) => (idx(id) < done ? \"done\" : idx(id) === done ? \"active\" : \"todo\");\n  const stepComplete = (s: PlanStep) => (s.children ?? []).every((c) => status(c.id) === \"done\") && status(s.id) === \"done\";\n  const visibleSteps = steps.filter((s) => idx(s.id) <= done);\n\n  const Dot = ({ st }: { st: string }) => (\n    <span className={cn(\"grid size-5 shrink-0 place-items-center rounded-full\", st === \"done\" ? \"bg-emerald-500 text-white\" : st === \"active\" ? \"bg-primary/15 text-primary\" : \"bg-muted\")}>\n      {st === \"done\" ? <Check className=\"size-3\" strokeWidth={3} /> : st === \"active\" ? <Loader2 className=\"size-3 animate-spin motion-reduce:animate-none\" /> : null}\n    </span>\n  );\n\n  return (\n    <div className={cn(\"w-full max-w-md rounded-3xl border border-border bg-card p-5 text-sm\", className)}>\n      <div className=\"flex items-center gap-2 rounded-2xl bg-muted px-3 py-2\">\n        <span className=\"text-[10px] font-semibold uppercase tracking-wider text-muted-foreground\">Goal</span>\n        <span className=\"font-medium\">{goal}</span>\n      </div>\n      <p className=\"sr-only\" aria-live=\"polite\">{done >= flat.length ? \"Plan complete\" : `Working on step ${visibleSteps.length} of ${steps.length}`}</p>\n      <ol className=\"relative mt-2 pl-4\">\n        <AnimatePresence initial={false}>\n          {visibleSteps.map((s) => {\n            const complete = stepComplete(s);\n            return (\n              <motion.li key={s.id} layout={!reduced} initial={reduced ? false : { opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} className=\"relative pt-3\">\n                <motion.span aria-hidden className=\"absolute -left-[9px] top-0 w-px bg-border\" initial={reduced ? false : { height: 0 }} animate={{ height: \"100%\" }} transition={{ duration: 0.4 }} />\n                <span aria-hidden className=\"absolute -left-[9px] top-[1.35rem] h-px w-3 bg-border\" />\n                <div className=\"flex items-center gap-2\">\n                  <Dot st={complete ? \"done\" : status(s.id) === \"todo\" ? \"todo\" : \"active\"} />\n                  <span className=\"font-medium\">{s.title}</span>\n                  {complete && s.children?.length ? <motion.span initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className=\"ml-auto rounded-full bg-emerald-500/15 px-2 py-0.5 text-[11px] text-emerald-600 dark:text-emerald-400\">{s.children.length} done</motion.span> : null}\n                </div>\n                <AnimatePresence initial={false}>\n                  {!complete && s.children && (\n                    <motion.ul initial={{ height: 0, opacity: 0 }} animate={{ height: \"auto\", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: reduced ? 0 : 0.3 }} className=\"ml-2.5 overflow-hidden border-l border-dashed border-border pl-4\">\n                      {s.children.filter((c) => idx(c.id) <= done).map((c) => (\n                        <motion.li key={c.id} initial={reduced ? false : { opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className=\"flex items-center gap-2 py-1 text-muted-foreground\">\n                          <Dot st={status(c.id)} />\n                          <span className={cn(status(c.id) === \"done\" && \"text-foreground\")}>{c.title}</span>\n                        </motion.li>\n                      ))}\n                    </motion.ul>\n                  )}\n                </AnimatePresence>\n              </motion.li>\n            );\n          })}\n        </AnimatePresence>\n      </ol>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "ai",
+      "agent",
+      "plan",
+      "tasks",
+      "tree",
+      "reasoning"
+    ],
+    "pageTypes": [
+      "ai-app",
+      "dashboard"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Give the trigger and the sheet the same layoutId so the button grows into the panel; stagger avatar and target buttons in; copy uses navigator.clipboard and flips to a check; call navigator.share when available.

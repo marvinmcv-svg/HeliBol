@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "nav-stretch-tabs",
+  "type": "registry:component",
+  "title": "Tabs — Stretch Indicator",
+  "description": "Tabs whose pill indicator moves like a caterpillar: the leading edge springs toward the new tab first while the trailing edge lags and catches up, so the pill stretches across the gap and snaps back.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/nav-stretch-tabs.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/nav-stretch-tabs.tsx",
+      "content": "\"use client\";\nimport { useLayoutEffect, useRef, useState } from \"react\";\nimport { animate, motion, useMotionValue } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface NavStretchTabsProps {\n  tabs: string[];\n  defaultIndex?: number;\n  onChange?: (i: number) => void;\n  className?: string;\n}\n\n/**\n * Tabs whose indicator moves like a caterpillar: the leading edge springs out toward the new tab\n * first while the trailing edge lags and then catches up, so the pill stretches across the gap and\n * snaps back — two independently timed edges instead of one sliding box. Arrow keys move between tabs.\n */\nexport function NavStretchTabs({ tabs, defaultIndex = 0, onChange, className }: NavStretchTabsProps) {\n  const reduced = useReducedMotion();\n  const [active, setActive] = useState(defaultIndex);\n  const list = useRef<HTMLDivElement>(null);\n  const left = useMotionValue(0), right = useMotionValue(0);\n  const width = useWidth(left, right);\n  const first = useRef(true);\n\n  useLayoutEffect(() => {\n    const el = list.current?.children[active] as HTMLElement | undefined;\n    if (!el) return;\n    const l = el.offsetLeft, r = el.offsetLeft + el.offsetWidth;\n    if (first.current || reduced) {\n      left.set(l);\n      right.set(r);\n      first.current = false;\n      return;\n    }\n    const goingRight = l > left.get();\n    const lead = { type: \"spring\" as const, stiffness: 520, damping: 34 };\n    const trail = { type: \"spring\" as const, stiffness: 260, damping: 26, delay: 0.07 };\n    const a = animate(left, l, goingRight ? trail : lead);\n    const b = animate(right, r, goingRight ? lead : trail);\n    return () => (a.stop(), b.stop());\n  }, [active, reduced, left, right]);\n\n  const select = (i: number) => (setActive(i), onChange?.(i));\n  return (\n    <div className={cn(\"relative inline-flex rounded-full bg-muted p-1\", className)}>\n      <motion.span aria-hidden className=\"absolute bottom-1 top-1 rounded-full bg-foreground shadow\" style={{ left, width }} />\n      <div ref={list} role=\"tablist\" className=\"relative flex\">\n        {tabs.map((t, i) => (\n          <button\n            key={t}\n            role=\"tab\"\n            type=\"button\"\n            aria-selected={i === active}\n            tabIndex={i === active ? 0 : -1}\n            onClick={() => select(i)}\n            onKeyDown={(e) => {\n              const d = e.key === \"ArrowRight\" ? 1 : e.key === \"ArrowLeft\" ? -1 : 0;\n              if (!d) return;\n              const n = (i + d + tabs.length) % tabs.length;\n              select(n);\n              (e.currentTarget.parentElement?.children[n] as HTMLElement)?.focus();\n            }}\n            className={cn(\"relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\", i === active ? \"text-background\" : \"text-muted-foreground hover:text-foreground\")}\n          >\n            {t}\n          </button>\n        ))}\n      </div>\n    </div>\n  );\n}\n\nfunction useWidth(left: ReturnType<typeof useMotionValue<number>>, right: ReturnType<typeof useMotionValue<number>>) {\n  const w = useMotionValue(0);\n  useLayoutEffect(() => {\n    const update = () => w.set(Math.max(0, right.get() - left.get()));\n    update();\n    const u1 = left.on(\"change\", update), u2 = right.on(\"change\", update);\n    return () => (u1(), u2());\n  }, [left, right, w]);\n  return w;\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "tabs",
+      "indicator",
+      "segmented",
+      "stretch",
+      "navigation"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "settings",
+      "landing"
+    ]
+  }
+}

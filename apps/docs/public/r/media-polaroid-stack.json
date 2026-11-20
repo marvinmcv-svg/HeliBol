@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "media-polaroid-stack",
+  "type": "registry:component",
+  "title": "Polaroid Stack",
+  "description": "A messy pile of polaroids with hand-written captions. Fling the top photo in any direction and it flies off and slides back in at the bottom while the rest shuffle up with new tilts.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/media-polaroid-stack.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/media-polaroid-stack.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion, useMotionValue, useTransform, type PanInfo } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface Polaroid { src: string; caption: string; alt?: string }\nexport interface MediaPolaroidStackProps {\n  photos: Polaroid[];\n  className?: string;\n}\n\nconst tilt = (i: number) => [-6, 4, -2, 7, -4, 3][i % 6]!;\n\n/**\n * A messy pile of polaroids. Fling the top one in any direction and it flies off and slides back in\n * at the bottom of the pile; the others shuffle up with a new tilt. Hand-written captions. Buttons and\n * ←/→ do the same for keyboard users. Reduced motion just cycles without the throw.\n */\nexport function MediaPolaroidStack({ photos, className }: MediaPolaroidStackProps) {\n  const reduced = useReducedMotion();\n  const [order, setOrder] = useState(() => photos.map((_, i) => i));\n  const [exitX, setExitX] = useState(400);\n  const next = (dir = 1) => {\n    setExitX(dir * 420);\n    setOrder((o) => [...o.slice(1), o[0]!]);\n  };\n  const prev = () => setOrder((o) => [o[o.length - 1]!, ...o.slice(0, -1)]);\n  const visible = order.slice(0, 4);\n\n  return (\n    <div\n      className={cn(\"relative grid place-items-center\", className)}\n      tabIndex={0}\n      role=\"group\"\n      aria-roledescription=\"photo stack\"\n      aria-label={`Photo ${order[0]! + 1} of ${photos.length}: ${photos[order[0]!]!.caption}`}\n      onKeyDown={(e) => (e.key === \"ArrowRight\" ? next(1) : e.key === \"ArrowLeft\" ? prev() : null)}\n    >\n      <div className=\"relative h-[340px] w-[260px]\">\n        <AnimatePresence initial={false} custom={exitX}>\n          {visible.slice().reverse().map((idx) => {\n            const depth = visible.indexOf(idx);\n            return depth === 0 ? (\n              <TopCard key={idx} p={photos[idx]!} rot={tilt(idx)} reduced={reduced} onThrow={next} exitX={exitX} />\n            ) : (\n              <motion.div\n                key={idx}\n                className=\"absolute inset-0\"\n                initial={{ opacity: 0, scale: 0.9 }}\n                animate={{ opacity: 1, scale: 1 - depth * 0.03, rotate: tilt(idx) * (1 + depth * 0.2), y: depth * 6, zIndex: 10 - depth }}\n                transition={{ type: \"spring\", stiffness: 260, damping: 24 }}\n              >\n                <Frame p={photos[idx]!} />\n              </motion.div>\n            );\n          })}\n        </AnimatePresence>\n      </div>\n      <div className=\"mt-6 flex gap-2\">\n        <button type=\"button\" onClick={prev} className=\"rounded-full border bg-background px-3 py-1 text-xs\">← Back</button>\n        <button type=\"button\" onClick={() => next(1)} className=\"rounded-full border bg-background px-3 py-1 text-xs\">Next →</button>\n      </div>\n    </div>\n  );\n}\n\nfunction TopCard({ p, rot, reduced, onThrow, exitX }: { p: Polaroid; rot: number; reduced: boolean; onThrow: (dir: number) => void; exitX: number }) {\n  const x = useMotionValue(0);\n  const r = useTransform(x, [-300, 300], [rot - 18, rot + 18]);\n  const end = (_: unknown, info: PanInfo) => {\n    if (Math.abs(info.offset.x) > 110 || Math.abs(info.velocity.x) > 600) onThrow(Math.sign(info.offset.x) || 1);\n  };\n  return (\n    <motion.div\n      className=\"absolute inset-0 z-20 cursor-grab touch-pan-y active:cursor-grabbing\"\n      style={{ x, rotate: reduced ? rot : r }}\n      drag={reduced ? false : \"x\"}\n      dragSnapToOrigin\n      dragElastic={0.9}\n      onDragEnd={end}\n      initial={{ scale: 0.97, y: 6 }}\n      animate={{ scale: 1, y: 0 }}\n      exit={reduced ? { opacity: 0, transition: { duration: 0.15 } } : { x: exitX, y: 60, rotate: exitX > 0 ? 30 : -30, opacity: 0, transition: { duration: 0.45, ease: [0.3, 0, 0.2, 1] } }}\n      whileTap={reduced ? undefined : { scale: 1.03 }}\n    >\n      <Frame p={p} />\n    </motion.div>\n  );\n}\n\nfunction Frame({ p }: { p: Polaroid }) {\n  return (\n    <figure className=\"h-full w-full select-none rounded-sm bg-[#fbfaf6] p-3 pb-0 shadow-[0_12px_30px_-8px_rgb(0_0_0/.35),0_2px_4px_rgb(0_0_0/.12)]\">\n      <img src={p.src} alt={p.alt ?? \"\"} draggable={false} className=\"aspect-square w-full object-cover saturate-[.9] sepia-[.12]\" />\n      <figcaption className=\"grid h-[64px] place-items-center text-center text-xl text-zinc-700\" style={{ fontFamily: \"'Segoe Print','Bradley Hand','Comic Sans MS',cursive\" }}>{p.caption}</figcaption>\n    </figure>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "polaroid",
+      "stack",
+      "swipe",
+      "gallery",
+      "photos",
+      "drag"
+    ],
+    "pageTypes": [
+      "portfolio",
+      "social",
+      "media"
+    ]
+  }
+}

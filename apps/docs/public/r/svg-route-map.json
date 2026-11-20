@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "svg-route-map",
+  "type": "registry:component",
+  "title": "SVG — Live Route Map",
+  "description": "Delivery-tracking map: a stylised street grid, the route draws itself, a courier marker follows the path and turns to its heading, stops light up as it passes and an ETA counts down.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/svg-route-map.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/svg-route-map.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { cn, useReducedMotion, useInView } from \"@/lib/kinetik/core\";\n\nexport interface RouteStop { label: string; /** 0–1 along the route */ at: number }\nexport interface SvgRouteMapProps {\n  /** SVG path in a 400×260 viewBox. */\n  route?: string;\n  stops?: RouteStop[];\n  /** Seconds for one trip. */\n  duration?: number;\n  /** Minutes the trip represents, for the ETA readout. */\n  minutes?: number;\n  className?: string;\n}\n\nconst DEFAULT_ROUTE = \"M30 220 C 80 220, 90 150, 140 150 S 200 70, 250 90 S 320 200, 370 40\";\nconst DEFAULT_STOPS: RouteStop[] = [\n  { label: \"Depot\", at: 0 },\n  { label: \"Market St\", at: 0.33 },\n  { label: \"Harbour\", at: 0.62 },\n  { label: \"You\", at: 1 },\n];\n\n/**\n * Live-delivery map: a stylised street grid, the route draws itself, then a courier marker follows\n * the path (rotating to its heading) with a fading trail, stops light up as it passes and an ETA\n * counts down. Plays when scrolled into view and loops. Reduced motion shows the finished route.\n */\nexport function SvgRouteMap({ route = DEFAULT_ROUTE, stops = DEFAULT_STOPS, duration = 8, minutes = 18, className }: SvgRouteMapProps) {\n  const reduced = useReducedMotion();\n  const id = useId().replace(/:/g, \"\");\n  const wrap = useRef<HTMLDivElement>(null);\n  const inView = useInView(wrap, { amount: 0.3 });\n  const path = useRef<SVGPathElement>(null);\n  const [p, setP] = useState(reduced ? 1 : 0);\n  const [pos, setPos] = useState({ x: 30, y: 220, a: 0 });\n  const [stopPts, setStopPts] = useState<{ x: number; y: number }[]>([]);\n  const len = useRef(0);\n\n  useEffect(() => {\n    const el = path.current;\n    if (!el || typeof el.getTotalLength !== \"function\") return;\n    len.current = el.getTotalLength();\n    setStopPts(stops.map((s) => el.getPointAtLength(s.at * len.current)));\n  }, [route, stops]);\n\n  useEffect(() => {\n    if (reduced) return setP(1);\n    if (!inView) return;\n    let raf = 0;\n    const t0 = performance.now();\n    const tick = (now: number) => {\n      const cycle = ((now - t0) / 1000) % (duration + 1.5);\n      setP(Math.min(1, cycle / duration));\n      raf = requestAnimationFrame(tick);\n    };\n    raf = requestAnimationFrame(tick);\n    return () => cancelAnimationFrame(raf);\n  }, [inView, reduced, duration]);\n\n  useEffect(() => {\n    const el = path.current;\n    if (!el || !len.current || typeof el.getPointAtLength !== \"function\") return;\n    const e = ease(p);\n    const a = el.getPointAtLength(e * len.current);\n    const b = el.getPointAtLength(Math.min(len.current, e * len.current + 1));\n    setPos({ x: a.x, y: a.y, a: (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI });\n  }, [p]);\n\n  const e = ease(p);\n  const eta = Math.max(0, Math.ceil(minutes * (1 - e)));\n  return (\n    <div ref={wrap} className={cn(\"relative overflow-hidden rounded-3xl border bg-[#0d1117] text-white\", className)}>\n      <svg viewBox=\"0 0 400 260\" className=\"block w-full\" role=\"img\" aria-label={`Delivery route, ${eta} minutes away`}>\n        <defs>\n          <pattern id={`g-${id}`} width=\"26\" height=\"26\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(-8)\">\n            <path d=\"M0 0H26M0 0V26\" stroke=\"#ffffff\" strokeOpacity=\".06\" strokeWidth=\"6\" />\n          </pattern>\n          <linearGradient id={`r-${id}`} x1=\"0\" x2=\"1\">\n            <stop offset=\"0\" stopColor=\"#22d3ee\" />\n            <stop offset=\"1\" stopColor=\"#a78bfa\" />\n          </linearGradient>\n        </defs>\n        <rect width=\"400\" height=\"260\" fill={`url(#g-${id})`} />\n        <path d=\"M0 120 Q 120 90 220 130 T 400 110 V 160 Q 300 175 220 180 T 0 170Z\" fill=\"#1e3a5f\" opacity=\".35\" />\n        <path d={route} stroke=\"#fff\" strokeOpacity=\".12\" strokeWidth=\"8\" fill=\"none\" strokeLinecap=\"round\" />\n        <path ref={path} d={route} stroke={`url(#r-${id})`} strokeWidth=\"4\" fill=\"none\" strokeLinecap=\"round\" pathLength={1} strokeDasharray=\"1\" strokeDashoffset={1 - Math.min(1, e + 0.0001)} />\n        {stopPts.map((s, i) => {\n          const passed = e >= stops[i]!.at - 0.001;\n          return (\n            <g key={i} transform={`translate(${s.x} ${s.y})`}>\n              {passed && !reduced && <circle r=\"12\" fill=\"#22d3ee\" opacity=\".18\"><animate attributeName=\"r\" values=\"6;14;6\" dur=\"2s\" repeatCount=\"indefinite\" /></circle>}\n              <circle r=\"5.5\" fill={passed ? \"#22d3ee\" : \"#0d1117\"} stroke={passed ? \"#fff\" : \"#ffffff55\"} strokeWidth=\"2\" />\n              <text y={i % 2 ? 22 : -12} textAnchor=\"middle\" fontSize=\"10\" fill={passed ? \"#fff\" : \"#ffffff80\"} fontFamily=\"ui-sans-serif, system-ui\">{stops[i]!.label}</text>\n            </g>\n          );\n        })}\n        {stopPts.length > 0 && (\n          <g transform={`translate(${pos.x} ${pos.y}) rotate(${pos.a})`}>\n            <circle r=\"11\" fill=\"#fff\" />\n            <path d=\"M-4 -4 L5 0 L-4 4 Z\" fill=\"#0d1117\" />\n          </g>\n        )}\n      </svg>\n      <div className=\"absolute left-4 top-4 rounded-2xl bg-white/10 px-3 py-2 backdrop-blur-md\">\n        <p className=\"text-[10px] uppercase tracking-widest text-white/60\">Arriving in</p>\n        <p className=\"font-mono text-2xl font-semibold tabular-nums\">{eta === 0 ? \"Here\" : `${eta} min`}</p>\n      </div>\n    </div>\n  );\n}\n\nconst ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);\n"
+    }
+  ],
+  "categories": [
+    "svg"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "premium",
+      "map",
+      "route",
+      "delivery",
+      "tracking",
+      "svg",
+      "eta"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "dashboard"
+    ]
+  }
+}

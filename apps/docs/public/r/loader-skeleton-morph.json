@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loader-skeleton-morph",
+  "type": "registry:component",
+  "title": "Skeleton → Content Morph",
+  "description": "Skeleton placeholders that dissolve with a blur while the real content resolves in from a blur in the same box — no layout jump — with a shimmer sweeping across the bars while loading.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/loader-skeleton-morph.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/loader-skeleton-morph.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface LoaderSkeletonMorphProps {\n  /** When true, the real content replaces the skeleton. */\n  loaded: boolean;\n  children: ReactNode;\n  /** Rows of skeleton bars; numbers are widths in %. Default looks like a profile card. */\n  rows?: number[];\n  avatar?: boolean;\n  className?: string;\n}\n\n/**\n * Skeleton → content morph: shimmering placeholder bars dissolve with a blur while the real content\n * resolves in from a blur, row by row, in the same box — no layout jump. Under reduced motion the\n * shimmer stops and the swap is an instant cross-fade.\n */\nexport function LoaderSkeletonMorph({ loaded, children, rows = [70, 45, 90, 80], avatar = true, className }: LoaderSkeletonMorphProps) {\n  const reduced = useReducedMotion();\n  return (\n    <div className={cn(\"relative grid\", className)} aria-busy={!loaded}>\n      <AnimatePresence initial={false}>\n        {!loaded && (\n          <motion.div\n            key=\"sk\"\n            aria-hidden\n            className=\"col-start-1 row-start-1 space-y-3\"\n            exit={reduced ? { opacity: 0, transition: { duration: 0.15 } } : { opacity: 0, filter: \"blur(8px)\", scale: 0.98, transition: { duration: 0.45 } }}\n          >\n            {avatar && (\n              <div className=\"flex items-center gap-3\">\n                <Bar reduced={reduced} className=\"size-11 rounded-full\" />\n                <div className=\"flex-1 space-y-2\"><Bar reduced={reduced} className=\"h-3 w-1/2\" /><Bar reduced={reduced} className=\"h-2.5 w-1/3\" /></div>\n              </div>\n            )}\n            {rows.map((w, i) => <Bar key={i} reduced={reduced} className=\"h-3\" style={{ width: `${w}%` }} />)}\n          </motion.div>\n        )}\n      </AnimatePresence>\n      {loaded && (\n        <motion.div\n          className=\"col-start-1 row-start-1\"\n          initial={reduced ? { opacity: 0 } : { opacity: 0, filter: \"blur(10px)\", y: 6 }}\n          animate={{ opacity: 1, filter: \"blur(0px)\", y: 0 }}\n          transition={{ duration: reduced ? 0.15 : 0.6, delay: reduced ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}\n        >\n          {children}\n        </motion.div>\n      )}\n    </div>\n  );\n}\n\nfunction Bar({ className, style, reduced }: { className?: string; style?: React.CSSProperties; reduced: boolean }) {\n  return (\n    <div className={cn(\"relative overflow-hidden rounded-md bg-muted\", className)} style={style}>\n      {!reduced && (\n        <motion.span\n          className=\"absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-foreground/10 to-transparent\"\n          animate={{ x: [\"-100%\", \"100%\"] }}\n          transition={{ duration: 1.3, repeat: Infinity, ease: \"easeInOut\" }}\n        />\n      )}\n    </div>\n  );\n}\n\n/** Convenience hook for demos: flips to loaded after `ms`. */\nexport function useFakeLoad(ms = 1600, key: unknown = 0) {\n  const [loaded, setLoaded] = useState(false);\n  useEffect(() => {\n    setLoaded(false);\n    const t = setTimeout(() => setLoaded(true), ms);\n    return () => clearTimeout(t);\n  }, [ms, key]);\n  return loaded;\n}\n"
+    }
+  ],
+  "categories": [
+    "loaders"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "skeleton",
+      "loading",
+      "shimmer",
+      "blur",
+      "placeholder"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "social",
+      "blog"
+    ]
+  }
+}

@@ -1,0 +1,124 @@
+"use client";
+import { useState } from "react";
+import { motion, type Transition } from "motion/react";
+import { cn, useReducedMotion } from "@kinetik/core";
+
+type IconProps = { size?: number; className?: string; label?: string };
+const sp: Transition = { type: "spring", stiffness: 420, damping: 26 };
+
+function useT(): Transition {
+  return useReducedMotion() ? { duration: 0 } : sp;
+}
+
+function Shell({ on, onToggle, label, size = 28, className, children }: { on: boolean; onToggle: () => void; label: string; size?: number; className?: string; children: React.ReactNode }) {
+  return (
+    <button type="button" aria-pressed={on} aria-label={label} onClick={onToggle} className={cn("grid place-items-center rounded-xl p-2 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", className)}>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        {children}
+      </svg>
+    </button>
+  );
+}
+
+/** Hamburger ⇄ close. Top and bottom bars rotate into an X while the middle bar collapses. */
+export function IconMenu({ label = "Menu", ...p }: IconProps) {
+  const [on, set] = useState(false);
+  const t = useT();
+  return (
+    <Shell on={on} onToggle={() => set(!on)} label={label} {...p}>
+      <motion.line x1="4" x2="20" y1="6" y2="6" style={{ originX: "12px", originY: "6px" }} animate={on ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} transition={t} />
+      <motion.line x1="4" x2="20" y1="12" y2="12" animate={{ scaleX: on ? 0 : 1, opacity: on ? 0 : 1 }} transition={t} />
+      <motion.line x1="4" x2="20" y1="18" y2="18" style={{ originX: "12px", originY: "18px" }} animate={on ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} transition={t} />
+    </Shell>
+  );
+}
+
+/** Play ⇄ pause: the triangle's points morph into two bars. */
+export function IconPlay({ label = "Play", ...p }: IconProps) {
+  const [on, set] = useState(false);
+  const t = useT();
+  return (
+    <Shell on={on} onToggle={() => set(!on)} label={label} {...p}>
+      <motion.path fill="currentColor" animate={{ d: on ? "M7 5 L10 5 L10 19 L7 19 Z" : "M7 4 L13 8 L13 16 L7 20 Z" }} transition={t} />
+      <motion.path fill="currentColor" animate={{ d: on ? "M14 5 L17 5 L17 19 L14 19 Z" : "M13 8 L19 12 L19 12 L13 16 Z" }} transition={t} />
+    </Shell>
+  );
+}
+
+/** Heart that fills and pops, with six burst sparks. */
+export function IconHeart({ label = "Like", ...p }: IconProps) {
+  const [on, set] = useState(false);
+  const reduced = useReducedMotion();
+  return (
+    <Shell on={on} onToggle={() => set(!on)} label={label} className={cn(on && "text-rose-500", p.className)} size={p.size}>
+      <motion.path
+        d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"
+        animate={{ fill: on ? "currentColor" : "rgba(0,0,0,0)", scale: on && !reduced ? [1, 1.25, 1] : 1 }}
+        style={{ originX: "12px", originY: "13px" }}
+        transition={{ duration: 0.35 }}
+      />
+      {!reduced && Array.from({ length: 6 }, (_, i) => {
+        const a = (i / 6) * Math.PI * 2;
+        return (
+          <motion.circle key={`${i}-${on}`} r={1} fill="currentColor" stroke="none" cx={12} cy={12}
+            initial={{ opacity: 0 }}
+            animate={on ? { cx: 12 + Math.cos(a) * 11, cy: 12 + Math.sin(a) * 11, opacity: [0, 1, 0] } : { opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }} />
+        );
+      })}
+    </Shell>
+  );
+}
+
+/** Bell that rings (swings) and shows a badge dot. */
+export function IconBell({ label = "Notifications", ...p }: IconProps) {
+  const [on, set] = useState(false);
+  const reduced = useReducedMotion();
+  return (
+    <Shell on={on} onToggle={() => set(!on)} label={label} {...p}>
+      <motion.g style={{ originX: "12px", originY: "3px" }} animate={on && !reduced ? { rotate: [0, 18, -14, 10, -6, 0] } : { rotate: 0 }} transition={{ duration: 0.7 }}>
+        <path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7" />
+        <motion.path d="M10 20a2 2 0 0 0 4 0" animate={on && !reduced ? { x: [0, -2, 2, -1, 0] } : { x: 0 }} transition={{ duration: 0.7 }} />
+      </motion.g>
+      <motion.circle cx="18" cy="5" r="3" fill="#ef4444" stroke="none" animate={{ scale: on ? 1 : 0 }} style={{ originX: "18px", originY: "5px" }} transition={useT()} />
+    </Shell>
+  );
+}
+
+/** Copy → check: the two sheets fold away and a check draws in. */
+export function IconCopy({ label = "Copy", ...p }: IconProps) {
+  const [on, set] = useState(false);
+  const t = useT();
+  return (
+    <Shell on={on} onToggle={() => { set(true); setTimeout(() => set(false), 1400); }} label={label} className={cn(on && "text-emerald-500", p.className)} size={p.size}>
+      <motion.g animate={{ opacity: on ? 0 : 1, scale: on ? 0.6 : 1 }} style={{ originX: "12px", originY: "12px" }} transition={t}>
+        <rect x="9" y="9" width="11" height="11" rx="2" />
+        <path d="M5 15V6a2 2 0 0 1 2-2h8" />
+      </motion.g>
+      <motion.path d="M5 12.5l4.5 4.5L19 7" initial={false} animate={{ pathLength: on ? 1 : 0, opacity: on ? 1 : 0 }} transition={{ duration: 0.35, delay: on ? 0.1 : 0 }} />
+    </Shell>
+  );
+}
+
+/** Sun ⇄ moon: rays retract and a mask circle slides in to carve the crescent. */
+export function IconTheme({ label = "Toggle theme", ...p }: IconProps) {
+  const [on, set] = useState(false);
+  const t = useT();
+  return (
+    <Shell on={on} onToggle={() => set(!on)} label={label} {...p}>
+      <mask id={`kn-moon-${label.replace(/\W/g, "")}`}>
+        <rect width="24" height="24" fill="#fff" stroke="none" />
+        <motion.circle r="6" fill="#000" stroke="none" animate={{ cx: on ? 17 : 30, cy: on ? 7 : -6 }} transition={t} />
+      </mask>
+      <motion.circle cx="12" cy="12" fill="currentColor" mask={`url(#kn-moon-${label.replace(/\W/g, "")})`} animate={{ r: on ? 8 : 4.5 }} transition={t} />
+      <motion.g animate={{ rotate: on ? 90 : 0, opacity: on ? 0 : 1, scale: on ? 0.5 : 1 }} style={{ originX: "12px", originY: "12px" }} transition={t}>
+        {Array.from({ length: 8 }, (_, i) => {
+          const a = (i / 8) * Math.PI * 2;
+          return <line key={i} x1={12 + Math.cos(a) * 7.5} y1={12 + Math.sin(a) * 7.5} x2={12 + Math.cos(a) * 9.5} y2={12 + Math.sin(a) * 9.5} />;
+        })}
+      </motion.g>
+    </Shell>
+  );
+}
+
+export const SvgIconSet = { Menu: IconMenu, Play: IconPlay, Heart: IconHeart, Bell: IconBell, Copy: IconCopy, Theme: IconTheme };

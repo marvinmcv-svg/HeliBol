@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "nav-drawer-3d",
+  "type": "registry:component",
+  "title": "Menu — 3D Push Drawer",
+  "description": "Mobile menu that pushes the page back in 3D: the page rotates on Y, slides right and scales down with rounded corners and a deep shadow, revealing a dark menu whose links slide in with a stagger.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/nav-drawer-3d.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/nav-drawer-3d.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState, type ReactNode } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface NavDrawer3DProps {\n  /** The page content that gets pushed back. */\n  children: ReactNode;\n  links: { label: string; href: string; icon?: ReactNode }[];\n  footer?: ReactNode;\n  defaultOpen?: boolean;\n  className?: string;\n}\n\n/**\n * Mobile menu that pushes the page back in 3D: the page rotates on Y, slides right and scales down\n * with rounded corners and a shadow, revealing the menu underneath, whose links slide in with a\n * stagger. Tap the page (or Esc) to bring it back. The page is inert while the menu is open.\n */\nexport function NavDrawer3D({ children, links, footer, defaultOpen = false, className }: NavDrawer3DProps) {\n  const reduced = useReducedMotion();\n  const [open, setOpen] = useState(defaultOpen);\n  const toggle = useRef<HTMLButtonElement>(null);\n  useEffect(() => {\n    if (!open) return;\n    const k = (e: KeyboardEvent) => e.key === \"Escape\" && (setOpen(false), toggle.current?.focus());\n    document.addEventListener(\"keydown\", k);\n    return () => document.removeEventListener(\"keydown\", k);\n  }, [open]);\n  const t = reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 220, damping: 28 };\n\n  return (\n    <div className={cn(\"relative h-full overflow-hidden bg-zinc-950 text-white\", className)} style={{ perspective: 1200 }}>\n      <nav aria-label=\"Menu\" aria-hidden={!open} className=\"absolute inset-y-0 left-0 flex w-[62%] flex-col justify-between p-6 pt-16\" inert={!open}>\n        <ul className=\"space-y-1\">\n          {links.map((l, i) => (\n            <motion.li key={l.href} initial={false} animate={open ? { x: 0, opacity: 1 } : { x: reduced ? 0 : -24, opacity: 0 }} transition={{ ...t, delay: open && !reduced ? 0.12 + i * 0.05 : 0 }}>\n              <a href={l.href} onClick={() => setOpen(false)} className=\"flex items-center gap-3 rounded-xl px-2 py-2.5 text-lg font-medium text-white/85 hover:bg-white/5 hover:text-white\">\n                {l.icon && <span className=\"text-white/50\">{l.icon}</span>}\n                {l.label}\n              </a>\n            </motion.li>\n          ))}\n        </ul>\n        {footer && <motion.div initial={false} animate={{ opacity: open ? 1 : 0 }} transition={{ delay: open ? 0.35 : 0 }} className=\"text-xs text-white/50\">{footer}</motion.div>}\n      </nav>\n      <motion.div\n        className=\"relative h-full origin-left overflow-hidden bg-background text-foreground\"\n        initial={false}\n        animate={open ? { x: \"58%\", rotateY: reduced ? 0 : -12, scale: reduced ? 1 : 0.82, borderRadius: 28, boxShadow: \"-30px 0 60px rgb(0 0 0 / .5)\" } : { x: 0, rotateY: 0, scale: 1, borderRadius: 0, boxShadow: \"0 0 0 rgb(0 0 0 / 0)\" }}\n        transition={t}\n        onClick={() => open && setOpen(false)}\n      >\n        <div inert={open} className=\"h-full\">\n          <button ref={toggle} type=\"button\" onClick={(e) => (e.stopPropagation(), setOpen(true))} aria-expanded={open} aria-label=\"Open menu\" className=\"absolute left-4 top-4 z-10 grid size-10 place-items-center rounded-full bg-foreground text-background\">\n            <span aria-hidden className=\"space-y-1\"><span className=\"block h-0.5 w-4 bg-current\" /><span className=\"block h-0.5 w-4 bg-current\" /></span>\n          </button>\n          {children}\n        </div>\n      </motion.div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "menu",
+      "drawer",
+      "3d",
+      "mobile",
+      "navigation",
+      "push"
+    ],
+    "pageTypes": [
+      "landing",
+      "ecommerce",
+      "media"
+    ]
+  }
+}

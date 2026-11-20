@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-slide-confirm",
+  "type": "registry:component",
+  "title": "Button — Slide to Confirm",
+  "description": "Slide-to-confirm control for risky actions: drag the knob along the track, the fill follows and the label shimmers and fades; past 85% it completes with a check, otherwise it springs back.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/button-slide-confirm.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/button-slide-confirm.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { animate, motion, useMotionValue, useTransform } from \"motion/react\";\nimport { ArrowRight, Check } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ButtonSlideConfirmProps {\n  label?: string;\n  doneLabel?: string;\n  onConfirm?: () => void;\n  /** Track width in px. */\n  width?: number;\n  className?: string;\n}\n\nconst KNOB = 52;\n\n/**\n * Slide to confirm (iOS \"slide to power off\"): drag the knob across — the label fades and a\n * shimmer sweeps the text, the track fills behind the knob, releasing short springs back, reaching\n * the end locks into a green success state. Keyboard: Enter/Space or arrow keys complete it.\n */\nexport function ButtonSlideConfirm({ label = \"Slide to pay\", doneLabel = \"Paid\", onConfirm, width = 300, className }: ButtonSlideConfirmProps) {\n  const reduced = useReducedMotion();\n  const [done, setDone] = useState(false);\n  const max = width - KNOB - 8;\n  const x = useMotionValue(0);\n  const fill = useTransform(x, (v) => v + KNOB);\n  const textOpacity = useTransform(x, [0, max * 0.6], [1, 0]);\n  const knob = useRef<HTMLDivElement>(null);\n\n  const complete = () => {\n    if (done) return;\n    setDone(true);\n    animate(x, max, reduced ? { duration: 0 } : { type: \"spring\", stiffness: 500, damping: 35 });\n    onConfirm?.();\n  };\n\n  return (\n    <div\n      className={cn(\"relative h-[60px] select-none overflow-hidden rounded-full p-1 transition-colors duration-500\", done ? \"bg-emerald-500\" : \"bg-zinc-900\", className)}\n      style={{ width }}\n    >\n      <motion.div aria-hidden className={cn(\"absolute inset-y-1 left-1 rounded-full\", done ? \"bg-emerald-500\" : \"bg-zinc-700/60\")} style={{ width: fill }} />\n      <motion.span aria-hidden style={{ opacity: done ? 0 : textOpacity }} className=\"kn-slide-shimmer pointer-events-none absolute inset-0 grid place-items-center pl-10 text-sm font-semibold text-white/70\">\n        <span className=\"bg-[linear-gradient(110deg,rgb(255_255_255/.45)_35%,#fff_50%,rgb(255_255_255/.45)_65%)] bg-[length:200%_100%] bg-clip-text text-transparent motion-safe:animate-[kn-slide-sheen_2.4s_linear_infinite]\">{label}</span>\n      </motion.span>\n      {done && <motion.span initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className=\"absolute inset-0 grid place-items-center pr-10 text-sm font-semibold text-white\">{doneLabel}</motion.span>}\n      <style href=\"kn-button-slide-confirm\" precedence=\"kinetik\">{`@keyframes kn-slide-sheen { from { background-position: 200% 0 } to { background-position: -200% 0 } } [data-reduce-motion] .kn-slide-shimmer span { animation: none !important; }`}</style>\n      <motion.div\n        ref={knob}\n        role=\"slider\"\n        tabIndex={done ? -1 : 0}\n        aria-label={label}\n        aria-valuemin={0}\n        aria-valuemax={100}\n        aria-valuenow={done ? 100 : 0}\n        aria-valuetext={done ? doneLabel : \"Not confirmed\"}\n        drag={done ? false : \"x\"}\n        dragConstraints={{ left: 0, right: max }}\n        dragElastic={0.04}\n        dragMomentum={false}\n        onDragEnd={() => (x.get() > max * 0.85 ? complete() : animate(x, 0, reduced ? { duration: 0 } : { type: \"spring\", stiffness: 500, damping: 30 }))}\n        onKeyDown={(e) => [\"Enter\", \" \", \"ArrowRight\", \"End\"].includes(e.key) && (e.preventDefault(), complete())}\n        style={{ x, width: KNOB, height: KNOB }}\n        whileTap={done || reduced ? undefined : { scale: 0.94 }}\n        className=\"relative z-10 grid cursor-grab place-items-center rounded-full bg-white text-zinc-900 shadow-lg outline-none focus-visible:ring-2 focus-visible:ring-ring active:cursor-grabbing\"\n      >\n        {done ? <Check className=\"size-5 text-emerald-600\" strokeWidth={3} /> : <ArrowRight className=\"size-5\" />}\n      </motion.div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "buttons"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "button",
+      "slide",
+      "confirm",
+      "drag",
+      "payment",
+      "unlock"
+    ],
+    "pageTypes": [
+      "ecommerce",
+      "settings",
+      "dashboard"
+    ]
+  }
+}

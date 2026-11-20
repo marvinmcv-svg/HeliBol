@@ -1,0 +1,1 @@
+Cross-fade the hero with AnimatePresence and a long linear scale from 1.08 to 1; animate each thumb's flexGrow (4 when active); a scaleX progress bar over interval seconds; a timeout advances the index.

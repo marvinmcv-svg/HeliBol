@@ -1,0 +1,1 @@
+Track with a draggable knob constrained to the track; useTransform the knob x into fill width and label opacity; on drag end if x > 85% animate to end and call onConfirm, else spring back; add keyboard handlers.

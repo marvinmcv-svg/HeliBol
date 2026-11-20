@@ -1,0 +1,1 @@
+On click store the pointer position, animate an SVG circle's radius to cover the farthest corner with a displacement filter for ragged edges, swap the page, move the origin to the mirrored point and shrink the radius back to 0.

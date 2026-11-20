@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "share-sheet",
+  "type": "registry:component",
+  "title": "Share Sheet",
+  "description": "A share button that morphs into a full share sheet (shared layoutId): recent people and targets pop in with a stagger, copy-link confirms inline, and the native share sheet is used when the browser has one.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/share-sheet.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/share-sheet.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useRef, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check, Copy, Share2 } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ShareTarget {\n  label: string;\n  icon: ReactNode;\n  color: string;\n  href?: string;\n}\n\nexport interface ShareSheetProps {\n  url: string;\n  title?: string;\n  targets: ShareTarget[];\n  /** Recent people shown as avatars. */\n  people?: { name: string; avatar: string }[];\n  /** Start open (for previews). */\n  defaultOpen?: boolean;\n  className?: string;\n}\n\n/**\n * Share button that morphs into a share sheet (shared layout): the pill grows into a card,\n * recent people and app targets pop in on a staggered spring, the link row copies with a check\n * morph, and the native share sheet is used when available. Esc and outside click close.\n */\nexport function ShareSheet({ url, title = \"Share\", targets, people = [], defaultOpen = false, className }: ShareSheetProps) {\n  const reduced = useReducedMotion();\n  const id = useId();\n  const [open, setOpen] = useState(defaultOpen);\n  const [copied, setCopied] = useState(false);\n  const ref = useRef<HTMLDivElement>(null);\n  const t = reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 380, damping: 32 };\n\n  useEffect(() => {\n    if (!open) return;\n    const k = (e: KeyboardEvent) => e.key === \"Escape\" && setOpen(false);\n    const d = (e: PointerEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);\n    document.addEventListener(\"keydown\", k);\n    document.addEventListener(\"pointerdown\", d);\n    return () => { document.removeEventListener(\"keydown\", k); document.removeEventListener(\"pointerdown\", d); };\n  }, [open]);\n\n  const copy = async () => {\n    try { await navigator.clipboard.writeText(url); } catch {}\n    setCopied(true);\n    setTimeout(() => setCopied(false), 1500);\n  };\n  const pop = (i: number) => ({ initial: reduced ? { opacity: 0 } : { opacity: 0, scale: 0.4, y: 10 }, animate: { opacity: 1, scale: 1, y: 0 }, transition: reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 500, damping: 22, delay: 0.08 + i * 0.035 } });\n\n  return (\n    <div ref={ref} className={cn(\"relative inline-block\", className)}>\n      <AnimatePresence initial={false} mode=\"popLayout\">\n        {!open ? (\n          <motion.button key=\"btn\" layoutId={`${id}-sheet`} transition={t} type=\"button\" onClick={() => setOpen(true)} aria-expanded={false} style={{ borderRadius: 999 }} className=\"inline-flex h-11 items-center gap-2 bg-foreground px-5 text-sm font-semibold text-background\">\n            <Share2 className=\"size-4\" /> {title}\n          </motion.button>\n        ) : (\n          <motion.div key=\"sheet\" layoutId={`${id}-sheet`} transition={t} role=\"dialog\" aria-label={title} style={{ borderRadius: 24 }} className=\"w-80 overflow-hidden bg-popover p-4 text-popover-foreground shadow-2xl ring-1 ring-border\">\n            <div className=\"flex items-center justify-between\">\n              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className=\"text-sm font-semibold\">{title}</motion.p>\n              <button type=\"button\" onClick={() => setOpen(false)} className=\"text-xs text-muted-foreground hover:text-foreground\">Done</button>\n            </div>\n            {people.length > 0 && (\n              <ul className=\"mt-4 flex gap-3\">\n                {people.map((p, i) => (\n                  <motion.li key={p.name} {...pop(i)} className=\"w-12 text-center\">\n                    <img src={p.avatar} alt=\"\" className=\"mx-auto size-12 rounded-full object-cover\" />\n                    <span className=\"mt-1 block truncate text-[10px] text-muted-foreground\">{p.name}</span>\n                  </motion.li>\n                ))}\n              </ul>\n            )}\n            <ul className=\"mt-4 grid grid-cols-4 gap-3\">\n              {targets.map((tg, i) => (\n                <motion.li key={tg.label} {...pop(people.length + i)}>\n                  <a href={tg.href ?? \"#\"} className=\"group flex flex-col items-center gap-1 text-[10px] text-muted-foreground\">\n                    <span className=\"grid size-12 place-items-center rounded-2xl text-white transition-transform group-hover:-translate-y-0.5\" style={{ background: tg.color }}>{tg.icon}</span>\n                    {tg.label}\n                  </a>\n                </motion.li>\n              ))}\n            </ul>\n            <motion.div {...pop(people.length + targets.length)} className=\"mt-4 flex items-center gap-2 rounded-xl bg-muted px-3 py-2\">\n              <span className=\"min-w-0 flex-1 truncate text-xs text-muted-foreground\">{url}</span>\n              <button type=\"button\" onClick={copy} aria-label={copied ? \"Copied\" : \"Copy link\"} className=\"grid size-7 place-items-center rounded-lg bg-background\">\n                <AnimatePresence mode=\"popLayout\" initial={false}>\n                  <motion.span key={String(copied)} initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}>\n                    {copied ? <Check className=\"size-3.5 text-emerald-500\" /> : <Copy className=\"size-3.5\" />}\n                  </motion.span>\n                </AnimatePresence>\n              </button>\n            </motion.div>\n            {typeof navigator !== \"undefined\" && \"share\" in navigator && (\n              <button type=\"button\" onClick={() => navigator.share({ url, title }).catch(() => {})} className=\"mt-2 w-full text-center text-xs text-muted-foreground underline underline-offset-4\">More options…</button>\n            )}\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "share",
+      "sheet",
+      "morph",
+      "social",
+      "modal"
+    ],
+    "pageTypes": [
+      "social",
+      "media",
+      "ecommerce"
+    ]
+  }
+}

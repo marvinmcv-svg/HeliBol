@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-live-stream",
+  "type": "registry:component",
+  "title": "Chart — Live Stream",
+  "description": "Streaming line chart that scrolls smoothly between ticks: new points arrive every interval while the path translates continuously, the y-range eases to fit, and a pulsing head dot shows the latest value.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/chart-live-stream.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/chart-live-stream.tsx",
+      "content": "\"use client\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { cn, useInView, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ChartLiveStreamProps {\n  /** Provide real values; called every tick. Defaults to a random walk. */\n  next?: (prev: number) => number;\n  /** Visible points. */\n  points?: number;\n  /** ms between samples. */\n  interval?: number;\n  label?: string;\n  unit?: string;\n  color?: string;\n  className?: string;\n}\n\nconst W = 600, H = 180;\nconst randomWalk = (p: number) => Math.max(5, Math.min(95, p + (Math.random() - 0.48) * 12));\n\n/**\n * Live streaming chart: new samples slide in from the right while the window scrolls smoothly\n * between ticks (translate interpolated on rAF, not jumping), a pulsing head dot marks the latest\n * value, and the y-range eases to fit. Pauses when off-screen; reduced motion updates per tick.\n */\nexport function ChartLiveStream({ next = randomWalk, points = 40, interval = 700, label = \"Requests / s\", unit = \"\", color = \"#38bdf8\", className }: ChartLiveStreamProps) {\n  const reduced = useReducedMotion();\n  const box = useRef<HTMLDivElement>(null);\n  const inView = useInView(box, { once: false, amount: 0.1 });\n  const [data, setData] = useState<number[]>(() => {\n    const out = [50];\n    for (let i = 1; i < points + 1; i++) out.push(next(out[i - 1]));\n    return out;\n  });\n  const path = useRef<SVGGElement>(null);\n  const range = useRef({ lo: 0, hi: 100 });\n  const gid = `kn-ls-${useId().replace(/:/g, \"\")}`;\n\n  useEffect(() => {\n    if (!inView) return;\n    const id = setInterval(() => setData((d) => [...d.slice(1), next(d[d.length - 1])]), interval);\n    return () => clearInterval(id);\n  }, [inView, interval, next]);\n\n  // smooth scroll between ticks: shift the group left by one step over `interval`\n  useEffect(() => {\n    const g = path.current;\n    if (!g || reduced) return;\n    const t0 = performance.now();\n    let raf = 0;\n    const step = W / (points - 1);\n    const tick = (now: number) => {\n      const p = Math.min(1, (now - t0) / interval);\n      g.setAttribute(\"transform\", `translate(${step * (1 - p)} 0)`);\n      if (p < 1) raf = requestAnimationFrame(tick);\n    };\n    raf = requestAnimationFrame(tick);\n    return () => cancelAnimationFrame(raf);\n  }, [data, interval, points, reduced]);\n\n  const lo = Math.min(...data), hi = Math.max(...data);\n  range.current.lo += (lo - 5 - range.current.lo) * 0.3;\n  range.current.hi += (hi + 5 - range.current.hi) * 0.3;\n  const { lo: rLo, hi: rHi } = range.current;\n  const step = W / (points - 1);\n  const pts = data.map((v, i) => [(i - 1) * step, H - ((v - rLo) / (rHi - rLo || 1)) * H] as const);\n  const line = pts.map(([x, y], i) => `${i ? \"L\" : \"M\"}${x.toFixed(1)},${y.toFixed(1)}`).join(\" \");\n  const last = pts[pts.length - 1];\n  const cur = data[data.length - 1];\n\n  return (\n    <div ref={box} className={cn(\"w-full rounded-3xl border border-border bg-card p-5\", className)}>\n      <div className=\"flex items-baseline justify-between\">\n        <p className=\"flex items-center gap-2 text-sm text-muted-foreground\">\n          <span className=\"relative flex size-2\"><span className=\"absolute inline-flex size-full animate-ping rounded-full opacity-60 motion-reduce:animate-none\" style={{ background: color }} /><span className=\"relative inline-flex size-2 rounded-full\" style={{ background: color }} /></span>\n          {label}\n        </p>\n        <p className=\"text-2xl font-semibold tabular-nums\" aria-live=\"off\">{cur.toFixed(1)}{unit}</p>\n      </div>\n      <svg viewBox={`0 0 ${W} ${H}`} className=\"mt-3 w-full overflow-hidden\" role=\"img\" aria-label={`${label}, latest ${cur.toFixed(1)}${unit}`}>\n        <defs>\n          <linearGradient id={gid} x1=\"0\" x2=\"0\" y1=\"0\" y2=\"1\"><stop offset=\"0\" stopColor={color} stopOpacity=\".3\" /><stop offset=\"1\" stopColor={color} stopOpacity=\"0\" /></linearGradient>\n        </defs>\n        {[0.25, 0.5, 0.75].map((g) => <line key={g} x1=\"0\" x2={W} y1={H * g} y2={H * g} stroke=\"currentColor\" strokeOpacity=\".08\" />)}\n        <g ref={path}>\n          <path d={`${line} L${last[0]},${H} L${pts[0][0]},${H} Z`} fill={`url(#${gid})`} />\n          <path d={line} fill=\"none\" stroke={color} strokeWidth=\"2.5\" strokeLinejoin=\"round\" />\n          <circle cx={last[0]} cy={last[1]} r=\"5\" fill={color} />\n          <circle cx={last[0]} cy={last[1]} r=\"10\" fill={color} opacity=\".25\" />\n        </g>\n      </svg>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "premium",
+      "chart",
+      "realtime",
+      "streaming",
+      "line",
+      "sparkline",
+      "monitoring"
+    ],
+    "pageTypes": [
+      "dashboard"
+    ]
+  }
+}

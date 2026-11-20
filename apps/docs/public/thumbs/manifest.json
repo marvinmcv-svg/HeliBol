@@ -3811,5 +3811,185 @@
     },
     "captured_at": "2026-11-20T16:46:23.910Z",
     "provider": "cdp-page-capture"
+  },
+  "ai-plan-graph": {
+    "png_sha256": "6f292d73e5a2406d33631a04381d8e1ea37c54857451ae203a99a5d588e19f6e",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:00:48.841Z",
+    "provider": "cdp-page-capture"
+  },
+  "ai-voice-call": {
+    "png_sha256": "c8dc80a867965f684d9d5a917c7b0624ddab67b7811e3e26dc4fc1a4f12e5520",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:00:48.947Z",
+    "provider": "cdp-page-capture"
+  },
+  "svg-icon-set": {
+    "png_sha256": "fe56e4c2c6fec6b4ad25be92df520ba6084e38f4347fae3d296fd5908309dc10",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:00:49.375Z",
+    "provider": "cdp-page-capture"
+  },
+  "button-3d-key": {
+    "png_sha256": "6c0d08dd5be4c586114e0cc7a67d2df4747d40cbb1b3844d62336e2639fd301b",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:00:52.681Z",
+    "provider": "cdp-page-capture"
+  },
+  "button-slide-confirm": {
+    "png_sha256": "e5475b5568325cdccc77cee618d3f3043cdccdfe4e094c3d5d5d9ec5391560d5",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:00:52.774Z",
+    "provider": "cdp-page-capture"
+  },
+  "chart-bar-race": {
+    "png_sha256": "62a0aa3ffcf575c2947290b97cfb22bd0be03c90f0ca3b72b6f862bebf3ceaa7",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:06:36.667Z",
+    "provider": "cdp-page-capture"
+  },
+  "cursor-flashlight": {
+    "png_sha256": "ade30aabbc4d1b2089deac29c3f7bebffa1cb81980261b17eaee09592ca38582",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:12:52.585Z",
+    "provider": "cdp-page-capture"
+  },
+  "cursor-snap-outline": {
+    "png_sha256": "ce100cb25a8ca6fd3f948b358dab7a16fdce397109d32bc3ecb12c057ce475e6",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:00:56.400Z",
+    "provider": "cdp-page-capture"
+  },
+  "chart-live-stream": {
+    "png_sha256": "a0a42ea0f9a02729f222b1fb474977ff8d31f723c46c462186ce993f17a37a4e",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:00:56.505Z",
+    "provider": "cdp-page-capture"
+  },
+  "media-polaroid-stack": {
+    "png_sha256": "ad523687e03700b366932673dc6326932eadd1dde222252868251793d3c7dcca",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:01:00.019Z",
+    "provider": "cdp-page-capture"
+  },
+  "loader-orbit-dots": {
+    "png_sha256": "8c14e22560cfbd7983bd3f4619192275d5b2b6daf36be344b996dcc87ee3cdee",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:01:00.116Z",
+    "provider": "cdp-page-capture"
+  },
+  "nav-drawer-3d": {
+    "png_sha256": "2b952b7980371f2d50daf57fd5dddde71f3095953b239f8b55a609a3eb9011c8",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:06:36.770Z",
+    "provider": "cdp-page-capture"
+  },
+  "loader-skeleton-morph": {
+    "png_sha256": "6bcc8a7e69cd63b01188cae8cc42f559c0759e6f32af831c3306f5918cafe179",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:01:03.746Z",
+    "provider": "cdp-page-capture"
+  },
+  "share-sheet": {
+    "png_sha256": "8f7b9ee92f4e7e849a9888b092191f26bd6ff89bd75785b445bcdbe69f3ad992",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:01:03.861Z",
+    "provider": "cdp-page-capture"
+  },
+  "svg-route-map": {
+    "png_sha256": "2c3b57f9aae4d46846cefaf3c92784eb394a32dd17bcd0aeaf203364430d9dfd",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:01:03.964Z",
+    "provider": "cdp-page-capture"
+  },
+  "toast-island": {
+    "png_sha256": "d24e41020954f6d186cab2c968402c6cd5a71011994b3160028aed3ff22fda47",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:01:07.441Z",
+    "provider": "cdp-page-capture"
+  },
+  "nav-stretch-tabs": {
+    "png_sha256": "e0869f3a4290e4b3eadb28d78c9370dc940e881a86a97eb07d3a5499f12e37f6",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:01:07.540Z",
+    "provider": "cdp-page-capture"
+  },
+  "media-thumb-reel": {
+    "png_sha256": "c4a35db45a652cf65a0842fd7a479ca59036d05288a42bd59a57c464c7209f7f",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:01:07.678Z",
+    "provider": "cdp-page-capture"
+  },
+  "transition-stairs": {
+    "png_sha256": "f716b0e711fd830b4c41a37029d24c7407295b28377c1ced44a24a6f21fa0fc2",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:01:11.236Z",
+    "provider": "cdp-page-capture"
+  },
+  "transition-ink-blot": {
+    "png_sha256": "cc0d4e0a216e7624fdf3905a008c0504d398a8e8197e81640a058df53fac434c",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T18:06:39.750Z",
+    "provider": "cdp-page-capture"
   }
 }

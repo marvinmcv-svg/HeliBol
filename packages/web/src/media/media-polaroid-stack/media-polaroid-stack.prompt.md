@@ -1,0 +1,1 @@
+Keep an order array; render the first four with depth-based scale/rotate; the top card drags on x with rotate derived from x; on a throw past a threshold rotate the order and exit the card off-screen.

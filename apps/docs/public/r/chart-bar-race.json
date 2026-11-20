@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-bar-race",
+  "type": "registry:component",
+  "title": "Chart — Bar Race",
+  "description": "Animated bar-chart race: bars re-rank with layout springs as values change period by period, numbers tween, and the big period label rolls. Play/pause and a scrubber let you jump to any frame.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/chart-bar-race.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/chart-bar-race.tsx",
+      "content": "\"use client\";\nimport { useEffect, useMemo, useState } from \"react\";\nimport { AnimatePresence, LayoutGroup, motion } from \"motion/react\";\nimport { Pause, Play } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ChartBarRaceProps {\n  /** Frame labels (e.g. years). */\n  frames: string[];\n  /** One series per entity: values per frame. */\n  series: { name: string; color: string; values: number[] }[];\n  /** Bars shown at once. */\n  top?: number;\n  /** ms per frame. */\n  speed?: number;\n  title?: string;\n  className?: string;\n}\n\n/**\n * Bar chart race: each frame re-sorts the entities and the bars glide to their new rank (shared\n * layout), widths and values tween, the big period label rolls, and newcomers slide in from below\n * the cutoff. Play/pause and a scrubber; reduced motion steps without gliding.\n */\nexport function ChartBarRace({ frames, series, top = 6, speed = 1400, title = \"Ranking\", className }: ChartBarRaceProps) {\n  const reduced = useReducedMotion();\n  const [f, setF] = useState(0);\n  const [playing, setPlaying] = useState(!reduced);\n\n  useEffect(() => {\n    if (!playing) return;\n    const id = setTimeout(() => setF((n) => (n + 1) % frames.length), speed);\n    return () => clearTimeout(id);\n  }, [f, playing, speed, frames.length]);\n\n  const rows = useMemo(() => series.map((s) => ({ ...s, v: s.values[f] ?? 0 })).sort((a, b) => b.v - a.v).slice(0, top), [series, f, top]);\n  const max = rows[0]?.v || 1;\n  const t = reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 140, damping: 22 };\n\n  return (\n    <div className={cn(\"w-full rounded-3xl border border-border bg-card p-5\", className)}>\n      <div className=\"flex items-start justify-between\">\n        <p className=\"text-sm font-medium\">{title}</p>\n        <div className=\"relative h-10 overflow-hidden text-right\" aria-live=\"polite\">\n          <AnimatePresence mode=\"popLayout\" initial={false}>\n            <motion.p key={f} initial={reduced ? false : { y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={reduced ? undefined : { y: -30, opacity: 0 }} className=\"text-3xl font-bold tabular-nums tracking-tight text-muted-foreground\">{frames[f]}</motion.p>\n          </AnimatePresence>\n        </div>\n      </div>\n      <LayoutGroup>\n        <ol className=\"mt-3 space-y-1.5\" aria-label={`${title}, ${frames[f]}`}>\n          <AnimatePresence initial={false}>\n            {rows.map((r, i) => (\n              <motion.li key={r.name} layout={!reduced} transition={t} initial={reduced ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 24 }} className=\"flex items-center gap-2 text-xs\">\n                <span className=\"w-4 text-right tabular-nums text-muted-foreground\">{i + 1}</span>\n                <div className=\"relative h-7 flex-1\">\n                  <motion.div className=\"flex h-full items-center rounded-lg px-2 font-medium text-white\" style={{ background: r.color }} animate={{ width: `${Math.max(8, (r.v / max) * 100)}%` }} transition={t}>\n                    <span className=\"truncate\">{r.name}</span>\n                  </motion.div>\n                </div>\n                <span className=\"w-12 text-right font-semibold tabular-nums\">{Math.round(r.v).toLocaleString()}</span>\n              </motion.li>\n            ))}\n          </AnimatePresence>\n        </ol>\n      </LayoutGroup>\n      <div className=\"mt-4 flex items-center gap-3\">\n        <button type=\"button\" onClick={() => setPlaying((p) => !p)} aria-label={playing ? \"Pause\" : \"Play\"} className=\"grid size-8 place-items-center rounded-full bg-foreground text-background\">\n          {playing ? <Pause className=\"size-3.5 fill-current\" /> : <Play className=\"ml-0.5 size-3.5 fill-current\" />}\n        </button>\n        <input type=\"range\" min={0} max={frames.length - 1} value={f} onChange={(e) => (setPlaying(false), setF(Number(e.target.value)))} aria-label=\"Period\" className=\"flex-1\" />\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "chart",
+      "bar-race",
+      "ranking",
+      "data-viz",
+      "timeline"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "landing",
+      "blog"
+    ]
+  }
+}

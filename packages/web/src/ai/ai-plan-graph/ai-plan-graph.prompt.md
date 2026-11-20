@@ -1,0 +1,1 @@
+Render the goal, then step nodes connected by a vertical line; a timer advances task index; running tasks show a spinner, done tasks a check; when a step completes collapse its tasks into a chip with layout; loop with a Replay button.

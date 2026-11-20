@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "media-thumb-reel",
+  "type": "registry:component",
+  "title": "Thumbnail Reel",
+  "description": "Hero image with a filmstrip of thumbnails: the active thumb widens into a pill with a filling progress bar while the hero slowly zooms; when it fills, the next slide cross-fades in. Hover pauses.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/media-thumb-reel.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/media-thumb-reel.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ReelItem { src: string; title: string; meta?: string; alt?: string }\nexport interface MediaThumbReelProps {\n  items: ReelItem[];\n  /** Seconds per slide when autoplaying. */\n  interval?: number;\n  className?: string;\n}\n\n/**\n * Hero image with a filmstrip of thumbnails. The active thumb widens into a pill with a progress bar\n * that fills while the hero slowly zooms (Ken Burns); when it fills, the next slide cross-fades in.\n * Hover pauses; clicking a thumb jumps. Reduced motion: no zoom, no autoplay.\n */\nexport function MediaThumbReel({ items, interval = 5, className }: MediaThumbReelProps) {\n  const reduced = useReducedMotion();\n  const [i, setI] = useState(0);\n  const [paused, setPaused] = useState(false);\n  const playing = !reduced && !paused;\n  useEffect(() => {\n    if (!playing) return;\n    const t = setTimeout(() => setI((x) => (x + 1) % items.length), interval * 1000);\n    return () => clearTimeout(t);\n  }, [i, playing, interval, items.length]);\n  const it = items[i]!;\n\n  return (\n    <div className={cn(\"relative overflow-hidden rounded-3xl bg-black text-white\", className)} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>\n      <div className=\"relative aspect-[16/10]\">\n        <AnimatePresence initial={false}>\n          <motion.img\n            key={i}\n            src={it.src}\n            alt={it.alt ?? \"\"}\n            className=\"absolute inset-0 h-full w-full object-cover\"\n            initial={{ opacity: 0, scale: reduced ? 1 : 1.08 }}\n            animate={{ opacity: 1, scale: reduced ? 1 : 1.0, transition: { opacity: { duration: 0.8 }, scale: { duration: interval + 1, ease: \"linear\" } } }}\n            exit={{ opacity: 0, transition: { duration: 0.8 } }}\n          />\n        </AnimatePresence>\n        <div className=\"absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent\" />\n        <div className=\"absolute bottom-24 left-6 right-6\" aria-live=\"polite\">\n          <AnimatePresence mode=\"wait\" initial={false}>\n            <motion.div key={i} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }}>\n              {it.meta && <p className=\"text-[11px] uppercase tracking-[0.25em] text-white/60\">{it.meta}</p>}\n              <h3 className=\"text-3xl font-semibold tracking-tight\">{it.title}</h3>\n            </motion.div>\n          </AnimatePresence>\n        </div>\n        <div role=\"tablist\" aria-label=\"Slides\" className=\"absolute inset-x-6 bottom-5 flex h-14 gap-2\">\n          {items.map((t, n) => {\n            const on = n === i;\n            return (\n              <motion.button\n                key={t.src + n}\n                role=\"tab\"\n                type=\"button\"\n                aria-selected={on}\n                aria-label={t.title}\n                onClick={() => setI(n)}\n                className=\"relative h-full overflow-hidden rounded-xl ring-1 ring-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white\"\n                animate={{ flexGrow: on ? 4 : 1, opacity: on ? 1 : 0.6 }}\n                style={{ flexBasis: 0 }}\n                transition={{ type: \"spring\", stiffness: 260, damping: 30 }}\n              >\n                <img src={t.src} alt=\"\" className=\"absolute inset-0 h-full w-full object-cover\" />\n                {on && (\n                  <span className=\"absolute inset-x-2 bottom-1.5 h-1 overflow-hidden rounded-full bg-white/30\">\n                    <motion.span\n                      key={`${i}-${playing}`}\n                      className=\"block h-full origin-left bg-white\"\n                      initial={{ scaleX: 0 }}\n                      animate={{ scaleX: playing ? 1 : 0 }}\n                      transition={{ duration: playing ? interval : 0, ease: \"linear\" }}\n                    />\n                  </span>\n                )}\n              </motion.button>\n            );\n          })}\n        </div>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "media"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "carousel",
+      "slideshow",
+      "thumbnails",
+      "ken-burns",
+      "autoplay",
+      "hero"
+    ],
+    "pageTypes": [
+      "landing",
+      "media",
+      "ecommerce"
+    ]
+  }
+}

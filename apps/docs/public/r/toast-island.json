@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toast-island",
+  "type": "registry:component",
+  "title": "Toast — Dynamic Island",
+  "description": "Dynamic-Island-style notifications: a black pill at the top morphs in width and height to show loading, success or error, with a promise() helper that walks through the states and an optional detail line.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/toast-island.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/toast-island.tsx",
+      "content": "\"use client\";\nimport { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check, Loader2, X } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\ntype IslandState = { id: number; kind: \"loading\" | \"success\" | \"error\"; title: string; detail?: string } | null;\n\ninterface IslandApi {\n  /** Show a loading island that resolves to success/error with the promise. */\n  promise: <T>(p: Promise<T>, msgs: { loading: string; success: string; error: string; detail?: string }) => Promise<T>;\n  show: (kind: \"success\" | \"error\", title: string, detail?: string) => void;\n}\n\nconst Ctx = createContext<IslandApi | null>(null);\nexport const useIsland = () => {\n  const v = useContext(Ctx);\n  if (!v) throw new Error(\"useIsland must be used inside <ToastIsland>\");\n  return v;\n};\n\n/**\n * Dynamic-Island-style toasts: a black pill at the top that stretches (shared layout spring) from a\n * compact loading capsule into a wider success/error card with icon morph and detail line, then\n * shrinks back and away. One island at a time — new messages morph the existing one.\n */\nexport function ToastIsland({ children, className }: { children: ReactNode; className?: string }) {\n  const reduced = useReducedMotion();\n  const [s, setS] = useState<IslandState>(null);\n  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);\n  const n = useRef(0);\n\n  const settle = useCallback((next: IslandState, ms = 2600) => {\n    clearTimeout(timer.current);\n    setS(next);\n    if (next && next.kind !== \"loading\") timer.current = setTimeout(() => setS(null), ms);\n  }, []);\n  const api: IslandApi = {\n    show: (kind, title, detail) => settle({ id: ++n.current, kind, title, detail }),\n    promise: async (p, m) => {\n      const id = ++n.current;\n      settle({ id, kind: \"loading\", title: m.loading });\n      try {\n        const v = await p;\n        settle({ id, kind: \"success\", title: m.success, detail: m.detail });\n        return v;\n      } catch (e) {\n        settle({ id, kind: \"error\", title: m.error, detail: e instanceof Error ? e.message : undefined });\n        throw e;\n      }\n    },\n  };\n  useEffect(() => () => clearTimeout(timer.current), []);\n  const t = reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 400, damping: 30 };\n\n  return (\n    <Ctx.Provider value={api}>\n      <div className={cn(\"relative\", className)}>\n        {children}\n        <div className=\"pointer-events-none absolute inset-x-0 top-3 z-50 flex justify-center\" role=\"status\" aria-live=\"polite\">\n          <AnimatePresence>\n            {s && (\n              <motion.div\n                key=\"island\"\n                layout={!reduced}\n                initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.6, y: -10 }}\n                animate={{ opacity: 1, scale: 1, y: 0 }}\n                exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.6, y: -10 }}\n                transition={t}\n                style={{ borderRadius: 999 }}\n                className=\"pointer-events-auto flex items-center gap-3 bg-black py-2 pl-2 pr-5 text-white shadow-2xl\"\n              >\n                <motion.span layout={!reduced} transition={t} className={cn(\"grid size-7 shrink-0 place-items-center rounded-full\", s.kind === \"success\" ? \"bg-emerald-500\" : s.kind === \"error\" ? \"bg-rose-500\" : \"bg-white/15\")}>\n                  <AnimatePresence mode=\"popLayout\" initial={false}>\n                    <motion.span key={s.kind} initial={reduced ? false : { scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }} transition={t}>\n                      {s.kind === \"loading\" ? <Loader2 className=\"size-4 animate-spin motion-reduce:animate-none\" /> : s.kind === \"success\" ? <Check className=\"size-4\" strokeWidth={3} /> : <X className=\"size-4\" strokeWidth={3} />}\n                    </motion.span>\n                  </AnimatePresence>\n                </motion.span>\n                <motion.div layout=\"position\" transition={t} className=\"min-w-0\">\n                  <p className=\"whitespace-nowrap text-sm font-medium\">{s.title}</p>\n                  <AnimatePresence initial={false}>\n                    {s.detail && s.kind !== \"loading\" && (\n                      <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: \"auto\" }} exit={{ opacity: 0, height: 0 }} className=\"whitespace-nowrap text-xs text-white/60\">{s.detail}</motion.p>\n                    )}\n                  </AnimatePresence>\n                </motion.div>\n              </motion.div>\n            )}\n          </AnimatePresence>\n        </div>\n      </div>\n    </Ctx.Provider>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "overlays"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "toast",
+      "notification",
+      "dynamic-island",
+      "promise",
+      "morph"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "ai-app",
+      "ecommerce"
+    ]
+  }
+}

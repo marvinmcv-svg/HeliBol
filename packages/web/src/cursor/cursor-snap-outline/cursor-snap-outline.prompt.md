@@ -1,0 +1,1 @@
+Track the pointer inside a container; on pointerover of a matching target read its rect and radius; spring x/y/width/height/radius toward the target rect (plus a small offset toward the pointer for magnetism); otherwise shrink to a 10px dot following the pointer.

@@ -1,0 +1,1042 @@
+[
+ {
+  "id": "cursor-snap-outline",
+  "name": "Cursor — Snap Outline",
+  "category": "cursor",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "iPadOS-style pointer: a soft dot that morphs into a rounded outline hugging whatever button or link you hover, springing on position, size and radius, with a subtle magnetic pull toward the target's centre.",
+  "tags": [
+   "premium",
+   "cursor",
+   "ipados",
+   "magnetic",
+   "morph",
+   "pointer"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Purely decorative overlay (aria-hidden); native cursor stays available. Disabled on touch and under reduced motion.",
+  "perf": "Five spring motion values; one pointermove listener; no React re-renders while moving.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Area where the cursor is active."
+   ],
+   [
+    "targets",
+    "string",
+    "a, button, [data-snap]",
+    "Selector for elements to snap to."
+   ]
+  ],
+  "prompt": "Track the pointer inside a container; on pointerover of a matching target read its rect and radius; spring x/y/width/height/radius toward the target rect (plus a small offset toward the pointer for magnetism); otherwise shrink to a 10px dot following the pointer."
+ },
+ {
+  "id": "cursor-flashlight",
+  "name": "Cursor — Flashlight",
+  "category": "cursor",
+  "engine": "css",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "X-ray flashlight: a dark top layer has a soft circular hole that trails the pointer with easing, revealing a second layer underneath — hidden messages, blueprints, before/after. Click to widen the beam. Touch and reduced motion get a Reveal toggle.",
+  "tags": [
+   "premium",
+   "cursor",
+   "flashlight",
+   "mask",
+   "reveal",
+   "spotlight",
+   "dark"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Both layers stay in the DOM; a Reveal toggle (aria-pressed) shows the hidden layer for touch and keyboard users.",
+  "perf": "CSS mask-image driven by three custom properties updated in one rAF loop.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "What you see in the dark (top layer)."
+   ],
+   [
+    "reveal",
+    "ReactNode",
+    "",
+    "What the light reveals underneath."
+   ],
+   [
+    "radius",
+    "number",
+    "110",
+    "Beam radius in px."
+   ]
+  ],
+  "prompt": "Stack a cover div over the content and set mask-image: radial-gradient(circle var(--fr) at var(--fx) var(--fy), transparent 70%, #000); lerp --fx/--fy toward the pointer in rAF; animate --fr up on pointerdown."
+ },
+ {
+  "id": "chart-bar-race",
+  "name": "Chart — Bar Race",
+  "category": "data",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 440,
+  "description": "Animated bar-chart race: bars re-rank with layout springs as values change period by period, numbers tween, and the big period label rolls. Play/pause and a scrubber let you jump to any frame.",
+  "tags": [
+   "premium",
+   "chart",
+   "bar-race",
+   "ranking",
+   "data-viz",
+   "timeline"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "landing",
+   "blog"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Chart has a text summary of the current leader; controls are real buttons and a labelled range input. Reduced motion jumps between frames without springs.",
+  "perf": "Only the visible top-N bars render; layout animations on transform.",
+  "props": [
+   [
+    "frames",
+    "string[]",
+    "",
+    "Period labels."
+   ],
+   [
+    "series",
+    "{ name; color; values: number[] }[]",
+    "",
+    "One value per frame per series."
+   ],
+   [
+    "top",
+    "number",
+    "6",
+    "Bars shown."
+   ],
+   [
+    "speed",
+    "number",
+    "1400",
+    "ms per frame."
+   ],
+   [
+    "title",
+    "string",
+    "Ranking",
+    "Chart title."
+   ]
+  ],
+  "prompt": "Sort each frame's entries, render the top N as motion.div with layout and key=series so re-ordering animates; width = value / max; tween the numbers; roll the period label with AnimatePresence; add play/pause and a range scrubber."
+ },
+ {
+  "id": "chart-live-stream",
+  "name": "Chart — Live Stream",
+  "category": "data",
+  "engine": "svg",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "Streaming line chart that scrolls smoothly between ticks: new points arrive every interval while the path translates continuously, the y-range eases to fit, and a pulsing head dot shows the latest value.",
+  "tags": [
+   "premium",
+   "chart",
+   "realtime",
+   "streaming",
+   "line",
+   "sparkline",
+   "monitoring"
+  ],
+  "pageTypes": [
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=img with an aria-label holding the latest value; pause button; reduced motion updates per tick without the scroll.",
+  "perf": "One SVG path rebuilt per tick; between ticks only a transform changes via rAF.",
+  "props": [
+   [
+    "next",
+    "(prev: number) => number",
+    "random walk",
+    "Generates the next value."
+   ],
+   [
+    "points",
+    "number",
+    "40",
+    "Window size."
+   ],
+   [
+    "interval",
+    "number",
+    "700",
+    "ms between points."
+   ],
+   [
+    "label",
+    "string",
+    "Requests / s",
+    "Readout label."
+   ],
+   [
+    "unit",
+    "string",
+    "",
+    "Value unit."
+   ],
+   [
+    "color",
+    "string",
+    "#38bdf8",
+    "Line colour."
+   ]
+  ],
+  "prompt": "Keep a fixed-length buffer, push a random-walk value each tick; draw the path one step wider than the view and translate it left by progress × step inside rAF; ease min/max toward the buffer's range; gradient fill under the line."
+ },
+ {
+  "id": "ai-voice-call",
+  "name": "AI — Voice Call",
+  "category": "ai",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 460,
+  "description": "Voice-assistant call screen: a liquid orb that breathes while listening, swirls while thinking and pulses with the voice while speaking, live word-by-word captions, a call timer, mute and hang-up.",
+  "tags": [
+   "premium",
+   "ai",
+   "voice",
+   "assistant",
+   "orb",
+   "captions",
+   "call"
+  ],
+  "pageTypes": [
+   "ai-app"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Captions are an aria-live region; state is announced; controls are labelled buttons. Reduced motion keeps the orb static and shows full captions.",
+  "perf": "Orb animates transform/opacity only; captions reveal one word per tick.",
+  "props": [
+   [
+    "turns",
+    "{ who: 'user' | 'agent'; text: string }[]",
+    "",
+    "Conversation to play back."
+   ],
+   [
+    "agentName",
+    "string",
+    "Nova",
+    "Assistant name."
+   ]
+  ],
+  "prompt": "State machine listening → thinking → speaking over a script; orb = layered blurred gradients whose scale/rotation depend on state; captions reveal word by word; a timer; mute toggles and hang-up ends the call."
+ },
+ {
+  "id": "ai-plan-graph",
+  "name": "AI — Plan Graph",
+  "category": "ai",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 460,
+  "description": "Agent plan visualiser: a goal node grows a tree of steps; each step's sub-tasks spin then tick off, finished steps collapse into an 'N done' chip, and the next step unfolds — like watching an agent think.",
+  "tags": [
+   "premium",
+   "ai",
+   "agent",
+   "plan",
+   "tasks",
+   "tree",
+   "reasoning"
+  ],
+  "pageTypes": [
+   "ai-app",
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Plan is an ordered list with status text per item; progress is announced politely. Reduced motion shows the final state.",
+  "perf": "Small DOM; height animations via layout on a handful of nodes.",
+  "props": [
+   [
+    "goal",
+    "string",
+    "",
+    "Top-level goal."
+   ],
+   [
+    "steps",
+    "{ id; title; children?: { id; title }[] }[]",
+    "",
+    "Plan steps and their sub-tasks."
+   ],
+   [
+    "speed",
+    "number",
+    "650",
+    "ms per task."
+   ]
+  ],
+  "prompt": "Render the goal, then step nodes connected by a vertical line; a timer advances task index; running tasks show a spinner, done tasks a check; when a step completes collapse its tasks into a chip with layout; loop with a Replay button."
+ },
+ {
+  "id": "toast-island",
+  "name": "Toast — Dynamic Island",
+  "category": "overlays",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "Dynamic-Island-style notifications: a black pill at the top morphs in width and height to show loading, success or error, with a promise() helper that walks through the states and an optional detail line.",
+  "tags": [
+   "premium",
+   "toast",
+   "notification",
+   "dynamic-island",
+   "promise",
+   "morph"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "ai-app",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Island is a role=status live region; dismisses after a timeout but pauses on hover.",
+  "perf": "One element morphing via layout; icons swap with AnimatePresence.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "App content (provider)."
+   ],
+   [
+    "useIsland()",
+    "{ show, promise }",
+    "",
+    "Hook to trigger notifications."
+   ]
+  ],
+  "prompt": "Provide context with show(kind,title,detail) and promise(p,{loading,success,error}); render one motion.div with layout and rounded-full; contents keyed by state animate in/out; auto-collapse to a small pill after a delay."
+ },
+ {
+  "id": "share-sheet",
+  "name": "Share Sheet",
+  "category": "overlays",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 460,
+  "description": "A share button that morphs into a full share sheet (shared layoutId): recent people and targets pop in with a stagger, copy-link confirms inline, and the native share sheet is used when the browser has one.",
+  "tags": [
+   "premium",
+   "share",
+   "sheet",
+   "morph",
+   "social",
+   "modal"
+  ],
+  "pageTypes": [
+   "social",
+   "media",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Sheet is a dialog with focus moved in and Esc to close; buttons are labelled. Reduced motion uses a fade.",
+  "perf": "One layout morph; pops are transform/opacity.",
+  "props": [
+   [
+    "url",
+    "string",
+    "",
+    "Link to share."
+   ],
+   [
+    "title",
+    "string",
+    "Share",
+    "Sheet title."
+   ],
+   [
+    "targets",
+    "{ label; icon; color }[]",
+    "",
+    "Share targets."
+   ],
+   [
+    "people",
+    "{ name; avatar }[]",
+    "[]",
+    "Recent contacts."
+   ],
+   [
+    "defaultOpen",
+    "boolean",
+    "false",
+    "Start open."
+   ]
+  ],
+  "prompt": "Give the trigger and the sheet the same layoutId so the button grows into the panel; stagger avatar and target buttons in; copy uses navigator.clipboard and flips to a check; call navigator.share when available."
+ },
+ {
+  "id": "button-slide-confirm",
+  "name": "Button — Slide to Confirm",
+  "category": "buttons",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Slide-to-confirm control for risky actions: drag the knob along the track, the fill follows and the label shimmers and fades; past 85% it completes with a check, otherwise it springs back.",
+  "tags": [
+   "premium",
+   "button",
+   "slide",
+   "confirm",
+   "drag",
+   "payment",
+   "unlock"
+  ],
+  "pageTypes": [
+   "ecommerce",
+   "settings",
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Role=slider with aria-valuenow; Enter/Space/→/End complete it from the keyboard. Reduced motion removes the shimmer.",
+  "perf": "Drag on one motion value; fill and label opacity are derived transforms.",
+  "props": [
+   [
+    "label",
+    "string",
+    "Slide to pay",
+    "Track label."
+   ],
+   [
+    "doneLabel",
+    "string",
+    "Paid",
+    "Label after completion."
+   ],
+   [
+    "onConfirm",
+    "() => void",
+    "",
+    "Fires on completion."
+   ],
+   [
+    "width",
+    "number",
+    "300",
+    "Track width in px."
+   ]
+  ],
+  "prompt": "Track with a draggable knob constrained to the track; useTransform the knob x into fill width and label opacity; on drag end if x > 85% animate to end and call onConfirm, else spring back; add keyboard handlers."
+ },
+ {
+  "id": "button-3d-key",
+  "name": "Button — 3D Key",
+  "category": "buttons",
+  "engine": "css",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Chunky mechanical-key button with a real edge: the cap lifts on hover and sinks to the base on press, with a soft shadow that shrinks and grows. Colour and depth are CSS variables.",
+  "tags": [
+   "premium",
+   "button",
+   "3d",
+   "key",
+   "keyboard",
+   "tactile",
+   "game"
+  ],
+  "pageTypes": [
+   "landing",
+   "onboarding"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Native button; visible focus ring; reduced motion removes the transitions but keeps the pressed state.",
+  "perf": "Pure CSS transforms on three span layers.",
+  "props": [
+   [
+    "color",
+    "string",
+    "#f43f5e",
+    "Key colour."
+   ],
+   [
+    "depth",
+    "number",
+    "6",
+    "Edge depth in px."
+   ],
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Label."
+   ],
+   [
+    "...button",
+    "ButtonHTMLAttributes",
+    "",
+    "Native button props."
+   ]
+  ],
+  "prompt": "Layer three spans in a button: a blurred shadow, a darker edge, and the cap; translate the cap up by --d on rest, further on hover, and to 2px on :active; shrink the shadow as the cap sinks."
+ },
+ {
+  "id": "nav-stretch-tabs",
+  "name": "Tabs — Stretch Indicator",
+  "category": "navigation",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Tabs whose pill indicator moves like a caterpillar: the leading edge springs toward the new tab first while the trailing edge lags and catches up, so the pill stretches across the gap and snaps back.",
+  "tags": [
+   "premium",
+   "tabs",
+   "indicator",
+   "segmented",
+   "stretch",
+   "navigation"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "settings",
+   "landing"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=tablist with roving tabindex and arrow-key navigation. Reduced motion jumps the indicator.",
+  "perf": "Two motion values (left/right edges) on one absolutely positioned span.",
+  "props": [
+   [
+    "tabs",
+    "string[]",
+    "",
+    "Tab labels."
+   ],
+   [
+    "defaultIndex",
+    "number",
+    "0",
+    "Initial tab."
+   ],
+   [
+    "onChange",
+    "(i: number) => void",
+    "",
+    "Selection callback."
+   ]
+  ],
+  "prompt": "Track left and right edges as separate motion values; when the tab changes animate the leading edge with a stiff spring and the trailing edge with a softer, delayed spring; width = right − left."
+ },
+ {
+  "id": "nav-drawer-3d",
+  "name": "Menu — 3D Push Drawer",
+  "category": "navigation",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 520,
+  "description": "Mobile menu that pushes the page back in 3D: the page rotates on Y, slides right and scales down with rounded corners and a deep shadow, revealing a dark menu whose links slide in with a stagger.",
+  "tags": [
+   "premium",
+   "menu",
+   "drawer",
+   "3d",
+   "mobile",
+   "navigation",
+   "push"
+  ],
+  "pageTypes": [
+   "landing",
+   "ecommerce",
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Menu is a nav landmark; closed menu and open page are inert; Esc closes and returns focus to the toggle. Reduced motion: slide only, no rotation.",
+  "perf": "Transform-only animation on the page wrapper.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Page content."
+   ],
+   [
+    "links",
+    "{ label; href; icon? }[]",
+    "",
+    "Menu links."
+   ],
+   [
+    "footer",
+    "ReactNode",
+    "",
+    "Menu footer."
+   ],
+   [
+    "defaultOpen",
+    "boolean",
+    "false",
+    "Start open."
+   ]
+  ],
+  "prompt": "Place the menu behind the page; on open animate the page to x 58%, rotateY −12°, scale .82, radius 28 with perspective on the parent; stagger links in; tap the page to close."
+ },
+ {
+  "id": "loader-skeleton-morph",
+  "name": "Skeleton → Content Morph",
+  "category": "loaders",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 380,
+  "description": "Skeleton placeholders that dissolve with a blur while the real content resolves in from a blur in the same box — no layout jump — with a shimmer sweeping across the bars while loading.",
+  "tags": [
+   "premium",
+   "skeleton",
+   "loading",
+   "shimmer",
+   "blur",
+   "placeholder"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "social",
+   "blog"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Container toggles aria-busy; skeleton is aria-hidden. Reduced motion stops the shimmer and cross-fades.",
+  "perf": "Grid stacking keeps both states in one cell; filter only during the swap.",
+  "props": [
+   [
+    "loaded",
+    "boolean",
+    "",
+    "Show content."
+   ],
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Real content."
+   ],
+   [
+    "rows",
+    "number[]",
+    "[70,45,90,80]",
+    "Bar widths %."
+   ],
+   [
+    "avatar",
+    "boolean",
+    "true",
+    "Show avatar row."
+   ]
+  ],
+  "prompt": "Stack skeleton and content in the same grid cell; exit the skeleton with blur+fade, enter the content from blur(10px) and y 6; shimmer is a gradient span sliding across each bar."
+ },
+ {
+  "id": "loader-orbit-dots",
+  "name": "Loader — Orbit Dots",
+  "category": "loaders",
+  "engine": "css",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Atom-style loader: three tilted rings of dots spinning at different speeds and directions around a pulsing core, built with CSS 3D transforms only.",
+  "tags": [
+   "premium",
+   "loader",
+   "spinner",
+   "orbit",
+   "atom",
+   "3d"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "ai-app"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=status with a label. Reduced motion shows the static gyroscope.",
+  "perf": "Pure CSS keyframes on transform; no JS per frame.",
+  "props": [
+   [
+    "size",
+    "number",
+    "72",
+    "Size in px."
+   ],
+   [
+    "dots",
+    "number",
+    "8",
+    "Dots per ring."
+   ],
+   [
+    "color",
+    "string",
+    "currentColor",
+    "Colour."
+   ]
+  ],
+  "prompt": "Three preserve-3d wrappers tilted with rotateX/rotateY; inside each, dots placed on a circle and the wrapper spins on Z with different durations; a pulsing core in the middle."
+ },
+ {
+  "id": "svg-icon-set",
+  "name": "Animated Icon Set",
+  "category": "svg",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 360,
+  "description": "Six stateful SVG icons with meaningful motion: hamburger ⇄ close, play ⇄ pause path morph, a heart that fills with a spark burst, a ringing bell with a badge, copy → check and sun ⇄ moon.",
+  "tags": [
+   "premium",
+   "icons",
+   "svg",
+   "micro-interaction",
+   "toggle",
+   "morph"
+  ],
+  "pageTypes": [
+   "landing",
+   "dashboard",
+   "settings"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Each icon is a toggle button with aria-pressed and a label. Reduced motion switches state without motion.",
+  "perf": "Small SVGs animating d, transform and pathLength.",
+  "props": [
+   [
+    "size",
+    "number",
+    "28",
+    "Icon size."
+   ],
+   [
+    "label",
+    "string",
+    "",
+    "Accessible label."
+   ]
+  ],
+  "prompt": "Build each icon as a button around a 24×24 stroke SVG; animate per-element transforms with springs (menu), interpolate equal-point paths (play/pause), pathLength (check), and a mask circle (moon)."
+ },
+ {
+  "id": "svg-route-map",
+  "name": "SVG — Live Route Map",
+  "category": "svg",
+  "engine": "svg",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Delivery-tracking map: a stylised street grid, the route draws itself, a courier marker follows the path and turns to its heading, stops light up as it passes and an ETA counts down.",
+  "tags": [
+   "premium",
+   "map",
+   "route",
+   "delivery",
+   "tracking",
+   "svg",
+   "eta"
+  ],
+  "pageTypes": [
+   "ecommerce",
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=img with an aria-label carrying the ETA. Reduced motion shows the completed route.",
+  "perf": "getPointAtLength each frame on one path; the marker is a single transformed group.",
+  "props": [
+   [
+    "route",
+    "string",
+    "",
+    "Path in a 400×260 viewBox."
+   ],
+   [
+    "stops",
+    "{ label; at }[]",
+    "",
+    "Stops along the route (0–1)."
+   ],
+   [
+    "duration",
+    "number",
+    "8",
+    "Seconds per trip."
+   ],
+   [
+    "minutes",
+    "number",
+    "18",
+    "ETA total."
+   ]
+  ],
+  "prompt": "Draw the route with pathLength=1 and animate dashoffset; each frame get the point at progress × length plus a point 1px ahead for the heading; light stops whose position ≤ progress; derive the ETA."
+ },
+ {
+  "id": "transition-ink-blot",
+  "name": "Transition — Ink Blot",
+  "category": "transitions",
+  "engine": "svg",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 480,
+  "description": "Page transition where ink spills from the exact point you clicked: a turbulence-displaced SVG circle grows into a wobbly blot that floods the screen, the page swaps, then the blot drains to the opposite corner.",
+  "tags": [
+   "premium",
+   "transition",
+   "ink",
+   "blot",
+   "page",
+   "svg-filter",
+   "organic"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing",
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Overlay is aria-hidden; nav uses aria-current. Reduced motion swaps instantly.",
+  "perf": "One SVG circle with feTurbulence + feDisplacementMap; only r and cx/cy change.",
+  "props": [
+   [
+    "pages",
+    "{ title; content }[]",
+    "",
+    "Pages."
+   ],
+   [
+    "ink",
+    "string",
+    "#0a0a0a",
+    "Ink colour."
+   ]
+  ],
+  "prompt": "On click store the pointer position, animate an SVG circle's radius to cover the farthest corner with a displacement filter for ragged edges, swap the page, move the origin to the mirrored point and shrink the radius back to 0."
+ },
+ {
+  "id": "transition-stairs",
+  "name": "Transition — Stairs",
+  "category": "transitions",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 480,
+  "description": "Staircase page transition: vertical columns drop in one after another, a big index number appears while the page swaps under cover, then the columns keep falling out the bottom in the same order.",
+  "tags": [
+   "premium",
+   "transition",
+   "stairs",
+   "columns",
+   "page",
+   "stagger"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "landing"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Columns are decorative; nav uses aria-current. Reduced motion swaps instantly.",
+  "perf": "N transformed divs; no layout work.",
+  "props": [
+   [
+    "pages",
+    "{ title; content }[]",
+    "",
+    "Pages."
+   ],
+   [
+    "steps",
+    "number",
+    "6",
+    "Columns."
+   ],
+   [
+    "color",
+    "string",
+    "#111",
+    "Column colour."
+   ]
+  ],
+  "prompt": "Render N flex columns with initial y -100%, animate to 0 with a per-column delay, swap the page once all are down, then exit to y 100% with the same stagger."
+ },
+ {
+  "id": "media-polaroid-stack",
+  "name": "Polaroid Stack",
+  "category": "media",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 460,
+  "description": "A messy pile of polaroids with hand-written captions. Fling the top photo in any direction and it flies off and slides back in at the bottom while the rest shuffle up with new tilts.",
+  "tags": [
+   "premium",
+   "polaroid",
+   "stack",
+   "swipe",
+   "gallery",
+   "photos",
+   "drag"
+  ],
+  "pageTypes": [
+   "portfolio",
+   "social",
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Group is focusable with ←/→ and labelled with the current caption; Back/Next buttons. Reduced motion cycles without the throw.",
+  "perf": "At most 4 cards rendered; drag on one motion value.",
+  "props": [
+   [
+    "photos",
+    "{ src; caption; alt? }[]",
+    "",
+    "Photos."
+   ]
+  ],
+  "prompt": "Keep an order array; render the first four with depth-based scale/rotate; the top card drags on x with rotate derived from x; on a throw past a threshold rotate the order and exit the card off-screen."
+ },
+ {
+  "id": "media-thumb-reel",
+  "name": "Thumbnail Reel",
+  "category": "media",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 460,
+  "description": "Hero image with a filmstrip of thumbnails: the active thumb widens into a pill with a filling progress bar while the hero slowly zooms; when it fills, the next slide cross-fades in. Hover pauses.",
+  "tags": [
+   "premium",
+   "carousel",
+   "slideshow",
+   "thumbnails",
+   "ken-burns",
+   "autoplay",
+   "hero"
+  ],
+  "pageTypes": [
+   "landing",
+   "media",
+   "ecommerce"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Thumbnails are a tablist; title is aria-live; hover and focus pause autoplay. Reduced motion: no zoom, no autoplay.",
+  "perf": "Flex-grow springs on 5 buttons; one image transform per slide.",
+  "props": [
+   [
+    "items",
+    "{ src; title; meta?; alt? }[]",
+    "",
+    "Slides."
+   ],
+   [
+    "interval",
+    "number",
+    "5",
+    "Seconds per slide."
+   ]
+  ],
+  "prompt": "Cross-fade the hero with AnimatePresence and a long linear scale from 1.08 to 1; animate each thumb's flexGrow (4 when active); a scaleX progress bar over interval seconds; a timeout advances the index."
+ }
+]

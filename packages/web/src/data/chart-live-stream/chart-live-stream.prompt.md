@@ -1,0 +1,1 @@
+Keep a fixed-length buffer, push a random-walk value each tick; draw the path one step wider than the view and translate it left by progress × step inside rAF; ease min/max toward the buffer's range; gradient fill under the line.

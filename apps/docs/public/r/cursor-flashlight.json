@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cursor-flashlight",
+  "type": "registry:component",
+  "title": "Cursor — Flashlight",
+  "description": "X-ray flashlight: a dark top layer has a soft circular hole that trails the pointer with easing, revealing a second layer underneath — hidden messages, blueprints, before/after. Click to widen the beam. Touch and reduced motion get a Reveal toggle.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/cursor-flashlight.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/cursor-flashlight.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, type CSSProperties, type ReactNode } from \"react\";\nimport { cn, usePrefersTouch, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface CursorFlashlightProps {\n  /** What you see in the dark. */\n  children: ReactNode;\n  /** What the light reveals (rendered underneath, aligned with children). */\n  reveal: ReactNode;\n  /** Beam radius in px. */\n  radius?: number;\n  className?: string;\n}\n\n/**\n * X-ray flashlight: a dark top layer has a soft circular hole (CSS mask driven by custom\n * properties) that trails the pointer with easing, revealing a second layer underneath — hidden\n * messages, blueprints, before/after. Click to widen the beam. Touch and reduced motion also get a\n * Reveal toggle; under reduced motion the beam is a still spot. Before the pointer arrives the beam idles on a slow\n * Lissajous path (paused while off-screen).\n */\nexport function CursorFlashlight({ children, reveal, radius = 110, className }: CursorFlashlightProps) {\n  const reduced = useReducedMotion();\n  const touch = usePrefersTouch();\n  const top = useRef<HTMLDivElement>(null);\n\n  useEffect(() => {\n    const el = top.current;\n    const host = el?.parentElement;\n    if (!el || !host || reduced) return;\n    // Until the pointer arrives (and after it leaves) the beam idles along a slow Lissajous path,\n    // so the effect reads at a glance in galleries and on load.\n    let idle = true;\n    const b0 = host.getBoundingClientRect();\n    const cur = { x: b0.width / 2, y: b0.height / 2, r: 0 }, tgt = { x: cur.x, y: cur.y, r: radius * 0.9 };\n    let raf = 0;\n    const tick = (now: number) => {\n      if (idle) {\n        const b = host.getBoundingClientRect();\n        tgt.x = b.width * (0.5 + Math.cos(now * 0.00055) * 0.3);\n        tgt.y = b.height * (0.5 + Math.sin(now * 0.0009) * 0.22);\n      }\n      const k = idle ? 0.06 : 0.18;\n      cur.x += (tgt.x - cur.x) * k;\n      cur.y += (tgt.y - cur.y) * k;\n      cur.r += (tgt.r - cur.r) * 0.12;\n      el.style.setProperty(\"--fx\", `${cur.x}px`);\n      el.style.setProperty(\"--fy\", `${cur.y}px`);\n      el.style.setProperty(\"--fr\", `${cur.r}px`);\n      raf = (idle && visible) || Math.abs(tgt.x - cur.x) + Math.abs(tgt.y - cur.y) + Math.abs(tgt.r - cur.r) > 0.3 ? requestAnimationFrame(tick) : 0;\n    };\n    const kick = () => (raf ||= requestAnimationFrame(tick));\n    let visible = false;\n    const io = new IntersectionObserver(([e]) => ((visible = !!e?.isIntersecting), visible && kick()));\n    io.observe(host);\n    const move = (e: PointerEvent) => {\n      const b = host.getBoundingClientRect();\n      idle = false;\n      tgt.x = e.clientX - b.left;\n      tgt.y = e.clientY - b.top;\n      kick();\n    };\n    const leave = () => ((idle = true), (tgt.r = radius * 0.9), kick());\n    const enter = () => ((tgt.r = radius), kick());\n    const down = () => ((tgt.r = radius * 2.2), kick());\n    const up = () => ((tgt.r = radius), kick());\n    host.addEventListener(\"pointermove\", move);\n    host.addEventListener(\"pointerleave\", leave);\n    host.addEventListener(\"pointerenter\", enter);\n    host.addEventListener(\"pointerdown\", down);\n    window.addEventListener(\"pointerup\", up);\n    return () => {\n      cancelAnimationFrame(raf);\n      io.disconnect();\n      host.removeEventListener(\"pointermove\", move);\n      host.removeEventListener(\"pointerleave\", leave);\n      host.removeEventListener(\"pointerenter\", enter);\n      host.removeEventListener(\"pointerdown\", down);\n      window.removeEventListener(\"pointerup\", up);\n    };\n  }, [radius, reduced]);\n\n  const mask = \"radial-gradient(circle var(--fr, 0px) at var(--fx, -999px) var(--fy, -999px), transparent 0%, transparent 70%, #000 100%)\";\n  const fallback = touch || reduced;\n  return (\n    <div className={cn(\"group/fl relative isolate overflow-hidden\", className)}>\n      <div className=\"absolute inset-0\">{reveal}</div>\n      <div\n        ref={top}\n        className={cn(\"relative h-full\", fallback && \"transition-opacity duration-300 group-has-[[data-fl-on]]/fl:opacity-0\")}\n        style={{ WebkitMaskImage: mask, maskImage: mask, ...(reduced && ({ \"--fx\": \"62%\", \"--fy\": \"45%\", \"--fr\": `${radius}px` } as CSSProperties)) }}\n      >\n        {children}\n      </div>\n      {fallback && <FallbackToggle />}\n    </div>\n  );\n}\n\nfunction FallbackToggle() {\n  return (\n    <button\n      type=\"button\"\n      onClick={(e) => (e.currentTarget.toggleAttribute(\"data-fl-on\"), e.currentTarget.setAttribute(\"aria-pressed\", String(e.currentTarget.hasAttribute(\"data-fl-on\"))))}\n      aria-pressed=\"false\"\n      className=\"absolute bottom-3 right-3 z-10 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-black\"\n    >\n      Reveal\n    </button>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cursor"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "premium",
+      "cursor",
+      "flashlight",
+      "mask",
+      "reveal",
+      "spotlight",
+      "dark"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loader-orbit-dots",
+  "type": "registry:component",
+  "title": "Loader — Orbit Dots",
+  "description": "Atom-style loader: three tilted rings of dots spinning at different speeds and directions around a pulsing core, built with CSS 3D transforms only.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/loader-orbit-dots.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/loader-orbit-dots.tsx",
+      "content": "\"use client\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface LoaderOrbitDotsProps {\n  size?: number;\n  /** Number of dots per ring. */\n  dots?: number;\n  color?: string;\n  label?: string;\n  className?: string;\n}\n\n/**\n * Three tilted orbits of dots that spin at different speeds and directions, like an atom.\n * Pure CSS 3D (preserve-3d + keyframes) — no JS per frame. Each dot fades as it passes \"behind\".\n * Reduced motion shows the static gyroscope.\n */\nexport function LoaderOrbitDots({ size = 72, dots = 8, color = \"currentColor\", label = \"Loading\", className }: LoaderOrbitDotsProps) {\n  const reduced = useReducedMotion();\n  const rings = [\n    { tilt: \"rotateX(70deg)\", dur: 1.6, dir: \"normal\" },\n    { tilt: \"rotateX(70deg) rotateY(60deg)\", dur: 2.2, dir: \"reverse\" },\n    { tilt: \"rotateX(70deg) rotateY(-60deg)\", dur: 2.8, dir: \"normal\" },\n  ];\n  return (\n    <div role=\"status\" aria-label={label} className={cn(\"relative\", className)} style={{ width: size, height: size, perspective: size * 6, color }}>\n      <style>{`@keyframes kn-orbit{to{transform:rotateZ(360deg)}}@keyframes kn-orbit-core{50%{transform:scale(.7);opacity:.6}}`}</style>\n      <span className=\"absolute left-1/2 top-1/2 -ml-1.5 -mt-1.5 size-3 rounded-full bg-current\" style={{ animation: reduced ? undefined : \"kn-orbit-core 1.4s ease-in-out infinite\" }} />\n      {rings.map((r, i) => (\n        <div key={i} className=\"absolute inset-0\" style={{ transform: r.tilt, transformStyle: \"preserve-3d\" }}>\n          <div className=\"absolute inset-0 rounded-full\" style={{ border: \"1px solid currentColor\", opacity: 0.12 }} />\n          <div className=\"absolute inset-0\" style={{ transformStyle: \"preserve-3d\", animation: reduced ? undefined : `kn-orbit ${r.dur}s linear infinite ${r.dir}` }}>\n            {Array.from({ length: dots }, (_, d) => {\n              const a = (d / dots) * Math.PI * 2;\n              return (\n                <span\n                  key={d}\n                  className=\"absolute size-1.5 rounded-full bg-current\"\n                  style={{ left: `calc(50% + ${Math.cos(a) * 50}% - 3px)`, top: `calc(50% + ${Math.sin(a) * 50}% - 3px)`, opacity: 0.25 + 0.75 * (d / dots) }}\n                />\n              );\n            })}\n          </div>\n        </div>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "loaders"
+  ],
+  "meta": {
+    "engine": "css",
+    "tags": [
+      "premium",
+      "loader",
+      "spinner",
+      "orbit",
+      "atom",
+      "3d"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "ai-app"
+    ]
+  }
+}

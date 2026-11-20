@@ -1,0 +1,1 @@
+Sort each frame's entries, render the top N as motion.div with layout and key=series so re-ordering animates; width = value / max; tween the numbers; roll the period label with AnimatePresence; add play/pause and a range scrubber.

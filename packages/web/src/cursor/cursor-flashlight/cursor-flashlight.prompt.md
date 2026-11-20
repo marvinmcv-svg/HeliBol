@@ -1,0 +1,1 @@
+Stack a cover div over the content and set mask-image: radial-gradient(circle var(--fr) at var(--fx) var(--fy), transparent 70%, #000); lerp --fx/--fy toward the pointer in rAF; animate --fr up on pointerdown.

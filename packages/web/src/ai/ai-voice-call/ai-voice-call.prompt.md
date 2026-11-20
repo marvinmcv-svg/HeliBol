@@ -1,0 +1,1 @@
+State machine listening → thinking → speaking over a script; orb = layered blurred gradients whose scale/rotation depend on state; captions reveal word by word; a timer; mute toggles and hang-up ends the call.
