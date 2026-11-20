@@ -71,7 +71,7 @@ export function NavCircleReveal({ links, footer = "hello@studio.com", defaultOpe
   const ease = [0.76, 0, 0.24, 1] as const;
 
   return (
-    <div ref={root} className={cn("relative h-full w-full overflow-hidden", className)}>
+    <div ref={root} className={cn("relative h-full w-full overflow-hidden [container-type:inline-size]", className)}>
       <AnimatePresence>
         {open && (
           <motion.nav
@@ -100,7 +100,7 @@ export function NavCircleReveal({ links, footer = "hello@studio.com", defaultOpe
                     animate={reduced ? { opacity: 1 } : { y: 0 }}
                     exit={reduced ? { opacity: 0 } : { y: "110%", transition: { duration: 0.35, ease, delay: (links.length - i) * 0.03 } }}
                     transition={{ duration: reduced ? 0.15 : 0.7, ease, delay: reduced ? 0 : 0.25 + i * 0.06 }}
-                    className="group flex items-baseline gap-4 text-[clamp(2.4rem,8vw,4.5rem)] font-semibold leading-[1.05] tracking-tight outline-none"
+                    className="group flex items-baseline gap-4 text-[clamp(2rem,8cqw,4.5rem)] font-semibold leading-[1.05] tracking-tight outline-none"
                   >
                     <span className="text-xs font-medium tabular-nums opacity-50">0{i + 1}</span>
                     <span className="transition-transform duration-300 group-hover:translate-x-3 group-focus-visible:translate-x-3 group-focus-visible:underline motion-reduce:transition-none">{l.label}</span>

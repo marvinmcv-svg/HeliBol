@@ -3712,5 +3712,104 @@
     },
     "captured_at": "2026-11-19T05:02:42.706Z",
     "provider": "cdp-page-capture"
+  },
+  "mockup-phone-3d": {
+    "png_sha256": "cb27bba602f6787b997d491699f33f8eeca8b10afc7f3087826a472c6e842b2a",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:45:29.455Z",
+    "provider": "cdp-page-capture"
+  },
+  "form-auth-morph": {
+    "png_sha256": "2c283b2ee176ab9b83c5e0f0320f188c9b257cb780c383605775fa6a14c840f0",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:45:29.571Z",
+    "provider": "cdp-page-capture"
+  },
+  "form-credit-card": {
+    "png_sha256": "eca50c481d0e5c2254697b8e1a556a4d97be11128805b78bef5909f20665c219",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:45:29.675Z",
+    "provider": "cdp-page-capture"
+  },
+  "widget-flip-countdown": {
+    "png_sha256": "cabc21a5846b65308fbb374b5e53a446441c45b402a9e94a2ef4760d5089d7f6",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:45:33.096Z",
+    "provider": "cdp-page-capture"
+  },
+  "hero-aurora-type": {
+    "png_sha256": "d2c3ff8bb3c9f9f42859fbbc00a3eb570c087e11484c5a9ba07dfb416d1cc214",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:45:33.208Z",
+    "provider": "cdp-page-capture"
+  },
+  "widget-flight": {
+    "png_sha256": "7266a257cc366996ad55d5922e5ba898096f5cfe069c79e07cf6a4522599f48f",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:45:33.332Z",
+    "provider": "cdp-page-capture"
+  },
+  "mockup-laptop-open": {
+    "png_sha256": "48f899007df7b27c0888c18193b8925f46bc31bc048825e182c5ab3fb7dd1bfb",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:45:36.791Z",
+    "provider": "cdp-page-capture"
+  },
+  "hero-depth-landscape": {
+    "png_sha256": "b753199ba2c3321f568872dbc1d5683470205eda6e3c12ccd9f3c4e8d8b78c91",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:45:36.894Z",
+    "provider": "cdp-page-capture"
+  },
+  "hero-product-orbit": {
+    "png_sha256": "963a6b3b19f2edc2d8fbf0ae2e75605d9895d2ee60754b24c716566d9822bd24",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:45:37.035Z",
+    "provider": "cdp-page-capture"
+  },
+  "input-password-peek": {
+    "png_sha256": "5eee27468110401401cdbf67e56af42be18d6a7f918d82c3434f3636618d333c",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:45:40.404Z",
+    "provider": "cdp-page-capture"
+  },
+  "widget-vinyl": {
+    "png_sha256": "03817785cb4981a4756e9ec6df946de0b8f14f99502cbbfb4bd59ef8a77bf121",
+    "viewport": {
+      "width": 800,
+      "height": 500
+    },
+    "captured_at": "2026-11-20T16:46:23.910Z",
+    "provider": "cdp-page-capture"
   }
 }

@@ -59,12 +59,12 @@ function Blobs({ colors }: { colors: [string, string, string] }) {
  */
 export function HeroAuroraType({ word, children, colors = ["#22d3ee", "#a855f7", "#f472b6"], className }: HeroAuroraTypeProps) {
   return (
-    <section className={cn("relative isolate flex h-full min-h-[420px] flex-col items-center justify-center overflow-hidden bg-black px-6 text-white", className)}>
+    <section className={cn("relative isolate flex h-full min-h-[420px] flex-col items-center justify-center overflow-hidden bg-black px-6 text-white [container-type:inline-size]", className)}>
       <style href="kn-hero-aurora-type" precedence="kinetik">{css}</style>
       <h1 className="relative isolate overflow-hidden">
         <span aria-hidden className="absolute inset-0 -z-10"><Blobs colors={colors} /></span>
         {/* white letters on black, multiplied over the blobs = aurora inside the type only */}
-        <span className="block bg-black px-[0.06em] text-[clamp(4rem,19vw,14rem)] font-black uppercase leading-[0.9] tracking-tighter text-white mix-blend-multiply">{word}</span>
+        <span className="block bg-black px-[0.06em] text-[clamp(2.5rem,19cqw,14rem)] font-black uppercase leading-[0.9] tracking-tighter text-white mix-blend-multiply">{word}</span>
       </h1>
       <div aria-hidden className="pointer-events-none relative -mt-4 h-20 w-[70%] opacity-50 blur-3xl"><Blobs colors={colors} /></div>
       {children && <div className="relative -mt-8 text-center">{children}</div>}
