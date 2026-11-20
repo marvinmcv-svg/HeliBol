@@ -1,0 +1,1 @@
+Render a pill with a primary button and a chevron; the menu animates from scale .4 / radius 999 / y −24 at the top-right to a 16px-radius panel; items stagger in; choosing one rolls the primary label with AnimatePresence and closes the menu.

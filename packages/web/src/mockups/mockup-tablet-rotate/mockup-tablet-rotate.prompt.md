@@ -1,0 +1,1 @@
+Animate the device frame's width/height between landscape and portrait with a spring; render children(orientation) inside a layout container so motion children reflow; a rotate button with a small spinning device glyph.

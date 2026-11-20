@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-cube-rotate",
+  "type": "registry:component",
+  "title": "Text — Cube Rotate",
+  "description": "Rotating word where every letter is the face of a little cube: on each change the cubes tip forward one after another, so the new word rolls in letter by letter while the old one tips away. Different word lengths reflow smoothly.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/text-cube-rotate.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/text-cube-rotate.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface TextCubeRotateProps {\n  words: string[];\n  /** ms each word stays. */\n  interval?: number;\n  /** Letter stagger in seconds. */\n  stagger?: number;\n  className?: string;\n}\n\n/**\n * Rotating word where every letter is the face of a little cube: on each change the cubes tip\n * forward one after another, so the new word rolls in letter by letter from the top face while the\n * old one tips away underneath. Words of different lengths reflow smoothly. Reduced motion\n * cross-fades whole words.\n */\nexport function TextCubeRotate({ words, interval = 2200, stagger = 0.045, className }: TextCubeRotateProps) {\n  const reduced = useReducedMotion();\n  const [i, setI] = useState(0);\n  useEffect(() => {\n    const id = setInterval(() => setI((x) => (x + 1) % words.length), interval);\n    return () => clearInterval(id);\n  }, [interval, words.length]);\n  const word = words[i]!;\n  const longest = Math.max(...words.map((w) => w.length));\n\n  if (reduced)\n    return (\n      <span className={cn(\"relative inline-grid\", className)} aria-live=\"polite\">\n        <AnimatePresence initial={false}>\n          <motion.span key={word} className=\"col-start-1 row-start-1\" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>{word}</motion.span>\n        </AnimatePresence>\n      </span>\n    );\n\n  return (\n    <span className={cn(\"relative inline-flex\", className)} style={{ perspective: \"8em\" }} aria-label={word} aria-live=\"polite\">\n      {Array.from({ length: longest }, (_, k) => {\n        const ch = word[k];\n        return (\n          <motion.span key={k} aria-hidden className=\"relative inline-grid\" animate={{ width: ch ? \"auto\" : 0 }} transition={{ duration: 0.3, delay: k * stagger }} style={{ transformStyle: \"preserve-3d\" }}>\n            <AnimatePresence initial={false}>\n              {ch && (\n                <motion.span\n                  key={`${i}-${k}`}\n                  className=\"col-start-1 row-start-1 inline-block whitespace-pre [backface-visibility:hidden]\"\n                  style={{ transformOrigin: \"50% 50% -0.5em\" }}\n                  initial={{ rotateX: 90, opacity: 0 }}\n                  animate={{ rotateX: 0, opacity: 1 }}\n                  exit={{ rotateX: -90, opacity: 0 }}\n                  transition={{ duration: 0.55, delay: k * stagger, ease: [0.65, 0, 0.35, 1] }}\n                >\n                  {ch}\n                </motion.span>\n              )}\n            </AnimatePresence>\n          </motion.span>\n        );\n      })}\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "text"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "text",
+      "rotate",
+      "3d",
+      "cube",
+      "words",
+      "headline"
+    ],
+    "pageTypes": [
+      "landing"
+    ]
+  }
+}

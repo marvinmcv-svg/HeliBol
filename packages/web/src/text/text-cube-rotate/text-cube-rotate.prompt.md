@@ -1,0 +1,1 @@
+For each letter slot render AnimatePresence; letters enter from rotateX 90° and exit to −90° around an origin half an em behind the glyph, with per-index delay; animate slot width to 0 for missing letters.

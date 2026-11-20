@@ -1,0 +1,1 @@
+Convert pointer angle around the centre to a value across a 270° sweep; render a dashed circle whose dash length follows the value, a knob at the arc end, and derive heat/cool/idle from target vs current.

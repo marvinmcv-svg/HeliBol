@@ -1,0 +1,1038 @@
+[
+ {
+  "id": "mockup-watch",
+  "name": "Mockup — Smartwatch",
+  "category": "mockups",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 520,
+  "description": "Smartwatch mockup with a working digital crown: drag the crown, scroll over the face or use ↑/↓ and the app list rolls on a curved fish-eye path — centre rows big and bright, edge rows shrinking inward — snapping to the nearest row.",
+  "tags": [
+   "premium",
+   "mockup",
+   "watch",
+   "wearable",
+   "crown",
+   "fisheye",
+   "device"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Face is a focusable listbox with aria-activedescendant; the crown is a labelled button. Reduced motion snaps without springs.",
+  "perf": "One motion value drives every row through transforms; no re-render while scrolling except the active index.",
+  "props": [
+   [
+    "apps",
+    "{ name; icon; color }[]",
+    "",
+    "Apps in the list."
+   ]
+  ],
+  "prompt": "Keep one motion value y (index × row height); each row derives its offset from the centre and maps it to y, scale, inward x and opacity; wheel, crown drag and arrow keys write y, and release springs to the nearest row."
+ },
+ {
+  "id": "mockup-tablet-rotate",
+  "name": "Mockup — Rotating Tablet",
+  "category": "mockups",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 520,
+  "description": "Tablet mockup that physically turns between portrait and landscape with a spring while the screen content reflows — pass a render function and lay out differently per orientation; layout-animated children glide to their new spots.",
+  "tags": [
+   "premium",
+   "mockup",
+   "tablet",
+   "ipad",
+   "rotate",
+   "responsive",
+   "device"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Rotate control is a labelled button; content stays upright and readable. Reduced motion switches instantly.",
+  "perf": "Device size animates via springs; inner content uses layout animations.",
+  "props": [
+   [
+    "children",
+    "(o: 'portrait' | 'landscape') => ReactNode",
+    "",
+    "Screen renderer."
+   ],
+   [
+    "defaultOrientation",
+    "'portrait' | 'landscape'",
+    "landscape",
+    "Start orientation."
+   ],
+   [
+    "size",
+    "number",
+    "440",
+    "Long side in px."
+   ]
+  ],
+  "prompt": "Animate the device frame's width/height between landscape and portrait with a spring; render children(orientation) inside a layout container so motion children reflow; a rotate button with a small spinning device glyph."
+ },
+ {
+  "id": "bg-pixel-wave",
+  "name": "Background — Pixel Wave",
+  "category": "backgrounds",
+  "engine": "canvas",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "A grid of square pixels driven by interfering sine waves — each cell's size and colour follow the wave height. Clicks (and an occasional automatic drop) send expanding rings across the grid, and the pointer leaves a soft bulge.",
+  "tags": [
+   "premium",
+   "background",
+   "canvas",
+   "pixels",
+   "wave",
+   "ripple",
+   "interactive"
+  ],
+  "pageTypes": [
+   "landing",
+   "ai-app"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Canvas is aria-hidden; content sits above it. Reduced motion draws one still frame.",
+  "perf": "Single 2D canvas via useCanvas: DPR-aware, paused off-screen and in background tabs.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Content above the grid."
+   ],
+   [
+    "cell",
+    "number",
+    "14",
+    "Cell size in px."
+   ],
+   [
+    "colors",
+    "[string, string]",
+    "indigo → cyan",
+    "Low/high colours."
+   ]
+  ],
+  "prompt": "For each grid cell compute v = sum of two travelling sines + Gaussian rings from ripple origins (front = age × speed) + a Gaussian bump at the pointer; map v to square size, colour mix and alpha."
+ },
+ {
+  "id": "bg-orbit-rings",
+  "name": "Background — Orbit Rings",
+  "category": "backgrounds",
+  "engine": "css",
+  "deps": [],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Tilted solar-system backdrop: concentric orbits around a glowing core, each spinning at its own speed and direction and carrying a glowing planet with a comet tail. Pure SVG and CSS keyframes in 3D perspective.",
+  "tags": [
+   "premium",
+   "background",
+   "orbit",
+   "space",
+   "integrations",
+   "svg",
+   "3d"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Decorative and aria-hidden. Reduced motion freezes the planets in staggered positions.",
+  "perf": "CSS keyframe rotations on SVG groups; no JS per frame.",
+  "props": [
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Content above."
+   ],
+   [
+    "rings",
+    "number",
+    "5",
+    "Number of orbits."
+   ],
+   [
+    "colors",
+    "string[]",
+    "5 neons",
+    "Planet colours."
+   ]
+  ],
+  "prompt": "Draw concentric circles in an SVG tilted with perspective + rotateX(64deg); per ring, a group spinning via CSS keyframes (negative delay for phase) containing a short dashed arc as the tail and a glowing planet."
+ },
+ {
+  "id": "scroll-cards-fan",
+  "name": "Scroll — Cards Fan",
+  "category": "scroll",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 480,
+  "description": "Pinned section where a tight stack of cards deals itself into a wide arc as you scroll, each card rotating around a pivot far below the stage like a hand of playing cards, while the heading rises. Scroll back and they gather.",
+  "tags": [
+   "premium",
+   "scroll",
+   "cards",
+   "fan",
+   "pinned",
+   "arc",
+   "gallery"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Cards are figures with captions; reduced motion shows the finished fan without pinning.",
+  "perf": "Transform-only, driven by one scroll progress value.",
+  "props": [
+   [
+    "cards",
+    "{ src; title; alt? }[]",
+    "",
+    "Cards to fan."
+   ],
+   [
+    "heading",
+    "string",
+    "A hand worth holding",
+    "Heading above the fan."
+   ],
+   [
+    "container",
+    "RefObject<HTMLElement>",
+    "",
+    "Custom scroll container."
+   ]
+  ],
+  "prompt": "Pin a stage; map scroll progress to each card's rotate = (i − mid) × spread × p with transform-origin far below the card (50% 260%), plus a small y lift for outer cards."
+ },
+ {
+  "id": "scroll-media-expand",
+  "name": "Scroll — Media Expand",
+  "category": "scroll",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 480,
+  "description": "Keynote-style reveal: a small rounded image sits between the two halves of a headline; scrolling grows it to full-bleed, squares its corners and settles its zoom while the headline halves slide apart, then the caption rises in.",
+  "tags": [
+   "premium",
+   "scroll",
+   "expand",
+   "keynote",
+   "video",
+   "hero",
+   "pinned"
+  ],
+  "pageTypes": [
+   "landing",
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Headline stays real text; reduced motion shows the full-bleed image with the headline.",
+  "perf": "Width/height/radius from scroll progress; image scale on the GPU.",
+  "props": [
+   [
+    "image",
+    "string",
+    "",
+    "Media source."
+   ],
+   [
+    "title",
+    "[string, string]",
+    "",
+    "Headline halves."
+   ],
+   [
+    "children",
+    "ReactNode",
+    "",
+    "Caption revealed at the end."
+   ],
+   [
+    "container",
+    "RefObject<HTMLElement>",
+    "",
+    "Custom scroll container."
+   ]
+  ],
+  "prompt": "Pin a stage; map progress to the media box width 34%→100%, height 38%→100%, radius 28→0 and inner image scale 1.4→1; translate the headline halves outward and fade; fade the caption in near the end."
+ },
+ {
+  "id": "layout-split-panes",
+  "name": "Layout — Split Panes",
+  "category": "layout",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Resizable split view with feel: drag the handle and the panes resize live; release near a snap point (⅓, ½, ⅔) and it springs into place. The grip grows while dragging and shows the ratio. Arrow keys, Home/End and double-click to reset.",
+  "tags": [
+   "premium",
+   "layout",
+   "split",
+   "resize",
+   "panes",
+   "editor",
+   "drag"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "docs"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Handle is role=separator with live aria-valuenow; ←/→, Home/End, Enter reset. Reduced motion snaps without springs.",
+  "perf": "One motion value drives the left width; no layout thrash beyond the resize itself.",
+  "props": [
+   [
+    "left",
+    "ReactNode",
+    "",
+    "Left pane."
+   ],
+   [
+    "right",
+    "ReactNode",
+    "",
+    "Right pane."
+   ],
+   [
+    "defaultSplit",
+    "number",
+    "0.5",
+    "Initial ratio."
+   ],
+   [
+    "snaps",
+    "number[]",
+    "[⅓, ½, ⅔]",
+    "Snap points."
+   ],
+   [
+    "min / max",
+    "number",
+    "0.2 / 0.8",
+    "Limits."
+   ]
+  ],
+  "prompt": "Store the split as a motion value; pointer capture on the handle maps clientX to a clamped ratio; on release spring to the nearest snap within 6%; render the ratio badge from the motion value."
+ },
+ {
+  "id": "layout-stack-grid",
+  "name": "Layout — Stack ⇄ Grid ⇄ List",
+  "category": "layout",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 460,
+  "description": "One collection, three layouts: a messy stacked deck, a tidy grid and a compact list. Switching animates every card from where it is to where it belongs with a per-card stagger, so the deck deals itself out.",
+  "tags": [
+   "premium",
+   "layout",
+   "grid",
+   "list",
+   "stack",
+   "shared-layout",
+   "gallery"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "portfolio",
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Mode switch is a radiogroup; reduced motion switches instantly.",
+  "perf": "Motion layout animations (transform-based FLIP).",
+  "props": [
+   [
+    "items",
+    "{ id; src; title; meta? }[]",
+    "",
+    "Items."
+   ],
+   [
+    "defaultMode",
+    "'stack' | 'grid' | 'list'",
+    "stack",
+    "Initial layout."
+   ]
+  ],
+  "prompt": "Render items as motion.div with layout and per-index delayed springs; change container classes between a single grid cell (stack, with per-item rotation and z-index), a CSS grid and a flex column."
+ },
+ {
+  "id": "card-product-swatch",
+  "name": "Card — Product Swatches",
+  "category": "cards",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 520,
+  "description": "Product card that changes with the colourway: picking a swatch floods the backdrop with the new colour, the product swings out and the next swings in from that side, name and price roll, and the selection ring glides. Add to bag morphs into a check.",
+  "tags": [
+   "premium",
+   "card",
+   "product",
+   "ecommerce",
+   "swatch",
+   "variant",
+   "shop"
+  ],
+  "pageTypes": [
+   "ecommerce"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Swatches are a radiogroup with names; the button announces the added state. Reduced motion cross-fades.",
+  "perf": "AnimatePresence popLayout for the image and rolling text; one layoutId ring.",
+  "props": [
+   [
+    "title",
+    "string",
+    "",
+    "Product name."
+   ],
+   [
+    "subtitle",
+    "string",
+    "",
+    "Secondary line."
+   ],
+   [
+    "variants",
+    "{ name; color; image; price }[]",
+    "",
+    "Colourways."
+   ],
+   [
+    "currency",
+    "string",
+    "$",
+    "Currency symbol."
+   ]
+  ],
+  "prompt": "Track [index, direction]; animate the backdrop colour; AnimatePresence with custom direction slides/rotates the image; roll name and price; a shared layoutId ring on the active swatch; morph the CTA into a success state."
+ },
+ {
+  "id": "card-now-playing",
+  "name": "Card — Now Playing",
+  "category": "cards",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 520,
+  "description": "Mini player → full player. The compact pill (cover, title, live equaliser) expands in place into a full card — cover, title and play button are shared elements that fly to their new spots — with a scrubber and elapsed/remaining time.",
+  "tags": [
+   "premium",
+   "card",
+   "music",
+   "player",
+   "expand",
+   "shared-layout",
+   "media"
+  ],
+  "pageTypes": [
+   "media",
+   "social"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Pill is a button that expands; controls are labelled; seek is a native range input. Reduced motion skips the flight.",
+  "perf": "Shared layoutIds for three elements; the equaliser is four transform animations.",
+  "props": [
+   [
+    "track",
+    "{ title; artist; cover; duration }",
+    "",
+    "Track."
+   ],
+   [
+    "defaultExpanded",
+    "boolean",
+    "false",
+    "Start expanded."
+   ]
+  ],
+  "prompt": "Render either the pill or the full card inside a layout container; give cover, meta and play button the same layoutId in both so they animate between positions; tick the time while playing."
+ },
+ {
+  "id": "text-cube-rotate",
+  "name": "Text — Cube Rotate",
+  "category": "text",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Rotating word where every letter is the face of a little cube: on each change the cubes tip forward one after another, so the new word rolls in letter by letter while the old one tips away. Different word lengths reflow smoothly.",
+  "tags": [
+   "premium",
+   "text",
+   "rotate",
+   "3d",
+   "cube",
+   "words",
+   "headline"
+  ],
+  "pageTypes": [
+   "landing"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Current word is exposed via aria-label and aria-live; letters are aria-hidden. Reduced motion cross-fades words.",
+  "perf": "Per-letter rotateX transforms with backface hidden.",
+  "props": [
+   [
+    "words",
+    "string[]",
+    "",
+    "Words to cycle."
+   ],
+   [
+    "interval",
+    "number",
+    "2200",
+    "ms per word."
+   ],
+   [
+    "stagger",
+    "number",
+    "0.045",
+    "Letter stagger (s)."
+   ]
+  ],
+  "prompt": "For each letter slot render AnimatePresence; letters enter from rotateX 90° and exit to −90° around an origin half an em behind the glyph, with per-index delay; animate slot width to 0 for missing letters."
+ },
+ {
+  "id": "text-gravity-hover",
+  "name": "Text — Gravity Letters",
+  "category": "text",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 360,
+  "description": "Letters that come unstuck: brush a letter and it drops off the line, tumbles and bounces on an invisible floor with a spin, then floats back into place on a spring. A Shake button drops them all.",
+  "tags": [
+   "premium",
+   "text",
+   "gravity",
+   "physics",
+   "hover",
+   "playful",
+   "headline"
+  ],
+  "pageTypes": [
+   "landing",
+   "portfolio"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Full text in aria-label; Shake button for keyboard users; reduced motion keeps the text still.",
+  "perf": "Two motion values per letter; animation only while falling.",
+  "props": [
+   [
+    "text",
+    "string",
+    "",
+    "Text."
+   ],
+   [
+    "drop",
+    "number",
+    "1.6",
+    "Fall distance in em."
+   ],
+   [
+    "restore",
+    "number",
+    "1800",
+    "ms before letters return."
+   ]
+  ],
+  "prompt": "Split into letter spans with y/rotate motion values; on pointerenter animate y through bounce keyframes to the floor with a random spin, wait, then spring back to 0."
+ },
+ {
+  "id": "widget-habit-tracker",
+  "name": "Widget — Habit Tracker",
+  "category": "widgets",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 460,
+  "description": "Habit tracker grid: tap a day and it fills with a pop and a ring burst; the streak flame counter rolls to its new value and flickers bigger the longer the streak. Today is outlined.",
+  "tags": [
+   "premium",
+   "widget",
+   "habit",
+   "tracker",
+   "streak",
+   "calendar",
+   "grid"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "onboarding"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Each day is a toggle button with its relative date; the streak has an aria-label. Reduced motion removes pops.",
+  "perf": "Small grid of buttons; springs on scale only.",
+  "props": [
+   [
+    "habit",
+    "string",
+    "",
+    "Habit name."
+   ],
+   [
+    "weeks",
+    "number",
+    "6",
+    "Weeks shown."
+   ],
+   [
+    "defaultDone",
+    "number[]",
+    "[]",
+    "Completed day indexes."
+   ],
+   [
+    "color",
+    "string",
+    "#22c55e",
+    "Fill colour."
+   ]
+  ],
+  "prompt": "Render a 7-row column-flow grid; filled state springs a coloured square to scale 1 and spawns an expanding ring; compute the streak backward from today and roll it with AnimatePresence."
+ },
+ {
+  "id": "widget-thermostat",
+  "name": "Widget — Thermostat",
+  "category": "widgets",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 480,
+  "description": "Smart-thermostat dial: drag around the ring or use the arrow keys to set the target; the arc fills along a blue-to-orange gradient, the number ticks, and the mode switches between heating, cooling and idle with a breathing glow.",
+  "tags": [
+   "premium",
+   "widget",
+   "thermostat",
+   "dial",
+   "smart-home",
+   "knob",
+   "iot"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "settings"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=slider with value text including the mode; arrow keys step 0.5°. Reduced motion stops the glow.",
+  "perf": "Motion values drive the arc dash and knob position.",
+  "props": [
+   [
+    "defaultTarget",
+    "number",
+    "21",
+    "Target °."
+   ],
+   [
+    "current",
+    "number",
+    "19",
+    "Room °."
+   ],
+   [
+    "min / max",
+    "number",
+    "10 / 30",
+    "Range."
+   ]
+  ],
+  "prompt": "Convert pointer angle around the centre to a value across a 270° sweep; render a dashed circle whose dash length follows the value, a knob at the arc end, and derive heat/cool/idle from target vs current."
+ },
+ {
+  "id": "form-emoji-feedback",
+  "name": "Form — Emoji Feedback",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 500,
+  "description": "Feedback rating where one drawn face does the talking: choose 1–5 and the mouth curve bends from frown to grin, brows tilt, eyes squint and the face warms; a comment box slides open and Send turns into a thank-you.",
+  "tags": [
+   "premium",
+   "form",
+   "feedback",
+   "rating",
+   "emoji",
+   "nps",
+   "survey"
+  ],
+  "pageTypes": [
+   "ai-app",
+   "ecommerce",
+   "onboarding"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Rating is a radiogroup with text labels; the face is decorative. Reduced motion swaps states without springs.",
+  "perf": "One SVG; path d and transforms animate.",
+  "props": [
+   [
+    "question",
+    "string",
+    "How was your experience?",
+    "Prompt."
+   ],
+   [
+    "labels",
+    "string[5]",
+    "Awful … Loved it",
+    "Rating labels."
+   ],
+   [
+    "onSubmit",
+    "(rating, comment) => void",
+    "",
+    "Submit handler."
+   ]
+  ],
+  "prompt": "Map the rating to k = 0..1; derive the mouth quadratic control point, brow rotation, eye height and fill colour from k and animate them with springs; reveal the comment field and submit button once rated."
+ },
+ {
+  "id": "form-chat-composer",
+  "name": "Form — Chat Composer",
+  "category": "forms",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 520,
+  "description": "Messaging composer with polish: the field grows with the text, attachments drop in as removable chips, the mic morphs into a send arrow as soon as you type, and sent text lifts into the thread as a bubble, followed by a typing reply.",
+  "tags": [
+   "premium",
+   "form",
+   "chat",
+   "composer",
+   "messaging",
+   "input",
+   "attachments"
+  ],
+  "pageTypes": [
+   "social",
+   "ai-app"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Thread is role=log aria-live; Enter sends, Shift+Enter breaks lines; all buttons labelled. Reduced motion fades.",
+  "perf": "Layout animations on bubbles only.",
+  "props": [
+   [
+    "initial",
+    "{ id; text; me }[]",
+    "[]",
+    "Starting messages."
+   ],
+   [
+    "placeholder",
+    "string",
+    "Message",
+    "Field placeholder."
+   ],
+   [
+    "onSend",
+    "(text, files) => void",
+    "",
+    "Send handler."
+   ]
+  ],
+  "prompt": "Auto-size the textarea from scrollHeight; keep attachments as AnimatePresence chips; swap the mic/send icon by key with a rotating scale; append bubbles that rise from the composer origin with layout."
+ },
+ {
+  "id": "chart-funnel",
+  "name": "Chart — Funnel",
+  "category": "data",
+  "engine": "svg",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 460,
+  "description": "Conversion funnel drawn as one continuous, smoothly tapering SVG shape: stages pour in from the top on view, drop-off between stages appears as a pill, and hovering a stage highlights its band and shows its share of the top.",
+  "tags": [
+   "premium",
+   "chart",
+   "funnel",
+   "conversion",
+   "analytics",
+   "svg",
+   "marketing"
+  ],
+  "pageTypes": [
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "SVG has an aria-label listing all stages; stage rows are focusable buttons. Reduced motion shows the final chart.",
+  "perf": "Five paths and a short list; animations run once.",
+  "props": [
+   [
+    "stages",
+    "{ label; value }[]",
+    "",
+    "Funnel stages."
+   ],
+   [
+    "colors",
+    "[string, string]",
+    "violet → cyan",
+    "Gradient."
+   ],
+   [
+    "title",
+    "string",
+    "Conversion",
+    "Title."
+   ]
+  ],
+  "prompt": "For each stage build a path from its half-width to the next stage's with cubic curves on both sides; animate scaleY from the band's top with a stagger; compute drop-off between consecutive stages."
+ },
+ {
+  "id": "chart-gauge",
+  "name": "Chart — Gauge",
+  "category": "data",
+  "engine": "svg",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Speedometer gauge with a weighted needle: on view and on change the needle sweeps past the target and settles with a damped wobble, the active zone lights up and the readout counts. Zones are configurable.",
+  "tags": [
+   "premium",
+   "chart",
+   "gauge",
+   "speedometer",
+   "kpi",
+   "score",
+   "meter"
+  ],
+  "pageTypes": [
+   "dashboard"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "role=img labelled with value and max. Reduced motion places the needle directly.",
+  "perf": "A low-damping spring on one motion value drives rotation and the number.",
+  "props": [
+   [
+    "value",
+    "number",
+    "",
+    "Value."
+   ],
+   [
+    "min / max",
+    "number",
+    "0 / 100",
+    "Range."
+   ],
+   [
+    "label",
+    "string",
+    "Score",
+    "Label."
+   ],
+   [
+    "unit",
+    "string",
+    "",
+    "Unit."
+   ],
+   [
+    "zones",
+    "{ to; color }[]",
+    "red/amber/green",
+    "Coloured zones."
+   ]
+  ],
+  "prompt": "Draw zone arcs across a 240° sweep and tick marks; rotate the needle group from its bottom-centre with an underdamped spring toward the value; derive the readout from the same motion value."
+ },
+ {
+  "id": "button-split-action",
+  "name": "Button — Split Action",
+  "category": "buttons",
+  "engine": "motion",
+  "deps": [
+   "motion",
+   "lucide-react"
+  ],
+  "priority": "P1",
+  "previewHeight": 420,
+  "description": "Split button whose menu grows out of the button itself: the chevron opens a panel that morphs from the pill's shape with options staggering in; picking one rolls the main label to the new action.",
+  "tags": [
+   "premium",
+   "button",
+   "split",
+   "dropdown",
+   "menu",
+   "actions"
+  ],
+  "pageTypes": [
+   "dashboard",
+   "settings"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "Chevron has aria-haspopup/expanded; menu uses menuitemradio with arrow keys, Esc returns focus. Reduced motion fades.",
+  "perf": "One panel morph and a few staggered items; label roll via AnimatePresence.",
+  "props": [
+   [
+    "options",
+    "{ id; label; hint?; icon? }[]",
+    "",
+    "Actions."
+   ],
+   [
+    "defaultId",
+    "string",
+    "first",
+    "Initial action."
+   ],
+   [
+    "onAction",
+    "(id: string) => void",
+    "",
+    "Primary click."
+   ]
+  ],
+  "prompt": "Render a pill with a primary button and a chevron; the menu animates from scale .4 / radius 999 / y −24 at the top-right to a 16px-radius panel; items stagger in; choosing one rolls the primary label with AnimatePresence and closes the menu."
+ },
+ {
+  "id": "button-like-counter",
+  "name": "Button — Like Counter",
+  "category": "buttons",
+  "engine": "motion",
+  "deps": [
+   "motion"
+  ],
+  "priority": "P1",
+  "previewHeight": 320,
+  "description": "Like button with the full ceremony: the heart squashes then bursts — a ring expands and confetti dots fly out — and the counter rolls digit by digit, only the digits that change, up for a like and down for an unlike.",
+  "tags": [
+   "premium",
+   "button",
+   "like",
+   "heart",
+   "counter",
+   "social",
+   "confetti"
+  ],
+  "pageTypes": [
+   "social",
+   "media"
+  ],
+  "inspiration": [
+   "kinetik Premium collection"
+  ],
+  "a11y": "aria-pressed with the count in the label. Reduced motion skips burst and roll.",
+  "perf": "Short-lived transform animations; digits are separate spans keyed by value.",
+  "props": [
+   [
+    "count",
+    "number",
+    "",
+    "Base count."
+   ],
+   [
+    "defaultLiked",
+    "boolean",
+    "false",
+    "Start liked."
+   ],
+   [
+    "onChange",
+    "(liked: boolean) => void",
+    "",
+    "Toggle handler."
+   ]
+  ],
+  "prompt": "Render each character of the formatted count in its own slot with AnimatePresence keyed by the character so only changed digits animate (direction by like/unlike); burst ring + radial dots on like."
+ }
+]

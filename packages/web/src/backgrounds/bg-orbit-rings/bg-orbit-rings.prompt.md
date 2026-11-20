@@ -1,0 +1,1 @@
+Draw concentric circles in an SVG tilted with perspective + rotateX(64deg); per ring, a group spinning via CSS keyframes (negative delay for phase) containing a short dashed arc as the tail and a glowing planet.

@@ -1,0 +1,1 @@
+Track [index, direction]; animate the backdrop colour; AnimatePresence with custom direction slides/rotates the image; roll name and price; a shared layoutId ring on the active swatch; morph the CTA into a success state.

@@ -2,7 +2,7 @@
 
 Status of every component ID in `motion-library-master-plan.md` (Sections 7 & 8), plus everything built beyond it.
 
-**Summary (kinetik 2.2):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **412 registry items live** (371 components + 27 blocks incl. 3 templates + 14 flows), including the 36-piece GSAP collection and the 13-piece three.js collection, plus 30 Mobbin-researched heroes. Research and gap analysis: `docs/research/README.md`.
+**Summary (kinetik 2.2):** 137 plan items done · 6 partial (mostly native Expo source still to write) · 55 todo · **432 registry items live** (391 components + 27 blocks incl. 3 templates + 14 flows), including the 36-piece GSAP collection and the 13-piece three.js collection, plus 30 Mobbin-researched heroes. Research and gap analysis: `docs/research/README.md`.
 
 Legend: ✅ done · 🟡 partial · ⬜ todo
 
@@ -381,3 +381,5 @@ Report: `docs/audit/2026-11-site-audit.md`.
 **Premium round 2 (11):** `hero-depth-landscape` · `hero-product-orbit` · `hero-aurora-type` · `form-auth-morph` · `form-credit-card` · `input-password-peek` · `widget-flight` · `widget-vinyl` · `widget-flip-countdown` · `mockup-phone-3d` · `mockup-laptop-open` — plus 14 existing pieces curated into Premium (5 heroes, 5 forms, 3 widgets, 1 mockup). Every category now has Premium items.
 
 **Premium round 3 (20):** `cursor-snap-outline` · `cursor-flashlight` · `chart-bar-race` · `chart-live-stream` · `ai-voice-call` · `ai-plan-graph` · `toast-island` · `share-sheet` · `button-slide-confirm` · `button-3d-key` · `nav-stretch-tabs` · `nav-drawer-3d` · `loader-skeleton-morph` · `loader-orbit-dots` · `svg-icon-set` · `svg-route-map` · `transition-ink-blot` · `transition-stairs` · `media-polaroid-stack` · `media-thumb-reel`. Ten thin categories go from 2 to 4 Premium items each; **114 Premium items** across 20 categories. Spec: `packages/web/specs/17-premium-3.json`. Tests: 2,196 passing.
+
+**Premium round 4 (20):** `mockup-watch` · `mockup-tablet-rotate` · `bg-pixel-wave` · `bg-orbit-rings` · `scroll-cards-fan` · `scroll-media-expand` · `layout-split-panes` · `layout-stack-grid` · `card-product-swatch` · `card-now-playing` · `text-cube-rotate` · `text-gravity-hover` · `widget-habit-tracker` · `widget-thermostat` · `form-emoji-feedback` · `form-chat-composer` · `chart-funnel` · `chart-gauge` · `button-split-action` · `button-like-counter`. **134 Premium items**; every category except navigation, loaders, cursor, overlays, transitions, AI and SVG (4 each) now has 5+. Also fixed SVG transform origins in `svg-icon-set`, `icon-morph` and `input-password-peek` (Motion measures SVG origins from the element's own box). Spec: `packages/web/specs/18-premium-4.json`. Tests: 2,316 passing.

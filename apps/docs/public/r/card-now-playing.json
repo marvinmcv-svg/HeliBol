@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-now-playing",
+  "type": "registry:component",
+  "title": "Card — Now Playing",
+  "description": "Mini player → full player. The compact pill (cover, title, live equaliser) expands in place into a full card — cover, title and play button are shared elements that fly to their new spots — with a scrubber and elapsed/remaining time.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-now-playing.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-now-playing.tsx",
+      "content": "\"use client\";\nimport { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { ChevronDown, Pause, Play, SkipBack, SkipForward } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface Track { title: string; artist: string; cover: string; duration: number }\nexport interface CardNowPlayingProps {\n  track: Track;\n  defaultExpanded?: boolean;\n  className?: string;\n}\n\nconst fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, \"0\")}`;\n\n/**\n * Mini player → full player. The compact pill (cover, title, live equaliser) expands in place into a\n * full card — cover, title and controls are shared elements that fly to their new spots — with a\n * draggable scrubber and elapsed/remaining time. Collapse to tuck it back.\n */\nexport function CardNowPlaying({ track, defaultExpanded = false, className }: CardNowPlayingProps) {\n  const reduced = useReducedMotion();\n  const [open, setOpen] = useState(defaultExpanded);\n  const [playing, setPlaying] = useState(true);\n  const [t, setT] = useState(track.duration * 0.32);\n  useEffect(() => {\n    if (!playing) return;\n    const id = setInterval(() => setT((x) => (x + 1) % track.duration), 1000);\n    return () => clearInterval(id);\n  }, [playing, track.duration]);\n  const spring = reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 300, damping: 30 };\n  const PlayBtn = ({ big }: { big?: boolean }) => (\n    <motion.button layoutId=\"np-play\" transition={spring} type=\"button\" aria-label={playing ? \"Pause\" : \"Play\"} onClick={(e) => (e.stopPropagation(), setPlaying(!playing))} className={cn(\"grid place-items-center rounded-full bg-white text-black\", big ? \"size-14\" : \"size-8\")}>\n      {playing ? <Pause className={big ? \"size-6\" : \"size-4\"} fill=\"currentColor\" /> : <Play className={cn(big ? \"size-6\" : \"size-4\", \"translate-x-px\")} fill=\"currentColor\" />}\n    </motion.button>\n  );\n\n  return (\n    <div className={cn(\"relative grid w-80 place-items-center\", className)}>\n      <motion.div layout transition={spring} className={cn(\"overflow-hidden bg-zinc-900 text-white shadow-2xl\", open ? \"w-80 rounded-[32px] p-5\" : \"w-72 rounded-full p-2 pr-3\")}>\n        {open ? (\n          <div className=\"space-y-3.5\">\n            <button type=\"button\" onClick={() => setOpen(false)} aria-label=\"Collapse player\" className=\"mx-auto -mt-2 flex text-white/60 hover:text-white\"><ChevronDown className=\"size-5\" /></button>\n            <motion.img layoutId=\"np-cover\" transition={spring} src={track.cover} alt=\"\" className=\"aspect-[5/4] w-full rounded-2xl object-cover shadow-lg\" />\n            <motion.div layoutId=\"np-meta\" transition={spring}>\n              <p className=\"text-lg font-semibold\">{track.title}</p>\n              <p className=\"text-sm text-white/60\">{track.artist}</p>\n            </motion.div>\n            <div>\n              <input type=\"range\" min={0} max={track.duration} value={t} onChange={(e) => setT(+e.target.value)} aria-label=\"Seek\" className=\"h-1 w-full cursor-pointer accent-white\" />\n              <div className=\"mt-1 flex justify-between font-mono text-[11px] text-white/50\"><span>{fmt(t)}</span><span>-{fmt(track.duration - t)}</span></div>\n            </div>\n            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduced ? 0 : 0.15 }} className=\"flex items-center justify-center gap-8\">\n              <button type=\"button\" aria-label=\"Previous\" onClick={() => setT(0)}><SkipBack className=\"size-6\" fill=\"currentColor\" /></button>\n              <PlayBtn big />\n              <button type=\"button\" aria-label=\"Next\" onClick={() => setT(0)}><SkipForward className=\"size-6\" fill=\"currentColor\" /></button>\n            </motion.div>\n          </div>\n        ) : (\n          <div role=\"button\" tabIndex={0} aria-label={`Expand player: ${track.title}`} onClick={() => setOpen(true)} onKeyDown={(e) => (e.key === \"Enter\" || e.key === \" \") && (e.preventDefault(), setOpen(true))} className=\"flex cursor-pointer items-center gap-3\">\n            <motion.img layoutId=\"np-cover\" transition={spring} src={track.cover} alt=\"\" className=\"size-11 rounded-full object-cover\" />\n            <motion.div layoutId=\"np-meta\" transition={spring} className=\"min-w-0 flex-1\">\n              <p className=\"truncate text-sm font-semibold\">{track.title}</p>\n              <p className=\"truncate text-xs text-white/60\">{track.artist}</p>\n            </motion.div>\n            <Eq playing={playing && !reduced} />\n            <PlayBtn />\n          </div>\n        )}\n      </motion.div>\n      <AnimatePresence>{!open && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className=\"mt-4 text-xs text-muted-foreground\">Tap the player to expand</motion.p>}</AnimatePresence>\n    </div>\n  );\n}\n\nfunction Eq({ playing }: { playing: boolean }) {\n  return (\n    <span aria-hidden className=\"flex h-4 items-end gap-[3px]\">\n      {[0.6, 1, 0.4, 0.8].map((h, i) => (\n        <motion.span key={i} className=\"w-[3px] rounded-full bg-emerald-400\" animate={playing ? { height: [\"30%\", `${h * 100}%`, \"45%\", \"90%\", \"30%\"] } : { height: \"30%\" }} transition={{ duration: 1.1 + i * 0.17, repeat: Infinity, ease: \"easeInOut\" }} />\n      ))}\n    </span>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "card",
+      "music",
+      "player",
+      "expand",
+      "shared-layout",
+      "media"
+    ],
+    "pageTypes": [
+      "media",
+      "social"
+    ]
+  }
+}

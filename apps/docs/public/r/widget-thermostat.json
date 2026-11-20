@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-thermostat",
+  "type": "registry:component",
+  "title": "Widget — Thermostat",
+  "description": "Smart-thermostat dial: drag around the ring or use the arrow keys to set the target; the arc fills along a blue-to-orange gradient, the number ticks, and the mode switches between heating, cooling and idle with a breathing glow.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/widget-thermostat.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/widget-thermostat.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { animate, motion, useMotionValue, useMotionValueEvent, useTransform } from \"motion/react\";\nimport { Flame, Snowflake, Wind } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface WidgetThermostatProps {\n  defaultTarget?: number;\n  current?: number;\n  min?: number;\n  max?: number;\n  className?: string;\n}\n\nconst START = 135, SWEEP = 270; // degrees, gauge opens at the bottom\n\n/**\n * Smart-thermostat dial: drag around the ring (or use the arrow keys) to set the target; the arc\n * fills and its gradient shifts from icy blue to ember orange, the big number ticks, and the mode\n * switches to heating, cooling or idle depending on the current room temperature, with a matching\n * glow that breathes.\n */\nexport function WidgetThermostat({ defaultTarget = 21, current = 19, min = 10, max = 30, className }: WidgetThermostatProps) {\n  const reduced = useReducedMotion();\n  const target = useMotionValue(defaultTarget);\n  const [t, setT] = useState(defaultTarget);\n  useMotionValueEvent(target, \"change\", (v) => setT(Math.round(v * 2) / 2));\n  const frac = useTransform(target, [min, max], [0, 1]);\n  const angle = useTransform(frac, (f) => START + f * SWEEP);\n  const knobX = useTransform(angle, (a) => 100 + Math.cos((a * Math.PI) / 180) * 80);\n  const knobY = useTransform(angle, (a) => 100 + Math.sin((a * Math.PI) / 180) * 80);\n  const ARC = 2 * Math.PI * 80 * (SWEEP / 360);\n  const dash = useTransform(frac, (f) => `${f * ARC} 999`);\n  const mode = t > current + 0.4 ? \"heat\" : t < current - 0.4 ? \"cool\" : \"idle\";\n  const glow = mode === \"heat\" ? \"#f97316\" : mode === \"cool\" ? \"#38bdf8\" : \"#a1a1aa\";\n  const svg = useRef<SVGSVGElement>(null);\n\n  const setFromPointer = (x: number, y: number) => {\n    const b = svg.current!.getBoundingClientRect();\n    let a = (Math.atan2(y - (b.top + b.height / 2), x - (b.left + b.width / 2)) * 180) / Math.PI;\n    a = ((a - START) % 360 + 360) % 360;\n    if (a > SWEEP) a = a - SWEEP < (360 - SWEEP) / 2 ? SWEEP : 0;\n    target.set(Math.round((min + (a / SWEEP) * (max - min)) * 2) / 2);\n  };\n  const step = (d: number) => {\n    const v = Math.max(min, Math.min(max, t + d));\n    reduced ? target.set(v) : animate(target, v, { type: \"spring\", stiffness: 300, damping: 30 });\n  };\n\n  return (\n    <div className={cn(\"relative w-[260px] rounded-[36px] bg-zinc-950 p-5 text-white shadow-2xl\", className)}>\n      <motion.div aria-hidden className=\"absolute inset-8 rounded-full blur-3xl\" animate={{ backgroundColor: glow, opacity: reduced ? 0.25 : mode === \"idle\" ? 0.12 : [0.2, 0.38, 0.2] }} transition={{ duration: 2.4, repeat: reduced ? 0 : Infinity }} />\n      <div\n        role=\"slider\"\n        tabIndex={0}\n        aria-label=\"Target temperature\"\n        aria-valuemin={min}\n        aria-valuemax={max}\n        aria-valuenow={t}\n        aria-valuetext={`${t} degrees, ${mode === \"heat\" ? \"heating\" : mode === \"cool\" ? \"cooling\" : \"holding\"}`}\n        onKeyDown={(e) => {\n          if (e.key === \"ArrowUp\" || e.key === \"ArrowRight\") (e.preventDefault(), step(0.5));\n          if (e.key === \"ArrowDown\" || e.key === \"ArrowLeft\") (e.preventDefault(), step(-0.5));\n        }}\n        className=\"relative rounded-full outline-none focus-visible:ring-2 focus-visible:ring-white/60\"\n      >\n        <svg\n          ref={svg}\n          viewBox=\"0 0 200 200\"\n          className=\"block w-full cursor-grab touch-none active:cursor-grabbing\"\n          onPointerDown={(e) => (e.currentTarget.setPointerCapture(e.pointerId), setFromPointer(e.clientX, e.clientY))}\n          onPointerMove={(e) => e.buttons && setFromPointer(e.clientX, e.clientY)}\n        >\n          <defs>\n            <linearGradient id=\"kn-thermo\" x1=\"0\" x2=\"1\" y1=\"1\" y2=\"0\">\n              <stop offset=\"0\" stopColor=\"#38bdf8\" />\n              <stop offset=\".5\" stopColor=\"#a78bfa\" />\n              <stop offset=\"1\" stopColor=\"#f97316\" />\n            </linearGradient>\n          </defs>\n          {Array.from({ length: 55 }, (_, i) => {\n            const a = ((START + (i / 54) * SWEEP) * Math.PI) / 180;\n            return <line key={i} x1={100 + Math.cos(a) * 94} y1={100 + Math.sin(a) * 94} x2={100 + Math.cos(a) * (i % 9 ? 90 : 87)} y2={100 + Math.sin(a) * (i % 9 ? 90 : 87)} stroke=\"#fff\" strokeOpacity={i % 9 ? 0.18 : 0.45} strokeWidth=\"1\" />;\n          })}\n          <circle r=\"80\" cx=\"100\" cy=\"100\" fill=\"none\" stroke=\"#fff\" strokeOpacity=\".08\" strokeWidth=\"12\" strokeLinecap=\"round\" strokeDasharray={`${ARC} 999`} transform={`rotate(${START} 100 100)`} />\n          <motion.circle r=\"80\" cx=\"100\" cy=\"100\" fill=\"none\" stroke=\"url(#kn-thermo)\" strokeWidth=\"12\" strokeLinecap=\"round\" style={{ strokeDasharray: dash }} transform={`rotate(${START} 100 100)`} />\n          <motion.circle r=\"9\" fill=\"#fff\" style={{ cx: knobX, cy: knobY }} />\n        </svg>\n        <div className=\"pointer-events-none absolute inset-0 grid place-items-center text-center\">\n          <div>\n            <p className=\"text-[10px] uppercase tracking-[0.25em] text-white/50\">{mode === \"heat\" ? \"Heating to\" : mode === \"cool\" ? \"Cooling to\" : \"Holding\"}</p>\n            <p className=\"font-mono text-5xl font-light tabular-nums\">{t.toFixed(1)}<span className=\"text-2xl text-white/50\">°</span></p>\n            <p className=\"text-xs text-white/50\">Inside {current}°</p>\n          </div>\n        </div>\n      </div>\n      <div className=\"relative mt-2 flex justify-center gap-2\">\n        {([[\"heat\", Flame], [\"idle\", Wind], [\"cool\", Snowflake]] as const).map(([m, Icon]) => (\n          <span key={m} className={cn(\"grid size-9 place-items-center rounded-full transition-colors\", mode === m ? \"bg-white text-black\" : \"bg-white/5 text-white/40\")} aria-hidden>\n            <Icon className=\"size-4\" />\n          </span>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "widgets"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "widget",
+      "thermostat",
+      "dial",
+      "smart-home",
+      "knob",
+      "iot"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "settings"
+    ]
+  }
+}

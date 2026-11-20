@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "layout-stack-grid",
+  "type": "registry:component",
+  "title": "Layout — Stack ⇄ Grid ⇄ List",
+  "description": "One collection, three layouts: a messy stacked deck, a tidy grid and a compact list. Switching animates every card from where it is to where it belongs with a per-card stagger, so the deck deals itself out.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/layout-stack-grid.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/layout-stack-grid.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { LayoutGroup, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface StackGridItem { id: string; src: string; title: string; meta?: string }\nexport type StackGridMode = \"stack\" | \"grid\" | \"list\";\nexport interface LayoutStackGridProps {\n  items: StackGridItem[];\n  defaultMode?: StackGridMode;\n  className?: string;\n}\n\nconst tilt = [-7, 5, -3, 8, -5, 3, -8, 6];\n\n/**\n * One collection, three layouts: a messy stacked deck, a tidy grid and a compact list. Switching\n * animates every card from where it is to where it belongs (shared layout), with a per-card stagger\n * so the deck deals itself out. The segmented control's pill slides too.\n */\nexport function LayoutStackGrid({ items, defaultMode = \"stack\", className }: LayoutStackGridProps) {\n  const reduced = useReducedMotion();\n  const [mode, setMode] = useState<StackGridMode>(defaultMode);\n  const t = (i: number) => (reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 260, damping: 26, delay: i * 0.035 });\n  return (\n    <LayoutGroup>\n      <div className={cn(\"flex flex-col items-center gap-5\", className)}>\n        <div role=\"radiogroup\" aria-label=\"Layout\" className=\"relative flex rounded-full bg-muted p-1\">\n          {([\"stack\", \"grid\", \"list\"] as const).map((m) => (\n            <button key={m} type=\"button\" role=\"radio\" aria-checked={mode === m} onClick={() => setMode(m)} className={cn(\"relative rounded-full px-4 py-1 text-xs font-medium capitalize\", mode === m ? \"text-background\" : \"text-muted-foreground\")}>\n              {mode === m && <motion.span layoutId=\"kn-sg-pill\" className=\"absolute inset-0 rounded-full bg-foreground\" transition={t(0)} />}\n              <span className=\"relative\">{m}</span>\n            </button>\n          ))}\n        </div>\n        <div\n          className={cn(\n            \"relative w-full\",\n            mode === \"stack\" && \"grid h-[300px] place-items-center\",\n            mode === \"grid\" && \"grid grid-cols-3 gap-3 sm:grid-cols-4\",\n            mode === \"list\" && \"flex max-w-md flex-col gap-2\",\n          )}\n        >\n          {items.map((it, i) => (\n            <motion.div\n              key={it.id}\n              layout\n              transition={t(i)}\n              className={cn(\n                \"overflow-hidden bg-card shadow-sm ring-1 ring-border\",\n                mode === \"stack\" && \"col-start-1 row-start-1 w-44 rounded-2xl p-2 pb-3 shadow-xl\",\n                mode === \"grid\" && \"rounded-xl\",\n                mode === \"list\" && \"flex items-center gap-3 rounded-xl p-2\",\n              )}\n              style={{ rotate: mode === \"stack\" ? tilt[i % tilt.length] : 0, zIndex: mode === \"stack\" ? items.length - i : 0 }}\n            >\n              <motion.img layout transition={t(i)} src={it.src} alt=\"\" className={cn(\"object-cover\", mode === \"list\" ? \"size-12 rounded-lg\" : \"aspect-[4/3] w-full\", mode === \"stack\" && \"rounded-xl\")} />\n              <motion.div layout=\"position\" transition={t(i)} className={cn(mode === \"grid\" && \"p-2\", mode === \"stack\" && \"px-1 pt-2\")}>\n                <p className=\"text-sm font-medium leading-tight\">{it.title}</p>\n                {it.meta && mode !== \"stack\" && <p className=\"text-xs text-muted-foreground\">{it.meta}</p>}\n              </motion.div>\n            </motion.div>\n          ))}\n        </div>\n      </div>\n    </LayoutGroup>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "layout",
+      "grid",
+      "list",
+      "stack",
+      "shared-layout",
+      "gallery"
+    ],
+    "pageTypes": [
+      "dashboard",
+      "portfolio",
+      "media"
+    ]
+  }
+}

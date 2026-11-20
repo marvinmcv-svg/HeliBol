@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-funnel",
+  "type": "registry:component",
+  "title": "Chart — Funnel",
+  "description": "Conversion funnel drawn as one continuous, smoothly tapering SVG shape: stages pour in from the top on view, drop-off between stages appears as a pill, and hovering a stage highlights its band and shows its share of the top.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/chart-funnel.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/chart-funnel.tsx",
+      "content": "\"use client\";\nimport { useRef, useState } from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn, useInView, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface FunnelStage { label: string; value: number }\nexport interface ChartFunnelProps {\n  stages: FunnelStage[];\n  colors?: [string, string];\n  title?: string;\n  className?: string;\n}\n\n/**\n * Conversion funnel drawn as one continuous, smoothly tapering SVG shape: each stage pours in from\n * the top when scrolled into view, the drop-off between stages appears as a pill, and hovering (or\n * focusing) a stage highlights its band and shows the share of the top of the funnel.\n */\nexport function ChartFunnel({ stages, colors = [\"#8b5cf6\", \"#22d3ee\"], title = \"Conversion\", className }: ChartFunnelProps) {\n  const reduced = useReducedMotion();\n  const box = useRef<HTMLDivElement>(null);\n  const inView = useInView(box, { amount: 0.4 });\n  const [hover, setHover] = useState<number | null>(null);\n  const W = 360, BAND = 56, top = stages[0]?.value || 1, n = stages.length;\n  const half = (i: number) => ((stages[Math.min(i, n - 1)]!.value / top) * W) / 2;\n  const id = `kn-fun-${title.replace(/\\W/g, \"\")}`;\n  const show = reduced || inView;\n\n  return (\n    <div ref={box} className={cn(\"w-full max-w-xl rounded-3xl border bg-card p-6\", className)}>\n      <p className=\"mb-4 text-sm font-medium text-muted-foreground\">{title}</p>\n      <div className=\"flex gap-4\">\n        <svg viewBox={`${-W / 2} 0 ${W} ${BAND * n}`} className=\"w-[62%] shrink-0 overflow-visible\" role=\"img\" aria-label={stages.map((s) => `${s.label} ${s.value.toLocaleString()}`).join(\", \")}>\n          <defs>\n            <linearGradient id={id} x1=\"0\" x2=\"0\" y1=\"0\" y2=\"1\"><stop offset=\"0\" stopColor={colors[0]} /><stop offset=\"1\" stopColor={colors[1]} /></linearGradient>\n          </defs>\n          {stages.map((_, i) => {\n            const a = half(i), b = half(i + 1), y0 = i * BAND, y1 = y0 + BAND, m = (y0 + y1) / 2;\n            const d = `M${-a} ${y0} L${a} ${y0} C${a} ${m} ${b} ${m} ${b} ${y1} L${-b} ${y1} C${-b} ${m} ${-a} ${m} ${-a} ${y0} Z`;\n            return (\n              <motion.path\n                key={i}\n                d={d}\n                fill={`url(#${id})`}\n                initial={false}\n                animate={{ opacity: show ? (hover === null || hover === i ? 1 : 0.35) : 0, scaleY: show ? 1 : 0 }}\n                style={{ originY: 0 }}\n                transition={{ duration: reduced ? 0 : 0.5, delay: reduced || hover !== null ? 0 : i * 0.15, ease: [0.22, 1, 0.36, 1] }}\n              />\n            );\n          })}\n          {stages.map((_, i) => i > 0 && <line key={`l${i}`} x1={-W / 2} x2={W / 2} y1={i * BAND} y2={i * BAND} className=\"stroke-card\" strokeWidth=\"2\" />)}\n        </svg>\n        <ul className=\"flex flex-1 flex-col\">\n          {stages.map((s, i) => {\n            const drop = i > 0 ? 1 - s.value / stages[i - 1]!.value : 0;\n            return (\n              <li key={s.label} style={{ height: `${100 / n}%` }} className=\"relative\">\n                <button type=\"button\" onPointerEnter={() => setHover(i)} onPointerLeave={() => setHover(null)} onFocus={() => setHover(i)} onBlur={() => setHover(null)} className={cn(\"flex h-full w-full flex-col justify-center rounded-lg px-2 text-left transition-colors\", hover === i && \"bg-muted\")}>\n                  <span className=\"text-xs text-muted-foreground\">{s.label}</span>\n                  <span className=\"font-mono text-base font-semibold tabular-nums\">{s.value.toLocaleString()}{hover === i && <span className=\"ml-1.5 text-xs font-normal text-muted-foreground\">{Math.round((s.value / top) * 100)}%</span>}</span>\n                </button>\n                {i > 0 && (\n                  <motion.span initial={false} animate={{ opacity: show ? 1 : 0, scale: show ? 1 : 0.6 }} transition={{ delay: reduced ? 0 : 0.3 + i * 0.15 }} className=\"absolute -top-2.5 right-0 rounded-full bg-rose-500/10 px-1.5 py-0.5 font-mono text-[10px] text-rose-500\">\n                    −{Math.round(drop * 100)}%\n                  </motion.span>\n                )}\n              </li>\n            );\n          })}\n        </ul>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "premium",
+      "chart",
+      "funnel",
+      "conversion",
+      "analytics",
+      "svg",
+      "marketing"
+    ],
+    "pageTypes": [
+      "dashboard"
+    ]
+  }
+}

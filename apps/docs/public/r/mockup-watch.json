@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mockup-watch",
+  "type": "registry:component",
+  "title": "Mockup — Smartwatch",
+  "description": "Smartwatch mockup with a working digital crown: drag the crown, scroll over the face or use ↑/↓ and the app list rolls on a curved fish-eye path — centre rows big and bright, edge rows shrinking inward — snapping to the nearest row.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/mockup-watch.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/mockup-watch.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState, type ReactNode } from \"react\";\nimport { animate, motion, useMotionValue, useMotionValueEvent, useTransform, type MotionValue } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface WatchApp { name: string; icon: ReactNode; color: string }\nexport interface MockupWatchProps {\n  apps: WatchApp[];\n  className?: string;\n}\n\nconst ROW = 46;\n\n/**\n * Smartwatch mockup with a working digital crown: turn the crown (drag it, use the mouse wheel over\n * the watch, or ↑/↓ when focused) and the app list scrolls on a curved, fish-eye path — rows near\n * the centre are big and bright, rows at the edges shrink and slide inward, like the real thing.\n * It snaps to the nearest row with a spring.\n */\nexport function MockupWatch({ apps, className }: MockupWatchProps) {\n  const reduced = useReducedMotion();\n  const y = useMotionValue(0); // index * ROW\n  const crown = useTransform(y, (v) => v * 1.6);\n  const [active, setActive] = useState(0);\n  useMotionValueEvent(y, \"change\", (v) => setActive(Math.round(v / ROW)));\n  const max = (apps.length - 1) * ROW;\n  const snapTo = (v: number) => {\n    const t = Math.max(0, Math.min(max, Math.round(v / ROW) * ROW));\n    if (reduced) y.set(t);\n    else animate(y, t, { type: \"spring\", stiffness: 300, damping: 30 });\n  };\n  const nudge = (d: number) => snapTo(y.get() + d * ROW);\n\n  const face = useRef<HTMLDivElement>(null);\n  useEffect(() => {\n    const el = face.current;\n    if (!el) return;\n    let t: ReturnType<typeof setTimeout>;\n    const wheel = (e: WheelEvent) => {\n      e.preventDefault();\n      y.set(Math.max(-ROW / 2, Math.min(max + ROW / 2, y.get() + e.deltaY * 0.35)));\n      clearTimeout(t);\n      t = setTimeout(() => snapTo(y.get()), 120);\n    };\n    el.addEventListener(\"wheel\", wheel, { passive: false });\n    return () => (el.removeEventListener(\"wheel\", wheel), clearTimeout(t));\n  });\n\n  const drag = useRef<number | null>(null);\n  return (\n    <div className={cn(\"relative select-none\", className)}>\n      {/* band */}\n      <div aria-hidden className=\"absolute left-1/2 top-[-70px] h-[calc(100%+140px)] w-[150px] -translate-x-1/2 rounded-[40px] bg-gradient-to-b from-orange-400 via-orange-500 to-orange-400 opacity-90\" style={{ backgroundImage: \"repeating-linear-gradient(0deg, rgb(0 0 0 / .06) 0 2px, transparent 2px 9px), linear-gradient(#fb923c,#f97316)\" }} />\n      {/* case */}\n      <div className=\"relative h-[250px] w-[210px] rounded-[58px] bg-gradient-to-br from-zinc-500 via-zinc-800 to-zinc-600 p-[5px] shadow-[0_30px_60px_-20px_rgb(0_0_0/.6)]\">\n        <div\n          ref={face}\n          tabIndex={0}\n          role=\"listbox\"\n          aria-label=\"Apps\"\n          aria-activedescendant={`watch-app-${active}`}\n          onKeyDown={(e) => (e.key === \"ArrowDown\" ? (e.preventDefault(), nudge(1)) : e.key === \"ArrowUp\" ? (e.preventDefault(), nudge(-1)) : null)}\n          className=\"relative h-full w-full overflow-hidden rounded-[53px] bg-black outline-none ring-orange-400 focus-visible:ring-2\"\n        >\n          <p className=\"absolute right-7 top-4 z-10 font-mono text-sm font-semibold text-white\">10:09</p>\n          <div className=\"absolute inset-0 top-1/2\">\n            {apps.map((a, i) => <Row key={a.name} app={a} i={i} y={y} active={i === active} />)}\n          </div>\n          <div aria-hidden className=\"pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,transparent_55%,#000_95%)]\" />\n        </div>\n      </div>\n      {/* crown */}\n      <motion.button\n        type=\"button\"\n        aria-label=\"Digital crown — drag to scroll\"\n        className=\"absolute right-[-13px] top-[62px] h-12 w-4 cursor-ns-resize touch-none rounded-r-md bg-gradient-to-r from-zinc-500 to-zinc-300\"\n        style={{ backgroundImage: \"repeating-linear-gradient(0deg,#52525b 0 1px,transparent 1px 3px)\", backgroundPositionY: crown }}\n        onPointerDown={(e) => ((drag.current = e.clientY - y.get() / 0.6), e.currentTarget.setPointerCapture(e.pointerId))}\n        onPointerMove={(e) => drag.current !== null && y.set(Math.max(-ROW / 2, Math.min(max + ROW / 2, (drag.current - e.clientY) * -0.6)))}\n        onPointerUp={() => ((drag.current = null), snapTo(y.get()))}\n        onClick={() => face.current?.focus()}\n      >\n        <span className=\"absolute inset-y-1 right-0 w-1 rounded-r bg-orange-500\" />\n      </motion.button>\n      <span aria-hidden className=\"absolute right-[-7px] top-[130px] h-14 w-2 rounded-r bg-zinc-600\" />\n    </div>\n  );\n}\n\nfunction Row({ app, i, y, active }: { app: WatchApp; i: number; y: MotionValue<number>; active: boolean }) {\n  const d = useTransform(y, (v) => (i * ROW - v) / ROW); // distance in rows from centre\n  const ty = useTransform(d, (v) => v * ROW - 20 - Math.sign(v) * Math.max(0, Math.abs(v) - 1) * 6);\n  const scale = useTransform(d, (v) => Math.max(0.45, 1 - Math.abs(v) * 0.17));\n  const x = useTransform(d, (v) => Math.abs(v) * Math.abs(v) * 7);\n  const opacity = useTransform(d, (v) => Math.max(0, 1 - Math.abs(v) * 0.3));\n  return (\n    <motion.div id={`watch-app-${i}`} role=\"option\" aria-selected={active} className=\"absolute left-0 flex w-full items-center gap-3 px-6\" style={{ y: ty, scale, x, opacity }}>\n      <span className=\"grid size-10 shrink-0 place-items-center rounded-full text-white\" style={{ background: app.color }}>{app.icon}</span>\n      <span className=\"truncate text-base font-medium text-white\">{app.name}</span>\n    </motion.div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "mockups"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "mockup",
+      "watch",
+      "wearable",
+      "crown",
+      "fisheye",
+      "device"
+    ],
+    "pageTypes": [
+      "landing",
+      "portfolio"
+    ]
+  }
+}

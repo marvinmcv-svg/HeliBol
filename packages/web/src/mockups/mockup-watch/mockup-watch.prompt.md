@@ -1,0 +1,1 @@
+Keep one motion value y (index × row height); each row derives its offset from the centre and maps it to y, scale, inward x and opacity; wheel, crown drag and arrow keys write y, and release springs to the nearest row.

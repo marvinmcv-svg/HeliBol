@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "form-emoji-feedback",
+  "type": "registry:component",
+  "title": "Form — Emoji Feedback",
+  "description": "Feedback rating where one drawn face does the talking: choose 1–5 and the mouth curve bends from frown to grin, brows tilt, eyes squint and the face warms; a comment box slides open and Send turns into a thank-you.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/form-emoji-feedback.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/form-emoji-feedback.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface FormEmojiFeedbackProps {\n  question?: string;\n  labels?: [string, string, string, string, string];\n  onSubmit?: (rating: number, comment: string) => void;\n  className?: string;\n}\n\nconst COLORS = [\"#ef4444\", \"#f97316\", \"#facc15\", \"#84cc16\", \"#22c55e\"];\n\n/**\n * Feedback rating where one face does all the talking: slide or tap 1–5 and the drawn face morphs —\n * the mouth curve bends from frown to grin, brows tilt, eyes squint into a smile, the face colour\n * warms — then a comment box slides open and Send turns into a thank-you.\n */\nexport function FormEmojiFeedback({ question = \"How was your experience?\", labels = [\"Awful\", \"Meh\", \"Okay\", \"Good\", \"Loved it\"], onSubmit, className }: FormEmojiFeedbackProps) {\n  const reduced = useReducedMotion();\n  const [r, setR] = useState<number | null>(null);\n  const [comment, setComment] = useState(\"\");\n  const [sent, setSent] = useState(false);\n  const v = r ?? 2; // face shown before choosing = neutral\n  const k = v / 4; // 0..1\n  const mouth = `M68 ${128 - k * 4} Q100 ${112 + k * 44} 132 ${128 - k * 4}`;\n  const spring = reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 220, damping: 18 };\n\n  return (\n    <form\n      onSubmit={(e) => (e.preventDefault(), r !== null && (setSent(true), onSubmit?.(r + 1, comment)))}\n      className={cn(\"w-[320px] overflow-hidden rounded-[28px] border bg-card p-6 text-center shadow-xl\", className)}\n    >\n      <AnimatePresence mode=\"wait\" initial={false}>\n        {sent ? (\n          <motion.div key=\"thanks\" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className=\"space-y-2 py-10\">\n            <p className=\"text-4xl\" aria-hidden>💌</p>\n            <p className=\"text-lg font-semibold\">Thanks for the feedback!</p>\n            <button type=\"button\" onClick={() => (setSent(false), setR(null), setComment(\"\"))} className=\"text-xs text-muted-foreground underline\">Rate again</button>\n          </motion.div>\n        ) : (\n          <motion.div key=\"form\" exit={{ opacity: 0, y: -10 }} className=\"space-y-4\">\n            <p className=\"font-semibold\">{question}</p>\n            <svg viewBox=\"0 0 200 200\" className=\"mx-auto size-32\" aria-hidden>\n              <motion.circle cx=\"100\" cy=\"100\" r=\"80\" animate={{ fill: r === null ? \"#e4e4e7\" : COLORS[v] }} transition={{ duration: reduced ? 0 : 0.35 }} />\n              <motion.path d=\"M58 70 L84 74\" stroke=\"#18181b\" strokeWidth=\"6\" strokeLinecap=\"round\" animate={{ rotate: (0.5 - k) * 24, y: k * -4 }} style={{ originX: 0.5, originY: 0.5 }} transition={spring} />\n              <motion.path d=\"M116 74 L142 70\" stroke=\"#18181b\" strokeWidth=\"6\" strokeLinecap=\"round\" animate={{ rotate: (k - 0.5) * 24, y: k * -4 }} style={{ originX: 0.5, originY: 0.5 }} transition={spring} />\n              <motion.ellipse cx=\"74\" cy=\"92\" rx=\"8\" fill=\"#18181b\" animate={{ ry: 10 - k * 6 }} transition={spring} />\n              <motion.ellipse cx=\"126\" cy=\"92\" rx=\"8\" fill=\"#18181b\" animate={{ ry: 10 - k * 6 }} transition={spring} />\n              <motion.path fill=\"none\" stroke=\"#18181b\" strokeWidth=\"7\" strokeLinecap=\"round\" animate={{ d: mouth }} transition={spring} />\n            </svg>\n            <div role=\"radiogroup\" aria-label=\"Rating\" className=\"flex justify-between gap-1\">\n              {labels.map((l, i) => (\n                <button key={l} type=\"button\" role=\"radio\" aria-checked={r === i} onClick={() => setR(i)} className=\"relative flex-1 rounded-full py-1.5 text-[11px] font-medium\">\n                  {r === i && <motion.span layoutId=\"kn-emoji-pill\" className=\"absolute inset-0 rounded-full\" style={{ background: COLORS[i] }} transition={spring} />}\n                  <span className={cn(\"relative\", r === i ? \"text-black\" : \"text-muted-foreground\")}>{l}</span>\n                </button>\n              ))}\n            </div>\n            <AnimatePresence initial={false}>\n              {r !== null && (\n                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: \"auto\", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: reduced ? 0 : 0.3 }} className=\"space-y-3 overflow-hidden\">\n                  <textarea value={comment} onChange={(e) => setComment(e.target.value)} rows={2} placeholder={r < 2 ? \"What went wrong?\" : \"What did you like?\"} aria-label=\"Comment\" className=\"w-full resize-none rounded-xl border bg-background p-3 text-sm outline-none focus:ring-2 focus:ring-ring\" />\n                  <button type=\"submit\" className=\"h-10 w-full rounded-full bg-foreground text-sm font-medium text-background\">Send feedback</button>\n                </motion.div>\n              )}\n            </AnimatePresence>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </form>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "form",
+      "feedback",
+      "rating",
+      "emoji",
+      "nps",
+      "survey"
+    ],
+    "pageTypes": [
+      "ai-app",
+      "ecommerce",
+      "onboarding"
+    ]
+  }
+}

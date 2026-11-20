@@ -54,7 +54,7 @@ export function IconMorph({ kind, active, className }: { kind: IconMorphKind; ac
       {kind === "plus-minus" && (
         <>
           <path d="M5 12h14" />
-          <motion.path d="M12 5v14" initial={false} animate={{ rotate: active ? 90 : 0, opacity: active ? 0 : 1 }} style={{ originX: "12px", originY: "12px" }} transition={t} />
+          <motion.path d="M12 5v14" initial={false} animate={{ rotate: active ? 90 : 0, opacity: active ? 0 : 1 }} style={{ originX: 0.5, originY: 0.5 }} transition={t} />
         </>
       )}
       {kind === "arrow-check" && <motion.path initial={false} animate={{ d: active ? "M5 12.5L10 17L19 7" : "M5 12L19 12M13 6L19 12L13 18" }} transition={t} />}

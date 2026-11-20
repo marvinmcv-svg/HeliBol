@@ -1,0 +1,1 @@
+Auto-size the textarea from scrollHeight; keep attachments as AnimatePresence chips; swap the mic/send icon by key with a rotating scale; append bubbles that rise from the composer origin with layout.

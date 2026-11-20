@@ -51,9 +51,9 @@ export function IconMenu({ label = "Menu", ...p }: IconProps) {
   const t = useT();
   return (
     <Shell on={on} onToggle={() => set(!on)} label={label} {...p}>
-      <motion.line x1="4" x2="20" y1="6" y2="6" style={{ originX: "12px", originY: "6px" }} animate={on ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} transition={t} />
+      <motion.line x1="4" x2="20" y1="6" y2="6" style={{ originX: 0.5, originY: 0.5 }} animate={on ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} transition={t} />
       <motion.line x1="4" x2="20" y1="12" y2="12" animate={{ scaleX: on ? 0 : 1, opacity: on ? 0 : 1 }} transition={t} />
-      <motion.line x1="4" x2="20" y1="18" y2="18" style={{ originX: "12px", originY: "18px" }} animate={on ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} transition={t} />
+      <motion.line x1="4" x2="20" y1="18" y2="18" style={{ originX: 0.5, originY: 0.5 }} animate={on ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} transition={t} />
     </Shell>
   );
 }
@@ -79,7 +79,7 @@ export function IconHeart({ label = "Like", ...p }: IconProps) {
       <motion.path
         d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"
         animate={{ fill: on ? "currentColor" : "rgba(0,0,0,0)", scale: on && !reduced ? [1, 1.25, 1] : 1 }}
-        style={{ originX: "12px", originY: "13px" }}
+        style={{ originX: 0.5, originY: 0.5 }}
         transition={{ duration: 0.35 }}
       />
       {!reduced && Array.from({ length: 6 }, (_, i) => {
@@ -101,11 +101,11 @@ export function IconBell({ label = "Notifications", ...p }: IconProps) {
   const reduced = useReducedMotion();
   return (
     <Shell on={on} onToggle={() => set(!on)} label={label} {...p}>
-      <motion.g style={{ originX: "12px", originY: "3px" }} animate={on && !reduced ? { rotate: [0, 18, -14, 10, -6, 0] } : { rotate: 0 }} transition={{ duration: 0.7 }}>
+      <motion.g style={{ originX: 0.5, originY: 0 }} animate={on && !reduced ? { rotate: [0, 18, -14, 10, -6, 0] } : { rotate: 0 }} transition={{ duration: 0.7 }}>
         <path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7" />
         <motion.path d="M10 20a2 2 0 0 0 4 0" animate={on && !reduced ? { x: [0, -2, 2, -1, 0] } : { x: 0 }} transition={{ duration: 0.7 }} />
       </motion.g>
-      <motion.circle cx="18" cy="5" r="3" fill="#ef4444" stroke="none" animate={{ scale: on ? 1 : 0 }} style={{ originX: "18px", originY: "5px" }} transition={useT()} />
+      <motion.circle cx="18" cy="5" r="3" fill="#ef4444" stroke="none" animate={{ scale: on ? 1 : 0 }} style={{ originX: 0.5, originY: 0.5 }} transition={useT()} />
     </Shell>
   );
 }
@@ -116,7 +116,7 @@ export function IconCopy({ label = "Copy", ...p }: IconProps) {
   const t = useT();
   return (
     <Shell on={on} onToggle={() => { set(true); setTimeout(() => set(false), 1400); }} label={label} className={cn(on && "text-emerald-500", p.className)} size={p.size}>
-      <motion.g animate={{ opacity: on ? 0 : 1, scale: on ? 0.6 : 1 }} style={{ originX: "12px", originY: "12px" }} transition={t}>
+      <motion.g animate={{ opacity: on ? 0 : 1, scale: on ? 0.6 : 1 }} style={{ originX: 0.5, originY: 0.5 }} transition={t}>
         <rect x="9" y="9" width="11" height="11" rx="2" />
         <path d="M5 15V6a2 2 0 0 1 2-2h8" />
       </motion.g>
@@ -136,7 +136,7 @@ export function IconTheme({ label = "Toggle theme", ...p }: IconProps) {
         <motion.circle r="6" fill="#000" stroke="none" animate={{ cx: on ? 17 : 30, cy: on ? 7 : -6 }} transition={t} />
       </mask>
       <motion.circle cx="12" cy="12" fill="currentColor" mask={`url(#kn-moon-${label.replace(/\W/g, "")})`} animate={{ r: on ? 8 : 4.5 }} transition={t} />
-      <motion.g animate={{ rotate: on ? 90 : 0, opacity: on ? 0 : 1, scale: on ? 0.5 : 1 }} style={{ originX: "12px", originY: "12px" }} transition={t}>
+      <motion.g animate={{ rotate: on ? 90 : 0, opacity: on ? 0 : 1, scale: on ? 0.5 : 1 }} style={{ originX: 0.5, originY: 0.5 }} transition={t}>
         {Array.from({ length: 8 }, (_, i) => {
           const a = (i / 8) * Math.PI * 2;
           return <line key={i} x1={12 + Math.cos(a) * 7.5} y1={12 + Math.sin(a) * 7.5} x2={12 + Math.cos(a) * 9.5} y2={12 + Math.sin(a) * 9.5} />;

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-product-swatch",
+  "type": "registry:component",
+  "title": "Card — Product Swatches",
+  "description": "Product card that changes with the colourway: picking a swatch floods the backdrop with the new colour, the product swings out and the next swings in from that side, name and price roll, and the selection ring glides. Add to bag morphs into a check.",
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/card-product-swatch.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/card-product-swatch.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { Check, ShoppingBag } from \"lucide-react\";\nimport { cn, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface ProductVariant { name: string; color: string; image: string; price: number }\nexport interface CardProductSwatchProps {\n  title: string;\n  subtitle?: string;\n  variants: ProductVariant[];\n  currency?: string;\n  className?: string;\n}\n\n/**\n * Product card that changes with the colourway: picking a swatch floods the backdrop with the new\n * colour from the swatch's side, the product slides out and the next one swings in, the name and\n * price roll, and the selection ring glides between swatches. \"Add to bag\" morphs into a check.\n */\nexport function CardProductSwatch({ title, subtitle, variants, currency = \"$\", className }: CardProductSwatchProps) {\n  const reduced = useReducedMotion();\n  const [[i, dir], setSel] = useState<[number, number]>([0, 0]);\n  const [added, setAdded] = useState(false);\n  const v = variants[i]!;\n  const pick = (n: number) => n !== i && (setSel([n, n > i ? 1 : -1]), setAdded(false));\n  const spring = reduced ? { duration: 0 } : { type: \"spring\" as const, stiffness: 260, damping: 26 };\n\n  return (\n    <div className={cn(\"relative w-80 overflow-hidden rounded-[28px] border bg-card shadow-xl\", className)}>\n      <div className=\"relative h-60 overflow-hidden\">\n        <motion.div className=\"absolute inset-0\" animate={{ backgroundColor: v.color }} transition={{ duration: reduced ? 0 : 0.5 }} />\n        <motion.div aria-hidden className=\"absolute -right-10 -top-10 size-48 rounded-full bg-white/25 blur-2xl\" animate={{ x: dir * -10 }} />\n        <AnimatePresence initial={false} custom={dir} mode=\"popLayout\">\n          <motion.img\n            key={v.image + i}\n            src={v.image}\n            alt={`${title} in ${v.name}`}\n            custom={dir}\n            variants={{\n              enter: (d: number) => ({ x: reduced ? 0 : d * 220, rotate: reduced ? 0 : d * 18, opacity: 0 }),\n              center: { x: 0, rotate: -6, opacity: 1 },\n              exit: (d: number) => ({ x: reduced ? 0 : d * -220, rotate: reduced ? 0 : d * -18, opacity: 0 }),\n            }}\n            initial=\"enter\"\n            animate=\"center\"\n            exit=\"exit\"\n            transition={spring}\n            className=\"absolute left-1/2 top-1/2 -ml-24 -mt-[76px] h-[152px] w-48 rounded-2xl object-cover shadow-[0_30px_40px_-15px_rgb(0_0_0/.5)]\"\n          />\n        </AnimatePresence>\n      </div>\n      <div className=\"space-y-4 p-5\">\n        <div className=\"flex items-start justify-between gap-3\">\n          <div>\n            <h3 className=\"text-lg font-semibold leading-tight\">{title}</h3>\n            <div className=\"relative h-5 overflow-hidden text-sm text-muted-foreground\">\n              <AnimatePresence initial={false} mode=\"popLayout\">\n                <motion.p key={v.name} initial={{ y: reduced ? 0 : 20 * (dir || 1), opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: reduced ? 0 : -20 * (dir || 1), opacity: 0 }} transition={spring}>{subtitle ? `${subtitle} · ` : \"\"}{v.name}</motion.p>\n              </AnimatePresence>\n            </div>\n          </div>\n          <div className=\"relative h-7 overflow-hidden font-mono text-xl font-semibold tabular-nums\">\n            <AnimatePresence initial={false} mode=\"popLayout\">\n              <motion.span key={v.price} className=\"block\" initial={{ y: reduced ? 0 : 28, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: reduced ? 0 : -28, opacity: 0 }} transition={spring}>{currency}{v.price}</motion.span>\n            </AnimatePresence>\n          </div>\n        </div>\n        <div role=\"radiogroup\" aria-label=\"Colour\" className=\"flex gap-2.5\">\n          {variants.map((x, n) => (\n            <button key={x.name} type=\"button\" role=\"radio\" aria-checked={n === i} aria-label={x.name} onClick={() => pick(n)} className=\"relative grid size-8 place-items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\">\n              {n === i && <motion.span layoutId={`kn-swatch-${title}`} className=\"absolute inset-0 rounded-full ring-2 ring-foreground\" transition={spring} />}\n              <span className=\"size-6 rounded-full ring-1 ring-black/10\" style={{ background: x.color }} />\n            </button>\n          ))}\n        </div>\n        <motion.button\n          type=\"button\"\n          layout\n          onClick={() => setAdded(true)}\n          className={cn(\"flex h-11 w-full items-center justify-center gap-2 rounded-full text-sm font-medium text-white\", added ? \"bg-emerald-500\" : \"bg-foreground text-background\")}\n          transition={spring}\n          aria-live=\"polite\"\n        >\n          <AnimatePresence mode=\"wait\" initial={false}>\n            {added ? (\n              <motion.span key=\"ok\" className=\"flex items-center gap-2\" initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ opacity: 0 }}><Check className=\"size-4\" /> Added to bag</motion.span>\n            ) : (\n              <motion.span key=\"add\" className=\"flex items-center gap-2\" initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }}><ShoppingBag className=\"size-4\" /> Add to bag</motion.span>\n            )}\n          </AnimatePresence>\n        </motion.button>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "cards"
+  ],
+  "meta": {
+    "engine": "motion",
+    "tags": [
+      "premium",
+      "card",
+      "product",
+      "ecommerce",
+      "swatch",
+      "variant",
+      "shop"
+    ],
+    "pageTypes": [
+      "ecommerce"
+    ]
+  }
+}

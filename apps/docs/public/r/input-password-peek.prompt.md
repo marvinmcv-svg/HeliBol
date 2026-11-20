@@ -96,7 +96,7 @@ export function InputPasswordPeek({ label = "Password", name = "password", autoC
         >
           <svg viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round">
             <path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
-            <motion.g initial={false} animate={{ scaleY: shown ? 1 : 0.08 }} style={{ originY: "12px", originX: "12px" }} transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 22 }}>
+            <motion.g initial={false} animate={{ scaleY: shown ? 1 : 0.08 }} style={{ originX: 0.5, originY: 0.5 }} transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 22 }}>
               <circle cx="12" cy="12" r="3.3" />
               <motion.circle cy="12" r="1.3" fill="currentColor" stroke="none" animate={{ cx: 12 + look * 1.6 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} />
             </motion.g>

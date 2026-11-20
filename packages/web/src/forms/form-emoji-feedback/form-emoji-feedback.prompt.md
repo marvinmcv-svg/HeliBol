@@ -1,0 +1,1 @@
+Map the rating to k = 0..1; derive the mouth quadratic control point, brow rotation, eye height and fill colour from k and animate them with springs; reveal the comment field and submit button once rated.

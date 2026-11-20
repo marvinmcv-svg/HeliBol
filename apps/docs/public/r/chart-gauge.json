@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-gauge",
+  "type": "registry:component",
+  "title": "Chart — Gauge",
+  "description": "Speedometer gauge with a weighted needle: on view and on change the needle sweeps past the target and settles with a damped wobble, the active zone lights up and the readout counts. Zones are configurable.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://marvzkineticlibrary.vercel.app/r/kinetik-core.json"
+  ],
+  "files": [
+    {
+      "path": "components/kinetik/chart-gauge.tsx",
+      "type": "registry:component",
+      "target": "components/kinetik/chart-gauge.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef } from \"react\";\nimport { animate, motion, useMotionValue, useTransform } from \"motion/react\";\nimport { cn, useInView, useReducedMotion } from \"@/lib/kinetik/core\";\n\nexport interface GaugeZone { to: number; color: string }\nexport interface ChartGaugeProps {\n  value: number;\n  min?: number;\n  max?: number;\n  label?: string;\n  unit?: string;\n  zones?: GaugeZone[];\n  className?: string;\n}\n\nconst A0 = -120, A1 = 120;\n\n/**\n * Speedometer gauge with a weighted needle: on view (and whenever the value changes) the needle\n * sweeps past the target and settles with a damped wobble, the active zone of the coloured track\n * lights up, and the readout counts. Zones are configurable.\n */\nexport function ChartGauge({ value, min = 0, max = 100, label = \"Score\", unit = \"\", zones = [{ to: 40, color: \"#ef4444\" }, { to: 70, color: \"#f59e0b\" }, { to: 100, color: \"#22c55e\" }], className }: ChartGaugeProps) {\n  const reduced = useReducedMotion();\n  const box = useRef<HTMLDivElement>(null);\n  const inView = useInView(box, { amount: 0.5 });\n  const v = useMotionValue(reduced ? value : min);\n  const rot = useTransform(v, [min, max], [A0, A1], { clamp: false });\n  const shown = useTransform(v, (x) => `${Math.round(Math.max(min, Math.min(max, x)))}${unit}`);\n  useEffect(() => {\n    if (reduced) return v.set(value);\n    if (!inView) return;\n    const c = animate(v, value, { type: \"spring\", stiffness: 60, damping: 7, mass: 1.2 });\n    return () => c.stop();\n  }, [value, inView, reduced, v]);\n  const pt = (a: number, r: number) => [100 + Math.sin((a * Math.PI) / 180) * r, 110 - Math.cos((a * Math.PI) / 180) * r] as const;\n  const arc = (from: number, to: number, r: number) => {\n    const [x0, y0] = pt(from, r), [x1, y1] = pt(to, r);\n    return `M${x0} ${y0} A${r} ${r} 0 ${to - from > 180 ? 1 : 0} 1 ${x1} ${y1}`;\n  };\n  const ang = (x: number) => A0 + ((x - min) / (max - min)) * (A1 - A0);\n  const active = zones.findIndex((z) => value <= z.to);\n\n  return (\n    <div ref={box} className={cn(\"w-72 rounded-3xl border bg-card p-5\", className)}>\n      <svg viewBox=\"0 0 200 150\" className=\"w-full\" role=\"img\" aria-label={`${label}: ${value}${unit} of ${max}`}>\n        {zones.map((z, i) => {\n          const from = ang(i ? zones[i - 1]!.to : min) + (i ? 1.5 : 0), to = ang(z.to);\n          return <path key={i} d={arc(from, to, 80)} fill=\"none\" stroke={z.color} strokeWidth=\"14\" strokeLinecap={i === 0 || i === zones.length - 1 ? \"round\" : \"butt\"} opacity={i === active ? 1 : 0.25} style={{ transition: \"opacity .4s\" }} />;\n        })}\n        {Array.from({ length: 11 }, (_, i) => {\n          const a = A0 + (i / 10) * (A1 - A0), [x0, y0] = pt(a, 64), [x1, y1] = pt(a, i % 5 ? 60 : 56);\n          return <line key={i} x1={x0} y1={y0} x2={x1} y2={y1} className=\"stroke-muted-foreground\" strokeWidth={i % 5 ? 1 : 2} />;\n        })}\n        <motion.g style={{ rotate: rot, originX: 0.5, originY: 1 }} /* motion measures SVG origins from the element's own box: bottom-centre = pivot */>\n          <path d=\"M97 110 L100 40 L103 110 Z\" className=\"fill-foreground\" />\n        </motion.g>\n        <circle cx=\"100\" cy=\"110\" r=\"9\" className=\"fill-foreground\" />\n        <circle cx=\"100\" cy=\"110\" r=\"3.5\" className=\"fill-card\" />\n      </svg>\n      <div className=\"-mt-6 text-center\">\n        <motion.p className=\"font-mono text-3xl font-semibold tabular-nums\">{shown}</motion.p>\n        <p className=\"text-xs uppercase tracking-widest text-muted-foreground\">{label}</p>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "categories": [
+    "data"
+  ],
+  "meta": {
+    "engine": "svg",
+    "tags": [
+      "premium",
+      "chart",
+      "gauge",
+      "speedometer",
+      "kpi",
+      "score",
+      "meter"
+    ],
+    "pageTypes": [
+      "dashboard"
+    ]
+  }
+}
